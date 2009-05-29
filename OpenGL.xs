@@ -1,4 +1,4 @@
-/*  Last saved: Fri 29 May 2009 05:59:15 PM  */
+/*  Last saved: Fri 29 May 2009 06:23:33 PM  */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -2154,7 +2154,10 @@ void disable_fbo(oga_struct * oga)
 
 
 
+
 MODULE = PDL::Graphics::OpenGL::Perl::OpenGL		PACKAGE = PDL::Graphics::OpenGL::Perl::OpenGL::Array
+
+#ifdef IN_POGL_ARRAY_XS
 
 #//# $oga = OpenGL::Array->new($count, @types);
 #//- Contructor for multi-type OGA - unpopulated
@@ -2195,6 +2198,8 @@ new(Class, count, type, ...)
 	}
 	OUTPUT:
 		RETVAL
+
+
 
 #//# $oga = OpenGL::Array->new_list($type, @data);
 #//- Contructor for mono-type OGA - populated
@@ -2911,8 +2916,12 @@ DESTROY(oga)
 		free(oga);
 	}
 
+#endif /* End IN_POGL_ARRAY_XS */
+
 
 MODULE = PDL::Graphics::OpenGL::Perl::OpenGL		PACKAGE = PDL::Graphics::OpenGL::Perl::OpenGL
+
+#ifdef IN_POGL_CONST_XS
 
 #// Define a POGL Constant
 SV *
@@ -2928,6 +2937,7 @@ constant(name,arg)
 	OUTPUT:
 	RETVAL
 
+#endif /* End IN_POGL_CONST_XS */
 
 #ifdef IN_POGL_GL_XS
 
@@ -3005,6 +3015,8 @@ done_glutInit()
 	RETVAL
 
 #endif /* End IN_POGL_GLUT_XS */
+
+#ifdef IN_POGL_GL_XS
 
 #ifdef HAVE_GL
 
@@ -16019,7 +16031,11 @@ glClampColorARB(target,clamp)
 
 #endif /* HAVE_GL */
 
+#endif /* End IN_POGL_GL_XS */
+
 ##################### GLU #########################
+
+#ifdef IN_POGL_GLU_XS
 
 #ifdef HAVE_GLU
 
@@ -16660,7 +16676,11 @@ gluUnProject_p(winx,winy,winz, m1,m2,m3,m4,m5,m6,m7,m8,m9,m10,m11,m12,m13,m14,m1
 
 #endif
 
+#endif /* End IN_POGL_GLU_XS */
+
 ############################## GLUT #########################
+
+#ifdef IN_POGL_GLUT_XS
 
 #ifdef GLUT_API_VERSION
 
@@ -17601,6 +17621,11 @@ glutCloseFunc(handler=0, ...)
 
 #endif /* def GLUT_API_VERSION */
 
+#endif /* End IN_POGL_GLUT_XS */
+
+# /* This is assigned to GLX for now.  The glp*() functions should be split out */
+
+#ifdef IN_POGL_GLX_XS
 
 # /* The following material is directly copied from Stan Melax's original OpenGL-0.4 */
 
@@ -17928,6 +17953,7 @@ glpHasGPGPU()
 	OUTPUT:
 		RETVAL
 
+#endif /* End IN_POGL_GLX_XS */
 
 BOOT:
 #ifdef __PM__
