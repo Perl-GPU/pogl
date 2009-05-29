@@ -1,3 +1,5 @@
+/*  Last saved: Fri 29 May 2009 04:48:33 PM  */
+
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
  *  This program is free software; you can redistribute it and/or
@@ -316,6 +318,7 @@ neoconstant(char * name, int arg)
 #undef f
 #endif /* End IN_POGL_CONST_XS */
 
+#ifdef IN_POGL_GL_XS
 /* Note: this is caching procs once for all contexts */
 /* !!! This should instead cache per context */
 #ifdef HAVE_GL
@@ -334,8 +337,10 @@ neoconstant(char * name, int arg)
 #define testProc(proc,name) 1
 #endif
 #endif
+#endif /* End IN_POGL_GL_XS */
 
 
+#ifdef IN_POGL_GLX_XS
 #ifdef HAVE_GLX
 #  define HAVE_GLpc			/* Perl interface */
 #  define nativeWindowId(d, w)	(w)
@@ -358,8 +363,6 @@ AV *EventAv;
 unsigned long LastEventMask;	/* !! Common for all the windows */
 Display myDisplay;
 
-#else
-#  define InitSys()
 #endif	/* defined __PM__ */ 
 
 #ifdef HAVE_GLpc
@@ -381,6 +384,9 @@ static int default_attributes[] = { GLX_DOUBLEBUFFER, GLX_RGBA };
 static int DBUFFER_HACK = 0;
 #define __had_dbuffer_hack() (DBUFFER_HACK)
 
+#endif /* End IN_POGL_GLX_XS */
+
+/*
 #define PackCallbackST(av,first)					\
 	if (SvROK(ST(first)) && (SvTYPE(SvRV(ST(first))) == SVt_PVAV)){	\
 		int i;							\
@@ -393,6 +399,7 @@ static int DBUFFER_HACK = 0;
 		for(i=first;i<items;i++)				\
 			av_push(av, newSVsv(ST(i)));			\
 	}
+*/
 
 #ifdef GLUT_API_VERSION
 
@@ -17894,4 +17901,6 @@ glpHasGPGPU()
 
 
 BOOT:
+#ifdef __PM__
   InitSys();
+#endif /* defined __PM__ */

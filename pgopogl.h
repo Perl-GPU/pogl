@@ -44,4 +44,17 @@ void _pgopogl_call_XS (pTHX_ void (*subaddr) (pTHX_ CV *), CV * cv, SV ** mark);
 		_pgopogl_call_XS (aTHX_ name, cv, mark);	\
 	}
 
+#define PackCallbackST(av,first)					\
+	if (SvROK(ST(first)) && (SvTYPE(SvRV(ST(first))) == SVt_PVAV)){	\
+		int i;							\
+		AV * x = (AV*)SvRV(ST(first));				\
+		for(i=0;i<=av_len(x);i++) {				\
+			av_push(av, newSVsv(*av_fetch(x, i, 0)));	\
+		}							\
+	} else {							\
+		int i;							\
+		for(i=first;i<items;i++)				\
+			av_push(av, newSVsv(ST(i)));			\
+	}
+
 #endif
