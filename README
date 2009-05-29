@@ -1,0 +1,16 @@
+ Copyright (c) 1998,1999 Kenneth Albanowski. All rights reserved.
+ Copyright (c) 2000 Ilya Zakharevich. All rights reserved.
+ Copyright (c) 2007 Bob Free. All rights reserved.
+ This program is free software; you can redistribute it and/or
+ modify it under the same terms as Perl itself. 
+
+
+PDL::Graphics::OpenGL::Perl::OpenGL is a development version of the
+Perl OpenGL (POGL) module for the purposes of evaluating the implementation
+for the Perl Data Language integration.  This version is based on
+0.57 POGL.  The features developer in this module will be folded into
+the OpenGL software at which point this release sequence will be
+superceded by that module.
+
+See the OpenGL module if you need Perl OpenGL bindings.  Thanks.
+

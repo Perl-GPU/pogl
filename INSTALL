@@ -1,0 +1,122 @@
+ This module is a testing and integration version of POGL only.
+ See POGL for the official release.  This interface will likely
+ change radically before the full POGL functionality is
+ integrated with PDL.  Thanks!
+
+ Visit the Perl OpenGL (POGL) Developer's Site for more information:
+ http://graphcomp.com/opengl
+
+ To install the OpenGL module, please follow these instructions:
+
+ 1. Update your development environment with the latest OpenGL header
+    and lib files.  If you are using a GPU, get the latest drivers
+    from your vendor.
+
+    Install FreeGLUT (or compatible) - you can find this at
+    http://freeglut.sourceforge.net/.
+
+    On Windows, FreeGLUT is installed automatically by this module if
+    needed.  On Mac OS X (Leopard and newer), GLUT is built in.  On
+    Linux distributions FreeGLUT is available via their package
+    installers.
+
+    The 'include' subfolder provided with this module contains headers
+    that this module has been tested with.
+
+    This module looks for libGL.so, libGLU.so and libglut.so
+    (opengl32.dll, glu32.dll and freeglut.dll on Windows) in the normal
+    places for your OS installation; you may need to symlink libraries
+    from various vendors to the proper place/names.
+
+    Note: it is strongly recommended, but not required, that you
+    install PerlMagick (6.3.5 or newer) first, as this will
+    dramatically simplify and enhance your ability/performance in
+    loading/saving images/textures via OpenGL::Image - see INSTALL
+    note in the OpenGL::Image module.
+
+ 
+ 2. Run 'perl Makefile.PL'
+
+    Makefile.PL attempts to detemine your OS and available libs.
+    You can override these defaults by specifying:
+
+        perl Makefile.PL interface=XFACE [verbose]
+
+    where XFACE is one of the following constants:
+
+        FREEGLUT		Default window interface
+        GLUT			Fallback if FreeGLUT is not available
+        GLX			Unix X11
+        W32API			Windows via CYGWIN
+        AGL			Mac OS X
+        
+    Makefile.PL will attempt to build and run a glversion utility to
+    determine what version and extensions your OpenGL installation
+    supports, and will create an gl_exclude.h header file to exclude
+    APIs your libraries do not support.  You can manually edit this
+    file to override excluded extensions.
+
+    The "verbose" option provides additional info for troubleshooting.
+
+    Note: glversion assumes libGL.so and libglut.so
+    (opengl32.dll and freeglut.dll on Windows) - and that it will
+    be run via a GUI window (eg. X11 on Unix).  This will impact
+    automated build systems.
+
+
+    For building POGL without extension exclusions, use:
+
+        perl Makefile.PL dist=NO_EXCLUSIONS
+
+    Note: NO_EXCLUSIONS is the default for Windows; this can be
+    overridden by using the EXCLUSIONS option.
+
+
+    To install in non-standard locations, use the PREFIX and LIB options
+    when generating the Makefiles:
+
+        perl Makefile.PL prefix=/PREFIXPATH [LIB=/PREFIXPATH/perl/lib]
+
+    where PREFIXPATH is the path of the directory where you wish
+    the module to be installed (e.g. binary executables in /PREFIXPATH/bin,
+    manual pages in /PREFIXPATH/man, library files in /PREFIXPATH/lib...).
+    The LIB option allows you to control where the perl module stuff goes
+    rather than the default /PREFIXPATH/lib/perl5).
+
+    Then either set the PERL5LIB environment variable before you run
+    scripts that use the modules/libraries (see perlrun) or in your
+    programs say:
+ 
+      use lib '/PREFIXPATH/perl/lib';
+
+
+ 3. Run 'make' ('nmake' on Windows) to build OpenGL.pm.
+
+ 
+ 4. Run 'make test' ('nmake test' on Windows) to test your
+    installation.  You must have GLUT installed in order to run
+    this test.  You should see a spinning cube with textured surfaces.
+    Press 'q' to quit/complete the test (the test window must have focus).
+
+    Note: Automated builds will normally fail this test, as it requires
+    the ability to open a GL context (window) and provide user input.
+
+ 
+ 5. If all is well, run 'sudo make install' ('nmake install on Windows')
+    to intall the OpenGL module onto your system.
+
+
+ 6. It is recommended (not required) that you also install the OpenGL::Image
+    and OpenGL::Shader modules to enhance POGL's features.
+
+
+Read the included README files for additional notes on your particular
+platform.
+
+
+If you get an error about __eprintf missing, add
+
+   -L/opt/gnu/lib/gcc-lib/sparc-sun-solaris2.7/2.96/ -lgcc
+
+to the @LIBS initializer in Makefile.PL (change the directory for the
+appropriate one for your system).

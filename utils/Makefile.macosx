@@ -1,0 +1,23 @@
+#!make
+
+CC=cc
+CCFLAGS=-I../include -I/usr/X11/include
+LINK=cc
+LDFLAGS=-framework AGL -framework OpenGL -framework GLUT
+
+all: glversion.txt
+
+clean:
+	rm -f glversion.txt
+	rm -f glversion
+	rm -f glversion.o
+
+glversion.txt: glversion
+	./$< > $@
+
+glversion: glversion.o
+	${LINK} ${LDFLAGS} -o $@ $<
+	chmod u+x $@
+
+%.o: %.c Makefile
+	${CC} ${CCFLAGS} -c $<

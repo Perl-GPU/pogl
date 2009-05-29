@@ -1,0 +1,59 @@
+	Improve diagnostic output for better debugging of CPAN test results,
+		Maybe enable verbose logging by default as a start.
+	
+	Fix test output to use Test::More and result in a clear pass/fail
+		CPAN testers report PASS when the test never got to run.
+		Needed to support useful automated testing.
+	
+	Modify example/ programs to use glut functions rather than the
+		OpenGL-0.4 defaults with glp*() functions.  We need to
+		make some simple defaults for the various glut callbacks
+		to simplify coding.
+
+	Add Geometry Shader support.
+
+	Fix GLU implementation - particularly Tesselation.
+
+	Move test apps to t/ subdirectory from test.pl
+		Split into interactive and non-interactive tests
+		Skip interactive tests if no OpenGL context
+
+	Implement safe glutInit by checking _done_glutInit before calling glutInit()
+
+	Fix GLUT error handling for perl:
+		Add croak on no glutInit to glut functions to prevent exit(1)
+		Add croak to glutDisplayFunc() with null callback.
+		Add croak to glutSetKeyRepeat() with invalid repeat mode
+		Add croak to glutSetCursor() with unknown cursor type
+		Investigate use of undef return for errors; 1 instead of void's
+
+	Add toggle & display of OpenGL errors a la glutReportErrors()
+
+	Finish perl bindings to remaining FreeGLUT functions:
+		glutGetMenuData, glutSetMenuData, glutGetWindowData, glutSetWindowData,
+		glutGetProcAddress, glutJoystickFunc, glutWireSierpinskiSponge,
+		glutSolidSierpinskiSponge, glutWMCloseFunc
+	
+	Improve support for non-standard OpenGL configurations:
+		Document how to edit Makefile.PL (e.g. lines #120, #132 for lib stuff)
+		Add command line options for perl Makefile.PL to set CFLAGS,...
+		Make single point override for INCLUDE info.
+
+	Recognize OpenGLUT as an allowed flavor of FreeGLUT for POGL config/compile.
+
+	Clean up existing use of configuration information:
+		Clean up compile and config results so they are unambiguous
+		Use the same information to build POGL as to build glversion
+		Refactor Makefile.PL to be more comprehensible.
+	
+	Consider move to Module::Build from ExtUtils::MakeMaker to improve build
+		configuration process and portability.
+	
+	Convert malloc() and calloc() calls to Newx(), Newxc(), and Newxz() from
+		the perl API.  Convert free() to Safefree() to match.
+	
+	Document and implement a test matrix for regression and stability testing for
+		POGL.  The matrix of factors to include: perl vs activeperl, GLX vs WGL,
+		hardware vs software/Mesa, OS, and relevant versions applicable to each.
+	
+	Investigate a "compile and link only" install of POGL
