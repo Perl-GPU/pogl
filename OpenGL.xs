@@ -4,13 +4,38 @@
  *  modify it under the same terms as Perl itself.
  */
 
-#include <stdio.h>
-#include "pgopogl.h"
-#include "ppport.h"
+/* OpenGL::Array */
+#define IN_POGL_ARRAY_XS
 
+/* All OpenGL constants---should split */
+#define IN_POGL_CONST_XS
+
+/* OpenGL OpenGL bindings */
+#define IN_POGL_GL_XS
+
+/* OpenGL *GLUT bindings */
+#define IN_POGL_GLUT_XS
+
+/* OpenGL GLU bindings */
+#define IN_POGL_GLU_XS
+
+/* OpenGL GLX bindings */
+#define IN_POGL_GLX_XS
+
+/* This ends up being OpenGL.pm */
+#define IN_POGL_MAIN_XS
+
+/* OpenGL RPN code */
+#define IN_POGL_RPN_XS
+
+#include <stdio.h>
+
+#include "pgopogl.h"
+
+#ifdef IN_POGL_MAIN_XS
 =head2 Miscellaneous
 
-Various useful utilities defined in PGOpogl.xs.
+Various BOOT utilities defined in pogl_main.xs.
 
 =over
 
@@ -43,19 +68,27 @@ _pgopogl_call_XS (pTHX_ void (*subaddr) (pTHX_ CV *), CV * cv, SV ** mark)
 	(*subaddr) (aTHX_ cv);
 	PUTBACK;	/* forget return values */
 }
+#endif /* End IN_POGL_MAIN_XS */
 
+#ifdef IN_POGL_GL_XS
 #ifdef HAVE_GL
 #include "gl_util.h"
 #endif
+#endif /* End IN_POGL_GL_XS */
 
+#ifdef IN_POGL_GLX_XS
 #ifdef HAVE_GLX
 #include "glx_util.h"
 #endif
+#endif /* End IN_POGL_GLX_XS */
 
+#ifdef IN_POGL_GLU_XS
 #ifdef HAVE_GLU
 #include "glu_util.h"
 #endif
+#endif /* End IN_POGL_GLU_XS */
 
+#ifdef IN_POGL_GLUT_XS
 #if defined(HAVE_GLUT) || defined(HAVE_FREEGLUT)
 #ifndef GLUT_API_VERSION
 #define GLUT_API_VERSION 4
@@ -64,7 +97,9 @@ _pgopogl_call_XS (pTHX_ void (*subaddr) (pTHX_ CV *), CV * cv, SV ** mark)
 #endif
 
 static int _done_glutInit = 0;
+#endif /* End IN_POGL_GLUT_XS */
 
+#ifdef IN_POGL_RPN_XS
 #ifndef M_PI
 #ifdef PI
 #define M_PI PI
@@ -72,11 +107,19 @@ static int _done_glutInit = 0;
 #define M_PI 3.1415926535897932384626433832795
 #endif
 #endif
+#endif /* End IN_POGL_RPN_XS */
 
+#ifdef IN_POGL_GL_XS
 GLint FBO_MAX = -1;
+#endif /* End IN_POGL_GL_XS */
 
-static char *SWIZZLE[4] = {"x","y","z","w"};
+/* This does not seem to be used */
+#if 0
+static char *SWIZZLE[4] = {"x","y","z","w"}; */
+#endif 
 
+/* This does not seem to be used */
+#if 0
 static int
 not_here(s)
 char *s;
@@ -84,14 +127,10 @@ char *s;
     croak("%s not implemented on this architecture", s);
     return -1;
 }
+#endif
 
 
-/* GLUT on OS/2 PM runs callbacks from a secondary thread.  This thread
-   is not instrumented to run EMX CRTL functions.  Basically, no Perl
-   function may be run from this thread.
-   We create a ternary thread via CRTL _beginthread() call, and communicate
-   the requests to this thread via inter-thread communication (ITC).  */
-
+#ifdef IN_POGL_GLUT_XS
 #ifndef __PM__
 #  define DO_perl_call_sv(handler, flag) perl_call_sv(handler, flag)
 #  define ENSURE_callback_thread
@@ -101,6 +140,11 @@ char *s;
 #  define GLUT_EXTEND_STACK(sp,n)
 #  define GLUT_PUSHMARK(sp)		PUSHMARK(sp)
 #else
+/* GLUT on OS/2 PM runs callbacks from a secondary thread.  This thread
+   is not instrumented to run EMX CRTL functions.  Basically, no Perl
+   function may be run from this thread.
+   We create a ternary thread via CRTL _beginthread() call, and communicate
+   the requests to this thread via inter-thread communication (ITC).  */
 
 #  define GLUT_PUSHMARK(sp)
 
@@ -248,14 +292,13 @@ start_callback_thread()
 	croak("Error creating callback thread");
     }
 }
-
 #endif	/* __PM__ */
+#endif /* End IN_POGL_GLUT_XS */
 
+#ifdef IN_POGL_CONST_XS
+/* These macros used in neoconstant */
 #define i(test) if (strEQ(name, #test)) return newSViv((int)test);
 #define f(test) if (strEQ(name, #test)) return newSVnv((double)test);
-
-#ifdef __PM__
-#endif
 
 static SV *
 neoconstant(char * name, int arg)
@@ -271,6 +314,7 @@ neoconstant(char * name, int arg)
 
 #undef i
 #undef f
+#endif /* End IN_POGL_CONST_XS */
 
 /* Note: this is caching procs once for all contexts */
 /* !!! This should instead cache per context */
