@@ -1,4 +1,4 @@
-/*  Last saved: Fri 29 May 2009 04:48:33 PM  */
+/*  Last saved: Fri 29 May 2009 05:59:15 PM  */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -399,7 +399,10 @@ static int DBUFFER_HACK = 0;
 		for(i=first;i<items;i++)				\
 			av_push(av, newSVsv(ST(i)));			\
 	}
+
 */
+
+#ifdef IN_POGL_GLUT_XS
 
 #ifdef GLUT_API_VERSION
 
@@ -851,6 +854,10 @@ static void generic_glut_menu_handler(int value)
 
 #endif /* def GLUT_API_VERSION */
 
+#endif /* End IN_POGL_GLUT_XS */
+
+#ifdef IN_POGL_GLU_XS
+
 /* Begin a named callback handler */
 #define begin_void_specific_marshaller(name, assign_handler_av, params) \
 static void _s_marshal_ ## name params					\
@@ -943,9 +950,14 @@ end_tess_marshaller()
 
 #endif
 
+#endif /* End IN_POGL_GLU_XS */
+
+#if 0
 typedef void * ptr;
+#endif  /* Does not seem to be used.  Uncomment if breaks. chm 29-May-2009 */
 
 
+#if 0
 /* Get a Perl parameter, cast to C type */
 #define SvItems(type,offset,count,dst)					\
 {									\
@@ -1005,7 +1017,10 @@ typedef void * ptr;
 			croak("unknown type");				\
 	}								\
 }
+#endif /* Moved SvItems to gl_util.h */
 
+
+#ifdef IN_POGL_RPN_XS
 
 /********************/
 /* RPN Processor    */
@@ -1930,6 +1945,10 @@ void rpn_exec(rpn_context * ctx)
   }
 }
 
+#endif /* End IN_POGL_RPN_XS */
+
+
+#ifdef IN_POGL_GL_XS
 
 /********************/
 /* GPGPU Utils      */
@@ -2131,7 +2150,7 @@ void disable_fbo(oga_struct * oga)
 }
 #endif
 
-
+#endif /* End IN_POGL_GL_XS */
 
 
 
@@ -2892,6 +2911,7 @@ DESTROY(oga)
 		free(oga);
 	}
 
+
 MODULE = PDL::Graphics::OpenGL::Perl::OpenGL		PACKAGE = PDL::Graphics::OpenGL::Perl::OpenGL
 
 #// Define a POGL Constant
@@ -2907,6 +2927,9 @@ constant(name,arg)
 	}
 	OUTPUT:
 	RETVAL
+
+
+#ifdef IN_POGL_GL_XS
 
 #// Test for GL
 int
@@ -2968,6 +2991,11 @@ _have_glp()
 	OUTPUT:
 	RETVAL
 
+#endif /* End IN_POGL_GL_XS */
+
+
+#ifdef IN_POGL_GLUT_XS
+
 #// Test for done with glutInit
 int
 done_glutInit()
@@ -2976,6 +3004,7 @@ done_glutInit()
 	OUTPUT:
 	RETVAL
 
+#endif /* End IN_POGL_GLUT_XS */
 
 #ifdef HAVE_GL
 

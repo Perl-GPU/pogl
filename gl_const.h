@@ -3120,5 +3120,5 @@ if (!strncmp(name, "GL_", 3)) {
 	i(GL_ALL_CLIENT_ATTRIB_BITS)
 	i(GL_CLIENT_ALL_ATTRIB_BITS)
 }
-else
+/* else */
 #endif

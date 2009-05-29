@@ -1,7 +1,4 @@
-#include "EXTERN.h"
-#include "perl.h"
-#include "XSUB.h"
-#include "ppport.h"
+#include "pgopogl.h"
 
 #ifndef CALLBACK
 #define CALLBACK
@@ -29,6 +26,66 @@
 #include "glext_procs.h"
 #else
 #endif
+
+/* Get a Perl parameter, cast to C type */
+#define SvItems(type,offset,count,dst)					\
+{									\
+	GLuint i;							\
+	switch (type)							\
+	{								\
+		case GL_UNSIGNED_BYTE:					\
+		case GL_BITMAP:						\
+			for (i=0;i<(count);i++)				\
+			{						\
+			  ((GLubyte*)(dst))[i] = (GLubyte)SvIV(ST(i+(offset)));	\
+			}						\
+			break;						\
+		case GL_BYTE:						\
+			for (i=0;i<(count);i++)				\
+			{						\
+			  ((GLbyte*)(dst))[i] = (GLbyte)SvIV(ST(i+(offset)));	\
+			}						\
+			break;						\
+		case GL_UNSIGNED_SHORT:					\
+			for (i=0;i<(count);i++)				\
+			{						\
+			  ((GLushort*)(dst))[i] = (GLushort)SvIV(ST(i+(offset)));	\
+			}						\
+			break;						\
+		case GL_SHORT:						\
+			for (i=0;i<(count);i++)				\
+			{						\
+			  ((GLshort*)(dst))[i] = (GLshort)SvIV(ST(i+(offset)));	\
+			}						\
+			break;						\
+		case GL_UNSIGNED_INT:					\
+			for (i=0;i<(count);i++)				\
+			{						\
+			  ((GLuint*)(dst))[i] = (GLuint)SvIV(ST(i+(offset)));	\
+			}						\
+			break;						\
+		case GL_INT:						\
+			for (i=0;i<(count);i++)				\
+			{						\
+			  ((GLint*)(dst))[i] = (GLint)SvIV(ST(i+(offset)));	\
+			}						\
+			break;						\
+		case GL_FLOAT:						\
+			for (i=0;i<(count);i++)				\
+			{						\
+			  ((GLfloat*)(dst))[i] = (GLfloat)SvNV(ST(i+(offset)));	\
+			}						\
+			break;						\
+		case GL_DOUBLE:						\
+			for (i=0;i<(count);i++)				\
+			{						\
+			  ((GLdouble*)(dst))[i] = (GLdouble)SvNV(ST(i+(offset)));	\
+			}						\
+			break;						\
+		default:						\
+			croak("unknown type");				\
+	}								\
+}
 
 
 #ifndef GL_ADD
