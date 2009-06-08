@@ -1,4 +1,4 @@
-/*  Last saved: Mon 08 Jun 2009 04:11:38 PM  */
+/*  Last saved: Mon 08 Jun 2009 05:12:45 PM  */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -7,28 +7,28 @@
  */
 
 /* OpenGL::Array */
-#define IN_POGL_ARRAY_XS
+/* #define IN_POGL_ARRAY_XS */
 
 /* All OpenGL constants---should split */
-#define IN_POGL_CONST_XS
+/* #define IN_POGL_CONST_XS */
 
 /* OpenGL OpenGL bindings */
-#define IN_POGL_GL_XS
+/* #define IN_POGL_GL_XS */
 
 /* OpenGL *GLUT bindings */
-#define IN_POGL_GLUT_XS
+/* #define IN_POGL_GLUT_XS */
 
 /* OpenGL GLU bindings */
-#define IN_POGL_GLU_XS
+/* #define IN_POGL_GLU_XS */
 
 /* OpenGL GLX bindings */
-#define IN_POGL_GLX_XS
+/* #define IN_POGL_GLX_XS */
 
 /* This ends up being OpenGL.pm */
 #define IN_POGL_MAIN_XS
 
 /* OpenGL RPN code */
-#define IN_POGL_RPN_XS
+/* #define IN_POGL_RPN_XS */
 
 #include <stdio.h>
 
