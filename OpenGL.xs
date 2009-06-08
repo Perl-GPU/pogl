@@ -1,4 +1,4 @@
-/*  Last saved: Fri 29 May 2009 06:23:33 PM  */
+/*  Last saved: Mon 08 Jun 2009 04:11:38 PM  */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -2965,11 +2965,23 @@ _have_glu()
 	OUTPUT:
 	RETVAL
 
-#// Test for GLUT/FreeGLUT
+#// Test for GLUT
 int
 _have_glut()
 	CODE:
 #if defined(HAVE_GLUT) || defined(HAVE_FREEGLUT)
+	RETVAL = 1;
+#else
+	RETVAL = 0;
+#endif
+	OUTPUT:
+	RETVAL
+
+#// Test for FreeGLUT
+int
+_have_freeglut()
+	CODE:
+#if defined(HAVE_FREEGLUT)
 	RETVAL = 1;
 #else
 	RETVAL = 0;
