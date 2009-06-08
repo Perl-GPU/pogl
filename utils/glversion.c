@@ -1,9 +1,17 @@
 #include <stdio.h>
 
 #if defined(HAVE_FREEGLUT)
+
+#ifdef WIN32
 #include "../include/GL/freeglut.h"
 #else
+#include <GL/freeglut.h>
+#endif
+
+#else
+
 #include <GL/glut.h>
+
 #endif
 
 #define PROGRAM "glversion"

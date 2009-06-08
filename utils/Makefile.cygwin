@@ -2,11 +2,15 @@
 # This Makefile was developed with GNU make on cygwin.
 
 CC=gcc
-CCFLAGS=-DWIN32 -DHAVE_FREEGLUT
-
 LINK=g++
-LDFLAGS=-L/usr/lib/w32API -lopengl32 -L../FreeGLUT -lfreeglut
 
+# For FreeGLUT over WGL
+CCFLAGS=-DWIN32 -DHAVE_FREEGLUT
+LDFLAGS=-L../FreeGLUT -lfreeglut /cygdrive/c/WINDOWS/system32/opengl32.dll
+
+# For FreeGLUT over GLX (set default for now)
+CCFLAGS=-DHAVE_FREEGLUT
+LDFLAGS=-lGL -lglut
 
 all: glversion.txt
 
