@@ -546,7 +546,7 @@ my $build_config =
     'Config.pm' => '$(INST_LIBDIR)/OpenGL/Config.pm'
   },
   'AUTHOR'	=> "Bob 'grafman' Free ".'<grafman at graphcomp.com>',
-  'OBJECT' 	=> '$(BASEEXT)$(OBJ_EXT) gl_util$(OBJ_EXT) pogl_main$(OBJ_EXT) pogl_glut$(OBJ_EXT)',
+  'OBJECT' 	=> '$(BASEEXT)$(OBJ_EXT) gl_util$(OBJ_EXT) pogl_main$(OBJ_EXT) pogl_rpn$(OBJ_EXT) pogl_glut$(OBJ_EXT)',
   'XSPROTOARG'	=> '-noprototypes',
   'DEFINE'	=> $DEFS,
   'INC'		=> $INCS,
