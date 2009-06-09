@@ -558,6 +558,7 @@ my $build_config =
   'clean'       => 
   {
     FILES =>
+      "Config.pm ".
       "utils/glversion.txt ".
       "utils/glversion$Config{exe_ext} ".
       "utils/glversion$Config{obj_ext}"
