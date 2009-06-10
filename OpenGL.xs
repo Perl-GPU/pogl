@@ -1,4 +1,4 @@
-/*  Last saved: Tue 09 Jun 2009 09:37:02 AM  */
+/*  Last saved: Wed 10 Jun 2009 09:49:53 AM  */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -19,7 +19,7 @@
 #ifdef IN_POGL_MAIN_XS
 =head2 Miscellaneous
 
-Various BOOT utilities defined in pogl_main.xs.
+Various BOOT utilities defined in OpenGL.xs
 
 =over
 
@@ -151,7 +151,7 @@ constant(name,arg)
 
 BOOT:
   PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__RPN);
-  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__Rest);
+  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GL);
   PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GLUT);
 #ifdef __PM__
   InitSys();

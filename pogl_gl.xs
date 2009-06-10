@@ -1,4 +1,4 @@
-/*  Last saved: Tue 09 Jun 2009 09:42:16 AM  */
+/*  Last saved: Wed 10 Jun 2009 09:50:02 AM  */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -438,7 +438,7 @@ void disable_fbo(oga_struct * oga)
 
 
 
-MODULE = PDL::Graphics::OpenGL::Perl::OpenGL::Rest		PACKAGE = PDL::Graphics::OpenGL::Perl::OpenGL
+MODULE = PDL::Graphics::OpenGL::Perl::OpenGL::GL		PACKAGE = PDL::Graphics::OpenGL::Perl::OpenGL
 
 
 #ifdef IN_POGL_GL_XS

@@ -1,9 +1,12 @@
+# Various junk to skip
 *.bs
 *.exe
 *.o
 *.obj
 *~
 .*.swp
+
+# Explicitly skip these generated files
 Config.pm
 Makefile
 Makefile.old
@@ -11,7 +14,11 @@ OpenGL.c
 OpenGL.xs-orig
 blib/
 pm_to_blib
+pogl_array.c
+pogl_const.c
+pogl_gl.c
+pogl_glu.c
 pogl_glut.c
-pogl_main.c
+pogl_glx.c
 pogl_rpn.c
 utils/glversion.txt
