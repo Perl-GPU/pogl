@@ -1,59 +1,122 @@
-	Improve diagnostic output for better debugging of CPAN test results,
-		Maybe enable verbose logging by default as a start.
-	
-	Fix test output to use Test::More and result in a clear pass/fail
-		CPAN testers report PASS when the test never got to run.
-		Needed to support useful automated testing.
-	
-	Modify example/ programs to use glut functions rather than the
-		OpenGL-0.4 defaults with glp*() functions.  We need to
-		make some simple defaults for the various glut callbacks
-		to simplify coding.
+Last saved: Wed 10 Jun 2009 11:13:37 AM 
 
-	Add Geometry Shader support.
 
-	Fix GLU implementation - particularly Tesselation.
+Enhance CPAN Testers automated testing support:
+ * Improve diagnostic output for debugging test results,
+ * Add a "compile and link only" install of POGL
 
-	Move test apps to t/ subdirectory from test.pl
-		Split into interactive and non-interactive tests
-		Skip interactive tests if no OpenGL context
 
-	Implement safe glutInit by checking _done_glutInit before calling glutInit()
+If required libraries and headers are not available and
+usable (compile and link ok), then exit 0 from Makefile.PL.
+ * Required libraries are OpenGL and *GLUT.
+ * GLUT is available on *all* GLX platforms
+ * use *GLUT functions instead of glp*() ones
 
-	Fix GLUT error handling for perl:
-		Add croak on no glutInit to glut functions to prevent exit(1)
-		Add croak to glutDisplayFunc() with null callback.
-		Add croak to glutSetKeyRepeat() with invalid repeat mode
-		Add croak to glutSetCursor() with unknown cursor type
-		Investigate use of undef return for errors; 1 instead of void's
 
-	Add toggle & display of OpenGL errors a la glutReportErrors()
+Clean up glp*() routine support:
+ * backward compatible where possible
+ * strip out GLX+X11 code
+ * layer over *GLUT environment
+    * N.B. *GLUT is on *all* GLX systems
+ * Fix example/ programs to use GLUT
 
-	Finish perl bindings to remaining FreeGLUT functions:
-		glutGetMenuData, glutSetMenuData, glutGetWindowData, glutSetWindowData,
-		glutGetProcAddress, glutJoystickFunc, glutWireSierpinskiSponge,
-		glutSolidSierpinskiSponge, glutWMCloseFunc
-	
-	Improve support for non-standard OpenGL configurations:
-		Document how to edit Makefile.PL (e.g. lines #120, #132 for lib stuff)
-		Add command line options for perl Makefile.PL to set CFLAGS,...
-		Make single point override for INCLUDE info.
 
-	Recognize OpenGLUT as an allowed flavor of FreeGLUT for POGL config/compile.
+Add Geometry Shader support.
 
-	Clean up existing use of configuration information:
-		Clean up compile and config results so they are unambiguous
-		Use the same information to build POGL as to build glversion
-		Refactor Makefile.PL to be more comprehensible.
-	
-	Consider move to Module::Build from ExtUtils::MakeMaker to improve build
-		configuration process and portability.
-	
-	Convert malloc() and calloc() calls to Newx(), Newxc(), and Newxz() from
-		the perl API.  Convert free() to Safefree() to match.
-	
-	Document and implement a test matrix for regression and stability testing for
-		POGL.  The matrix of factors to include: perl vs activeperl, GLX vs WGL,
-		hardware vs software/Mesa, OS, and relevant versions applicable to each.
-	
-	Investigate a "compile and link only" install of POGL
+
+Fix GLU binding implementation:
+ * particularly Tesselation.
+ * start by adding tests in t/
+
+
+Move test apps to t/ subdirectory from test.pl
+ * Split into interactive and non-interactive tests
+ * Skip interactive tests if no OpenGL context
+ * need test for each major functionality for coverage
+    * GL
+    * GLU
+    * GLUT/FreeGLUT
+    * RPN
+    * Array
+    * back compatibility (glp routines)
+
+
+Implement safe glutInit by checking _done_glutInit before calling glutInit()
+
+
+Fix GLUT error handling for perl:
+ * Add croak on no glutInit to glut functions to prevent exit(1)
+ * Add croak to glutDisplayFunc() with null callback.
+ * Add croak to glutSetKeyRepeat() with invalid repeat mode
+ * Add croak to glutSetCursor() with unknown cursor type
+ * Investigate use of undef return for errors; 1 instead of void's
+
+
+Add toggle & display of OpenGL errors a la glutReportErrors()
+
+
+Finish perl bindings to remaining FreeGLUT functions:
+ * glutGetMenuData
+ * glutGetProcAddress
+ * glutGetWindowData
+ * glutJoystickFunc
+ * glutSetMenuData
+ * glutSetWindowData
+ * glutSolidSierpinskiSponge
+ * glutWMCloseFunc
+ * glutWireSierpinskiSponge
+
+
+Improve support for non-standard OpenGL configurations:
+ * Document how to edit Makefile.PL
+ * Add command line options for perl Makefile.PL to set CFLAGS,...
+ * Make single point override for INCLUDE info.
+
+
+OpenGLUT support for building:
+ * NOTE: OpenGLUT is a dead project, use FreeGLUT
+ * Document how to use instead of FreeGLUT or GLUT
+ * Recognize OpenGLUT as a flavor of FreeGLUT
+
+
+Make POGL GLUT-proof:
+ * Nothing should break if you have GLUT rather than FreeGLUT
+ * Some functionality may be disabled (glutMainLoop extensions)
+
+
+Fix current POGL configuration and build process:
+ * Clean up use of configuration information
+ * Make the compile and config results unambiguous
+    * Exactly what libraries are being used
+    * What are the compile and link configuration
+    * What bindings are actually enabled
+    * Use the same information to build POGL as glversion
+ * Refactor Makefile.PL to be comprehensible.
+    * strip out unused options
+    * remove directories that do not exist
+    * replace make of glversion by perl based functionality
+    * toolkit option: GLUT and FreeGLUT
+    * interface option: GLX/unix, WGL/win32, [ AGL/CGL? ]
+
+
+Refactor config/build for portability and simplicity:
+ * use Module::Build framework
+ * use GLEW and autogeneration for bindings
+    * why does GLEW require GLX_VERSION_1_2?
+
+
+Miscellaneous portability improvements:
+ * Convert malloc() and calloc() calls to Newx(), Newxc(), and Newxz()
+ * Convert free() to Safefree() to match.
+
+
+Implement complete matrix test capability:
+ * document/implement a test matrix for regression and stability tests
+ * factors to include
+    * perl vs activeperl
+    * GLX vs WGL vs CGL/AGL
+    * hardware vs software/Mesa
+    * OS
+ * setup virtualized test environment for POGL and PDL
+
+
