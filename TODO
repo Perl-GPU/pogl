@@ -1,4 +1,4 @@
-Last saved: Wed 10 Jun 2009 11:13:37 AM 
+Last saved: Wed 10 Jun 2009 11:26:32 AM 
 
 
 Enhance CPAN Testers automated testing support:
@@ -27,6 +27,9 @@ Add Geometry Shader support.
 Fix GLU binding implementation:
  * particularly Tesselation.
  * start by adding tests in t/
+
+
+Add bindings to GLUI
 
 
 Move test apps to t/ subdirectory from test.pl
