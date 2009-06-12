@@ -1,4 +1,4 @@
-/*  Last saved: Wed 10 Jun 2009 09:49:53 AM  */
+/*  Last saved: Fri 12 Jun 2009 08:58:05 AM  */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -152,6 +152,7 @@ constant(name,arg)
 BOOT:
   PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__RPN);
   PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GL);
+  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GLU);
   PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GLUT);
 #ifdef __PM__
   InitSys();
