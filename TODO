@@ -1,4 +1,12 @@
-Last saved: Wed 10 Jun 2009 11:26:32 AM 
+Last saved: Fri 12 Jun 2009 09:34:01 AM 
+
+
+Reduce compile size by splitting up XS files
+ * move common macro defs to single place
+ * make separate include headers for RPN, OGA to better split
+ * split out constants (maybe split further by library)
+ * split pogl_gl.xs by function groups
+ * verify compile and build on XO laptop
 
 
 Enhance CPAN Testers automated testing support:
@@ -33,6 +41,7 @@ Add bindings to GLUI
 
 
 Move test apps to t/ subdirectory from test.pl
+ * Note: require_ok/use_ok don't like $VERSION w git suffix
  * Split into interactive and non-interactive tests
  * Skip interactive tests if no OpenGL context
  * need test for each major functionality for coverage
@@ -53,6 +62,10 @@ Fix GLUT error handling for perl:
  * Add croak to glutSetKeyRepeat() with invalid repeat mode
  * Add croak to glutSetCursor() with unknown cursor type
  * Investigate use of undef return for errors; 1 instead of void's
+    * This would be great for a debug mode
+    * Return undef if no error
+    * Return error info if there was one
+    * No return if not in debug mode (or always undef)
 
 
 Add toggle & display of OpenGL errors a la glutReportErrors()
@@ -85,11 +98,15 @@ OpenGLUT support for building:
 Make POGL GLUT-proof:
  * Nothing should break if you have GLUT rather than FreeGLUT
  * Some functionality may be disabled (glutMainLoop extensions)
+ * make work with readline event loop for perldl shell
 
 
 Fix current POGL configuration and build process:
  * Clean up use of configuration information
  * Make the compile and config results unambiguous
+    * Compile flags have two types
+       * Info opts: HAVE_GLX, HAVE_GLUT, ...
+       * Build opts: BUILD_GLUT, BUILD_FREEGLUT, ...
     * Exactly what libraries are being used
     * What are the compile and link configuration
     * What bindings are actually enabled
@@ -121,5 +138,3 @@ Implement complete matrix test capability:
     * hardware vs software/Mesa
     * OS
  * setup virtualized test environment for POGL and PDL
-
-
