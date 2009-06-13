@@ -33,7 +33,7 @@
 
 ^.git
 ^Config.pm
-^Makefile
+^Makefile$
 EL-ELI.c
 freeglut-funs-name.txt
 pogl_gl_funcs.txt
