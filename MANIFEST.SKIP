@@ -1,0 +1,57 @@
+
+#!start included /usr/lib/perl5/5.10/ExtUtils/MANIFEST.SKIP
+# Avoid version control files.
+\bRCS\b
+\bCVS\b
+\bSCCS\b
+,v$
+\B\.svn\b
+\b_darcs\b
+
+# Avoid Makemaker generated and utility files.
+\bMANIFEST\.bak
+\bblib/
+\bMakeMaker-\d
+\bpm_to_blib\.ts$
+\bpm_to_blib$
+\bblibdirs\.ts$         # 6.18 through 6.25 generated this
+
+# Avoid Module::Build generated and utility files.
+\bBuild$
+\b_build/
+
+# Avoid temp and backup files.
+~$
+\.old$
+\#$
+\b\.#
+\.bak$
+
+# Avoid Devel::Cover files.
+\bcover_db\b
+#!end included /usr/lib/perl5/5.10/ExtUtils/MANIFEST.SKIP
+
+^.git
+^Config.pm
+^Makefile
+EL-ELI.c
+freeglut-funs-name.txt
+pogl_gl_funcs.txt
+utils/glversion.exe
+utils/glversion.o
+utils/glversion.txt
+utils/glxinfo.c
+^.*.tar.gz
+^OpenGL.c
+^OpenGL.o
+^gl_util.o
+^pogl_const.c
+^pogl_const.o
+^pogl_gl.c
+^pogl_gl.o
+^pogl_glu.c
+^pogl_glu.o
+^pogl_glut.c
+^pogl_glut.o
+^pogl_rpn.c
+^pogl_rpn.o

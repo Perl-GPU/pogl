@@ -1,4 +1,4 @@
-/*  Last saved: Fri 12 Jun 2009 08:58:05 AM  */
+/*  Last saved: Sat 13 Jun 2009 02:28:13 PM*/
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -7,7 +7,7 @@
  */
 
 /* All OpenGL constants---should split */
-#define IN_POGL_CONST_XS
+/* #define IN_POGL_CONST_XS */
 
 /* This ends up being OpenGL.pm */
 #define IN_POGL_MAIN_XS
@@ -72,9 +72,6 @@ _pgopogl_call_XS (pTHX_ void (*subaddr) (pTHX_ CV *), CV * cv, SV ** mark)
 #endif
 #include "glut_util.h"
 #endif
-
-static int _done_glutInit = 0;
-
 
 
 /* This does not seem to be used */
@@ -151,6 +148,7 @@ constant(name,arg)
 
 BOOT:
   PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__RPN);
+  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__Const);
   PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GL);
   PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GLU);
   PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GLUT);
