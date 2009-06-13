@@ -55,3 +55,6 @@ utils/glxinfo.c
 ^pogl_glut.o
 ^pogl_rpn.c
 ^pogl_rpn.o
+cpp.sh
+OpenGL.hh
+
