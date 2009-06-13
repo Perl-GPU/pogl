@@ -1,4 +1,4 @@
-/*  Last saved: Tue 09 Jun 2009 09:24:11 AM  */
+/*  Last saved: Sat 13 Jun 2009 07:15:04 PM */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -875,6 +875,11 @@ glutInitWindowPosition(x, y)
 void
 glutInitDisplayMode(mode)
 	int	mode
+
+#//# glutInitDisplayString($string);
+void
+glutInitDisplayString(string)
+	char *	string
 
 #//# glutMainLoop();
 void
