@@ -132,20 +132,19 @@ our @libdirs = qw
 our @check_libs = qw
 {
   -lGL
-  -lGLU
-  -lglut
-  -lfreeglut
   -lopengl
+  -lMesaGL
+  -lGLU
+  -lglu
+  -lMesaGLU
+  -lfreeglut
+  -lGLUT
+  -lglut
+  -lMesaGLUT
+  -lOSMesa
   -lGLX
   -lglx
-  -lglitz-glx
-  -lglu
-  -lGLUT
-  -lOSMesa
-  -lMesaGL
-  -lMesaGLU
   -lMesaGLX
-  -lMesaGLUT
 };
 
 our $found_libs = get_libs(@libdirs,@check_libs);
@@ -302,9 +301,13 @@ if ( grep { m/^interface=/i } @ARGV )
 # Otherwise use available defaults
 elsif ($IS_CYGWIN)
 {
-  if ($found_libs->{GLX} or $found_libs->{MESA})
+  if ($found_libs->{FREEGLUT})
   {
-    $interface_lib = 'GLX'; # CYGWIN will use X11 interface by default
+    $interface_lib = 'FREEGLUT'; # CYGWIN will use X11 interface by default
+  }
+  elsif($found_libs->{GLUT})
+  {
+    $interface_lib = 'GLUT';
   }
   elsif($found_libs->{GLUT32} || $found_libs->{FREEGLUT32})
   {
@@ -319,9 +322,9 @@ elsif ($^O eq 'darwin' && $found_libs->{GLUT})
 {
   $interface_lib = 'AGL';
 }
-elsif ($found_libs->{GLX})
+elsif ($found_libs->{FREEGLUT})
 {
-  $interface_lib = 'GLX';
+  $interface_lib = 'FREEGLUT';
 }
 elsif ($found_libs->{FREEGLUT} || $found_libs->{FREEGLUT32})
 {
