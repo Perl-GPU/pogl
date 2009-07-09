@@ -342,8 +342,13 @@ else
 {
   $interface_lib = 'GLX'; # otherwise default to GLX
 }
-print "\nUsing interface: $interface_lib\n\n";
 
+if ($interface_lib eq 'GLX') {
+   warn "GLUT or FreeGLUT not found, cannot build module!\n";
+   exit 0;
+}
+
+print "\nUsing interface: $interface_lib\n\n";
 
 # Marshall compiler defines
 our $DEFS = $DIST_DEFS;
