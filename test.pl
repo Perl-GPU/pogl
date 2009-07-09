@@ -1483,8 +1483,8 @@ sub cbClose
 glutInit();
 
 # To see OpenGL drawing, take out the GLUT_DOUBLE request.
-#glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_ALPHA);
-glutInitDisplayString("rgb alpha>=0 double depth");
+glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_ALPHA);
+#glutInitDisplayString("rgb alpha>=0 double depth");
 
 # Open Window
 if (defined($gameMode) && glutGameModeString($gameMode))
