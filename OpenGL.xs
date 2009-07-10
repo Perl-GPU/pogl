@@ -1,4 +1,4 @@
-/*  Last saved: Sat 13 Jun 2009 02:28:13 PM*/
+/*  Last saved: Fri 10 Jul 2009 05:19:04 PM */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -17,6 +17,7 @@
 #include "pgopogl.h"
 
 #ifdef IN_POGL_MAIN_XS
+
 =head2 Miscellaneous
 
 Various BOOT utilities defined in OpenGL.xs
@@ -43,7 +44,10 @@ evil hack and should not be used outside of the PGOPOGL_CALL_BOOT macro.
 it's implemented as a function to avoid code size bloat, and exported
 so that extension modules can pull the same trick.
 
+=back
+
 =cut
+
 void
 _pgopogl_call_XS (pTHX_ void (*subaddr) (pTHX_ CV *), CV * cv, SV ** mark)
 {

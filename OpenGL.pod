@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-PDL::Graphics::OpenGL::Perl::OpenGL - v0.01_03 Perl OpenGL (POGL) module for PDL to display 3D data using OpenGL, FreeGLUT/GLUT, and GLX
+PDL::Graphics::OpenGL::Perl::OpenGL - v0.01_06git Perl OpenGL (POGL) module for PDL to display 3D data using OpenGL, FreeGLUT/GLUT, and GLX
 
 =head1 SYNOPSIS
 
