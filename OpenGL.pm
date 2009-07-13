@@ -10,7 +10,7 @@ require DynaLoader;
 
 use Carp;
 
-$VERSION = '0.01_06';        # Remove git for release
+$VERSION = '0.01_07git';        # Remove git for release
 $BUILD_VERSION = $XS_VERSION = $VERSION;
 $VERSION = eval($VERSION);
 
