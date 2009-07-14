@@ -1,13 +1,10 @@
-/*  Last saved: Fri 12 Jun 2009 09:47:54 AM  */
+/*  Last saved: Tue 14 Jul 2009 03:21:25 PM  */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
  *  This program is free software; you can redistribute it and/or
  *  modify it under the same terms as Perl itself.
  */
-
-/* OpenGL OpenGL bindings */
-#define IN_POGL_GL_XS
 
 /* OpenGL GLX bindings */
 #define IN_POGL_GLX_XS
@@ -30,9 +27,7 @@
 #endif
 
 
-#ifdef IN_POGL_GL_XS
 GLint FBO_MAX = -1;
-#endif /* End IN_POGL_GL_XS */
 
 
 /* These macros used in neoconstant */
@@ -55,7 +50,6 @@ neoconstant(char * name, int arg)
 #undef f
 
 
-#ifdef IN_POGL_GL_XS
 /* Note: this is caching procs once for all contexts */
 /* !!! This should instead cache per context */
 #ifdef HAVE_GL
@@ -74,7 +68,6 @@ neoconstant(char * name, int arg)
 #define testProc(proc,name) 1
 #endif
 #endif
-#endif /* End IN_POGL_GL_XS */
 
 
 #ifdef IN_POGL_GLX_XS
@@ -124,7 +117,6 @@ static int DBUFFER_HACK = 0;
 #endif /* End IN_POGL_GLX_XS */
 
 
-#ifdef IN_POGL_GL_XS
 
 /********************/
 /* GPGPU Utils      */
@@ -326,14 +318,12 @@ void disable_fbo(oga_struct * oga)
 }
 #endif
 
-#endif /* End IN_POGL_GL_XS */
 
 
 
 MODULE = PDL::Graphics::OpenGL::Perl::OpenGL::GL		PACKAGE = PDL::Graphics::OpenGL::Perl::OpenGL
 
 
-#ifdef IN_POGL_GL_XS
 
 #// Test for GL
 int
@@ -407,11 +397,9 @@ _have_glp()
 	OUTPUT:
 	RETVAL
 
-#endif /* End IN_POGL_GL_XS */
 
 
 
-#ifdef IN_POGL_GL_XS
 
 #ifdef HAVE_GL
 
@@ -13426,7 +13414,6 @@ glClampColorARB(target,clamp)
 
 #endif /* HAVE_GL */
 
-#endif /* End IN_POGL_GL_XS */
 
 ##################### GLU #########################
 
