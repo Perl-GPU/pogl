@@ -1,4 +1,4 @@
-/*  Last saved: Tue 09 Jun 2009 09:43:19 AM  */
+/*  Last saved: Tue 14 Jul 2009 04:19:21 PM  */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -41,8 +41,7 @@
 #endif /* End IN_POGL_RPN_XS */
 
 
-
-
+#ifdef IN_POGL_CONST_XS
 
 /* These macros used in neoconstant */
 #define i(test) if (strEQ(name, #test)) return newSViv((int)test);
@@ -62,6 +61,9 @@ neoconstant(char * name, int arg)
 
 #undef i
 #undef f
+
+#endif /* defined IN_POGL_CONST_XS */
+
 
 /* Note: this is caching procs once for all contexts */
 /* !!! This should instead cache per context */

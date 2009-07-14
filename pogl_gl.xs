@@ -1,4 +1,4 @@
-/*  Last saved: Tue 14 Jul 2009 03:21:25 PM  */
+/*  Last saved: Tue 14 Jul 2009 04:17:01 PM  */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -16,19 +16,20 @@
 
 #ifdef HAVE_GL
 #include "gl_util.h"
-#endif
+#endif /* HAVE_GL */
 
 #ifdef HAVE_GLX
 #include "glx_util.h"
-#endif
+#endif /* defined HAVE_GLX */
 
 #ifdef HAVE_GLU
 #include "glu_util.h"
-#endif
+#endif /* defined HAVE_GLU */
 
 
 GLint FBO_MAX = -1;
 
+#ifdef IN_POGL_CONST_XS
 
 /* These macros used in neoconstant */
 #define i(test) if (strEQ(name, #test)) return newSViv((int)test);
@@ -49,6 +50,7 @@ neoconstant(char * name, int arg)
 #undef i
 #undef f
 
+#endif /* defined IN_POGL_CONST_XS */
 
 /* Note: this is caching procs once for all contexts */
 /* !!! This should instead cache per context */
@@ -67,7 +69,7 @@ neoconstant(char * name, int arg)
 #define loadProc(proc,name)
 #define testProc(proc,name) 1
 #endif
-#endif
+#endif /* defined HAVE_GL */
 
 
 #ifdef IN_POGL_GLX_XS
@@ -333,7 +335,7 @@ _have_gl()
 	RETVAL = 1;
 #else
 	RETVAL = 0;
-#endif
+#endif /* defined HAVE_GL */
 	OUTPUT:
 	RETVAL
 
@@ -345,7 +347,7 @@ _have_glu()
 	RETVAL = 1;
 #else
 	RETVAL = 0;
-#endif
+#endif /* defined HAVE_GLU */
 	OUTPUT:
 	RETVAL
 
@@ -357,7 +359,7 @@ _have_glut()
 	RETVAL = 1;
 #else
 	RETVAL = 0;
-#endif
+#endif /* defined HAVE_GLUT or HAVE_FREEGLUT */
 	OUTPUT:
 	RETVAL
 
@@ -369,7 +371,7 @@ _have_freeglut()
 	RETVAL = 1;
 #else
 	RETVAL = 0;
-#endif
+#endif /* defined HAVE_FREEGLUT */
 	OUTPUT:
 	RETVAL
 
@@ -381,7 +383,7 @@ _have_glx()
 	RETVAL = 1;
 #else
 	RETVAL = 0;
-#endif
+#endif /* defined HAVE_GLX */
 	OUTPUT:
 	RETVAL
 
@@ -393,7 +395,7 @@ _have_glp()
 	RETVAL = 1;
 #else
 	RETVAL = 0;
-#endif
+#endif /* defined HAVE_GLpc */
 	OUTPUT:
 	RETVAL
 
@@ -13528,11 +13530,11 @@ glpcOpenWindow(x,y,w,h,pw,steal,event_mask, ...)
 		croak("No context!\n");
 
 	    LastEventMask = event_mask;
-#else	/* HAVE_GLX */
+#else	/* defined HAVE_GLX */
 	    if((event_mask & StructureNotifyMask) && !steal) {
 	        XIfEvent(dpy, &event, WaitForNotify, (char*)win);
 	    }
-#endif	/* HAVE_GLX */
+#endif	/* not defined HAVE_GLX */
 
 	    /* connect the context to the window */
 	    if (!glXMakeCurrent(dpy, win, cx))
@@ -13671,7 +13673,7 @@ glpXQueryPointer(w=win,d=dpy)
 		PUSHs(sv_2mortal(newSViv(m)));
 	}
 
-#endif
+#endif /* defined HAVE_GLpc */
 
 
 #//# glpReadTex($file);
@@ -13737,7 +13739,7 @@ glpHasGLUT()
 		RETVAL = 1;
 #else
 		RETVAL = 0;
-#endif
+#endif /* defined HAVE_GLUT or HAVE_FREEGLUT */
 	}
 	OUTPUT:
 		RETVAL

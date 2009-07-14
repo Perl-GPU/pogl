@@ -1,13 +1,10 @@
-/*  Last saved: Fri 10 Jul 2009 05:19:04 PM */
+/*  Last saved: Tue 14 Jul 2009 04:21:44 PM */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
  *  This program is free software; you can redistribute it and/or
  *  modify it under the same terms as Perl itself.
  */
-
-/* All OpenGL constants---should split */
-/* #define IN_POGL_CONST_XS */
 
 /* This ends up being OpenGL.pm */
 #define IN_POGL_MAIN_XS
@@ -95,6 +92,7 @@ char *s;
 #endif
 
 
+#ifdef IN_POGL_CONST_XS
 
 /* These macros used in neoconstant */
 #define i(test) if (strEQ(name, #test)) return newSViv((int)test);
@@ -115,6 +113,7 @@ neoconstant(char * name, int arg)
 #undef i
 #undef f
 
+#endif /* defined IN_POGL_CONST_XS */
 
 
 MODULE = PDL::Graphics::OpenGL::Perl::OpenGL		PACKAGE = PDL::Graphics::OpenGL::Perl::OpenGL

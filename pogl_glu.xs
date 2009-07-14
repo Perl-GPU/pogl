@@ -1,4 +1,4 @@
-/*  Last saved: Fri 12 Jun 2009 09:03:36 AM  */
+/*  Last saved: Tue 14 Jul 2009 04:18:04 PM  */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -25,6 +25,7 @@
 #include "glu_util.h"
 #endif
 
+#ifdef IN_POGL_CONST_XS
 
 /* These macros used in neoconstant */
 #define i(test) if (strEQ(name, #test)) return newSViv((int)test);
@@ -45,6 +46,7 @@ neoconstant(char * name, int arg)
 #undef i
 #undef f
 
+#endif /* defined IN_POGL_CONST_XS */
 
 #ifdef IN_POGL_GLU_XS
 
