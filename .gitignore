@@ -28,5 +28,6 @@ PDL-Graphics-OpenGL-Perl-OpenGL-*.tar.gz
 
 # Some junk files I added to ignore
 gl-funs.txt
+gl-funs-number.txt
 gllist
 pdl.h
