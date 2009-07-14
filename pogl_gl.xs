@@ -1,4 +1,4 @@
-/*  Last saved: Tue 14 Jul 2009 04:17:01 PM  */
+/*  Last saved: Tue 14 Jul 2009 05:20:53 PM  */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -13,10 +13,26 @@
 
 #include "pgopogl.h"
 
-
 #ifdef HAVE_GL
 #include "gl_util.h"
-#endif /* HAVE_GL */
+
+/* Note: this is caching procs once for all contexts */
+/* !!! This should instead cache per context */
+#if defined(_WIN32) || (defined(__CYGWIN__) && defined(HAVE_W32API))
+#define loadProc(proc,name) \
+{ \
+  if (!proc) \
+  { \
+    proc = (void *)wglGetProcAddress(name); \
+    if (!proc) croak(name " is not supported by this renderer"); \
+  } \
+}
+#define testProc(proc,name) ((proc) ? 1 : !!(proc = (void *)wglGetProcAddress(name)))
+#else /* not using WGL */
+#define loadProc(proc,name)
+#define testProc(proc,name) 1
+#endif /* not defined _WIN32, __CYGWIN__, and HAVE_W32API */
+#endif /* defined HAVE_GL */
 
 #ifdef HAVE_GLX
 #include "glx_util.h"
@@ -26,8 +42,6 @@
 #include "glu_util.h"
 #endif /* defined HAVE_GLU */
 
-
-GLint FBO_MAX = -1;
 
 #ifdef IN_POGL_CONST_XS
 
@@ -52,25 +66,7 @@ neoconstant(char * name, int arg)
 
 #endif /* defined IN_POGL_CONST_XS */
 
-/* Note: this is caching procs once for all contexts */
-/* !!! This should instead cache per context */
-#ifdef HAVE_GL
-#if defined(_WIN32) || (defined(__CYGWIN__) && defined(HAVE_W32API))
-#define loadProc(proc,name) \
-{ \
-  if (!proc) \
-  { \
-    proc = (void *)wglGetProcAddress(name); \
-    if (!proc) croak(name " is not supported by this renderer"); \
-  } \
-}
-#define testProc(proc,name) ((proc) ? 1 : !!(proc = (void *)wglGetProcAddress(name)))
-#else
-#define loadProc(proc,name)
-#define testProc(proc,name) 1
-#endif
-#endif /* defined HAVE_GL */
-
+#ifdef IN_POGL_GL_TOP_XS
 
 #ifdef IN_POGL_GLX_XS
 #ifdef HAVE_GLX
@@ -123,6 +119,8 @@ static int DBUFFER_HACK = 0;
 /********************/
 /* GPGPU Utils      */
 /********************/
+
+GLint FBO_MAX = -1;
 
 /* Get max GPGPU data size */
 int gpgpu_size(void)
@@ -320,12 +318,13 @@ void disable_fbo(oga_struct * oga)
 }
 #endif
 
-
+#endif /* defined IN_POGL_GL_TOP_XS */
 
 
 MODULE = PDL::Graphics::OpenGL::Perl::OpenGL::GL		PACKAGE = PDL::Graphics::OpenGL::Perl::OpenGL
 
 
+#ifdef IN_POGL_GL_TOP_XS
 
 #// Test for GL
 int
@@ -399,7 +398,7 @@ _have_glp()
 	OUTPUT:
 	RETVAL
 
-
+#endif /* defined IN_POGL_GL_TOP_XS */
 
 
 
@@ -13416,6 +13415,7 @@ glClampColorARB(target,clamp)
 
 #endif /* HAVE_GL */
 
+#ifdef IN_POGL_GL_TOP_XS
 
 ##################### GLU #########################
 
@@ -13754,3 +13754,5 @@ glpHasGPGPU()
 		RETVAL
 
 #endif /* End IN_POGL_GLX_XS */
+
+#endif /* End IN_POGL_GL_TOP_XS */

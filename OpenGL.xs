@@ -1,4 +1,4 @@
-/*  Last saved: Tue 14 Jul 2009 04:21:44 PM */
+/*  Last saved: Tue 14 Jul 2009 05:14:40 PM */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -153,6 +153,7 @@ BOOT:
   PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__RPN);
   PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__Const);
   PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GL);
+  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GL__Top);
   PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GLU);
   PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GLUT);
 #ifdef __PM__
