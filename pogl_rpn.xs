@@ -1,4 +1,4 @@
-/*  Last saved: Tue 14 Jul 2009 04:19:21 PM  */
+/*  Last saved: Tue 14 Jul 2009 05:32:46 PM  */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -41,28 +41,6 @@
 #endif /* End IN_POGL_RPN_XS */
 
 
-#ifdef IN_POGL_CONST_XS
-
-/* These macros used in neoconstant */
-#define i(test) if (strEQ(name, #test)) return newSViv((int)test);
-#define f(test) if (strEQ(name, #test)) return newSVnv((double)test);
-
-static SV *
-neoconstant(char * name, int arg)
-{
-#include "gl_const.h"
-#include "glu_const.h"
-#include "glut_const.h"
-#include "glx_const.h"
-#include "glpm_const.h"
-	;
-	return 0;
-}
-
-#undef i
-#undef f
-
-#endif /* defined IN_POGL_CONST_XS */
 
 
 /* Note: this is caching procs once for all contexts */

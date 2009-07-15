@@ -1,4 +1,4 @@
-/*  Last saved: Tue 14 Jul 2009 05:14:40 PM */
+/*  Last saved: Wed 15 Jul 2009 09:54:47 AM */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -92,49 +92,10 @@ char *s;
 #endif
 
 
-#ifdef IN_POGL_CONST_XS
-
-/* These macros used in neoconstant */
-#define i(test) if (strEQ(name, #test)) return newSViv((int)test);
-#define f(test) if (strEQ(name, #test)) return newSVnv((double)test);
-
-static SV *
-neoconstant(char * name, int arg)
-{
-#include "gl_const.h"
-#include "glu_const.h"
-#include "glut_const.h"
-#include "glx_const.h"
-#include "glpm_const.h"
-	;
-	return 0;
-}
-
-#undef i
-#undef f
-
-#endif /* defined IN_POGL_CONST_XS */
 
 
 MODULE = PDL::Graphics::OpenGL::Perl::OpenGL		PACKAGE = PDL::Graphics::OpenGL::Perl::OpenGL
 
-#ifdef IN_POGL_CONST_XS
-
-#// Define a POGL Constant
-SV *
-constant(name,arg)
-	char *	name
-	int	arg
-	CODE:
-	{
-		RETVAL = neoconstant(name, arg);
-		if (!RETVAL)
-			RETVAL = newSVsv(&PL_sv_undef);
-	}
-	OUTPUT:
-	RETVAL
-
-#endif /* End IN_POGL_CONST_XS */
 
 
 
@@ -152,8 +113,15 @@ constant(name,arg)
 BOOT:
   PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__RPN);
   PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__Const);
-  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GL);
   PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GL__Top);
+  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GL__AccuGetM);
+  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GL__GetPPass);
+  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GL__MultProg);
+  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GL__PixeVer2);
+  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GL__ProgClam);
+  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GL__Tex2Draw);
+  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GL__Ver3Tex1);
+  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GL__VertMulti);
   PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GLU);
   PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GLUT);
 #ifdef __PM__
