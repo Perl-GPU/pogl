@@ -1,4 +1,4 @@
-/*  Last saved: Wed 15 Jul 2009 10:06:43 AM  */
+/*  Last saved: Fri 24 Jul 2009 01:50:05 PM  */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -46,7 +46,7 @@
 
 
 
-MODULE = PDL::Graphics::OpenGL::Perl::OpenGL::GL::VertMulti	PACKAGE = PDL::Graphics::OpenGL::Perl::OpenGL
+MODULE = OpenGL::GL::VertMulti	PACKAGE = OpenGL
 
 
 
@@ -90,7 +90,7 @@ glVertexPointerEXT_s(size, type, stride, count, pointer)
 void
 glVertexPointerEXT_p(size, oga)
 	GLint	size
-	PDL::Graphics::OpenGL::Perl::OpenGL::Array oga
+	OpenGL::Array oga
 	INIT:
 		loadProc(glVertexPointerEXT,"glVertexPointerEXT");
 	CODE:
@@ -139,7 +139,7 @@ glNormalPointerEXT_s(type, stride, count, pointer)
 #//# glNormalPointerEXT_p((OGA)pointer);
 void
 glNormalPointerEXT_p(oga)
-	PDL::Graphics::OpenGL::Perl::OpenGL::Array oga
+	OpenGL::Array oga
 	INIT:
 		loadProc(glNormalPointerEXT,"glNormalPointerEXT");
 	CODE:
@@ -191,7 +191,7 @@ glColorPointerEXT_s(size, type, stride, count, pointer)
 void
 glColorPointerEXT_p(size, oga)
 	GLint	size
-	PDL::Graphics::OpenGL::Perl::OpenGL::Array oga
+	OpenGL::Array oga
 	INIT:
 		loadProc(glColorPointerEXT,"glColorPointerEXT");
 	CODE:
@@ -240,7 +240,7 @@ glIndexPointerEXT_s(type, stride, count, pointer)
 #//# glIndexPointerEXT_p((OGA)pointer);
 void
 glIndexPointerEXT_p(oga)
-	PDL::Graphics::OpenGL::Perl::OpenGL::Array oga
+	OpenGL::Array oga
 	INIT:
 		loadProc(glIndexPointerEXT,"glIndexPointerEXT");
 	CODE:
@@ -292,7 +292,7 @@ glTexCoordPointerEXT_s(size, type, stride, count, pointer)
 void
 glTexCoordPointerEXT_p(size, oga)
 	GLint	size
-	PDL::Graphics::OpenGL::Perl::OpenGL::Array oga
+	OpenGL::Array oga
 	INIT:
 		loadProc(glTexCoordPointerEXT,"glTexCoordPointerEXT");
 	CODE:
@@ -339,7 +339,7 @@ glEdgeFlagPointerEXT_s(stride, count, pointer)
 #//# glEdgeFlagPointerEXT_p((OGA)pointer);
 void
 glEdgeFlagPointerEXT_p(oga)
-	PDL::Graphics::OpenGL::Perl::OpenGL::Array oga
+	OpenGL::Array oga
 	INIT:
 		loadProc(glEdgeFlagPointerEXT,"glEdgeFlagPointerEXT");
 	CODE:
@@ -1039,7 +1039,7 @@ glBufferDataARB_s(target,size,data,usage)
 void
 glBufferDataARB_p(target,oga,usage)
 	GLenum target
-	PDL::Graphics::OpenGL::Perl::OpenGL::Array oga
+	OpenGL::Array oga
 	GLenum usage
 	INIT:
 		loadProc(glBufferDataARB,"glBufferDataARB");
@@ -1082,7 +1082,7 @@ void
 glBufferSubDataARB_p(target,offset,oga)
 	GLenum	target
 	GLint	offset
-	PDL::Graphics::OpenGL::Perl::OpenGL::Array oga
+	OpenGL::Array oga
 	INIT:
 		loadProc(glBufferSubDataARB,"glBufferSubDataARB");
 	CODE:
@@ -1119,7 +1119,7 @@ glGetBufferSubDataARB_s(target,offset,size,data)
 
 #//# $oga = glGetBufferSubDataARB_p($target,$offset,$count,@types);
 #//- If no types are provided, GLubyte is assumed
-PDL::Graphics::OpenGL::Perl::OpenGL::Array
+OpenGL::Array
 glGetBufferSubDataARB_p(target,offset,count,...)
 	GLenum	target
 	GLint	offset
@@ -1195,7 +1195,7 @@ glMapBufferARB_c(target,access)
 
 #//# $oga = glMapBufferARB_p($target,$access,@types);
 #//- If no types are provided, GLubyte is assumed
-PDL::Graphics::OpenGL::Perl::OpenGL::Array
+OpenGL::Array
 glMapBufferARB_p(target,access,...)
 	GLenum	target
 	GLenum	access
@@ -1331,7 +1331,7 @@ glGetBufferPointervARB_s(target,pname,params)
 
 #//# $oga = glGetBufferPointervARB_p($target,$pname,@types);
 #//- If no types are provided, GLubyte is assumed
-PDL::Graphics::OpenGL::Perl::OpenGL::Array
+OpenGL::Array
 glGetBufferPointervARB_p(target,pname,...)
 	GLenum	target
 	GLenum	pname

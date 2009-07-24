@@ -5,6 +5,12 @@
  modify it under the same terms as Perl itself. 
 
 
+This is the refactored Perl OpenGL module (POGL) based on work
+integrating in PDL.  The pogl branch has been started to expedite
+the back port and integration with PDL of the new OpenGL binding
+and to verify that OpenGL::Image or OpenGL::Shader have not been
+broken inadvertently.
+
 PDL::Graphics::OpenGL::Perl::OpenGL is a development version of the
 Perl OpenGL (POGL) module for the purposes of evaluating the implementation
 for the Perl Data Language integration.  This version is based on

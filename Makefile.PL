@@ -545,7 +545,7 @@ else # Everyone else
 # This is the final build configuration
 my $build_config =
 {
-  'NAME'	=> 'PDL::Graphics::OpenGL::Perl::OpenGL',
+  'NAME'	=> 'OpenGL',
   'VERSION_FROM'=> 'OpenGL.pm',
   'PM' 		=>
   {
@@ -935,7 +935,7 @@ sub WriteConfigPM
 #
 };
 
-  print CONFIGPM Data::Dumper->Dump( [$config], [qw(PDL::Graphics::OpenGL::Perl::OpenGL::Config)] );
+  print CONFIGPM Data::Dumper->Dump( [$config], [qw(OpenGL::Config)] );
 
   print CONFIGPM qq
 {

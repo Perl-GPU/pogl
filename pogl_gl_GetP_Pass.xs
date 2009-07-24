@@ -1,4 +1,4 @@
-/*  Last saved: Wed 15 Jul 2009 10:04:10 AM  */
+/*  Last saved: Fri 24 Jul 2009 01:48:46 PM  */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -46,7 +46,7 @@
 
 
 
-MODULE = PDL::Graphics::OpenGL::Perl::OpenGL::GL::GetPPass	PACKAGE = PDL::Graphics::OpenGL::Perl::OpenGL
+MODULE = OpenGL::GL::GetPPass	PACKAGE = OpenGL
 
 
 
@@ -744,7 +744,7 @@ glIndexPointer_s(type, stride, pointer)
 #//# glIndexPointer_p($type, $stride, (OGA)pointer);
 void
 glIndexPointer_p(oga)
-	PDL::Graphics::OpenGL::Perl::OpenGL::Array oga
+	OpenGL::Array oga
 	CODE:
 	{
 #ifdef GL_ARB_vertex_buffer_object
@@ -1524,7 +1524,7 @@ glNormalPointer_s(type, stride, pointer)
 #//# glNormalPointer_s($type, $stride, (OGA)pointer);
 void
 glNormalPointer_p(oga)
-	PDL::Graphics::OpenGL::Perl::OpenGL::Array oga
+	OpenGL::Array oga
 	CODE:
 	{
 #ifdef GL_ARB_vertex_buffer_object

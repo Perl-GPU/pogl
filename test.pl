@@ -6,13 +6,13 @@ our $IS_ACTIVEPERL = ($stat =~ m|ActiveState|s);
 our $PERL_VERSION = $^V;
 $PERL_VERSION =~ s|^v||;
 
-use PDL::Graphics::OpenGL::Perl::OpenGL qw/ :all /;
+use OpenGL qw/ :all /;
 
-eval 'use PDL::Graphics::OpenGL::Perl::OpenGL::Image';
+eval 'use OpenGL::Image';
 my $hasImage = !$@;
-my $hasIM_635 = $hasImage && PDL::Graphics::OpenGL::Perl::OpenGL::Image::HasEngine('Magick','6.3.5');
+my $hasIM_635 = $hasImage && OpenGL::Image::HasEngine('Magick','6.3.5');
 
-eval 'use PDL::Graphics::OpenGL::Perl::OpenGL::Shader';
+eval 'use OpenGL::Shader';
 my $hasShader = !$@;
 
 eval 'use Image::Magick';
@@ -60,7 +60,7 @@ if (!glpHasGLUT())
 }
 
 
-use constant PROGRAM_TITLE => "PDL::Graphics::OpenGL::Perl::OpenGL Test App";
+use constant PROGRAM_TITLE => "OpenGL Test App";
 use constant DO_TESTS => 0;
 
 
@@ -144,9 +144,9 @@ my @Light_Diffuse  = ( 1.2, 1.2, 1.2, 1.0 );
 my @Light_Position = ( 2.0, 2.0, 0.0, 1.0 );
 
 # Model/Projection/Viewport Matrices
-my $mm = PDL::Graphics::OpenGL::Perl::OpenGL::Array->new(16,GL_DOUBLE);
-my $pm = PDL::Graphics::OpenGL::Perl::OpenGL::Array->new(16,GL_DOUBLE);
-my $vp = PDL::Graphics::OpenGL::Perl::OpenGL::Array->new(4,GL_INT);
+my $mm = OpenGL::Array->new(16,GL_DOUBLE);
+my $pm = OpenGL::Array->new(16,GL_DOUBLE);
+my $vp = OpenGL::Array->new(4,GL_INT);
 
 # Vertex Buffer Object data
 my($VertexObjID,$NormalObjID,$ColorObjID,$TexCoordObjID,$IndexObjID);
@@ -183,7 +183,7 @@ my @verts =
   -1.3,  1.0,  1.0,
   -1.3,  1.0, -1.0
 );
-my $verts = PDL::Graphics::OpenGL::Perl::OpenGL::Array->new_list(GL_FLOAT,@verts);
+my $verts = OpenGL::Array->new_list(GL_FLOAT,@verts);
 
 # Could calc norms on the fly
 my @norms =
@@ -195,7 +195,7 @@ my @norms =
   0.0, 0.0, 1.0,
   -1.0, 0.0, 0.0
 );
-my $norms = PDL::Graphics::OpenGL::Perl::OpenGL::Array->new_list(GL_FLOAT,@norms);
+my $norms = OpenGL::Array->new_list(GL_FLOAT,@norms);
 
 my @colors =
 (
@@ -229,7 +229,7 @@ my @colors =
   0.9,0.9,0.2,1.0,
   0.9,0.9,0.2,0.33
 );
-my $colors = PDL::Graphics::OpenGL::Perl::OpenGL::Array->new_list(GL_FLOAT,@colors);
+my $colors = OpenGL::Array->new_list(GL_FLOAT,@colors);
 
 my @rainbow =
 (
@@ -239,7 +239,7 @@ my @rainbow =
   0.1, 0.1, 0.1, 0.5
 );
 
-my $rainbow = PDL::Graphics::OpenGL::Perl::OpenGL::Array->new_list(GL_FLOAT,@rainbow);
+my $rainbow = OpenGL::Array->new_list(GL_FLOAT,@rainbow);
 my $rainbow_offset = 64;
 my @rainbow_inc;
 
@@ -275,10 +275,10 @@ my @texcoords =
   0.995, 0.995,
   0.005, 0.995
 );
-my $texcoords = PDL::Graphics::OpenGL::Perl::OpenGL::Array->new_list(GL_FLOAT,@texcoords);
+my $texcoords = OpenGL::Array->new_list(GL_FLOAT,@texcoords);
 
 my @indices = (0..23);
-my $indices = PDL::Graphics::OpenGL::Perl::OpenGL::Array->new_list(GL_UNSIGNED_INT,@indices);
+my $indices = OpenGL::Array->new_list(GL_UNSIGNED_INT,@indices);
 
 my @xform =
 (
@@ -287,7 +287,7 @@ my @xform =
   0.0, 0.0, 1.0, 0.0,
   0.0, 0.0, 0.0, 1.0
 );
-my $xform = PDL::Graphics::OpenGL::Perl::OpenGL::Array->new_list(GL_FLOAT,@xform);
+my $xform = OpenGL::Array->new_list(GL_FLOAT,@xform);
 
 
 # ------
@@ -456,9 +456,9 @@ sub ourBuildTextures
   # Use OpenGL::Image to load texture
   if ($hasImage && -e $Tex_File)
   {
-    my $img = new PDL::Graphics::OpenGL::Perl::OpenGL::Image(source=>$Tex_File);
+    my $img = new OpenGL::Image(source=>$Tex_File);
     my($eng,$ver) = $img->Get('engine','version');
-    print "Using PDL::Graphics::OpenGL::Perl::OpenGL::Image - $eng v$ver\n";
+    print "Using OpenGL::Image - $eng v$ver\n";
 
     ($Tex_Width,$Tex_Height) = $img->Get('width','height');
     my $alpha = $img->Get('alpha') ? 'has' : 'no';
@@ -472,7 +472,7 @@ sub ourBuildTextures
     $Tex_Pixels = $img->GetArray();
     print "Using ImageMagick's gaussian blur on inset\n" if ($hasIM_635);
   }
-  # Build texture from scratch if PDL::Graphics::OpenGL::Perl::OpenGL::Image not available
+  # Build texture from scratch if OpenGL::Image not available
   else
   {
     my $hole_size = 3300; # ~ == 57.45 ^ 2.
@@ -511,7 +511,7 @@ sub ourBuildTextures
       }
     }
 
-    $Tex_Pixels = PDL::Graphics::OpenGL::Perl::OpenGL::Array->new_scalar(GL_UNSIGNED_BYTE,$tex,length($tex));
+    $Tex_Pixels = OpenGL::Array->new_scalar(GL_UNSIGNED_BYTE,$tex,length($tex));
 
     $Tex_Type = GL_RGBA8;
     $Tex_Format = GL_RGBA;
@@ -599,7 +599,7 @@ sub ourBuildTextures
       }
       my $now = gettimeofday();
       my $fps = $loops / ($now - $start);
-      print "PDL::Graphics::OpenGL::Perl::OpenGL::Image + glTexImage2D_c: $fps\n";
+      print "OpenGL::Image + glTexImage2D_c: $fps\n";
     }
   }
 
@@ -651,7 +651,7 @@ sub ourInitShaders
   # Setup Vertex/Fragment Programs to render FBO texture
 
   # Use OpenGL::Shader
-  if ($hasShader && ($Shader = new PDL::Graphics::OpenGL::Perl::OpenGL::Shader()))
+  if ($hasShader && ($Shader = new OpenGL::Shader()))
   {
     my $type = $Shader->GetType();
     my $ext = lc($type);
@@ -660,7 +660,7 @@ sub ourInitShaders
     if (!$stat)
     {
       my $ver = $Shader->GetVersion();
-      print "Using PDL::Graphics::OpenGL::Perl::OpenGL::Shader('$type') v$ver\n";
+      print "Using OpenGL::Shader('$type') v$ver\n";
       return;
     }
     else
@@ -1075,7 +1075,7 @@ sub Inset
   # Using OpenGL::Image and ImageMagick to read/modify/draw pixels
   if ($hasIM_635)
   {
-    my $frame = new PDL::Graphics::OpenGL::Perl::OpenGL::Image(engine=>'Magick',
+    my $frame = new OpenGL::Image(engine=>'Magick',
       width=>$Inset_Width, height=>$Inset_Height);
     my($fmt,$size) = $frame->Get('gl_format','gl_type');
 
@@ -1098,7 +1098,7 @@ sub Inset
   else
   {
     my $len = $Inset_Width * $Inset_Height * 4;
-    my $oga = new PDL::Graphics::OpenGL::Perl::OpenGL::Array($len,GL_UNSIGNED_BYTE);
+    my $oga = new OpenGL::Array($len,GL_UNSIGNED_BYTE);
 
     glReadPixels_c( $Capture_X, $Capture_Y, $Inset_Width, $Inset_Height,
       GL_RGBA, GL_UNSIGNED_BYTE, $oga->ptr() );
@@ -1114,7 +1114,7 @@ sub Save
 
   if ($hasImage)
   {
-    my $frame = new PDL::Graphics::OpenGL::Perl::OpenGL::Image(width=>$w, height=>$h);
+    my $frame = new OpenGL::Image(width=>$w, height=>$h);
     my($fmt,$size) = $frame->Get('gl_format','gl_type');
 
     glReadPixels_c( 0, 0, $w, $h, $fmt, $size, $frame->Ptr() );
@@ -1122,7 +1122,7 @@ sub Save
   }
   else
   {
-    print "Need PDL::Graphics::OpenGL::Perl::OpenGL::Image and ImageMagick 6.3.5 or newer for file capture!\n";
+    print "Need OpenGL::Image and ImageMagick 6.3.5 or newer for file capture!\n";
   }
 }
 
@@ -1220,7 +1220,7 @@ sub cbKeyPressed
   elsif ($c eq 'K')
   {
     # ignore keypress if not FreeGLUT
-    glutLeaveMainLoop() if $PDL::Graphics::OpenGL::Perl::OpenGL::_have_freeglut;
+    glutLeaveMainLoop() if $OpenGL::_have_freeglut;
   }
   elsif ($c eq 'L')
   {
@@ -1509,8 +1509,8 @@ print "\n\n";
 my $version = glGetString(GL_VERSION);
 my $vendor = glGetString(GL_VENDOR);
 my $renderer = glGetString(GL_RENDERER);
-print "Using POGL v$PDL::Graphics::OpenGL::Perl::OpenGL::BUILD_VERSION\n";
-print "PDL::Graphics::OpenGL::Perl::OpenGL installation: $version\n$vendor\n$renderer\n\n";
+print "Using POGL v$OpenGL::BUILD_VERSION\n";
+print "OpenGL installation: $version\n$vendor\n$renderer\n\n";
 
 print "Installed extensions (* implemented in the module):\n";
 my $extensions = glGetString(GL_EXTENSIONS);
@@ -1522,19 +1522,19 @@ foreach my $ext (sort @extensions)
   print("    $stat\n") if ($stat && $stat !~ m|^$ext |);
 }
 
-if (!PDL::Graphics::OpenGL::Perl::OpenGL::glpCheckExtension('GL_ARB_vertex_buffer_object'))
+if (!OpenGL::glpCheckExtension('GL_ARB_vertex_buffer_object'))
 {
   #$hasVBO = 1;
   # Perl 5.10 crashes on VBOs!
   $hasVBO = ($PERL_VERSION !~ m|^5\.10\.|);
 }
 
-if (!PDL::Graphics::OpenGL::Perl::OpenGL::glpCheckExtension('GL_EXT_framebuffer_object'))
+if (!OpenGL::glpCheckExtension('GL_EXT_framebuffer_object'))
 {
   $hasFBO = 1;
   $FBO_On = 1;
 
-  if (!PDL::Graphics::OpenGL::Perl::OpenGL::glpCheckExtension('GL_ARB_fragment_program'))
+  if (!OpenGL::glpCheckExtension('GL_ARB_fragment_program'))
   {
     $hasFragProg = 1;
     $FBO_On++;
@@ -1564,7 +1564,7 @@ glutMouseFunc(\&cbMouseClick);
 #glutPassiveMotionFunc(\&cbMouseTrack);
 
 # Handle window close events.
-glutCloseFunc(\&cbClose) if $PDL::Graphics::OpenGL::Perl::OpenGL::_have_freeglut;
+glutCloseFunc(\&cbClose) if $OpenGL::_have_freeglut;
 
 # OK, OpenGL's ready to go.  Let's call our own init function.
 ourInit($Window_Width, $Window_Height);
@@ -1584,7 +1584,7 @@ Press 'c' to capture/save a RGBA targa file.
 
 # Pass off control to OpenGL.
 # Above functions are called as appropriate.
-if ($PDL::Graphics::OpenGL::Perl::OpenGL::_have_freeglut) {
+if ($OpenGL::_have_freeglut) {
    glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE,GLUT_ACTION_GLUTMAINLOOP_RETURNS)
 }
 

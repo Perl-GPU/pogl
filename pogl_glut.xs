@@ -1,4 +1,4 @@
-/*  Last saved: Tue 14 Jul 2009 05:32:35 PM */
+/*  Last saved: Fri 24 Jul 2009 01:50:29 PM */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -771,7 +771,7 @@ typedef void * ptr;
 
 
 
-MODULE = PDL::Graphics::OpenGL::Perl::OpenGL::GLUT		PACKAGE = PDL::Graphics::OpenGL::Perl::OpenGL
+MODULE = OpenGL::GLUT		PACKAGE = OpenGL
 
 
 

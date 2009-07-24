@@ -1,4 +1,4 @@
-/*  Last saved: Wed 15 Jul 2009 10:05:18 AM  */
+/*  Last saved: Fri 24 Jul 2009 01:49:05 PM  */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -46,7 +46,7 @@
 
 
 
-MODULE = PDL::Graphics::OpenGL::Perl::OpenGL::GL::PixeVer2	PACKAGE = PDL::Graphics::OpenGL::Perl::OpenGL
+MODULE = OpenGL::GL::PixeVer2	PACKAGE = OpenGL
 
 
 
@@ -678,7 +678,7 @@ glTexCoordPointer_s(size, type, stride, pointer)
 void
 glTexCoordPointer_p(size, oga)
 	GLint	size
-	PDL::Graphics::OpenGL::Perl::OpenGL::Array oga
+	OpenGL::Array oga
 	CODE:
 	{
 #ifdef GL_ARB_vertex_buffer_object
@@ -1476,7 +1476,7 @@ glVertexPointer_s(size, type, stride, pointer)
 void
 glVertexPointer_p(size, oga)
 	GLint	size
-	PDL::Graphics::OpenGL::Perl::OpenGL::Array oga
+	OpenGL::Array oga
 	CODE:
 	{
 #ifdef GL_ARB_vertex_buffer_object

@@ -1,4 +1,4 @@
-/*  Last saved: Tue 14 Jul 2009 04:16:09 PM */
+/*  Last saved: Fri 24 Jul 2009 01:48:20 PM */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -60,7 +60,7 @@ neoconstant(char * name, int arg)
 #endif /* defined IN_POGL_CONST_XS */
 
 
-MODULE = PDL::Graphics::OpenGL::Perl::OpenGL::Const		PACKAGE = PDL::Graphics::OpenGL::Perl::OpenGL
+MODULE = OpenGL::Const		PACKAGE = OpenGL
 
 #ifdef IN_POGL_CONST_XS
 

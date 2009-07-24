@@ -1,4 +1,4 @@
-/*  Last saved: Tue 14 Jul 2009 05:32:46 PM  */
+/*  Last saved: Fri 24 Jul 2009 01:51:42 PM  */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -1002,13 +1002,13 @@ void rpn_exec(rpn_context * ctx)
 
 
 
-MODULE = PDL::Graphics::OpenGL::Perl::OpenGL::RPN		PACKAGE = PDL::Graphics::OpenGL::Perl::OpenGL::Array
+MODULE = OpenGL::RPN		PACKAGE = OpenGL::Array
 
 #ifdef IN_POGL_ARRAY_XS
 
 #//# $oga = OpenGL::Array->new($count, @types);
 #//- Contructor for multi-type OGA - unpopulated
-PDL::Graphics::OpenGL::Perl::OpenGL::Array
+OpenGL::Array
 new(Class, count, type, ...)
 	GLsizei	count
 	GLenum	type
@@ -1050,7 +1050,7 @@ new(Class, count, type, ...)
 
 #//# $oga = OpenGL::Array->new_list($type, @data);
 #//- Contructor for mono-type OGA - populated
-PDL::Graphics::OpenGL::Perl::OpenGL::Array
+OpenGL::Array
 new_list(Class, type, ...)
 	GLenum	type
 	CODE:
@@ -1082,7 +1082,7 @@ new_list(Class, type, ...)
 
 #//# $oga = OpenGL::Array->new_scalar($type, (PACKED)data, $length);
 #//- Contructor for mono-type OGA - populated by string
-PDL::Graphics::OpenGL::Perl::OpenGL::Array
+OpenGL::Array
 new_scalar(Class, type, data, length)
 	GLenum	type
 	SV *	data
@@ -1118,7 +1118,7 @@ new_scalar(Class, type, data, length)
 
 #//# $oga = OpenGL::Array->new_pointer($type, (CPTR)ptr, $elements);
 #//- Contructor for mono-type OGA wrapper over a C pointer
-PDL::Graphics::OpenGL::Perl::OpenGL::Array
+OpenGL::Array
 new_pointer(Class, type, ptr, elements)
 	GLenum	type
 	void *	ptr
@@ -1152,7 +1152,7 @@ new_pointer(Class, type, ptr, elements)
 
 #//# $oga = OpenGL::Array->new_from_pointer((CPTR)ptr, $length);
 #//- Contructor for GLubyte OGA wrapper over a C pointer
-PDL::Graphics::OpenGL::Perl::OpenGL::Array
+OpenGL::Array
 new_from_pointer(Class, ptr, length)
 	void *	ptr
 	GLsizei	length
@@ -1186,7 +1186,7 @@ new_from_pointer(Class, ptr, length)
 #//- Replace OGA's C pointer - old one is not released
 GLboolean
 update_pointer(oga, ptr)
-	PDL::Graphics::OpenGL::Perl::OpenGL::Array oga
+	OpenGL::Array oga
 	void *	ptr
 	CODE:
 	{
@@ -1200,7 +1200,7 @@ update_pointer(oga, ptr)
 #//- Bind a VBO to an OGA
 void
 bind(oga, bind)
-	PDL::Graphics::OpenGL::Perl::OpenGL::Array oga
+	OpenGL::Array oga
 	GLint	bind
 	INIT:
 #ifdef GL_ARB_vertex_buffer_object
@@ -1212,7 +1212,7 @@ bind(oga, bind)
 		oga->bind = bind;
 		glBindBufferARB(GL_ARRAY_BUFFER_ARB,bind);
 #else
-		croak("PDL::Graphics::OpenGL::Perl::OpenGL::Array::bind requires GL_ARB_vertex_buffer_object");
+		croak("OpenGL::Array::bind requires GL_ARB_vertex_buffer_object");
 #endif
 	}
 
@@ -1220,7 +1220,7 @@ bind(oga, bind)
 #//- Return OGA's bound VBO ID
 GLint
 bound(oga)
-	PDL::Graphics::OpenGL::Perl::OpenGL::Array oga
+	OpenGL::Array oga
 	CODE:
 		RETVAL = oga->bind;
 	OUTPUT:
@@ -1243,7 +1243,7 @@ calc(...)
 		{
 			SV *	sv = ST(i);
 			if (sv == &PL_sv_undef ||
-				!sv_derived_from(sv,"PDL::Graphics::OpenGL::Perl::OpenGL::Array")) break;
+				!sv_derived_from(sv,"OpenGL::Array")) break;
 			oga_count++;
 		}
 
@@ -1257,7 +1257,7 @@ calc(...)
 		for (i=0; i<oga_count; i++)
 		{
 			IV ref = SvIV((SV*)SvRV(ST(i)));
-			oga_list[i] = INT2PTR(PDL__Graphics__OpenGL__Perl__OpenGL__Array,ref);
+			oga_list[i] = INT2PTR(OpenGL__Array,ref);
 		}
 
 		ops = malloc(sizeof(char *) * ops_count);
@@ -1286,7 +1286,7 @@ calc(...)
 #//- Set OGA values starting from offset
 void
 assign(oga, pos, ...)
-	PDL::Graphics::OpenGL::Perl::OpenGL::Array oga
+	OpenGL::Array oga
 	GLint	pos
 	CODE:
 	{
@@ -1410,7 +1410,7 @@ assign(oga, pos, ...)
 #//- Set OGA values by string, starting from offset
 void
 assign_data(oga, pos, data)
-	PDL::Graphics::OpenGL::Perl::OpenGL::Array	oga
+	OpenGL::Array	oga
 	GLint	pos
 	SV *	data
 	CODE:
@@ -1432,7 +1432,7 @@ assign_data(oga, pos, data)
 #//- Get OGA data array, by offset and length
 void
 retrieve(oga, ...)	
-	PDL::Graphics::OpenGL::Perl::OpenGL::Array	oga
+	OpenGL::Array	oga
 	PPCODE:
 	{
 		GLint	pos = (items > 1) ? SvIV(ST(1)) : 0;
@@ -1524,7 +1524,7 @@ retrieve(oga, ...)
 #//- Get OGA data as packed string, by offset and length
 SV *
 retrieve_data(oga, ...)
-	PDL::Graphics::OpenGL::Perl::OpenGL::Array	oga
+	OpenGL::Array	oga
 	CODE:
 	{
 		GLint	pos = (items > 1) ? SvIV(ST(1)) : 0;
@@ -1544,7 +1544,7 @@ retrieve_data(oga, ...)
 #//- Get number of OGA elements
 GLsizei
 elements(oga)
-	PDL::Graphics::OpenGL::Perl::OpenGL::Array	oga
+	OpenGL::Array	oga
 	CODE:
 		RETVAL = oga->item_count;
 	OUTPUT:
@@ -1554,7 +1554,7 @@ elements(oga)
 #//- Get size of OGA in bytes
 GLsizei
 length(oga)
-	PDL::Graphics::OpenGL::Perl::OpenGL::Array	oga
+	OpenGL::Array	oga
 	CODE:
 		RETVAL = oga->data_length;
 	OUTPUT:
@@ -1564,7 +1564,7 @@ length(oga)
 #//- Get C pointer to OGA data
 void *
 ptr(oga)
-	PDL::Graphics::OpenGL::Perl::OpenGL::Array	oga
+	OpenGL::Array	oga
 	CODE:
 	RETVAL = oga->data;
 	OUTPUT:
@@ -1574,7 +1574,7 @@ ptr(oga)
 #//- Get C pointer to OGA data, by element offset
 void *
 offset(oga, pos)
-	PDL::Graphics::OpenGL::Perl::OpenGL::Array	oga
+	OpenGL::Array	oga
 	GLint	pos
 	CODE:
 	RETVAL = ((char*)oga->data) +
@@ -1587,7 +1587,7 @@ offset(oga, pos)
 #//- Perform affine transform on an OGA
 void
 affine(oga, ...)
-	PDL::Graphics::OpenGL::Perl::OpenGL::Array oga
+	OpenGL::Array oga
 	CODE:
 	{
 		GLfloat *	data = (GLfloat *)oga->data;
@@ -1599,10 +1599,10 @@ affine(oga, ...)
 		int		free_mat = 0;
 
 		/* Get transform matrix OGA */
-		if (sv != &PL_sv_undef && sv_derived_from(sv,"PDL::Graphics::OpenGL::Perl::OpenGL::Array"))
+		if (sv != &PL_sv_undef && sv_derived_from(sv,"OpenGL::Array"))
 		{
 			IV ref = SvIV((SV*)SvRV(sv));
-			oga_struct *oga_mat = INT2PTR(PDL__Graphics__OpenGL__Perl__OpenGL__Array,ref);
+			oga_struct *oga_mat = INT2PTR(OpenGL__Array,ref);
 			count = oga_mat->item_count;
 
 			for (i=0;i<oga_mat->type_count;i++)
@@ -1727,7 +1727,7 @@ affine(oga, ...)
 #// OGA Destructor
 void
 DESTROY(oga)
-	PDL::Graphics::OpenGL::Perl::OpenGL::Array	oga
+	OpenGL::Array	oga
 	CODE:
 	{
 #if 0  /* Cleanup for GPU-based affine calcs */
@@ -1766,7 +1766,7 @@ DESTROY(oga)
 #endif /* End IN_POGL_ARRAY_XS */
 
 
-MODULE = PDL::Graphics::OpenGL::Perl::OpenGL::RPN		PACKAGE = PDL::Graphics::OpenGL::Perl::OpenGL
+MODULE = OpenGL::RPN		PACKAGE = OpenGL
 
 
 

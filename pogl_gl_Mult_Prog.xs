@@ -1,4 +1,4 @@
-/*  Last saved: Wed 15 Jul 2009 10:04:52 AM  */
+/*  Last saved: Fri 24 Jul 2009 01:48:53 PM  */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -46,7 +46,7 @@
 
 
 
-MODULE = PDL::Graphics::OpenGL::Perl::OpenGL::GL::MultProg	PACKAGE = PDL::Graphics::OpenGL::Perl::OpenGL
+MODULE = OpenGL::GL::MultProg	PACKAGE = OpenGL
 
 
 

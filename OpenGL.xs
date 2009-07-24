@@ -1,4 +1,4 @@
-/*  Last saved: Wed 15 Jul 2009 09:54:47 AM */
+/*  Last saved: Fri 24 Jul 2009 01:44:58 PM */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -94,7 +94,7 @@ char *s;
 
 
 
-MODULE = PDL::Graphics::OpenGL::Perl::OpenGL		PACKAGE = PDL::Graphics::OpenGL::Perl::OpenGL
+MODULE = OpenGL		PACKAGE = OpenGL
 
 
 
@@ -111,19 +111,19 @@ MODULE = PDL::Graphics::OpenGL::Perl::OpenGL		PACKAGE = PDL::Graphics::OpenGL::P
 
 
 BOOT:
-  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__RPN);
-  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__Const);
-  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GL__Top);
-  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GL__AccuGetM);
-  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GL__GetPPass);
-  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GL__MultProg);
-  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GL__PixeVer2);
-  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GL__ProgClam);
-  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GL__Tex2Draw);
-  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GL__Ver3Tex1);
-  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GL__VertMulti);
-  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GLU);
-  PGOPOGL_CALL_BOOT(boot_PDL__Graphics__OpenGL__Perl__OpenGL__GLUT);
+  PGOPOGL_CALL_BOOT(boot_OpenGL__RPN);
+  PGOPOGL_CALL_BOOT(boot_OpenGL__Const);
+  PGOPOGL_CALL_BOOT(boot_OpenGL__GL__Top);
+  PGOPOGL_CALL_BOOT(boot_OpenGL__GL__AccuGetM);
+  PGOPOGL_CALL_BOOT(boot_OpenGL__GL__GetPPass);
+  PGOPOGL_CALL_BOOT(boot_OpenGL__GL__MultProg);
+  PGOPOGL_CALL_BOOT(boot_OpenGL__GL__PixeVer2);
+  PGOPOGL_CALL_BOOT(boot_OpenGL__GL__ProgClam);
+  PGOPOGL_CALL_BOOT(boot_OpenGL__GL__Tex2Draw);
+  PGOPOGL_CALL_BOOT(boot_OpenGL__GL__Ver3Tex1);
+  PGOPOGL_CALL_BOOT(boot_OpenGL__GL__VertMulti);
+  PGOPOGL_CALL_BOOT(boot_OpenGL__GLU);
+  PGOPOGL_CALL_BOOT(boot_OpenGL__GLUT);
 #ifdef __PM__
   InitSys();
 #endif /* defined __PM__ */

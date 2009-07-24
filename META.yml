@@ -1,7 +1,7 @@
 # http://module-build.sourceforge.net/META-spec.html
 #XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
-name:         PDL-Graphics-OpenGL-Perl-OpenGL
-version:      0.01_04
+name:         OpenGL
+version:      0.58_01
 version_from: OpenGL.pm
 installdirs:  site
 requires:

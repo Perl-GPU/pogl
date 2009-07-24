@@ -1,28 +1,28 @@
 
 =head1 NAME
 
-PDL::Graphics::OpenGL::Perl::OpenGL - v0.01_06git Perl OpenGL (POGL) module for PDL to display 3D data using OpenGL, FreeGLUT/GLUT, and GLX
+OpenGL - v0.58_01
 
 =head1 SYNOPSIS
 
-	use PDL::Graphics::OpenGL::Perl::OpenGL; # exports most of the old functionality of OpenGL 0.4
+	use OpenGL; # exports most of the old functionality of OpenGL 0.4
 
-	use PDL::Graphics::OpenGL::Perl::OpenGL qw(:old); # Same thing
+	use OpenGL qw(:old); # Same thing
 
-	use PDL::Graphics::OpenGL::Perl::OpenGL qw(:glfunctions :glconstants); # exports functions and
+	use OpenGL qw(:glfunctions :glconstants); # exports functions and
 	            # constants for using OpenGL, without exporting GLU, GLUT,
 	            # or GLX stuff.
 
-	use PDL::Graphics::OpenGL::Perl::OpenGL qw(:all); # exports all new functionality, without the OpenGL
+	use OpenGL qw(:all); # exports all new functionality, without the OpenGL
 	                     # 0.4 compatibility functions
 
 	See also: POGL Objects
 
-	* PDL::Graphics::OpenGL::Perl::OpenGL::Array - optimized data arrays via C pointers
+	* OpenGL::Array - optimized data arrays via C pointers
 
-	* PDL::Graphics::OpenGL::Perl::OpenGL::Image - direct C pointer acces to ImageMagick image cache
+	* OpenGL::Image - direct C pointer acces to ImageMagick image cache
 
-	* PDL::Graphics::OpenGL::Perl::OpenGL::Shader - abstracted shader interface: ARB, GLSL and Cg
+	* OpenGL::Shader - abstracted shader interface: ARB, GLSL and Cg
 
 
 
@@ -37,7 +37,7 @@ This module assumes that libGL.so, libGLU.so and libglut.so
 (opengl32.dll and glu32.dll on Windows) are properly installed
 on your system.
 
-If used with PDL::Graphics::OpenGL::Perl::OpenGL::Image, use v1.03 or newer.
+If used with OpenGL::Image, use v1.03 or newer.
 
 
 =head1 DESCRIPTION
@@ -56,7 +56,7 @@ have the the same names as their C counterparts, but with a _p suffix.
 
 All functions that take pointers are available with their original
 calling syntax and a _c suffix. These are most useful when combined with
-the PDL::Graphics::OpenGL::Perl::OpenGL::Array module, which lets you allocate C arrays from Perl.
+the OpenGL::Array module, which lets you allocate C arrays from Perl.
 
 A third variant, _s, exists for most pointer functions, and takes a string
 argument for each pointer. The underlying OpenGL function will be passed
@@ -1768,8 +1768,8 @@ an SGI system. For other machines, 0.5 should greatly improve compatibility
 (compiling where 0.4 wouldn't have).
 
 Code-level compatibility with OpenGL 0.4 is available if you refer to
-OpenGL simply via C<use PDL::Graphics::OpenGL::Perl::OpenGL;>. If you request specific packages (such as
-C<use PDL::Graphics::OpenGL::Perl::OpenGL qw(glfunctions glconstants glutfunctions);>), you'll get 0.5
+OpenGL simply via C<use OpenGL;>. If you request specific packages (such as
+C<use OpenGL qw(glfunctions glconstants glutfunctions);>), you'll get 0.5
 specific support.
 
 =head1 EXPORTS

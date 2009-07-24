@@ -1,4 +1,4 @@
-package PDL::Graphics::OpenGL::Perl::OpenGL;
+package OpenGL;
 
 #  Copyright (c) 1998,1999 Kenneth Albanowski. All rights reserved.
 #  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -10,7 +10,7 @@ require DynaLoader;
 
 use Carp;
 
-$VERSION = '0.01_07git';        # Remove git for release
+$VERSION = '0.57_01';        # Remove git for release
 $BUILD_VERSION = $XS_VERSION = $VERSION;
 $VERSION = eval($VERSION);
 
@@ -6121,7 +6121,7 @@ sub AUTOLOAD {
     goto &$AUTOLOAD;
 }
 
-bootstrap PDL::Graphics::OpenGL::Perl::OpenGL;
+bootstrap OpenGL;
 
 # The following material is directly copied from Stan Melax's original OpenGL-0.4
 # (with modifications for OS/2).
@@ -6186,9 +6186,9 @@ sub glpFlush {
   glXSwapBuffers() if __had_dbuffer_hack();
 }
 
-sub PDL::Graphics::OpenGL::Perl::OpenGL::Quad::DESTROY ($) {gluDeleteQuadric(shift)}
-@PDL::Graphics::OpenGL::Perl::OpenGL::Quad::ISA = 'GLUquadricObjPtr';
-sub __new_gluQuad () {bless gluNewQuadric(), 'PDL::Graphics::OpenGL::Perl::OpenGL::Quad'}
+sub OpenGL::Quad::DESTROY ($) {gluDeleteQuadric(shift)}
+@OpenGL::Quad::ISA = 'GLUquadricObjPtr';
+sub __new_gluQuad () {bless gluNewQuadric(), 'OpenGL::Quad'}
 
 sub glpSolidSphere ($$$) {
   gluSphere(__new_gluQuad, shift, shift, shift);

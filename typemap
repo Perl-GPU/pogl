@@ -25,7 +25,7 @@ GLUquadricObj *	T_PTROBJ
 
 PGLUtess *	T_FASTPTROBJ
 
-PDL::Graphics::OpenGL::Perl::OpenGL::Array		T_PTROBJ
+OpenGL::Array		T_PTROBJ
 
 GLXDrawable		T_PTR
 

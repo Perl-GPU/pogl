@@ -1,4 +1,4 @@
-/*  Last saved: Tue 14 Jul 2009 05:32:28 PM  */
+/*  Last saved: Fri 24 Jul 2009 01:50:20 PM  */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -123,7 +123,7 @@ end_tess_marshaller()
 #endif /* End IN_POGL_GLU_XS */
 
 
-MODULE = PDL::Graphics::OpenGL::Perl::OpenGL::GLU		PACKAGE = PDL::Graphics::OpenGL::Perl::OpenGL
+MODULE = OpenGL::GLU		PACKAGE = OpenGL
 
 
 #ifdef IN_POGL_GLU_XS
