@@ -424,17 +424,6 @@ if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
 
   $EXES = ['FreeGLUT/freeglut.dll'];
 }
-elsif (0 && $IS_W32API)						# CYGWIN W32API
-{
-  my $glut_lib = ($found_libs->{FREEGLUT32}) ? $found_libs->{FREEGLUT32} :
-    $found_libs->{GLUT32};
-
-  $LIBS = "-L/usr/lib/w32api -lopengl32 -lglu32 -LFreeGLUT -l$glut_lib";
-  $LDFROM ="-l$glut_lib";
-  $INCS = '-I/usr/include/w32api';
-  $DEFS .= " -DHAVE_W32API";
-  $DYNS = { OTHERLDFLAGS => '-Wl,--exclude-symbols,'."\x7F".$glut_lib.'_NULL_THUNK_DATA' };
-}
 elsif ($interface_lib eq 'AGL')					# Mac OS X
 {
   $INCS = '-Iinclude -I/usr/X11/include';
@@ -786,22 +775,22 @@ sub get_extensions
   {
     $make_ver = "&mingw.bat";
 #    $make_ver = '&dmake -f makefile.mingw GLUT_DEF='.$def;
-    #print "mingw glversion: '$make_ver'\n";# if $verbose;
+    print "mingw glversion: '$make_ver'\n" if $verbose>1;
   }
   elsif ($IS_W32API)
   {
-    $make_ver = ";make -f Makefile.cygwin GLUT_LIB=$lib GLUT_DEF=$def";
-    #print "cygwin glversion: '$make_ver'\n" if $verbose;
+    $make_ver = ";make -f Makefile.cygwin " .  (length($lib) ? "GLUT_LIB=$lib " : "") . (length($def) ? "GLUT_DEF=$def " : "");
+    print "cygwin glversion: '$make_ver'\n" if $verbose>1;
   }
   elsif ($^O eq 'MSWin32')
   {
-    $make_ver = '&nmake -f makefile.mak GLUT_DEF='.$def;
-    #print "MSWin32 glversion: '$make_ver'\n" if $verbose;
+    $make_ver = '&nmake -f makefile.mak ' . (length($def) ? "GLUT_DEF=$def " : "");
+    print "MSWin32 glversion: '$make_ver'\n" if $verbose>1;
   }
   elsif ($^O eq 'darwin')
   {
-    $make_ver = ";make -f Makefile.macosx GLUT_LIB=$lib GLUT_DEF=$def";
-    #print "MacOSX glversion: '$make_ver'\n" if $verbose;
+    $make_ver = ";make -f Makefile.macosx " .  (length($lib) ? "GLUT_LIB=$lib " : "") . (length($def) ? "GLUT_DEF=$def " : "");
+    print "MacOSX glversion: '$make_ver'\n" if $verbose>1;
   }
   else
   {
@@ -810,8 +799,8 @@ sub get_extensions
       print "\nIn order to test your GPU's capabilities, run this make under an X11 shell\n\n";
     }
 
-    $make_ver = ";make -f Makefile GLUT_LIB=$lib GLUT_DEF=$def";
-    #print "glversion: '$make_ver'\n" if $verbose;
+    $make_ver = ";make -f Makefile " .  (length($lib) ? "GLUT_LIB=$lib " : "") . (length($def) ? "GLUT_DEF=$def " : "");
+    print "glversion: '$make_ver'\n" if $verbose>1;
   }
   my $exec = 'cd utils'."$make_ver clean".$make_ver;
   print "glversion: $exec\n" if ($verbose);
