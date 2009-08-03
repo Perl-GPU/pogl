@@ -12,7 +12,7 @@ our $is_valid_interface =
   'AGL'		=> 'GLUT framework on Mac OS X',
   'FREEGLUT'	=> 'FreeGLUT, preferred over GLUT',
   'GLUT'	=> 'GLUT; often really FreeGLUT on Linux',
-  'GLX'		=> 'X11, deprecated; requires running XServer',
+  'GLX'		=> 'GLX+X11 not supported; use GLUT or FreeGLUT',
   'W32API'	=> 'Uses WGL+FreeGLUT on CYGWIN, instead of GLX+FreeGLUT',
   'WGL'         => 'Same as W32API',
 };
@@ -184,7 +184,7 @@ if ( grep { m/^interface=/i } @ARGV )
 
       # test if requested interfaces supported
       # !!! Should use lookup table
-      if ($interface eq 'W32API')
+      if ($interface eq 'W32API' or $interface eq 'WGL')
       {
         if (!$found_libs->{FREEGLUT32} && !$found_libs->{GLUT32})
         {
@@ -231,8 +231,7 @@ if ( grep { m/^interface=/i } @ARGV )
             }
           }
         }
-
-        if ($interface eq 'GLUT')
+        elsif ($interface eq 'GLUT')
         {
           if (!$found_libs->{GLUT} && $found_libs->{FREEGLUT})
           {
@@ -256,16 +255,29 @@ if ( grep { m/^interface=/i } @ARGV )
 
           if (!$found_libs->{GLUT} && !$found_libs->{GLUT32})
           {
-            print "GLUT interface requires GLUT or FreeGLUT\n";
+            print "GLUT interface requires GLUT or FreeGLUT but libs were not found\n";
             next;
           }
+        }
+        else
+        {
+           print "Error in interface argument processing\n";
+           next;
         }
       }
       elsif ($interface eq 'GLX')
       {
+         if ($verbose > 1) {
+            print "\n";
+            print "*********************************************************************\n";
+            print "* WARNING: GLX interface is not supported, install GLUT or FreeGLUT *\n";
+            print "*********************************************************************\n";
+            print "\n";
+         }
+
         if (!$found_libs->{GL} && !$found_libs->{MESA} && !$found_libs->{GLX})
         {
-          print "GLX interface requires GLX/X11\n";
+          print "GLX interface requires GLX/X11 but the libraries were not found\n";
           next;
         }
       }
@@ -312,16 +324,12 @@ elsif ($IS_CYGWIN)
   }
   else
   {
-    die "No suitable interface found for CYGWIN\n";
+    die "No suitable OpenGL+GLUT interface found for CYGWIN\n";
   }
 }
 elsif ($^O eq 'darwin' && $found_libs->{GLUT})
 {
   $interface_lib = 'AGL';
-}
-elsif ($found_libs->{FREEGLUT})
-{
-  $interface_lib = 'FREEGLUT';
 }
 elsif ($found_libs->{FREEGLUT} || $found_libs->{FREEGLUT32})
 {
@@ -331,17 +339,14 @@ elsif ($found_libs->{GLUT} || $found_libs->{GLUT32})
 {
   $interface_lib = 'GLUT';
 }
-elsif ($^O eq 'MSWin32')
-{
-  die "Windows requires FreeGLUT or GLUT\n";
-}
 else
 {
-  $interface_lib = 'GLX'; # otherwise default to GLX
+  die "FreeGLUT or GLUT libraries were not found, won't build OpenGL module.";
 }
 
 if ($interface_lib eq 'GLX') {
-   warn "GLUT or FreeGLUT not found, cannot build module!\n";
+   warn "GLX requested but GLUT or FreeGLUT libraries were not found!\n";
+   warn "GLX is now supported via GLUT or FreeGLUT, please install.\n";
    exit 0;
 }
 
@@ -630,6 +635,7 @@ sub get_libs
   # Mac OS X
   if ($^O eq 'darwin' && -d '/System/Library/Frameworks/OpenGL.framework')
   {
+
     $found->{GL} = 'OpenGL.framework';
     $found->{GLU} = 'AGL.framework';
     $found->{GLUT} = 'GLUT.framework';
@@ -921,16 +927,16 @@ sub get_extensions
 # non-existant directories produce a minimal configuration value
 sub clean_incs {
    my $inincs = $_[0];
-   print "clean_incs: got input INCS='$inincs'\n" if $verbose;
+   print "clean_incs: got input INCS='$inincs'\n" if $verbose>1;
 
    my @inincs = split / /, $inincs;
 
    # clean out -I args with non-existent directories
-   print "clean_incs: removing bad directories\n" if $verbose;
+   print "clean_incs: removing bad directories\n" if $verbose>1;
    my @outincs = grep { my $tmp = $_; $tmp =~ s/^-I// and ( -d $tmp or -l $tmp) } @inincs;
    my $outincs = join ' ', @outincs;
 
-   print "clean_incs: returning INCS='$outincs'\n" if $verbose;
+   print "clean_incs: returning INCS='$outincs'\n" if $verbose>1;
    $_[0] = $outincs;
 }
 
@@ -939,18 +945,18 @@ sub clean_incs {
 # minimal configuration value
 sub clean_libs {
    my $inlibs = $_[0];
-   print "clean_libs: got input LIBS='$inlibs'\n" if $verbose;
+   print "clean_libs: got input LIBS='$inlibs'\n" if $verbose>1;
 
    my @inlibs = split ' ', $inlibs;
 
    # clean out -L args with non-existent directories
-   print "clean_libs: removing bad directories\n" if $verbose;
+   print "clean_libs: removing bad directories\n" if $verbose>1;
    my @outlibs = grep { my $tmp = $_; /^-l/ or $tmp =~ s/^-L// and ( -d $tmp or -l $tmp) } @inlibs;
 
 
    my $outlibs = join ' ', @outlibs;
 
-   print "clean_libs: returning LIBS='$outlibs'\n" if $verbose;
+   print "clean_libs: returning LIBS='$outlibs'\n" if $verbose>1;
    $_[0] = $outlibs;
 }
 
