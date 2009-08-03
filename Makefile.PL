@@ -6,12 +6,6 @@ use Config;
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
 
-# ExtUtils::Liblist is broken
-@findlib::ISA = qw(ExtUtils::Liblist);
-sub findlib::lsdir { shift; grep /$_[0]/, <$_[1]>}
-sub findlib::file_name_is_absolute { 1 } # Used for warnings only...
-
- 
 # Supported windowing interfaces
 our $is_valid_interface =
 {
@@ -710,7 +704,7 @@ sub get_libs
   # Everyone else
   open(SAVEERR, ">&STDERR");
   close(STDERR);
-  ($libs) = findlib->ext(join(' ',@glx_libs),0);
+  ($libs) = ExtUtils::Liblist->ext(join(' ',@glx_libs),0);
   open(STDERR, ">&SAVEERR");
 
   foreach my $lib (split(' ',$libs))
@@ -944,11 +938,13 @@ sub clean_libs {
    my $inlibs = $_[0];
    print "clean_libs: got input LIBS='$inlibs'\n" if $verbose;
 
-   my @inlibs = split / /, $inlibs;
+   my @inlibs = split ' ', $inlibs;
 
    # clean out -L args with non-existent directories
    print "clean_libs: removing bad directories\n" if $verbose;
    my @outlibs = grep { my $tmp = $_; /^-l/ or $tmp =~ s/^-L// and ( -d $tmp or -l $tmp) } @inlibs;
+
+
    my $outlibs = join ' ', @outlibs;
 
    print "clean_libs: returning LIBS='$outlibs'\n" if $verbose;
