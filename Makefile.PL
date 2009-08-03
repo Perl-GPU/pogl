@@ -541,6 +541,9 @@ else # Everyone else
   }
 }
 
+clean_incs( $INCS );
+
+clean_libs( $LIBS );
 
 # This is the final build configuration
 my $build_config =
@@ -915,6 +918,41 @@ sub get_extensions
   # return Distributable Defs
   print "Have Version Data\n" if ($verbose);
   return '-DHAVE_VER';
+}
+
+# Takes as input a INCS string ready for MakeMaker and cleans out
+# non-existant directories produce a minimal configuration value
+sub clean_incs {
+   my $inincs = $_[0];
+   print "clean_incs: got input INCS='$inincs'\n" if $verbose;
+
+   my @inincs = split / /, $inincs;
+
+   # clean out -I args with non-existent directories
+   print "clean_incs: removing bad directories\n" if $verbose;
+   my @outincs = grep { my $tmp = $_; $tmp =~ s/^-I// and ( -d $tmp or -l $tmp) } @inincs;
+   my $outincs = join ' ', @outincs;
+
+   print "clean_incs: returning INCS='$outincs'\n" if $verbose;
+   $_[0] = $outincs;
+}
+
+# Takes as input a LIBS string ready for MakeMaker and cleans out
+# non-existant directories and libraries to produce a better,
+# minimal configuration value
+sub clean_libs {
+   my $inlibs = $_[0];
+   print "clean_libs: got input LIBS='$inlibs'\n" if $verbose;
+
+   my @inlibs = split / /, $inlibs;
+
+   # clean out -L args with non-existent directories
+   print "clean_libs: removing bad directories\n" if $verbose;
+   my @outlibs = grep { my $tmp = $_; /^-l/ or $tmp =~ s/^-L// and ( -d $tmp or -l $tmp) } @inlibs;
+   my $outlibs = join ' ', @outlibs;
+
+   print "clean_libs: returning LIBS='$outlibs'\n" if $verbose;
+   $_[0] = $outlibs;
 }
 
 # Dump Config.pm
