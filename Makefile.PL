@@ -9,11 +9,12 @@ use Config;
 # Supported windowing interfaces
 our $is_valid_interface =
 {
-  'FREEGLUT'	=> 'FreeGLUT, preferred over GLUT',
-  'GLUT'	=> 'GLUT; this really FreeGLUT on Linux',
-  'GLX'		=> 'X11; requires a running XServer',
   'AGL'		=> 'GLUT framework on Mac OS X',
-  'W32API'	=> 'Uses FreeGLUT on CYGWIN, instead of GLX/X11'
+  'FREEGLUT'	=> 'FreeGLUT, preferred over GLUT',
+  'GLUT'	=> 'GLUT; often really FreeGLUT on Linux',
+  'GLX'		=> 'X11, deprecated; requires running XServer',
+  'W32API'	=> 'Uses WGL+FreeGLUT on CYGWIN, instead of GLX+FreeGLUT',
+  'WGL'         => 'Same as W32API',
 };
 
 
@@ -31,9 +32,11 @@ sub Usage
 
     help                This help message
 
-    verbose             Display additional status info
+    verbose             Display additional status info, can be
+                        repeated for more verbosity
 
     dist=NO_EXCLUSIONS  Build with no OpenGL Extension exclusions
+
     dist=EXCLUSIONS     Override NO_EXCLUSIONS default for Win32
 
     interface=XFACE     Build for a specific windowing interface
@@ -75,13 +78,13 @@ if ($^O eq 'MSWin32' && !$IS_CYGWIN)
 
 
 # Get debugging flags
-our $verbose = 1;
-if ( grep { m/^verbose/i } @ARGV )
+our $verbose = 0;
+if ( grep { if (m/^verbose/i) { $verbose++; 1; } else { 0; } } @ARGV )
 {
-  $verbose = 1;
   # Strip out interface args
   @ARGV = grep { !m/^verbose=/i } @ARGV;
 }
+print "\$verbose set to $verbose\n" if $verbose;
 
 
 # Get distribution build flags
