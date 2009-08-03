@@ -61,7 +61,7 @@ close(STDERR);
 my $uname = `uname`;
 open(STDERR, ">&SAVEERR");
 our $IS_CYGWIN = ($uname =~ m|^CYGWIN|);
-our $IS_W32API = ($IS_CYGWIN && grep { m/^interface=W32API/i } @ARGV );
+our $IS_W32API = ($IS_CYGWIN && grep { m/^interface=(W32API|WGL)/i } @ARGV );
 
 
 # Detect MINGW
@@ -138,14 +138,13 @@ our @check_libs = qw
   -lGLUT
   -lglut
   -lMesaGLUT
-  -lOSMesa
   -lGLX
   -lglx
   -lMesaGLX
 };
 
 our $found_libs = get_libs(@libdirs,@check_libs);
-die "No OpenGL libs found\n" if (!scalar($found_libs));
+die "No OpenGL related libs found\n" if (!scalar($found_libs));
 
 if ($verbose)
 {
@@ -267,13 +266,13 @@ if ( grep { m/^interface=/i } @ARGV )
       }
       elsif ($interface eq 'GLX')
       {
-         if ($verbose > 1) {
-            print "\n";
-            print "*********************************************************************\n";
-            print "* WARNING: GLX interface is not supported, install GLUT or FreeGLUT *\n";
-            print "*********************************************************************\n";
-            print "\n";
-         }
+         print "\n";
+         print "***********************************************************************\n";
+         print "* ERROR: GLX interface is not supported, use GLUT or FreeGLUT instead *\n";
+         print "***********************************************************************\n";
+         print "\n";
+
+         exit 0;
 
         if (!$found_libs->{GL} && !$found_libs->{MESA} && !$found_libs->{GLX})
         {
@@ -344,12 +343,6 @@ else
   die "FreeGLUT or GLUT libraries were not found, won't build OpenGL module.";
 }
 
-if ($interface_lib eq 'GLX') {
-   warn "GLX requested but GLUT or FreeGLUT libraries were not found!\n";
-   warn "GLX is now supported via GLUT or FreeGLUT, please install.\n";
-   exit 0;
-}
-
 print "\nUsing interface: $interface_lib\n\n";
 
 # Marshall compiler defines
@@ -370,17 +363,21 @@ elsif($IS_CYGWIN)
   delete($found_libs->{'GLU32'});
   delete($found_libs->{'OPENGL32'});
 }
-if (!$found_libs->{'GL'})
-{
-  if ($found_libs->{'GLX'})
-  {
-    $found_libs->{'GL'} = $found_libs->{'GLX'};
-  }
-  elsif ($found_libs->{'MESA'})
-  {
-    $found_libs->{'GL'} = $found_libs->{'MESA'};
-  }
+
+if (0) { # May be not necessary now, see if removing makes a difference
+   if (!$found_libs->{'GL'})
+   {
+      if ($found_libs->{'GLX'})
+      {
+         $found_libs->{'GL'} = $found_libs->{'GLX'};
+      }
+      elsif ($found_libs->{'MESA'})
+      {
+         $found_libs->{'GL'} = $found_libs->{'MESA'};
+      }
+   }
 }
+
 print "resulting libs:\n" if ($verbose);
 foreach my $key (sort keys %$found_libs)
 {
