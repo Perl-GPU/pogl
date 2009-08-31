@@ -1,4 +1,4 @@
-Last saved: Fri 12 Jun 2009 09:34:01 AM 
+Last saved: Mon 31 Aug 2009 05:56:24 PM 
 
 
 Reduce compile size by splitting up XS files
@@ -6,7 +6,6 @@ Reduce compile size by splitting up XS files
  * make separate include headers for RPN, OGA to better split
  * split out constants (maybe split further by library)
  * split pogl_gl.xs by function groups
- * verify compile and build on XO laptop
 
 
 Enhance CPAN Testers automated testing support:
@@ -25,7 +24,7 @@ Clean up glp*() routine support:
  * backward compatible where possible
  * strip out GLX+X11 code
  * layer over *GLUT environment
-    * N.B. *GLUT is on *all* GLX systems
+   N.B. *GLUT is on *all* GLX systems
  * Fix example/ programs to use GLUT
 
 
@@ -72,15 +71,8 @@ Add toggle & display of OpenGL errors a la glutReportErrors()
 
 
 Finish perl bindings to remaining FreeGLUT functions:
- * glutGetMenuData
  * glutGetProcAddress
- * glutGetWindowData
  * glutJoystickFunc
- * glutSetMenuData
- * glutSetWindowData
- * glutSolidSierpinskiSponge
- * glutWMCloseFunc
- * glutWireSierpinskiSponge
 
 
 Improve support for non-standard OpenGL configurations:
@@ -91,13 +83,13 @@ Improve support for non-standard OpenGL configurations:
 
 OpenGLUT support for building:
  * NOTE: OpenGLUT is a dead project, use FreeGLUT
- * Document how to use instead of FreeGLUT or GLUT
- * Recognize OpenGLUT as a flavor of FreeGLUT
 
 
 Make POGL GLUT-proof:
  * Nothing should break if you have GLUT rather than FreeGLUT
+     as long as you are using the GLUT subset of FreeGLUT
  * Some functionality may be disabled (glutMainLoop extensions)
+ * Some functionality may be emulated (e.g. glutBitmapString)
  * make work with readline event loop for perldl shell
 
 

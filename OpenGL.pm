@@ -1300,27 +1300,14 @@ our $glext_dependencies =
 );
 
 ##------------------------------------------------------------------------
-## Open/FreeGLUT not implemented yet       -chm 2008-09-06
+## FreeGLUT not implemented yet       -chm 2009-08-31
 ##------------------------------------------------------------------------
-##
-## Need to determine desired interface for data
-## glutGetMenuData (void)
-## glutSetMenuData (void *data)
-## glutGetWindowData (void)
-## glutSetWindowData (void *data)
 ##
 ## Need to determine desired/useful interface
 ## glutGetProcAddress (const char *procName)
 ##
 ## Need to add pollInterval argument to glutJoystickFunc() call
 ## glutJoystickFunc (void(*callback)(unsigned int buttons, int xaxis, int yaxis, int zaxis), int pollInterval)
-##
-## Need to determine handling of offset[3] argument
-## glutWireSierpinskiSponge (int num_levels, const GLdouble offset[3], GLdouble scale)
-## glutSolidSierpinskiSponge (int num_levels, const GLdouble offset[3], GLdouble scale)
-##
-## Deprecated function, use glutCloseFunc
-## glutWMCloseFunc (void(*callback)(void))
 ##
 ##------------------------------------------------------------------------
 

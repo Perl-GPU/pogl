@@ -1,4 +1,4 @@
-/*  Last saved: Fri 24 Jul 2009 01:50:29 PM */
+/*  Last saved: Mon 31 Aug 2009 05:49:39 PM */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -1587,18 +1587,10 @@ glutBitmapString(font, string)
 	void * font
 	const unsigned char * string
 
-#//# void *  glutGetMenuData (void)
-# void *
-# glutGetMenuData()
-
 #//# void *  glutGetProcAddress (const char *procName)
 # void *
 # glutGetProcAddress(procName)
 # 	const char * procName
-
-#//# void *  glutGetWindowData (void)
-# void *
-# glutGetWindowData()
 
 #//# void  glutMainLoopEvent (void)
 void
@@ -1618,16 +1610,6 @@ glutPostWindowRedisplay(windowID)
 void
 glutReportErrors()
 
-#//# void  glutSetMenuData (void *data)
-# void
-# glutSetMenuData(data)
-# 	void * data
-
-#//# void  glutSetWindowData (void *data)
-# void
-# glutSetWindowData(data)
-# 	void * data
-
 #//# void  glutSolidCylinder (GLdouble radius, GLdouble height, GLint slices, GLint stacks)
 void
 glutSolidCylinder(radius, height, slices, stacks)
@@ -1639,13 +1621,6 @@ glutSolidCylinder(radius, height, slices, stacks)
 #//# void  glutSolidRhombicDodecahedron (void)
 void
 glutSolidRhombicDodecahedron()
-
-#//# void  glutSolidSierpinskiSponge (int num_levels, const GLdouble offset[3], GLdouble scale)
-# void
-# glutSolidSierpinskiSponge(num_levels, offset, scale)
-# 	int num_levels
-# 	const GLdouble offset[3]
-# 	GLdouble scale
 
 #//# float  glutStrokeHeight (void *font)
 GLfloat
@@ -1681,13 +1656,6 @@ glutWireCylinder(radius, height, slices, stacks)
 #//# void  glutWireRhombicDodecahedron (void)
 void
 glutWireRhombicDodecahedron()
-
-#//# void  glutWireSierpinskiSponge (int num_levels, const GLdouble offset[3], GLdouble scale)
-# void
-# glutWireSierpinskiSponge(num_levels, offset, scale)
-# 	int num_levels
-# 	const GLdouble offset[3]
-# 	GLdouble scale
 
 #endif
 
