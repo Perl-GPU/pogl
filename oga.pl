@@ -7,8 +7,8 @@ use strict;
 
 use OpenGL qw/ :all /;
 
-use OpenGL::Image;
-use OpenGL::Shader;
+#use OpenGL::Image;
+#use OpenGL::Shader;
 use Time::HiRes qw( gettimeofday );
 
 

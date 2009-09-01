@@ -281,6 +281,7 @@ my $WindowId;
 #      exit(0);
 #   }
 
+   glutInit();
    glutInitWindowPosition(0, 0);
    glutInitWindowSize(400, 400);
    
