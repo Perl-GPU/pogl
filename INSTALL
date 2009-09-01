@@ -1,11 +1,3 @@
- This module is a testing and integration version of POGL only.
- See POGL for the official release.  This interface will likely
- change radically before the full POGL functionality is
- integrated with PDL.  Thanks!
-
- Visit the Perl OpenGL (POGL) Developer's Site for more information:
- http://graphcomp.com/opengl
-
  To install the OpenGL module, please follow these instructions:
 
  1. Update your development environment with the latest OpenGL header
@@ -43,12 +35,18 @@
         perl Makefile.PL interface=XFACE [verbose]
 
     where XFACE is one of the following constants:
-
+			      
         FREEGLUT		Default window interface
         GLUT			Fallback if FreeGLUT is not available
-        GLX			Unix X11
-        W32API			Windows via CYGWIN
-        AGL			Mac OS X
+        AGL			GLUT framework on Mac OS X
+        GLX			Legacy X11+GLX, use FreeGLUT instead
+	W32API                  FreeGLUT and W32API OpenGL on CYGWIN
+	WGL                     Same as W32API
+
+    However, this should not be needed except where there is some
+    ambiguity in the available interfaces.  If you have FreeGLUT
+    and OpenGL installed, it should just work with the defaults.
+    Please let us know if it doesn't.
         
     Makefile.PL will attempt to build and run a glversion utility to
     determine what version and extensions your OpenGL installation

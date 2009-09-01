@@ -1,25 +1,13 @@
-Changes for PDL::Graphics::OpenGL::Perl::OpenGL 0.01_06 - CHM
+Change List for 0.58+
 ____________________________________________________________
 
-This module is an interim solution to accelerate debuging and
-integration of the official POGL release 0.57 into PDL.
+Changes for PDL + POGL refactoring are now in GIT_CHANGES
+which is generated from the git log --stat output of the
+version control.  Eventually, GIT_CHANGES could move to
+CHANGES and replace the hand generated functionality...
 
-
-
-Changes for 0.57_03 - CHM
-____________________________________________________________
-
-Updated CHANGES.
-
-Makefile.PL: set verbose on as the default build option for
-             bettern diagnostics.  Also added better diags
-	     for when glversion.txt is not generated correctly
-	     and a clean exit(0) without writing a Makefile
-	     which is the preferred style for CPAN Testers.
-
-OpenGL.pm: updated $VERSION to 0.57_03 for a developers release
-
-
+TBD: set up publically accessible git repository for POGL
+on the PDL git site
 
 
 Change List for 0.57 - Bob "grafman" Free <grafman@graphcomp.com>

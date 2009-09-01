@@ -1,4 +1,4 @@
-Last saved: Mon 31 Aug 2009 05:56:24 PM 
+Last saved: Tue 01 Sep 2009 11:03:58 AM 
 
 
 Reduce compile size by splitting up XS files
@@ -15,17 +15,28 @@ Enhance CPAN Testers automated testing support:
 
 If required libraries and headers are not available and
 usable (compile and link ok), then exit 0 from Makefile.PL.
- * Required libraries are OpenGL and *GLUT.
+ * Required libraries are OpenGL and GLUT.
  * GLUT is available on *all* GLX platforms
- * use *GLUT functions instead of glp*() ones
+ * use GLUT functions instead of glp*() ones
+
+
+Evaluate/Measure back compatibility
+ * document at least
+ * provide mechanism to report issues
+ * implement compatibility mode
 
 
 Clean up glp*() routine support:
  * backward compatible where possible
  * strip out GLX+X11 code
- * layer over *GLUT environment
+ * layer over GLUT environment
    N.B. *GLUT is on *all* GLX systems
- * Fix example/ programs to use GLUT
+
+
+Fix examples/ directory
+ * update to use GLUT rather than glp()
+ * verify all examples work
+ * remove broken cruft
 
 
 Add Geometry Shader support.
@@ -40,10 +51,10 @@ Add bindings to GLUI
 
 
 Move test apps to t/ subdirectory from test.pl
- * Note: require_ok/use_ok don't like $VERSION w git suffix
+ * NOTE: require_ok/use_ok don't like $VERSION w git suffix
  * Split into interactive and non-interactive tests
  * Skip interactive tests if no OpenGL context
- * need test for each major functionality for coverage
+ * need to test for each major functionality
     * GL
     * GLU
     * GLUT/FreeGLUT
@@ -71,8 +82,8 @@ Add toggle & display of OpenGL errors a la glutReportErrors()
 
 
 Finish perl bindings to remaining FreeGLUT functions:
- * glutGetProcAddress
- * glutJoystickFunc
+ * glutGetProcAddress: what does this mean at perl level?
+ * glutJoystickFunc: need to add non-callback argument
 
 
 Improve support for non-standard OpenGL configurations:
@@ -87,7 +98,7 @@ OpenGLUT support for building:
 
 Make POGL GLUT-proof:
  * Nothing should break if you have GLUT rather than FreeGLUT
-     as long as you are using the GLUT subset of FreeGLUT
+     as long as you are only using the GLUT subset of FreeGLUT
  * Some functionality may be disabled (glutMainLoop extensions)
  * Some functionality may be emulated (e.g. glutBitmapString)
  * make work with readline event loop for perldl shell

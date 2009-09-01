@@ -1,35 +1,39 @@
+    0.57_01 This file is not up to date with the current code.
+            TBD: rewrite to reflect actual status
 
-	0.55 has been tested on Windows, Ubuntu and Fedora, using
-	various nVidia boards.
+    ----------------------------------------------------------
 
-	Previous releases havce been tested with Mesa 3.0.
-
-	
-	It is intended that it supports:
-	
-	OpenGL 1.0, 1.1, 1.2 (some? most?). (And various extensions).
-	
-	GLU (unknown version). Several (important to nurbs) functions are not
-	supported yet.
-	
-	GLUT, with full support up to API version 3.
-	
-	GLX is only supported to the degree that Stan's original module
-	supported it. Without an entire X binding it is of limited use, and I
-	recommend using glut or Gtk::GLArea instead.
-
-
-	Most functions that have no pointer arguments are called identically in
-	Perl as in C, and the same name is used. Functions that use array
-	arguments and have been changed in "the obvious way" -- to take a
-	variable number of arguments and/or to return an array -- have the
-	the same names as their C counterparts, but with a _p suffix.
-	
-	All functions that take pointers are available with their original
-	calling syntax and a _c suffix. These are most useful when combined with
-	the OpenGL::Array module, which lets you allocate C arrays from Perl.
-	
-	A third variant, _s, exists for most pointer functions, and takes a string
-	argument for each pointer. The underlying OpenGL function will be passed
-	a pointer to that string.
+    0.55 has been tested on Windows, Ubuntu and Fedora, using
+    various nVidia boards.
+    
+    Previous releases havce been tested with Mesa 3.0.
+    
+    
+    It is intended that it supports:
+    
+    OpenGL 1.0, 1.1, 1.2 (some? most?). (And various extensions).
+    
+    GLU (unknown version). Several (important to nurbs) functions are not
+    supported yet.
+    
+    GLUT, with full support up to API version 3.
+    
+    GLX is only supported to the degree that Stan's original module
+    supported it. Without an entire X binding it is of limited use, and I
+    recommend using glut or Gtk::GLArea instead.
+    
+    
+    Most functions that have no pointer arguments are called identically in
+    Perl as in C, and the same name is used. Functions that use array
+    arguments and have been changed in "the obvious way" -- to take a
+    variable number of arguments and/or to return an array -- have the
+    the same names as their C counterparts, but with a _p suffix.
+    
+    All functions that take pointers are available with their original
+    calling syntax and a _c suffix. These are most useful when combined with
+    the OpenGL::Array module, which lets you allocate C arrays from Perl.
+    
+    A third variant, _s, exists for most pointer functions, and takes a string
+    argument for each pointer. The underlying OpenGL function will be passed
+    a pointer to that string.
 
