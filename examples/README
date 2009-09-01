@@ -1,4 +1,4 @@
-NOTE: Some all examples may not function!
+NOTE: Some examples may not function correctly or at all!
 
 NOTE: This example directory is in the process of being refactored
 to use GLUT/FreeGLUT rather than the original GLX/X11 for window
