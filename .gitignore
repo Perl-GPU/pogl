@@ -16,7 +16,6 @@ OpenGL.c
 OpenGL.xs-orig
 blib/
 pm_to_blib
-ogl-calls-in-test.txt
 pogl_*.c
 utils/glversion.txt
 PDL-Graphics-OpenGL-Perl-OpenGL-*.tar.gz
@@ -27,3 +26,5 @@ gl-funs.txt
 gl-funs-number.txt
 gllist
 pdl.h
+ogl-calls-in-test.txt
+EL-ELI.c
