@@ -1,13 +1,12 @@
-Change List for 0.58+
+Change List for 0.58+ - Chris Marshall
 ____________________________________________________________
 
 Changes for PDL + POGL refactoring are now in GIT_CHANGES
 which is generated from the git log --stat output of the
-version control.  Eventually, GIT_CHANGES could move to
+version control.  Eventually, GIT_CHANGES will move to
 CHANGES and replace the hand generated functionality...
 
 TBD: set up publically accessible git repository for POGL
-on the PDL git site
 
 
 Change List for 0.57 - Bob "grafman" Free <grafman@graphcomp.com>
