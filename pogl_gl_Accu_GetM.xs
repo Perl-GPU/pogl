@@ -1,4 +1,4 @@
-/*  Last saved: Sun 06 Sep 2009 02:09:52 PM*/
+/*  Last saved: Sun 06 Sep 2009 02:32:19 PM*/
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -383,9 +383,9 @@ glColorPointer_s(size, type, stride, pointer)
 		glColorPointer(size, type, stride, pointer_s);
 	}
 
-#//# glColorPointer_oga($size, $type, $stride, (OGA)pointer);
+#//# glColorPointer_p($size, $type, $stride, (OGA)pointer);
 void
-glColorPointer_oga(size, oga)
+glColorPointer_p(size, oga)
 	GLint	size
 	OpenGL::Array oga
 	CODE:
@@ -781,9 +781,9 @@ glEdgeFlagPointer_s(stride, pointer)
 		glEdgeFlagPointer(stride, pointer_s);
 	}
 
-#//# glEdgeFlagPointer_oga($stride, (OGA)pointer);
+#//# glEdgeFlagPointer_p($stride, (OGA)pointer);
 void
-glEdgeFlagPointer_oga(oga)
+glEdgeFlagPointer_p(oga)
 	OpenGL::Array oga
 	CODE:
 	{

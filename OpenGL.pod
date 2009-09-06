@@ -341,7 +341,7 @@ data. The underlying OpenGL function will be passed a pointer to that data.
   glColorPointerEXT_p
   glColorPointerEXT_s
   glColorPointer_c
-  glColorPointer_oga
+  glColorPointer_p
   glColorPointer_s
   glCompileShaderARB
   glCopyPixels
@@ -406,7 +406,7 @@ data. The underlying OpenGL function will be passed a pointer to that data.
   glEdgeFlagPointerEXT_p
   glEdgeFlagPointerEXT_s
   glEdgeFlagPointer_c
-  glEdgeFlagPointer_oga
+  glEdgeFlagPointer_p
   glEdgeFlagPointer_s
   glEnable
   glEnableClientState
