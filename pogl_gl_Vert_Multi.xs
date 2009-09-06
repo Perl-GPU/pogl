@@ -1,4 +1,4 @@
-/*  Last saved: Fri 24 Jul 2009 01:50:05 PM  */
+/*  Last saved: Sun 06 Sep 2009 01:24:55 PM*/
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -187,9 +187,9 @@ glColorPointerEXT_s(size, type, stride, count, pointer)
 		glColorPointerEXT(size, type, stride, count, pointer_s);
 	}
 
-#//# glColorPointerEXT_p($size, (OGA)pointer);
+#//# glColorPointerEXT_oga($size, (OGA)pointer);
 void
-glColorPointerEXT_p(size, oga)
+glColorPointerEXT_oga(size, oga)
 	GLint	size
 	OpenGL::Array oga
 	INIT:
@@ -336,9 +336,9 @@ glEdgeFlagPointerEXT_s(stride, count, pointer)
 		glEdgeFlagPointerEXT(stride, count, pointer_s);
 	}
 
-#//# glEdgeFlagPointerEXT_p((OGA)pointer);
+#//# glEdgeFlagPointerEXT_oga((OGA)pointer);
 void
-glEdgeFlagPointerEXT_p(oga)
+glEdgeFlagPointerEXT_oga(oga)
 	OpenGL::Array oga
 	INIT:
 		loadProc(glEdgeFlagPointerEXT,"glEdgeFlagPointerEXT");
