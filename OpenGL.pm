@@ -2,6 +2,7 @@ package OpenGL;
 
 #  Copyright (c) 1998,1999 Kenneth Albanowski. All rights reserved.
 #  Copyright (c) 2007 Bob Free. All rights reserved.
+#  Copyright (c) 2009 Christopher Marshall. All rights reserved.
 #  This program is free software; you can redistribute it and/or
 #  modify it under the same terms as Perl itself.
 
@@ -10,7 +11,7 @@ require DynaLoader;
 
 use Carp;
 
-$VERSION = '0.57_02';        # Remove git for release
+$VERSION = '0.58';        # Remove git for release
 $BUILD_VERSION = $XS_VERSION = $VERSION;
 $VERSION = eval($VERSION);
 
