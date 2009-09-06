@@ -8,7 +8,7 @@ $PERL_VERSION =~ s|^v||;
 
 use OpenGL qw/ :all /;
 
-eval 'use OpenGL::Image';
+eval 'use OpenGL::Image 1.03';  # Need to use OpenGL::Image 1.03 or higher!
 my $hasImage = !$@;
 my $hasIM_635 = $hasImage && OpenGL::Image::HasEngine('Magick','6.3.5');
 
