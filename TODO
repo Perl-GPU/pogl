@@ -1,4 +1,4 @@
-Last saved: Wed 02 Sep 2009 09:40:04 AM 
+Last saved: Sun 06 Sep 2009 02:14:59 PM
 
 
 Refactor XS files partition
@@ -29,14 +29,15 @@ Evaluate backwards compatibility
 
 Clean up glp*() routine support:
     * backwards compatible where possible
-    * strip out GLX+X11 specific code
+    * strip out required GLX or X11 specific code
     * layer over GLUT environment
         * N.B. *GLUT is on *all* GLX systems
+	* Keep minimal GLX+X11 code to support Tk bindings
 
 
 Fix examples/ directory
     * update to use GLUT rather than glp()
-    * verify all examples work
+    * verify all examples work (most appear to)
     * remove broken cruft
 
 
@@ -101,7 +102,7 @@ Improve support for non-standard OpenGL configurations
 
 OpenGLUT support for building
     * NOTE: OpenGLUT is a dead project, use FreeGLUT
-    * Will not support at this time
+    * Such support not planned at this time
 
 
 Make POGL GLUT-proof

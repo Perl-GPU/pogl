@@ -1,5 +1,3 @@
-NOTE: Some examples may not function correctly or at all!
-
 NOTE: This example directory is in the process of being refactored
 to use GLUT/FreeGLUT rather than the original GLX/X11 for window
 creation and user interactions.  It has not yet been determined the

@@ -1,0 +1,15 @@
+* Some of the functions taking pointer type arguments
+  have inconsistent usage for the gl*_p() variants:
+
+    glBufferDataARB_p(target,oga,usage)
+    glBufferSubDataARB_p(target,offset,oga)
+    glColorPointer_p(size, oga)
+    glEdgeFlagPointer_p(oga)
+    glIndexPointerEXT_p(oga)
+    glIndexPointer_p(oga)
+    glNormalPointerEXT_p(oga)
+    glNormalPointer_p(oga)
+    glTexCoordPointerEXT_p(size, oga)
+    glTexCoordPointer_p(size, oga)
+    glVertexPointerEXT_p(size, oga)
+    glVertexPointer_p(size, oga)
