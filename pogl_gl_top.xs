@@ -1,4 +1,4 @@
-/*  Last saved: Sun 06 Sep 2009 02:10:19 PM */
+/*  Last saved: Wed 09 Sep 2009 01:02:49 PM */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -598,11 +598,14 @@ glpXNextEvent(d=dpy)
 				break;
 			case ButtonPress:
 			case ButtonRelease:
-				EXTEND(sp,4);
+				EXTEND(sp,7);
 				PUSHs(sv_2mortal(newSViv(event.type)));
 				PUSHs(sv_2mortal(newSViv(event.xbutton.button)));
 				PUSHs(sv_2mortal(newSViv(event.xbutton.x)));
 				PUSHs(sv_2mortal(newSViv(event.xbutton.y)));
+				PUSHs(sv_2mortal(newSViv(event.xbutton.x_root)));
+				PUSHs(sv_2mortal(newSViv(event.xbutton.y_root)));
+				PUSHs(sv_2mortal(newSViv(event.xbutton.state)));
 				break;
 			case MotionNotify:
 				EXTEND(sp,4);
