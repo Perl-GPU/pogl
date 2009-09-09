@@ -1,4 +1,4 @@
-/*  Last saved: Wed 09 Sep 2009 01:02:49 PM */
+/*  Last saved: Wed 09 Sep 2009 04:56:51 PM */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -72,7 +72,7 @@ Display myDisplay;
 
 #ifdef HAVE_GLpc
 
-#  define NUM_ARG 7
+#  define NUM_ARG 7			/* Number of mandatory args to glpcOpenWindow */
 
 Display *dpy;
 int dpy_open;
@@ -80,7 +80,7 @@ XVisualInfo *vi;
 Colormap cmap;
 XSetWindowAttributes swa;
 Window win;
-GLXContext cx;
+GLXContext ctx;
 
 static int default_attributes[] = { GLX_DOUBLEBUFFER, GLX_RGBA };
 
@@ -460,8 +460,8 @@ glpcOpenWindow(x,y,w,h,pw,steal,event_mask, ...)
 	    /* A blank line here will confuse xsubpp ;-) */
 #ifdef HAVE_GLX
 	    /* create a GLX context */
-	    cx = glXCreateContext(dpy, vi, 0, GL_TRUE);
-	    if(!cx)
+	    ctx = glXCreateContext(dpy, vi, 0, GL_TRUE);
+	    if(!ctx)
 		croak("No context\n");
 	
 	    /* create a color map */
@@ -488,8 +488,8 @@ glpcOpenWindow(x,y,w,h,pw,steal,event_mask, ...)
 #ifndef HAVE_GLX
 	    /* On OS/2: cannot create a context before mapping something... */
 	    /* create a GLX context */
-	    cx = glXCreateContext(dpy, vi, 0, GL_TRUE);
-	    if(!cx)
+	    ctx = glXCreateContext(dpy, vi, 0, GL_TRUE);
+	    if(!ctx)
 		croak("No context!\n");
 
 	    LastEventMask = event_mask;
@@ -500,7 +500,7 @@ glpcOpenWindow(x,y,w,h,pw,steal,event_mask, ...)
 #endif	/* not defined HAVE_GLX */
 
 	    /* connect the context to the window */
-	    if (!glXMakeCurrent(dpy, win, cx))
+	    if (!glXMakeCurrent(dpy, win, ctx))
 	        croak("Non current");
 	
 	    /* clear the buffer */
