@@ -6135,7 +6135,7 @@ sub glpOpenWindow {
                 $p{$k} = $a{$k};
         }
         glpcOpenWindow($p{'x'},$p{'y'},$p{'width'},$p{'height'},
-                       $p{'parent'},$p{steal},$p{'mask'},
+                       $p{'parent'},$p{'steal'},$p{'mask'},
                        @{$p{'attributes'}});
 }
 

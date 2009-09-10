@@ -2,6 +2,7 @@ TYPEMAP
 
 const unsigned char *	T_PV
 
+Display *	T_PTR
 GLsizei			T_INT
 GLfloat			T_FLOAT
 GLdouble		T_DOUBLE

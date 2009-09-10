@@ -1742,9 +1742,12 @@ glut instead.
   glpMultMatrixd
   glpMultMatrixf
   glpOpenWindow
+  glpPrintString	(from PDL)
+  glpRasterFont 	(from PDL)
   glpReadTex
   glpResizeWindow
   glpRestoreScreen
+  glpSetDebug		(from PDL)
   glpSolidSphere
   glpXNextEvent
   glpXQueryPointer

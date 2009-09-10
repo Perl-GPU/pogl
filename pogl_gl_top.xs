@@ -1,4 +1,4 @@
-/*  Last saved: Wed 09 Sep 2009 04:56:51 PM */
+/*  Last saved: Thu 10 Sep 2009 05:40:39 PM */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -82,6 +82,7 @@ XSetWindowAttributes swa;
 Window win;
 GLXContext ctx;
 
+static int debug=0;
 static int default_attributes[] = { GLX_DOUBLEBUFFER, GLX_RGBA };
 
 #endif	/* defined HAVE_GLpc */ 
@@ -507,6 +508,53 @@ glpcOpenWindow(x,y,w,h,pw,steal,event_mask, ...)
 	    glClearColor(0,0,0,1);
 	    RETVAL = win;
 	}
+
+#// glpRasterFont(name,base,number,d)
+int
+glpRasterFont(name,base,number,d)
+        char *name
+        int base
+        int number
+        Display *d
+        CODE:
+        {
+                XFontStruct *fi;
+                int lb;
+                fi = XLoadQueryFont(d,name);
+                if(fi == NULL) {
+                        die("No font %s found",name);
+                }
+                lb = glGenLists(number);
+                if(lb == 0) {
+                        die("No display lists left for font %s (need %d)",name,number);
+                }
+                glXUseXFont(fi->fid, base, number, lb);
+                RETVAL=lb;
+        }
+        OUTPUT:
+        RETVAL
+
+#// glpSetDebug(flag);
+void
+glpSetDebug(flag)
+        int flag
+        CODE:
+        {
+        debug=flag;
+        }
+
+#// glpPrintString(base,str);
+void
+glpPrintString(base,str)
+        int base
+        char *str
+        CODE:
+        {
+                glPushAttrib(GL_LIST_BIT);
+                glListBase(base);
+                glCallLists(strlen(str),GL_UNSIGNED_BYTE,(GLubyte*)str);
+                glPopAttrib();
+        }
 
 #// glpDisplay();
 void *
