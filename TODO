@@ -1,4 +1,9 @@
-Last saved: Sun 06 Sep 2009 02:14:59 PM
+Last saved: Fri 11 Sep 2009 12:25:04 PM 
+
+Clarify FreeGLUT/GLUT requirments wording
+    * make explicit what you get by OS
+    * add information on installing FreeGLUT
+    * install locations (TBD)
 
 
 Refactor XS files partition

@@ -1,4 +1,4 @@
-/*  Last saved: Fri 11 Sep 2009 10:07:18 AM */
+/*  Last saved: Fri 11 Sep 2009 12:19:30 PM */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -459,7 +459,7 @@ enum {
 	HANDLE_GLUT_TabletMotion,
 	HANDLE_GLUT_TabletButton,
         HANDLE_GLUT_MenuDestroy,            /* Open/FreeGLUT -chm */
-	HANDLE_GLUT_Close
+	HANDLE_GLUT_Close                   /* Open/FreeGLUT -chm */
 };
 
 /* Callback for glutDisplayFunc */
@@ -1720,8 +1720,11 @@ void
 glutMenuDestroyFunc(handler=0, ...)
 	SV *	handler
 	CODE:
-	decl_gwh_xs(MenuDestroy)
-
+        {
+#if defined HAVE_FREEGLUT
+		decl_gwh_xs(MenuDestroy)
+#endif
+	}
 
 #//# glutCloseFunc(\&callback);
 void
