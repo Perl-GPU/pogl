@@ -1661,15 +1661,34 @@ glutSolidCylinder(radius, height, slices, stacks)
 	GLdouble height
 	GLint slices
 	GLint stacks
+	CODE:
+	{
+#if defined HAVE_FREEGLUT
+		glutSolidCylinder(radius, height, slices, stacks);
+#endif
+	}
 
 #//# void  glutSolidRhombicDodecahedron (void)
 void
 glutSolidRhombicDodecahedron()
+	CODE:
+	{
+#if defined HAVE_FREEGLUT
+		glutSolidRhombicDodecahedron();
+#endif
+	}
 
 #//# float  glutStrokeHeight (void *font)
 GLfloat
 glutStrokeHeight(font)
 	void * font
+	CODE:
+	{
+#if defined HAVE_FREEGLUT
+		RETVAL = glutStrokeHeight(font);
+#endif
+	}
+
 
 #//# float  glutStrokeLength (void *font, const unsigned char *string)
 GLfloat
@@ -1682,6 +1701,12 @@ void
 glutStrokeString(font, string)
 	void * font
 	const unsigned char * string
+	CODE:
+	{
+#if defined HAVE_FREEGLUT
+		glutStrokeString(font, string);
+#endif
+	}
 
 #//# void  glutWarpPointer (int x, int y)
 void
@@ -1696,10 +1721,23 @@ glutWireCylinder(radius, height, slices, stacks)
 	GLdouble height
 	GLint slices
 	GLint stacks
+	CODE:
+	{
+#if defined HAVE_FREEGLUT
+		glutWireCylinder(radius, height, slices, stacks);
+#endif
+	}
+
 
 #//# void  glutWireRhombicDodecahedron (void)
 void
 glutWireRhombicDodecahedron()
+	CODE:
+	{
+#if defined HAVE_FREEGLUT
+		glutWireRhombicDodecahedron();
+#endif
+	}
 
 #endif
 
