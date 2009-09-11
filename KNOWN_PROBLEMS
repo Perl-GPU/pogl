@@ -1,3 +1,6 @@
+* GLUT support is more restricited in functions than
+  may actually be required
+
 * Some of the functions taking pointer type arguments
   have inconsistent usage for the gl*_p() variants:
 

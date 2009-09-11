@@ -6,7 +6,14 @@ which is generated from the git log --stat output of the
 version control.  Eventually, GIT_CHANGES will move to
 CHANGES and replace the hand generated functionality...
 
-TBD: set up publically accessible git repository for POGL
+Read only access to the POGL repository is available via
+  git clone git://pdl.git.sourceforge.net/gitroot/pdl/pogl
+
+For testing purposes and early availability, developers
+snapshots will be release periodically to CPAN.  Use the
+git repository if you want the bleeding edge code or wish
+to participate with development or patches.
+
 
 
 Change List for 0.57 - Bob "grafman" Free <grafman@graphcomp.com>

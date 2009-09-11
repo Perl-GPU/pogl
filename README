@@ -7,13 +7,14 @@
 
 Perl OpenGL: a.k.a. POGL
 
-As of OpenGL-0.57 POGL now *requires* FreeGLUT at
+As of OpenGL-0.57 POGL now requires FreeGLUT at
 
   http://freeglut.sourceforge.net/
 
-for full functionality.  This was due to licensing constraints and
-lack of window close events in GLUT.  Efforts are being made to support
-using GLUT with reduced functionality.
+for full functionality.  This was due to licensing constraints
+and lack of window close events in GLUT.  Efforts are being made
+to support using GLUT with reduced functionality and limited
+to the common subset of operations.
 
 
 NOTE: FreeGLUT distributions on Linux are deployed as libglut.so files,

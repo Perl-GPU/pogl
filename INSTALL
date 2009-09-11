@@ -7,13 +7,14 @@
     Install FreeGLUT (or compatible) - you can find this at
     http://freeglut.sourceforge.net/.
 
-    On Windows, FreeGLUT is installed automatically by this module if
-    needed.  On Mac OS X (Leopard and newer), GLUT is built in.  On
-    Linux distributions FreeGLUT is available via their package
-    installers.
+    On 32-bit MS Windows, FreeGLUT is installed automatically by
+    this module if needed.  On Mac OS X (Leopard and newer), GLUT
+    is available in the default OpenGL environment but you'll need
+    to install FreeGLUT for full functionality.  On most Linux
+    distributions FreeGLUT is available via their package installers.
 
-    The 'include' subfolder provided with this module contains headers
-    that this module has been tested with.
+    The 'include' subfolder provided with this module contains
+    headers that this module has been tested with.
 
     This module looks for libGL.so, libGLU.so and libglut.so
     (opengl32.dll, glu32.dll and freeglut.dll on Windows) in the normal
