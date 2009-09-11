@@ -1,4 +1,4 @@
-/*  Last saved: Fri 11 Sep 2009 12:19:30 PM */
+/*  Last saved: Fri 11 Sep 2009 02:37:41 PM */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -1143,7 +1143,11 @@ void
 glutWindowStatusFunc(handler=0, ...)
 	SV *	handler
 	CODE:
-	decl_gwh_xs(WindowStatus)
+        {
+#if defined HAVE_FREEGLUT
+		decl_gwh_xs(WindowStatus)
+#endif
+	}
 
 #endif
 
@@ -1159,7 +1163,11 @@ void
 glutMouseWheelFunc(handler=0, ...)
 	SV *	handler
 	CODE:
-	decl_gwh_xs(MouseWheel)
+        {
+#if defined HAVE_FREEGLUT
+		decl_gwh_xs(MouseWheel)
+#endif
+	}
 
 #//# glutMotionFunc(\&callback);
 void
@@ -1173,7 +1181,11 @@ void
 glutPassiveMotionFunc(handler=0, ...)
 	SV *	handler
 	CODE:
-	decl_gwh_xs(PassiveMotion)
+	{
+#if defined HAVE_FREEGLUT
+		decl_gwh_xs(PassiveMotion)
+#endif
+	}
 
 #//# glutVisibilityFunc(\&callback);
 void
@@ -1286,7 +1298,11 @@ void
 glutMenuStateFunc(handler=0, ...)
 	SV *	handler
 	CODE:
-	decl_ggh_xs(MenuState)
+	{
+#if defined HAVE_FREEGLUT
+		decl_ggh_xs(MenuState)
+#endif
+	}
 
 #//# glutIdleFunc(\&callback);
 void
