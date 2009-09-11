@@ -1,4 +1,4 @@
-/*  Last saved: Sun 06 Sep 2009 02:10:25 PM*/
+/*  Last saved: Fri 11 Sep 2009 08:49:52 AM */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -1569,25 +1569,45 @@ int
 glutGameModeGet(mode)
 	GLenum	mode
 
-##//## CHM implementation of missing FreeGLUT/OpenGLUT features
-
+#//# FreeGLUT/OpenGLUT feature
 #//# int  glutBitmapHeight (void *font)
 int
 glutBitmapHeight(font)
 	void * font
+	CODE:
+	{
+#if defined HAVE_FREEGLUT
+		RETVAL = glutBitmapHeight(font);
+#endif
+	}
 
+#//# FreeGLUT/OpenGLUT feature
 #//# int  glutBitmapLength (void *font, const unsigned char *string)
 int
 glutBitmapLength(font, string)
 	void * font
 	const unsigned char * string
+	CODE:
+	{
+#if defined HAVE_FREEGLUT
+		RETVAL = glutBitmapLength(font, string);
+#endif
+	}
 
+#//# FreeGLUT/OpenGLUT feature
 #//# void  glutBitmapString (void *font, const unsigned char *string)
 void
 glutBitmapString(font, string)
 	void * font
 	const unsigned char * string
+	CODE:
+	{
+#if defined HAVE_FREEGLUT
+		glutBitmapString(font, string);
+#endif
+	}
 
+#//# FreeGLUT/OpenGLUT feature
 #//# void *  glutGetProcAddress (const char *procName)
 # void *
 # glutGetProcAddress(procName)
