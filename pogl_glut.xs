@@ -1,4 +1,4 @@
-/*  Last saved: Fri 11 Sep 2009 08:49:52 AM */
+/*  Last saved: Fri 11 Sep 2009 10:07:18 AM */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -1613,9 +1613,16 @@ glutBitmapString(font, string)
 # glutGetProcAddress(procName)
 # 	const char * procName
 
+#//# FreeGLUT/OpenGLUT feature
 #//# void  glutMainLoopEvent (void)
 void
 glutMainLoopEvent()
+	CODE:
+	{
+#if defined HAVE_FREEGLUT
+		glutMainLoopEvent();
+#endif
+	}
 
 #//# void  glutPostWindowOverlayRedisplay (int windowID)
 void
