@@ -1,7 +1,7 @@
 #!make
 
 CC=cc
-CCFLAGS=-I../include -I/usr/X11/include
+CCFLAGS= -I/usr/X11/include -I../include
 LINK=cc
 LDFLAGS=-framework AGL -framework OpenGL -framework GLUT
 

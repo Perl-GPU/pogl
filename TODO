@@ -1,9 +1,16 @@
-Last saved: Fri 11 Sep 2009 12:25:04 PM 
+Last saved: Fri 11 Sep 2009 01:02:56 PM 
+
 
 Clarify FreeGLUT/GLUT requirments wording
     * make explicit what you get by OS
     * add information on installing FreeGLUT
     * install locations (TBD)
+
+
+Evaluate local include directory usage
+    * needed for win32 since we install
+    * check we're using the systemwide files
+    * if not, why not
 
 
 Refactor XS files partition
