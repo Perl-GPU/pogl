@@ -1313,7 +1313,6 @@ our $glext_dependencies =
 ##------------------------------------------------------------------------
 
 @glx_func = qw(
-   glpcOpenWindow
    glXSwapBuffers
    XPending
    glpXNextEvent
@@ -6125,6 +6124,7 @@ bootstrap OpenGL;
                 # 'attributes'=> [GLX_RGBA()],
         );
 
+
 sub glpOpenWindow {
         # default values
         my(%a) = @_;
@@ -6134,6 +6134,10 @@ sub glpOpenWindow {
                 #print "parameter $k now ",$a{$k}," was ",$p{$k},"\n";  
                 $p{$k} = $a{$k};
         }
+        #
+        # glpcOpenWindow() no longer exported.  Use fully qualified
+        # package name or (better!) glpOpenWindow()
+        #
         glpcOpenWindow($p{'x'},$p{'y'},$p{'width'},$p{'height'},
                        $p{'parent'},$p{'steal'},$p{'mask'},
                        @{$p{'attributes'}});

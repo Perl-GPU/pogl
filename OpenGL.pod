@@ -5,9 +5,10 @@ OpenGL - v0.58_002
 
 =head1 SYNOPSIS
 
-	use OpenGL; # exports most of the old functionality of OpenGL 0.4
 
-	use OpenGL qw(:old); # Same thing
+	use OpenGL qw(:old); # Exports much old functionality of OpenGL 0.4
+
+	use OpenGL; # DEPRECATED!  Same as above.  DEPRECATED!
 
 	use OpenGL qw(:glfunctions :glconstants); # exports functions and
 	            # constants for using OpenGL, without exporting GLU, GLUT,
@@ -1240,7 +1241,8 @@ glut instead.
   glXSwapBuffers
   glpXNextEvent
   glpXQueryPointer
-  glpcOpenWindow
+
+  glpcOpenWindow	(Not exported, must use fully qualified package name)
 
 =head2 Old functions
 
@@ -1752,13 +1754,12 @@ glut instead.
   glpXNextEvent
   glpXQueryPointer
 
-glpOpenWindow() provides a shortcut to glpcOpenWindow().  Both these
-functions have a special (mis)feature to handle cases when one does
-not need double buffering: if no GLX_DOUBLEBUFFER is specified, I<and>
-creation of a "visual" fails, the creation is retried I<with>
-GLX_DOUBLEBUFFER specified (to make it easier to support
-implementation which do not have SINGLEBUFFER visuals - which is
-typical on Suns).
+glpOpenWindow() provides the preferred interface to glpcOpenWindow().
+Both these functions have a special (mis)feature to handle cases when
+one does not need double buffering: if no GLX_DOUBLEBUFFER is specified,
+I<and> creation of a "visual" fails, the creation is retried I<with>
+GLX_DOUBLEBUFFER specified (to make it easier to support implementation
+which do not have SINGLEBUFFER visuals - which is typical on Suns).
 
 Since "finishing drawing" with and without GLX_DOUBLEBUFFER should be
 done in different ways, a convenience function glpFlush() is provided;
@@ -1771,17 +1772,23 @@ Additionally, in absense of GLUT, glpSolidSphere() is aliased to
 glutSolidSphere(), to make writing simple portable backward-compatible
 scripts easier.
 
-=head1 Compatibility with OpenGL 0.4:
+=head1 Historical Compatibility
 
-The OpenGL 0.4 library, written by Stan Melax, contains more support for
-some SGI specific functions then 0.5, so you may wish to stay with 0.4 on
-an SGI system. For other machines, 0.5 should greatly improve compatibility
-(compiling where 0.4 wouldn't have).
+The original OpenGL-0.4 library, written by Stan Melax, was releaseed to
+CPAN on 16-Feb-1996.
 
-Code-level compatibility with OpenGL 0.4 is available if you refer to
-OpenGL simply via C<use OpenGL;>. If you request specific packages (such as
-C<use OpenGL qw(glfunctions glconstants glutfunctions);>), you'll get 0.5
-specific support.
+The OpenGL-0.5 library, by Kenneth Albanowski, was released to CPAN
+on 24-Apr-1999.
+
+Ilya Zakharevich released OpenGL-0.53 on 05-Nov-2000 and and OpenGL-0.54
+on 26-May-2002.
+
+Bob Free has been responsible for the OpenGL module development starting
+with OpenGL-0.55 on 26-Apr-2007.
+
+Compatibility with these earlier libraries is in a state of flux with
+with on-going work to re-integrate the Perl OpenGL module into the Perl
+Data Language and replacing its fork of the OpenGL-0.5.
 
 =head1 EXPORTS
 
@@ -1827,7 +1834,7 @@ Exports all symbols needed for the B<glut*> functions.
 
 =item :glxfunctions
 
-Exports all B<glx*> functions.
+Exports all B<glx*> functions.  No longer exports C<glpcOpenWindow()>.
 
 =item :glxconstants
 
