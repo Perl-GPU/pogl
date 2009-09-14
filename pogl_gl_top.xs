@@ -1,4 +1,4 @@
-/*  Last saved: Mon 14 Sep 2009 02:42:29 PM */
+/*  Last saved: Mon 14 Sep 2009 03:08:58 PM */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -419,50 +419,56 @@ glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
     CODE:
 {
     XEvent event;
-    Window pwin=(Window)pw;
+    Window pwin = (Window)pw;
     int *attributes = default_attributes + 1;
     int *a_buf = NULL;
 
-    if(items>NUM_ARG){
+    if(items > NUM_ARG){
         int i;
-        a_buf = (int *)malloc((items-NUM_ARG+2)* sizeof(int));
+        a_buf = (int *) malloc((items-NUM_ARG+2) * sizeof(int));
         a_buf[0] = GLX_DOUBLEBUFFER; /* Preallocate */
         attributes = a_buf + 1;
-        for(i=NUM_ARG;i<items;i++) {
-            attributes[i-NUM_ARG]=SvIV(ST(i));
+        for (i=NUM_ARG; i<items; i++) {
+            attributes[i-NUM_ARG] = SvIV(ST(i));
         }
-        attributes[items-NUM_ARG]=None;
+        attributes[items-NUM_ARG] = None;
     }
     if(debug){
         int i;	
-        for(i=0;attributes[i] != None; i++){
-            printf("att=%%d %%d\n",i,attributes[i]);
+        for (i=0; attributes[i] != None; i++) {
+            printf("att=%%d %%d\n", i, attributes[i]);
         }
-    }       
+    }
     /* get a connection */
     if (!dpy_open) {
-        dpy = XOpenDisplay(0);
+        dpy = XOpenDisplay(NULL);
         dpy_open = 1;
     }
-    if (!dpy)
-        croak("No display!");
+    if (!dpy) {
+        croak("ERROR: failed to get an X connection");
+    } else if (debug) {
+        printf("Display open %%x\n", dpy);
+    }		
 
     /* get an appropriate visual */
-    vi = glXChooseVisual(dpy, DefaultScreen(dpy),attributes);
+    vi = glXChooseVisual(dpy, DefaultScreen(dpy), attributes);
     if (!vi) { /* Might have happened that one does not
                 * *need* DOUBLEBUFFER, but the display does
                 * not provide SINGLEBUFFER; and the semantic
                 * of GLX_DOUBLEBUFFER is that if it misses,
                 * only SINGLEBUFFER visuals are selected.  */
         attributes--; /* GLX_DOUBLEBUFFER preallocated there */
-        vi = glXChooseVisual(dpy, DefaultScreen(dpy),attributes); /* Retry */
+        vi = glXChooseVisual(dpy, DefaultScreen(dpy), attributes); /* Retry */
         if (vi)
             DBUFFER_HACK = 1;
     }
     if (a_buf)
         free(a_buf);
-    if(!vi)
-        croak("No visual!");
+    if(!vi) {
+        croak("ERROR: failed to get an X visual\n");
+    } else if (debug) {
+        printf("Visual open %%x\n", vi);
+    }		
 
     /* A blank line here will confuse xsubpp ;-) */
 #ifdef HAVE_GLX

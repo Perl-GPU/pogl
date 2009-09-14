@@ -6114,15 +6114,15 @@ bootstrap OpenGL;
 # (with modifications for OS/2).
 
 %window_defaults=(
-                'x'     => 0,
-                'y'     => 0,
-                'width' => 500,
-                'height'=> 500,
-                'parent'=> 0,
-                'steal'=> 0,
-		'mask'	=> (_have_glx() ? StructureNotifyMask() : 0),
-                # 'attributes'=> [GLX_RGBA()],
-        );
+   'x'         => 0,
+   'y'         => 0,
+   'width'     => 500,
+   'height'    => 500,
+   'parent'    => 0,
+   'steal'     => 0,
+   'mask'      => (_have_glx() ? StructureNotifyMask() : 0),
+   'attributes'=> [],
+);
 
 
 sub glpOpenWindow {
@@ -6130,7 +6130,7 @@ sub glpOpenWindow {
         my(%a) = @_;
         my(%p) = %window_defaults;
         foreach $k (keys(%a)){
-                defined($p{$k}) || warn "Not a valid parameter to glpOpenWindow: `$k'\n"; # exists instead?
+                exists($p{$k}) || warn "Not a valid parameter to glpOpenWindow: `$k'\n";
                 #print "parameter $k now ",$a{$k}," was ",$p{$k},"\n";  
                 $p{$k} = $a{$k};
         }
