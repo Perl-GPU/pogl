@@ -6130,7 +6130,7 @@ sub glpOpenWindow {
         my(%a) = @_;
         my(%p) = %window_defaults;
         foreach $k (keys(%a)){
-                defined($p{$k}) || warn "Not a valid parameter to glpOpenWindow: `$k'\n";
+                defined($p{$k}) || warn "Not a valid parameter to glpOpenWindow: `$k'\n"; # exists instead?
                 #print "parameter $k now ",$a{$k}," was ",$p{$k},"\n";  
                 $p{$k} = $a{$k};
         }
@@ -6139,7 +6139,7 @@ sub glpOpenWindow {
         # package name or (better!) glpOpenWindow()
         #
         glpcOpenWindow($p{'x'},$p{'y'},$p{'width'},$p{'height'},
-                       $p{'parent'},$p{'steal'},$p{'mask'},
+                       $p{'parent'},$p{'mask'},$p{'steal'},
                        @{$p{'attributes'}});
 }
 
