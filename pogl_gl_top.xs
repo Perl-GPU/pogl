@@ -1,4 +1,4 @@
-/*  Last saved: Mon 14 Sep 2009 03:08:58 PM */
+/*  Last saved: Mon 14 Sep 2009 03:15:28 PM */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -474,8 +474,11 @@ glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
 #ifdef HAVE_GLX
     /* create a GLX context */
     ctx = glXCreateContext(dpy, vi, 0, GL_TRUE);
-    if(!ctx)
-        croak("No context\n");
+    if (!ctx) {
+        croak("ERROR: failed to get an X Context");
+    } else if (debug) {
+        printf("Context Created %%x\n", ctx);
+    }
 
     /* create a color map */
     cmap = XCreateColormap(dpy, RootWindow(dpy, vi->screen),
