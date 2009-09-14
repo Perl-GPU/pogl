@@ -1,4 +1,4 @@
-/*  Last saved: Mon 14 Sep 2009 03:25:32 PM */
+/*  Last saved: Mon 14 Sep 2009 03:33:07 PM */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -501,6 +501,7 @@ glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
                 x, y, w, h,
                 0, vi->depth, InputOutput, vi->visual,
                 CWBorderPixel|CWColormap|CWEventMask, &swa);
+                /* NOTE: PDL code had CWBackPixel above */
     }
     if (!win) {
         croak("No Window");
@@ -508,16 +509,16 @@ glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
         if (debug) printf("win = 0x%%x\n", win);
     }
     XMapWindow(dpy, win);
-#ifndef HAVE_GLX
+#ifndef HAVE_GLX  /* For OS/2 GLX emulation stuff -chm 2009.09.14 */
     /* On OS/2: cannot create a context before mapping something... */
     /* create a GLX context */
     ctx = glXCreateContext(dpy, vi, 0, GL_TRUE);
-    if(!ctx)
+    if (!ctx)
         croak("No context!\n");
 
     LastEventMask = event_mask;
-#else	/* defined HAVE_GLX */
-    if((event_mask & StructureNotifyMask) && !steal) {
+#else	/* HAVE_GLX, this is the default branch */
+    if ( (event_mask & StructureNotifyMask) && !steal ) {
         XIfEvent(dpy, &event, WaitForNotify, (char*)win);
     }
 #endif	/* not defined HAVE_GLX */
