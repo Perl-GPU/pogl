@@ -26,7 +26,6 @@ this default.
 NOTE: POGL automatically installs a binary FreeGLUT library on Windows.
 
 
-
 POGL provides access to most of the OpenGL 1.0, 1.1, and 1.2 APIs, and
 many OpenGL Extensions, such as Framebuffer Objects (FBOs) and Vertex
 Array Objects (VBOs).
