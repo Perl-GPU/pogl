@@ -1,4 +1,4 @@
-/*  Last saved: Mon 14 Sep 2009 03:15:28 PM */
+/*  Last saved: Mon 14 Sep 2009 03:25:32 PM */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -490,16 +490,23 @@ glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
     swa.event_mask = event_mask;
 #endif	/* defined HAVE_GLX */
 
-    if(!pwin){pwin=RootWindow(dpy, vi->screen);}
-    if (steal)
+    if (!pwin) {
+        pwin = RootWindow(dpy, vi->screen);
+        if (debug) printf("Using root as parent window 0x%%x\n", pwin);
+    }
+    if (steal) {
         win = nativeWindowId(dpy, pwin); /* What about depth/visual */
-    else
+    } else {
         win = XCreateWindow(dpy, pwin, 
                 x, y, w, h,
                 0, vi->depth, InputOutput, vi->visual,
                 CWBorderPixel|CWColormap|CWEventMask, &swa);
-    if(!win)
+    }
+    if (!win) {
         croak("No Window");
+    } else {
+        if (debug) printf("win = 0x%%x\n", win);
+    }
     XMapWindow(dpy, win);
 #ifndef HAVE_GLX
     /* On OS/2: cannot create a context before mapping something... */
