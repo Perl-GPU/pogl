@@ -1,4 +1,4 @@
-/*  Last saved: Mon 14 Sep 2009 03:33:07 PM */
+/*  Last saved: Mon 14 Sep 2009 04:13:39 PM */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -82,7 +82,7 @@ XSetWindowAttributes swa;
 Window win;
 GLXContext ctx;
 
-static int debug=0;
+static int debug = 0;
 static int default_attributes[] = { GLX_DOUBLEBUFFER, GLX_RGBA, None };
 
 #endif	/* defined HAVE_GLpc */ 
@@ -407,7 +407,7 @@ __had_dbuffer_hack()
 #ifdef HAVE_GLpc			/* GLX or __PM__ */
 
 #// $ID = glpcOpenWindow($x,$y,$w,$h,$pw,$steal,$event_mask,@attribs);
-GLXDrawable
+HV *
 glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
     int	x
     int	y
@@ -420,8 +420,11 @@ glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
 {
     XEvent event;
     Window pwin = (Window)pw;
+    unsigned int err;
     int *attributes = default_attributes + 1;
     int *a_buf = NULL;
+
+    RETVAL = newHV(); /* Create hash to return GL Object info */
 
     if(items > NUM_ARG){
         int i;
@@ -433,10 +436,10 @@ glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
         }
         attributes[items-NUM_ARG] = None;
     }
-    if(debug){
+    if (debug) {
         int i;	
         for (i=0; attributes[i] != None; i++) {
-            printf("att=%%d %%d\n", i, attributes[i]);
+            printf("att=%d %d\n", i, attributes[i]);
         }
     }
     /* get a connection */
@@ -447,7 +450,7 @@ glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
     if (!dpy) {
         croak("ERROR: failed to get an X connection");
     } else if (debug) {
-        printf("Display open %%x\n", dpy);
+        printf("Display open %x\n", dpy);
     }		
 
     /* get an appropriate visual */
@@ -467,7 +470,7 @@ glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
     if(!vi) {
         croak("ERROR: failed to get an X visual\n");
     } else if (debug) {
-        printf("Visual open %%x\n", vi);
+        printf("Visual open %x\n", vi);
     }		
 
     /* A blank line here will confuse xsubpp ;-) */
@@ -477,7 +480,7 @@ glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
     if (!ctx) {
         croak("ERROR: failed to get an X Context");
     } else if (debug) {
-        printf("Context Created %%x\n", ctx);
+        printf("Context Created %x\n", ctx);
     }
 
     /* create a color map */
@@ -492,7 +495,7 @@ glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
 
     if (!pwin) {
         pwin = RootWindow(dpy, vi->screen);
-        if (debug) printf("Using root as parent window 0x%%x\n", pwin);
+        if (debug) printf("Using root as parent window 0x%x\n", pwin);
     }
     if (steal) {
         win = nativeWindowId(dpy, pwin); /* What about depth/visual */
@@ -501,12 +504,12 @@ glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
                 x, y, w, h,
                 0, vi->depth, InputOutput, vi->visual,
                 CWBorderPixel|CWColormap|CWEventMask, &swa);
-                /* NOTE: PDL code had CWBackPixel above */
+        /* NOTE: PDL code had CWBackPixel above */
     }
     if (!win) {
         croak("No Window");
     } else {
-        if (debug) printf("win = 0x%%x\n", win);
+        if (debug) printf("win = 0x%x\n", win);
     }
     XMapWindow(dpy, win);
 #ifndef HAVE_GLX  /* For OS/2 GLX emulation stuff -chm 2009.09.14 */
@@ -527,10 +530,29 @@ glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
     if (!glXMakeCurrent(dpy, win, ctx))
         croak("Non current");
 
+    if (debug)
+        printf("Display=0x%x Window=0x%x Context=0x%x\n",dpy, win, ctx);
+
+    /* Create the GL object hash information */
+    hv_store(RETVAL, "Display", strlen("Display"), newSViv(PTR2IV(dpy)), 0);
+    hv_store(RETVAL, "Window", strlen("Window"),   newSViv(  (IV) win ), 0);
+    hv_store(RETVAL, "Context", strlen("Context"), newSViv(PTR2IV(ctx)), 0);
+
+    hv_store(RETVAL, "GL_Version",strlen("GL_Version"), 
+            newSVpv((char *) glGetString(GL_VERSION),0),0);
+    hv_store(RETVAL, "GL_Vendor",strlen("GL_Vendor"), 
+            newSVpv((char *) glGetString(GL_VENDOR),0),0);
+    hv_store(RETVAL, "GL_Renderer",strlen("GL_Renderer"), 
+            newSVpv((char *) glGetString(GL_RENDERER),0),0);
+
     /* clear the buffer */
     glClearColor(0,0,0,1);
-    RETVAL = win;
+    while ( (err = glGetError()) != GL_NO_ERROR ) {
+        printf("ERROR issued in GL %%s\n", gluErrorString(err));
+    }
 }
+OUTPUT:
+RETVAL
 
 #// glpRasterFont(name,base,number,d)
 int
@@ -563,7 +585,7 @@ glpSetDebug(flag)
         int flag
         CODE:
         {
-        debug=flag;
+        debug = flag;
         }
 
 #// glpPrintString(base,str);
