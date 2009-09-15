@@ -66,7 +66,7 @@ use constant DO_TESTS => 0;
 
 # Run in Game Mode
 my $gameMode;
-if (lc($ARGV[0]) eq 'gamemode')
+if ($#ARGV and lc($ARGV[0]) eq 'gamemode')
 {
   $gameMode = $ARGV[1] || '';
 }
@@ -1484,6 +1484,11 @@ glutInit();
 
 # To see OpenGL drawing, take out the GLUT_DOUBLE request.
 glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_ALPHA);
+if (not glutGet(GLUT_DISPLAY_MODE_POSSIBLE))
+{
+   warn "glutInitDisplayMode not possible, exiting quietly";
+   exit 0;
+}
 #glutInitDisplayString("rgb alpha>=0 double depth");
 
 # Open Window
