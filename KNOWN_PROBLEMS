@@ -1,4 +1,4 @@
-* GLUT support is more restricited in functions than
+* GLUT support is more restricted in functions than
   may actually be required
 
 * Some of the functions taking pointer type arguments

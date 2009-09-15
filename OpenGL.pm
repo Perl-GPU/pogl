@@ -11,7 +11,7 @@ require DynaLoader;
 
 use Carp;
 
-$VERSION = '0.58_002';        # Remove git for release
+$VERSION = '0.58_003';
 $BUILD_VERSION = $XS_VERSION = $VERSION;
 $VERSION = eval($VERSION);
 

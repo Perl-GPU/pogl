@@ -1,4 +1,4 @@
-Last saved: Fri 11 Sep 2009 01:02:56 PM 
+Last saved: Tue 15 Sep 2009 09:10:25 AM 
 
 
 Clarify FreeGLUT/GLUT requirments wording
@@ -40,6 +40,7 @@ Evaluate backwards compatibility
 
 
 Clean up glp*() routine support:
+    * add friendlier display selection function (glpInitDisplayString?)
     * backwards compatible where possible
     * strip out required GLX or X11 specific code
     * layer over GLUT environment
