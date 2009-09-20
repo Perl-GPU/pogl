@@ -1,4 +1,4 @@
-Last saved: Tue 15 Sep 2009 09:10:25 AM 
+Last saved: Sun 20 Sep 2009 07:12:51 PM
 
 
 Clarify FreeGLUT/GLUT requirments wording
@@ -26,9 +26,12 @@ Enhance CPAN Testers automated testing support
 
 
 Improve library and headers checks in Makefile.PL
-    * Required libraries are OpenGL and GLUT
+    * Required libraries are OpenGL and GLUT/FreeGLUT
         * what about GLU, GLX, others?
         * GLUT is available on *all* GLX platforms
+	* Mac OS X has a non-X11 GLUT library with extensions:
+	    * glutCheckLoop()   -- same as glutMainLoopEvent()
+	    * glutWMCloseFunc() -- same as glutCloseFunc()
     * If libraries and headers are not available exit 0
 
 
@@ -44,7 +47,7 @@ Clean up glp*() routine support:
     * backwards compatible where possible
     * strip out required GLX or X11 specific code
     * layer over GLUT environment
-        * N.B. *GLUT is on *all* GLX systems
+        * N.B. *GLUT is on *all* GLX systems but may not use GLX
 	* Keep minimal GLX+X11 code to support Tk bindings
 
 
