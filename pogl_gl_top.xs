@@ -1,4 +1,4 @@
-/*  Last saved: Mon 14 Sep 2009 04:13:39 PM */
+/*  Last saved: Mon 21 Sep 2009 11:28:35 PM*/
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -579,15 +579,6 @@ glpRasterFont(name,base,number,d)
         OUTPUT:
         RETVAL
 
-#// glpSetDebug(flag);
-void
-glpSetDebug(flag)
-        int flag
-        CODE:
-        {
-        debug = flag;
-        }
-
 #// glpPrintString(base,str);
 void
 glpPrintString(base,str)
@@ -733,6 +724,16 @@ glpXQueryPointer(w=win,d=dpy)
 	}
 
 #endif /* defined HAVE_GLpc */
+
+
+#// glpSetDebug(flag);
+void
+glpSetDebug(flag)
+        int flag
+        CODE:
+        {
+        debug = flag;
+        }
 
 
 #//# glpReadTex($file);
