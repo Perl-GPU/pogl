@@ -120,10 +120,6 @@ our @libdirs = qw
   -L/usr/X11R6/lib
   -L/usr/local/lib
   -L/usr/openwin/lib
-  -L/usr/lib/xorg/modules
-  -L/usr/X11R6/lib/modules
-  -L/usr/lib/xorg/modules/extensions
-  -L/usr/X11R6/lib/modules/extensions
 };
 
 our @check_libs = qw
