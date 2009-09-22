@@ -134,9 +134,6 @@ our @check_libs = qw
   -lGLUT
   -lglut
   -lMesaGLUT
-  -lGLX
-  -lglx
-  -lMesaGLX
 };
 
 our $found_libs = get_libs(@libdirs,@check_libs);
