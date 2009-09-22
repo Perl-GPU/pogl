@@ -9,8 +9,8 @@
 
     On 32-bit MS Windows, FreeGLUT is installed automatically by
     this module if needed.  On Mac OS X (Leopard and newer), GLUT
-    is available in the default OpenGL environment but you'll need
-    to install FreeGLUT for full functionality.  On most Linux
+    is available in the default OpenGL environment with sufficient
+    extensions by Apple to support full functionalityt.  On most Linux
     distributions FreeGLUT is available via their package installers.
 
     The 'include' subfolder provided with this module contains
@@ -21,11 +21,11 @@
     places for your OS installation; you may need to symlink libraries
     from various vendors to the proper place/names.
 
-    Note: it is strongly recommended, but not required, that you
-    install PerlMagick (6.3.5 or newer) first, as this will
-    dramatically simplify and enhance your ability/performance in
-    loading/saving images/textures via OpenGL::Image - see INSTALL
-    note in the OpenGL::Image module.
+    Note:  If you will be installing OpenGL::Image, it is recommended,
+    but not required, that you install PerlMagick (6.3.5 or newer) first,
+    as this will dramatically simplify and enhance your ability/performance
+    in loading/saving images/textures via OpenGL::Image - see INSTALL note
+    in the OpenGL::Image module.
 
  
  2. Run 'perl Makefile.PL'
@@ -59,7 +59,7 @@
 
     Note: glversion assumes libGL.so and libglut.so
     (opengl32.dll and freeglut.dll on Windows) - and that it will
-    be run via a GUI window (eg. X11 on Unix).  This will impact
+    be run via a GUI window (eg. X11 on Unix).  This may impact
     automated build systems.
 
 

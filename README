@@ -11,10 +11,10 @@ As of OpenGL-0.57 POGL now requires FreeGLUT at
 
   http://freeglut.sourceforge.net/
 
-for full functionality.  This was due to licensing constraints
-and lack of window close events in GLUT.  Efforts are being made
-to support using GLUT with reduced functionality and limited
-to the common subset of operations.
+for full functionality (GLUT on Mac OS X is ok).  This was due
+to licensing constraints and lack of window close events in GLUT.
+Efforts are being made to support using GLUT with reduced
+functionality and limited to the common subset of operations.
 
 
 NOTE: FreeGLUT distributions on Linux are deployed as libglut.so files,
@@ -82,17 +82,17 @@ http://graphcomp.com/opengl
 
 DISTRIBUTIONS:
 
-CPAN: cpan.org
+CPAN: http://search.cpan.org/~chm/	# for latest CPAN version
 
-SVN: svn checkout svn://graphcomp.org/cpan/OpenGL OpenGL
+GIT: git clone git://pdl.git.sourceforge.net/gitroot/pdl/pogl
 
-TARBALL: http://graphcomp.com/opengl/OpenGL-0.56.tar.gz
+TARBALL: TBD
 
-ZIP: http://graphcomp.com/opengl/OpenGL-0.56.zip
+ZIP: TBD
 
-PPM 5.6.x: ppm install http://graphcomp.com/opengl/ppm56/OpenGL.ppd
+PPM 5.6.x: TBD
 
-PPM 5.8.x: ppm install http://graphcomp.com/opengl/ppm58/OpenGL.ppd
+PPM 5.8.x: TBD
 
 Enjoy!
 Bob "grafman" Free <grafman@graphcomp.com>
@@ -307,3 +307,6 @@ Changes:
 
 	Alex Dodge
 	Added glutKeyboardUpFunc
+
+0.58+:  See GIT_CHANGES file in CPAN releases or use git log --stat on
+        a git repository

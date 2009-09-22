@@ -1,5 +1,5 @@
-* GLUT support is more restricted in functions than
-  may actually be required
+* Configuration and compiling requires an active OpenGL
+  context (e.g. a display)
 
 * Some of the functions taking pointer type arguments
   have inconsistent usage for the gl*_p() variants:

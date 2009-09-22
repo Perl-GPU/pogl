@@ -1,4 +1,4 @@
-Last saved: Sun 20 Sep 2009 07:12:51 PM
+Last saved: Tue 22 Sep 2009 04:06:19 PM
 
 
 Clarify FreeGLUT/GLUT requirments wording
@@ -58,11 +58,6 @@ Fix examples/ directory
 
 
 Add Geometry Shader support
-
-
-Fix GLU binding implementation:
-    * particularly Tesselation
-    * start by adding tests in t/
 
 
 Add bindings to GLUI
