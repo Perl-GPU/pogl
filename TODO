@@ -49,6 +49,7 @@ Clean up glp*() routine support:
     * layer over GLUT environment
         * N.B. *GLUT is on *all* GLX systems but may not use GLX
 	* Keep minimal GLX+X11 code to support Tk bindings
+	* Is Tk even being used?  Contact perl/Tk about better support.
 
 
 Fix examples/ directory
@@ -123,7 +124,7 @@ Make POGL GLUT-proof
     * Some functionality may be emulated (glutBitmapString)
     * make work with readline event loop for perldl shell
         * reverse callback strategy
-        * what about a GUI window mode for perldl?
+        * what about a GUI window mode for perldl in that case?
 
 
 Fix current POGL configuration and build process

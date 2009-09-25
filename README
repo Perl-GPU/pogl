@@ -1,20 +1,21 @@
  Copyright (c) 1998,1999 Kenneth Albanowski. All rights reserved.
  Copyright (c) 2000 Ilya Zakharevich. All rights reserved.
  Copyright (c) 2007 Bob Free. All rights reserved.
+ Copyright (c) 2009 Chris Marshall. All rights reserved.
  This program is free software; you can redistribute it and/or
  modify it under the same terms as Perl itself. 
 
 
 Perl OpenGL: a.k.a. POGL
 
-As of OpenGL-0.57 POGL now requires FreeGLUT at
+As of OpenGL-0.57 POGL now requires FreeGLUT (GLUT on Mac OS X is ok)
+for full functionality:
 
   http://freeglut.sourceforge.net/
 
-for full functionality (GLUT on Mac OS X is ok).  This was due
-to licensing constraints and lack of window close events in GLUT.
-Efforts are being made to support using GLUT with reduced
-functionality and limited to the common subset of operations.
+This was due to licensing constraints and lack of window close events
+in GLUT.  Efforts are being made to support the original GLUT with
+reduced functionality and limited to the common subset of operations.
 
 
 NOTE: FreeGLUT distributions on Linux are deployed as libglut.so files,
