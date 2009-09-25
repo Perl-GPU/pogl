@@ -70,6 +70,8 @@ Display myDisplay;
 
 #endif	/* defined __PM__ */ 
 
+static int debug = 0;
+
 #ifdef HAVE_GLpc
 
 #  define NUM_ARG 7			/* Number of mandatory args to glpcOpenWindow */
@@ -82,7 +84,6 @@ XSetWindowAttributes swa;
 Window win;
 GLXContext ctx;
 
-static int debug = 0;
 static int default_attributes[] = { GLX_DOUBLEBUFFER, GLX_RGBA, None };
 
 #endif	/* defined HAVE_GLpc */ 
