@@ -36,5 +36,6 @@
     
     A third variant, _s, exists for most pointer functions, and takes a string
     argument for each pointer. The underlying OpenGL function will be passed
-    a pointer to that string.
+    a pointer to that string.  If these variants are passed a reference to a
+    string, they treat the string contents as the buffer being pointed to.
 

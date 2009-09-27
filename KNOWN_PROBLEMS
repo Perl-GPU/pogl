@@ -1,6 +1,18 @@
 * Configuration and compiling requires an active OpenGL
   context (e.g. a display)
 
+* The calling interfaces for OpenGL, GLU, GLUT, GLX, X11,
+  and the perl module routines (names beginning with glp)
+  are in a state of flux and may not be in sync with the
+  current API documentation.
+
+* W32API and WGL interface options do not currently work
+  with cygwin.  FreeGLUT does work but using the Mesa SW
+  renderer.
+
+* Build problems have been reported for the GLU callbacks
+  syntax with VC7.  Investigation is underway.
+
 * Some of the functions taking pointer type arguments
   have inconsistent usage for the gl*_p() variants:
 

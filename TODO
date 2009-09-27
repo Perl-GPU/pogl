@@ -1,4 +1,4 @@
-Last saved: Tue 22 Sep 2009 04:06:19 PM
+Last saved: Sat 26 Sep 2009 10:18:20 PM
 
 
 Clarify FreeGLUT/GLUT requirments wording
@@ -33,6 +33,7 @@ Improve library and headers checks in Makefile.PL
 	    * glutCheckLoop()   -- same as glutMainLoopEvent()
 	    * glutWMCloseFunc() -- same as glutCloseFunc()
     * If libraries and headers are not available exit 0
+    * Devel::CheckLib to check
 
 
 Evaluate backwards compatibility
@@ -106,10 +107,10 @@ Finish perl bindings to remaining FreeGLUT functions:
 
 
 Improve support for non-standard OpenGL configurations
-    * Document how to edit Makefile.PL
     * Add command line options for perl Makefile.PL
         * set CFLAGS and other build options
         * Make single point override for INCLUDE information
+    * Document how to edit Makefile.PL
 
 
 OpenGLUT support for building
