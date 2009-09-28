@@ -1,4 +1,4 @@
-/*  Last saved: Mon 21 Sep 2009 11:28:35 PM*/
+/*  Last saved: Sun 27 Sep 2009 10:20:35 PM*/
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -549,7 +549,7 @@ glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
     /* clear the buffer */
     glClearColor(0,0,0,1);
     while ( (err = glGetError()) != GL_NO_ERROR ) {
-        printf("ERROR issued in GL %%s\n", gluErrorString(err));
+        printf("ERROR issued in GL %s\n", gluErrorString(err));
     }
 }
 OUTPUT:
