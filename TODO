@@ -136,6 +136,11 @@ Fix current POGL configuration and build process
             * Build flags: BUILD_GLUT, BUILD_FREEGLUT, ...
         * Exactly what libraries are being used
         * What are the compile and link configuration
+	    * split out compile/link by libraries
+	        * OpenGL
+		* GLU
+		* GLUT
+		* GLX
         * What bindings are actually enabled
         * Use the same information to build POGL as glversion
     * Refactor Makefile.PL to be comprehensible.
