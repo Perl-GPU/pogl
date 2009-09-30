@@ -73,7 +73,7 @@ if ($^O eq 'MSWin32' && !$IS_CYGWIN)
 #  $IS_MINGW = `gcc -dumpversion`;
 #  open(STDERR, ">&SAVEERR");
 
-  $IS_MINGW = (($Config{make} eq 'dmake') && ($Config{cc} eq 'gcc'))
+  $IS_MINGW = (($Config{make} =~ /\bdmake/i) && ($Config{cc} =~ /\bgcc/i))
 }
 
 
