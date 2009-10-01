@@ -1636,10 +1636,10 @@ void
 glutMainLoopEvent()
 	CODE:
 	{
-#if defined HAVE_FREEGLUT
-		glutMainLoopEvent();
-#elif defined HAVE_AGL_GLUT
+#if defined HAVE_AGL_GLUT
 		glutCheckLoop();
+#elif defined HAVE_FREEGLUT
+		glutMainLoopEvent();
 #endif
 	}
 
