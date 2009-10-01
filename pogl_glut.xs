@@ -459,7 +459,8 @@ enum {
 	HANDLE_GLUT_TabletMotion,
 	HANDLE_GLUT_TabletButton,
         HANDLE_GLUT_MenuDestroy,            /* Open/FreeGLUT -chm */
-	HANDLE_GLUT_Close                   /* Open/FreeGLUT -chm */
+	HANDLE_GLUT_Close,                  /* Open/FreeGLUT -chm */
+	HANDLE_GLUT_WMClose,                /* AGL GLUT      -chm */
 };
 
 /* Callback for glutDisplayFunc */
@@ -1637,6 +1638,8 @@ glutMainLoopEvent()
 	{
 #if defined HAVE_FREEGLUT
 		glutMainLoopEvent();
+#elif defined HAVE_AGL_GLUT
+		glutCheckLoop();
 #endif
 	}
 
@@ -1788,6 +1791,8 @@ glutCloseFunc(handler=0, ...)
         {
 #if defined HAVE_FREEGLUT
 		decl_gwh_xs(Close)
+#elif defined HAVE_AGL_GLUT
+		decl_gwh_xs(WMClose)
 #endif
         }
 
