@@ -624,7 +624,11 @@ begin_decl_gwh(MenuDestroy, (void), 0)
 end_decl_gwh()
 
 /* Callback for glutCloseFunc */
+#ifdef HAVE_AGL_GLUT
+static void generic_glut_WMClose_handler(void)
+#else
 static void generic_glut_Close_handler(void)
+#endif
 {
 	int win = glutGetWindow();
 	AV * handler_data = (AV*)get_glut_win_handler(win, HANDLE_GLUT_Close);
