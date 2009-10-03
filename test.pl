@@ -1484,18 +1484,24 @@ glutInit();
 
 # To see OpenGL drawing, take out the GLUT_DOUBLE request.
 glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_ALPHA);
-if (not glutGet(GLUT_DISPLAY_MODE_POSSIBLE))
-{
-   warn "glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_ALPHA) not possible";
-   warn "...trying without GLUT_ALPHA";
-   # try without GLUT_ALPHA
-   glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
+
+if ($^O ne 'MSWin32') { # skip these MODE checks on win32, they don't work
+
    if (not glutGet(GLUT_DISPLAY_MODE_POSSIBLE))
    {
-      warn "glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH) not possible, exiting quietly";
-      exit 0;
+      warn "glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_ALPHA) not possible";
+      warn "...trying without GLUT_ALPHA";
+      # try without GLUT_ALPHA
+      glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
+      if (not glutGet(GLUT_DISPLAY_MODE_POSSIBLE))
+      {
+         warn "glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH) not possible, exiting quietly";
+         exit 0;
+      }
    }
+
 }
+
 #glutInitDisplayString("rgb alpha>=0 double depth");
 
 # Open Window
