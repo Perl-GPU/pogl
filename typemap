@@ -24,7 +24,7 @@ GLhandleARB		T_U_INT
 GLUnurbsObj *	T_PTROBJ
 GLUquadricObj *	T_PTROBJ
 
-PGLUtess *	T_PTROBJ
+PGLUtess *	T_FASTPTROBJ
 
 OpenGL::Array		T_PTROBJ
 
@@ -39,4 +39,3 @@ OUTPUT
 
 T_FASTPTROBJ
 	sv_setref_pv($arg, \"${ntype}\", (void*)$var);
-
