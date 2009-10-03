@@ -10,9 +10,6 @@
   with cygwin.  FreeGLUT does work but using the Mesa SW
   renderer.
 
-* Build problems have been reported for the GLU callbacks
-  syntax with VC7.  Investigation is underway.
-
 * Some of the functions taking pointer type arguments
   have inconsistent usage for the gl*_p() variants:
 
