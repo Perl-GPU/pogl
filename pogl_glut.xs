@@ -1,4 +1,4 @@
-/*  Last saved: Fri 11 Sep 2009 02:37:41 PM */
+/*  Last saved: Fri 02 Oct 2009 09:59:44 PM*/
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -1622,11 +1622,17 @@ glutBitmapString(font, string)
 	void * font
 	const unsigned char * string
 	CODE:
-	{
-#if defined HAVE_FREEGLUT
-		glutBitmapString(font, string);
-#endif
+{
+#if defined HAVE_AGL_GLUT
+	int len, i;
+	len = (int) strlen(string);
+	for (i = 0; i < len; i++) {
+		glutBitmapCharacter(font, string[i]);
 	}
+#elif defined HAVE_FREEGLUT
+	glutBitmapString(font, string);
+#endif
+}
 
 #//# FreeGLUT/OpenGLUT feature
 #//# void *  glutGetProcAddress (const char *procName)
