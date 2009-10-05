@@ -10,6 +10,10 @@
   with cygwin.  FreeGLUT does work but using the Mesa SW
   renderer.
 
+* Too many "extra" variants of standard OpenGL functions.
+  Implementation progress with PDL has suggested a way
+  to simplify the bindings a la OpenGL::Simple.  TBD.
+
 * Some of the functions taking pointer type arguments
   have inconsistent usage for the gl*_p() variants:
 

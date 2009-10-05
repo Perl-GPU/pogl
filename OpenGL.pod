@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-OpenGL - v0.58_008
+OpenGL - v0.59
 
 =head1 SYNOPSIS
 
@@ -1785,6 +1785,9 @@ on 26-May-2002.
 
 Bob Free has been responsible for the OpenGL module development starting
 with OpenGL-0.55 on 26-Apr-2007.
+
+Chris Marshall has been responsible for the OpenGL module development
+starting with OpenGL-0.58 on 06-Sep-2009.
 
 Compatibility with these earlier libraries is in a state of flux with
 with on-going work to re-integrate the Perl OpenGL module into the Perl

@@ -1,0 +1,35 @@
++------------------------------------------------------------------------+
+|                      OpenGL-0.59 Release Notes                         |
++------------------------------------------------------------------------+
+
+  * Now builds out of the box on many linux, PC, and Mac OS X systems
+    as a result of the move to FreeGLUT/GLUT for GUI operations.
+
+  * This is the base release for the upcoming PDL-2.4.5 release with
+    refactored 3D graphics using the Perl OpenGL module.
+
+  * Improved Mac OS X build support, especially with GLUT (not FreeGLUT)
+    and no X11 installed or server running.
+    
+  * Improved FreeGLUT binding and support for FreeGLUT vs GLUT.
+    A number of bugs stomped.
+    
+  * Improved linux/GLX+X11 build support control although FreeGLUT or
+    GLUT(on Mac OS X) is preferred.
+    
+  * Fix MinGW detection logic for ActivePerl configurations
+    
+  * Code clean up and bugs fixed.  Many were discovered as a result of
+    the reconcilliation with PDL::Graphics::OpenGL requirements.
+    
+  * A few glp*() functions from PDL were added to POGL and confirmed
+    consistent API with PDL::Graphics::OpenGL
+    
+  * glpcOpenWindow() is deprecated as an external, user visible function.
+    The use of glpOpenWindow() is recommended.  It provides the exact
+    same set of options and control.
+    
+  * Various documentation updates.
+    
+  * The test.pl demo program now works more robustly.
+

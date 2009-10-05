@@ -114,8 +114,8 @@ Improve support for non-standard OpenGL configurations
 
 
 OpenGLUT support for building
-    * NOTE: OpenGLUT is a dead project, use FreeGLUT
-    * Such support not planned at this time
+    * NOTE: OpenGLUT appears to be a dead project, use FreeGLUT.
+    * OpenGL support not planned at this time
 
 
 Make POGL GLUT-proof

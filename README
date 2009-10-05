@@ -8,7 +8,7 @@
 
 Perl OpenGL: a.k.a. POGL
 
-As of OpenGL-0.57 POGL now requires FreeGLUT (GLUT on Mac OS X is ok)
+As of OpenGL-0.57 POGL now requires FreeGLUT (GLUT on Mac OS X)
 for full functionality:
 
   http://freeglut.sourceforge.net/
