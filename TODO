@@ -1,4 +1,4 @@
-Last saved: Sat 26 Sep 2009 10:18:20 PM
+Last saved: Thu 15 Oct 2009 02:10:11 PM 
 
 
 Clarify FreeGLUT/GLUT requirments wording
@@ -119,6 +119,9 @@ OpenGLUT support for building
 
 
 Make POGL GLUT-proof
+    * Make build work with GLUT-only and GLUT+FreeGLUT configurations
+      * GLUT-only: build and run with reduced functionality
+      * GLUT+FreeGLUT: build should correctly select and use FreeGLUT
     * Nothing should break if you have GLUT rather than FreeGLUT
         (as long as you are only using the GLUT subset of FreeGLUT)
     * Some functionality may be quietly disabled (glutMainLoop extensions)
