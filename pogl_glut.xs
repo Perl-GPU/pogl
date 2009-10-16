@@ -1,4 +1,4 @@
-/*  Last saved: Fri 02 Oct 2009 09:59:44 PM*/
+/*  Last saved: Fri 16 Oct 2009 10:11:21 AM */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -1623,14 +1623,14 @@ glutBitmapString(font, string)
 	const unsigned char * string
 	CODE:
 {
-#if defined HAVE_AGL_GLUT
+#if defined HAVE_FREEGLUT
+	glutBitmapString(font, string);
+#else
 	int len, i;
 	len = (int) strlen(string);
 	for (i = 0; i < len; i++) {
 		glutBitmapCharacter(font, string[i]);
 	}
-#elif defined HAVE_FREEGLUT
-	glutBitmapString(font, string);
 #endif
 }
 

@@ -1,4 +1,4 @@
-/*  Last saved: Sun 06 Sep 2009 02:09:46 PM*/
+/*  Last saved: Fri 16 Oct 2009 10:25:51 AM */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -42,6 +42,7 @@
 /* These macros used in neoconstant */
 #define i(test) if (strEQ(name, #test)) return newSViv((int)test);
 #define f(test) if (strEQ(name, #test)) return newSVnv((double)test);
+#define p(test) if (strEQ(name, #test)) return newSViv(PTR2IV(test));
 
 static SV *
 neoconstant(char * name, int arg)
