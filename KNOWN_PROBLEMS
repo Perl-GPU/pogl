@@ -1,3 +1,8 @@
+* Build does not complete if you do not have the
+  required FreeGLUT or Apple GLUT (on Mac OS X systems).
+  While this is not a bug, we would like to enable as
+  much GLUT compatibility as possible.
+
 * Configuration and compiling requires an active OpenGL
   context (e.g. a display)
 
@@ -6,9 +11,9 @@
   are in a state of flux and may not be in sync with the
   current API documentation.
 
-* W32API and WGL interface options do not currently work
-  with cygwin.  FreeGLUT does work but using the Mesa SW
-  renderer.
+* The Cygwin interface options W32API and WGL do not work
+  so you don't get hardware accelerated graphics.  The
+  FreeGLUT code does work but uses the Mesa software renderer.
 
 * Too many "extra" variants of standard OpenGL functions.
   Implementation progress with PDL has suggested a way

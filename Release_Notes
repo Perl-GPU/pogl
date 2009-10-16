@@ -1,5 +1,5 @@
 +------------------------------------------------------------------------+
-|                      OpenGL-0.59 Release Notes                         |
+|                    OpenGL-0.59_002 Release Notes                       |
 +------------------------------------------------------------------------+
 
   * Now builds out of the box on many linux, PC, and Mac OS X systems
@@ -33,3 +33,4 @@
     
   * The test.pl demo program now works more robustly.
 
+  * The mysterious freeglut font ... not found bug has been fixed!

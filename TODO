@@ -1,4 +1,4 @@
-Last saved: Thu 15 Oct 2009 02:10:11 PM 
+Last saved: Fri 16 Oct 2009 11:26:45 AM 
 
 
 Clarify FreeGLUT/GLUT requirments wording
@@ -51,6 +51,7 @@ Clean up glp*() routine support:
         * N.B. *GLUT is on *all* GLX systems but may not use GLX
 	* Keep minimal GLX+X11 code to support Tk bindings
 	* Is Tk even being used?  Contact perl/Tk about better support.
+	* Investigate Gtk+ instead of Tk for embedding
 
 
 Fix examples/ directory
