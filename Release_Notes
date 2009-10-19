@@ -1,5 +1,5 @@
 +------------------------------------------------------------------------+
-|                    OpenGL-0.59_002 Release Notes                       |
+|                      OpenGL-0.60 Release Notes                         |
 +------------------------------------------------------------------------+
 
   * Now builds out of the box on many linux, PC, and Mac OS X systems
@@ -15,9 +15,9 @@
     A number of bugs stomped.
     
   * Improved linux/GLX+X11 build support control although FreeGLUT or
-    GLUT(on Mac OS X) is preferred.
+    GLUT(on Mac OS X) is preferred for full functionality.
     
-  * Fix MinGW detection logic for ActivePerl configurations
+  * Fixed MinGW detection logic for ActivePerl configurations
     
   * Code clean up and bugs fixed.  Many were discovered as a result of
     the reconcilliation with PDL::Graphics::OpenGL requirements.

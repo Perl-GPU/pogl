@@ -1,5 +1,7 @@
 #if defined(HAVE_FREEGLUT) && (defined(_WIN32) || defined(HAVE_W32API))
 #include "./include/GL/freeglut.h"
+#elif defined(HAVE_FREEGLUT_H)
+#include <GL/freeglut.h>
 #else
 #include <GL/glut.h>
 #define GLUT_ACTION_EXIT                         0

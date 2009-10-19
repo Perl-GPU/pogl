@@ -1,10 +1,4 @@
-Last saved: Fri 16 Oct 2009 11:26:45 AM 
-
-
-Clarify FreeGLUT/GLUT requirments wording
-    * make explicit what you get by OS
-    * add information on installing FreeGLUT
-    * install locations (TBD)
+Last saved: Mon 19 Oct 2009 01:10:42 PM 
 
 
 Evaluate local include directory usage
@@ -80,7 +74,7 @@ Move test apps to t/ subdirectory from test.pl
 
 
 Implement safe glutInit
-    * check if done glutInit before calling glutInit()
+    * check if done_glutInit before calling glutInit()
     * carp/croak/quiet error settings
 
 
@@ -115,7 +109,7 @@ Improve support for non-standard OpenGL configurations
 
 
 OpenGLUT support for building
-    * NOTE: OpenGLUT appears to be a dead project, use FreeGLUT.
+    * OpenGLUT appears to be a dead project, use FreeGLUT.
     * OpenGL support not planned at this time
 
 
@@ -145,7 +139,7 @@ Fix current POGL configuration and build process
 		* GLU
 		* GLUT
 		* GLX
-        * What bindings are actually enabled
+        * What bindings are actually enabled?
         * Use the same information to build POGL as glversion
     * Refactor Makefile.PL to be comprehensible.
         * strip out unused options

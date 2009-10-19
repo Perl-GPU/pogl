@@ -1,7 +1,26 @@
-* Build does not complete if you do not have the
+* Build may not complete if you do not have the
   required FreeGLUT or Apple GLUT (on Mac OS X systems).
   While this is not a bug, we would like to enable as
   much GLUT compatibility as possible.
+
+  NOTE: PDL::Graphics::TriD does require either FreeGLUT
+  or Apple GLUT to function.  An OpenGL using plain old
+  GLUT will not work at the moment.
+
+* On one Mac OS system, glutBitmapCharacter() appears to 
+  to be rendering into the Overlay.  This makes text and
+  legends always on top, even if the glRasterPos() was
+  set with depth.
+  
+  If you see this with PDL::Graphics::TriD, please report.
+  We need help debugging.  Thanks.
+
+* The build may fail if your FreeGLUT installation uses
+  freeglut.h as the name of its include file.  This may
+  happen if you have both original GLUT and FreeGLUT on
+  the same system.  Edit the Makefile produced and add
+  -DHAVE_FREEGLUT_H to the DEFINE = line and things may
+  compile then.
 
 * Configuration and compiling requires an active OpenGL
   context (e.g. a display)
@@ -18,6 +37,11 @@
 * Too many "extra" variants of standard OpenGL functions.
   Implementation progress with PDL has suggested a way
   to simplify the bindings a la OpenGL::Simple.  TBD.
+
+* examples/planets:  works but has visual artifacts
+  examples/tk_steal: runs but maybe not correctly 
+
+*  Examples using GLX calls need to be ported to GLUT
 
 * Some of the functions taking pointer type arguments
   have inconsistent usage for the gl*_p() variants:
