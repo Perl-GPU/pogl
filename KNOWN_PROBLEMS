@@ -15,6 +15,13 @@
   If you see this with PDL::Graphics::TriD, please report.
   We need help debugging.  Thanks.
 
+* ActiveState automated PPM builds currently fail due to
+  what appears to be interface detection failures in their
+  build environment.  You'll need to use another PPM site
+  or build your own OpenGL: (1) install ASPerl on your
+  system, (2) do ppm install MinGW to get the compile
+  environment, (3) cpan -i OpenGL, and you should be done!
+
 * The build may fail if your FreeGLUT installation uses
   freeglut.h as the name of its include file.  This may
   happen if you have both original GLUT and FreeGLUT on

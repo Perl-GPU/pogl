@@ -1,4 +1,11 @@
-Last saved: Mon 19 Oct 2009 01:10:42 PM 
+Last saved: Fri 23 Oct 2009 01:33:26 PM 
+
+
+Resolve ASPerl PPM build problems:
+    * win32 fails because of the FreeGLUT install during Makefile.PL
+    * linux fails because FreeGLUT is not found
+    * Mac OS X fails because the GLUT compile env is not right
+    * What does ASPerl do re external packages needed to build?
 
 
 Evaluate local include directory usage
