@@ -416,6 +416,19 @@ if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
   }
 
   $EXES = ['FreeGLUT/freeglut.dll'];
+
+  # This is a suggested fix for the problem of EXE_FILES being intended for perl scripts
+  # and *not* binaries as is being done above.  This needs to be modified to take place
+  # at install time or some such... a work around would be to replace line 418 with this
+  # code block:
+  #
+  # {
+  #   system $^X , qw[-MExtUtils::Command -e mkpath --], qw[blib/bin];
+  #   system $^X , qw[-MExtUtils::Command -e cp --], qw[FreeGLUT/freeglut.dll blib/bin/freeglut.dll];
+  # }
+
+
+
 }
 elsif ($interface_lib eq 'AGL')					# Mac OS X
 {
