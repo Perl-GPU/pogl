@@ -489,6 +489,20 @@ else # Everyone else
     print "GLX not found (neither library, nor headers).";
   }
 
+  # Test for obfuscated Freeglut
+  # quite often Freeglut is in -lglut...  Test for GL/freeglut.h instead...
+  my $out = cfile_text('GL/freeglut.h');
+
+  # The cpp would not let this macro through. Check for something else
+  # that still exists after the cpp pass. a typedef, or type would work
+  my $has_freeglut = ($out =~ m|glutMainLoopEvent|);
+
+  if ($has_freeglut)
+  {
+    #delete($found_libs->{GLX});
+    $DEFS .= " -DHAVE_FREEGLUT";
+    $found_libs->{FREEGLUT}="glut";
+  }
 
   # Marshall libs
   my $libs = ' -l'.join(' -l',values(%$found_libs));
