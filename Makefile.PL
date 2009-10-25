@@ -500,7 +500,7 @@ else # Everyone else
   if ($has_freeglut)
   {
     #delete($found_libs->{GLX});
-    $DEFS .= " -DHAVE_FREEGLUT";
+    $DEFS .= " -DHAVE_FREEGLUT -DHAVE_FREEGLUT_H";
     $found_libs->{FREEGLUT}="glut";
   }
 
