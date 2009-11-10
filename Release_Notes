@@ -1,6 +1,11 @@
 +------------------------------------------------------------------------+
-|                      OpenGL-0.60 Release Notes                         |
+|                      OpenGL-0.61 Release Notes                         |
 +------------------------------------------------------------------------+
+
+  * FreeGLUT detection has been improved when both glut.h and freeglut.h
+    are present on a system.
+
+  * Fixed include path problems for glversion on Mac OS X.
 
   * Now builds out of the box on many linux, PC, and Mac OS X systems
     as a result of the move to FreeGLUT/GLUT for GUI operations.

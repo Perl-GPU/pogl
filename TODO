@@ -1,4 +1,4 @@
-Last saved: Fri 23 Oct 2009 01:33:26 PM 
+Last saved: Mon 09 Nov 2009 09:36:51 PM
 
 
 Resolve ASPerl PPM build problems:
@@ -52,7 +52,7 @@ Clean up glp*() routine support:
         * N.B. *GLUT is on *all* GLX systems but may not use GLX
 	* Keep minimal GLX+X11 code to support Tk bindings
 	* Is Tk even being used?  Contact perl/Tk about better support.
-	* Investigate Gtk+ instead of Tk for embedding
+	* Investigate Gtk+ or wxWidgets instead of Tk for embedding
 
 
 Fix examples/ directory
