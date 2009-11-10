@@ -1,7 +1,7 @@
 --- #YAML:1.0
 name:                OpenGL
 version:             0.61
-abstract:            ~
+abstract:            OpenGL GLU FreeGLUT/GLUT and some X11/GLX bindings for perl
 license:             ~
 author:              
     - Bob 'grafman' Free <grafman at graphcomp.com>
