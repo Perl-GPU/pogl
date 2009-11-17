@@ -1602,7 +1602,7 @@ Press 'c' to capture/save a RGBA targa file.
 
 # Pass off control to OpenGL.
 # Above functions are called as appropriate.
-if ($OpenGL::_have_freeglut) {
+if (OpenGL::_have_freeglut()) {
    glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE,GLUT_ACTION_GLUTMAINLOOP_RETURNS)
 }
 
