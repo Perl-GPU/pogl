@@ -1,4 +1,15 @@
 +------------------------------------------------------------------------+
+|                    OpenGL-0.61_001 Release Notes                       |
++------------------------------------------------------------------------+
+
+  * Developers release to check out fix for FreeGLUT constants
+    definitions and some include typos that caused them.  If this
+    tests ok on CPAN Testers, it will become the stable release.
+
+  * The fix means that exiting the FreeGLUT event loop should work.
+
+
++------------------------------------------------------------------------+
 |                      OpenGL-0.61 Release Notes                         |
 +------------------------------------------------------------------------+
 
