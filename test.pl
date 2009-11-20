@@ -1220,7 +1220,7 @@ sub cbKeyPressed
   elsif ($c eq 'K')
   {
     # ignore keypress if not FreeGLUT
-    glutLeaveMainLoop() if $OpenGL::_have_freeglut;
+    glutLeaveMainLoop() if OpenGL::_have_freeglut();
   }
   elsif ($c eq 'L')
   {
@@ -1582,7 +1582,7 @@ glutMouseFunc(\&cbMouseClick);
 #glutPassiveMotionFunc(\&cbMouseTrack);
 
 # Handle window close events.
-glutCloseFunc(\&cbClose) if $OpenGL::_have_freeglut;
+glutCloseFunc(\&cbClose) if OpenGL::_have_freeglut();
 
 # OK, OpenGL's ready to go.  Let's call our own init function.
 ourInit($Window_Width, $Window_Height);
