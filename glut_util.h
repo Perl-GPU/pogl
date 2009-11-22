@@ -1,9 +1,19 @@
 #if defined(HAVE_FREEGLUT) && (defined(_WIN32) || defined(HAVE_W32API))
+
 #include "./include/GL/freeglut.h"
+
 #elif defined(HAVE_FREEGLUT_H)
+
 #include <GL/freeglut.h>
+
+#else
+
+#if defined(HAVE_AGL_GLUT)
+#include <GLUT/glut.h>
 #else
 #include <GL/glut.h>
+#endif
+
 #define GLUT_ACTION_EXIT                         0
 #define GLUT_ACTION_GLUTMAINLOOP_RETURNS         1
 #define GLUT_ACTION_CONTINUE_EXECUTION           2
@@ -19,4 +29,5 @@
 #define GLUT_VERSION                        0x01FC
 #define GLUT_RENDERING_CONTEXT              0x01FD
 #define GLUT_DIRECT_RENDERING               0x01FE
+
 #endif

@@ -10,7 +10,15 @@
 
 #else
 
+#ifdef __APPLE__
+/* NB: not ideal -- this assumes that we always build with AGL interface on Mac OS X
+ * Ideally, the flag HAVE_AGL_GLUT should be set appropriately by Makefile.PL when building glversion
+ * and used to check here, but this will require substantial changes to the get_extensions() there
+ */
+#include <GLUT/glut.h>
+#else
 #include <GL/glut.h>
+#endif
 
 #endif
 
