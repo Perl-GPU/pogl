@@ -120,6 +120,7 @@ our @libdirs = qw
   -L/usr/X11R6/lib
   -L/usr/local/lib
   -L/usr/openwin/lib
+  -L/opt/csw/lib
 };
 
 our @check_libs = qw
@@ -459,6 +460,7 @@ else # Everyone else
     -I/usr/X11R6/include
     -I/usr/local/include
     -I/usr/openwin/include
+    -I/opt/csw/include
   };
   $INCS = "@includes";
 
