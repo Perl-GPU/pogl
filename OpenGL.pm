@@ -11,7 +11,7 @@ require DynaLoader;
 
 use Carp;
 
-$VERSION = '0.61_002';
+$VERSION = '0.62';
 $BUILD_VERSION = $XS_VERSION = $VERSION;
 $VERSION = eval($VERSION);
 
@@ -1123,13 +1123,9 @@ our $glext_dependencies =
 
 @glu_func = qw(
    gluBeginCurve
-   gluEndCurve
    gluBeginPolygon
-   gluEndPolygon
    gluBeginSurface
-   gluEndSurface
    gluBeginTrim
-   gluEndTrim
    gluBuild1DMipmaps_c
    gluBuild1DMipmaps_s
    gluBuild2DMipmaps_c
@@ -1139,9 +1135,14 @@ our $glext_dependencies =
    gluDeleteQuadric
    gluDeleteTess
    gluDisk
+   gluEndCurve
+   gluEndPolygon
+   gluEndSurface
+   gluEndTrim
    gluErrorString
    gluGetNurbsProperty_p
    gluGetString
+   gluGetTessProperty_p
    gluLoadSamplingMatrices_p
    gluLookAt
    gluNewNurbsRenderer
@@ -1162,142 +1163,141 @@ our $glext_dependencies =
    gluQuadricTexture
    gluScaleImage_s
    gluSphere
-   gluGetTessProperty_p
    gluTessBeginCountour
-   gluTessEndContour
    gluTessBeginPolygon
+   gluTessCallback
+   gluTessEndContour
    gluTessEndPolygon
    gluTessNormal
    gluTessProperty
-   gluTessCallback
    gluTessVertex
    gluUnProject_p
 );
 
 @glut_func = qw(
-   glutInit
    done_glutInit
-   glutInitWindowSize
-   glutInitWindowPosition
-   glutInitDisplayMode
-   glutMainLoop
-   glutCreateWindow
-   glutCreateSubWindow
-   glutSetWindow
-   glutGetWindow
-   glutDestroyWindow
-   glutPostRedisplay
-   glutSwapBuffers
-   glutPositionWindow
-   glutReshapeWindow
-   glutFullScreen
-   glutPopWindow
-   glutPushWindow
-   glutShowWindow
-   glutHideWindow
-   glutIconifyWindow
-   glutSetWindowTitle
-   glutSetIconTitle
-   glutSetCursor
-   glutEstablishOverlay
-   glutUseLayer
-   glutRemoveOverlay
-   glutPostOverlayRedisplay
-   glutShowOverlay
-   glutHideOverlay
-   glutCreateMenu
-   glutSetMenu
-   glutGetMenu
-   glutDestroyMenu
    glutAddMenuEntry
    glutAddSubMenu
-   glutChangeToMenuEntry
-   glutChangeToSubMenu
-   glutRemoveMenuItem
    glutAttachMenu
-   glutDetachMenu
-   glutDisplayFunc
-   glutOverlayDisplayFunc
-   glutReshapeFunc
-   glutKeyboardFunc
-   glutKeyboardUpFunc
-   glutMouseFunc
-   glutMotionFunc
-   glutPassiveMotionFunc
-   glutVisibilityFunc
-   glutWindowStatusFunc
-   glutEntryFunc
-   glutSpecialFunc
-   glutSpecialUpFunc
-   glutSpaceballMotionFunc
-   glutSpaceballRotateFunc
-   glutSpaceballButtonFunc
-   glutButtonBoxFunc
-   glutDialsFunc
-   glutTabletMotionFunc
-   glutTabletButtonFunc
-   glutMenuStatusFunc
-   glutMenuStateFunc
-   glutIdleFunc
-   glutTimerFunc
-   glutSetColor
-   glutGetColor
-   glutCopyColormap
-   glutGet
-   glutLayerGet
-   glutDeviceGet
-   glutGetModifiers
-   glutExtensionSupported
    glutBitmapCharacter
-   glutStrokeCharacter
-   glutBitmapWidth
-   glutStrokeWidth
-   glutSolidSphere
-   glutWireSphere
-   glutSolidCube
-   glutWireCube
-   glutSolidCone
-   glutWireCone
-   glutSolidTorus
-   glutWireTorus
-   glutSolidDodecahedron
-   glutWireDodecahedron
-   glutSolidOctahedron
-   glutWireOctahedron
-   glutSolidTetrahedron
-   glutWireTetrahedron
-   glutSolidIcosahedron
-   glutWireIcosahedron
-   glutSolidTeapot
-   glutWireTeapot
-   glutSetOption
-   glutGameModeString
-   glutEnterGameMode
-   glutLeaveGameMode
-   glutGameModeGet
-   glutCloseFunc
-   glutLeaveMainLoop
-   glutIgnoreKeyRepeat
-   glutSetKeyRepeat
-   glutForceJoystickFunc
    glutBitmapHeight
    glutBitmapLength
    glutBitmapString
+   glutBitmapWidth
+   glutButtonBoxFunc
+   glutChangeToMenuEntry
+   glutChangeToSubMenu
+   glutCloseFunc
+   glutCopyColormap
+   glutCreateMenu
+   glutCreateSubWindow
+   glutCreateWindow
+   glutDestroyMenu
+   glutDestroyWindow
+   glutDetachMenu
+   glutDeviceGet
+   glutDialsFunc
+   glutDisplayFunc
+   glutEnterGameMode
+   glutEntryFunc
+   glutEstablishOverlay
+   glutExtensionSupported
+   glutForceJoystickFunc
+   glutFullScreen
+   glutGameModeGet
+   glutGameModeString
+   glutGet
+   glutGetColor
+   glutGetMenu
+   glutGetModifiers
+   glutGetWindow
+   glutHideOverlay
+   glutHideWindow
+   glutIconifyWindow
+   glutIdleFunc
+   glutIgnoreKeyRepeat
+   glutInit
+   glutInitDisplayMode
    glutInitDisplayString
+   glutInitWindowPosition
+   glutInitWindowSize
+   glutKeyboardFunc
+   glutKeyboardUpFunc
+   glutLayerGet
+   glutLeaveGameMode
+   glutLeaveMainLoop
+   glutMainLoop
    glutMainLoopEvent
    glutMenuDestroyFunc
+   glutMenuStateFunc
+   glutMenuStatusFunc
+   glutMotionFunc
+   glutMouseFunc
    glutMouseWheelFunc
+   glutOverlayDisplayFunc
+   glutPassiveMotionFunc
+   glutPopWindow
+   glutPositionWindow
+   glutPostOverlayRedisplay
+   glutPostRedisplay
    glutPostWindowOverlayRedisplay
    glutPostWindowRedisplay
+   glutPushWindow
+   glutRemoveMenuItem
+   glutRemoveOverlay
    glutReportErrors
+   glutReshapeFunc
+   glutReshapeWindow
+   glutSetColor
+   glutSetCursor
+   glutSetIconTitle
+   glutSetKeyRepeat
+   glutSetMenu
+   glutSetOption
+   glutSetWindow
+   glutSetWindowTitle
+   glutShowOverlay
+   glutShowWindow
+   glutSolidCone
+   glutSolidCube
    glutSolidCylinder
+   glutSolidDodecahedron
+   glutSolidIcosahedron
+   glutSolidOctahedron
    glutSolidRhombicDodecahedron
+   glutSolidSphere
+   glutSolidTeapot
+   glutSolidTetrahedron
+   glutSolidTorus
+   glutSpaceballButtonFunc
+   glutSpaceballMotionFunc
+   glutSpaceballRotateFunc
+   glutSpecialFunc
+   glutSpecialUpFunc
+   glutStrokeCharacter
    glutStrokeHeight
    glutStrokeLength
    glutStrokeString
+   glutStrokeWidth
+   glutSwapBuffers
+   glutTabletButtonFunc
+   glutTabletMotionFunc
+   glutTimerFunc
+   glutUseLayer
+   glutVisibilityFunc
    glutWarpPointer
+   glutWindowStatusFunc
+   glutWireCone
+   glutWireCube
    glutWireCylinder
+   glutWireDodecahedron
+   glutWireIcosahedron
+   glutWireOctahedron
    glutWireRhombicDodecahedron
+   glutWireSphere
+   glutWireTeapot
+   glutWireTetrahedron
+   glutWireTorus
 );
 
 ##------------------------------------------------------------------------

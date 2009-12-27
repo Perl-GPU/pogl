@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-OpenGL - v0.61_002
+OpenGL - v0.62
 
 =head1 SYNOPSIS
 
@@ -66,10 +66,14 @@ data. The underlying OpenGL function will be passed a pointer to that data.
 
 =head2 GLUT functions
 
+  done_glutInit
   glutAddMenuEntry
   glutAddSubMenu
   glutAttachMenu
   glutBitmapCharacter
+  glutBitmapHeight
+  glutBitmapLength
+  glutBitmapString
   glutBitmapWidth
   glutButtonBoxFunc
   glutChangeToMenuEntry
@@ -105,6 +109,7 @@ data. The underlying OpenGL function will be passed a pointer to that data.
   glutIgnoreKeyRepeat
   glutInit
   glutInitDisplayMode
+  glutInitDisplayString
   glutInitWindowPosition
   glutInitWindowSize
   glutKeyboardFunc
@@ -113,19 +118,25 @@ data. The underlying OpenGL function will be passed a pointer to that data.
   glutLeaveGameMode
   glutLeaveMainLoop
   glutMainLoop
+  glutMainLoopEvent
+  glutMenuDestroyFunc
   glutMenuStateFunc
   glutMenuStatusFunc
   glutMotionFunc
   glutMouseFunc
+  glutMouseWheelFunc
   glutOverlayDisplayFunc
   glutPassiveMotionFunc
   glutPopWindow
   glutPositionWindow
   glutPostOverlayRedisplay
   glutPostRedisplay
+  glutPostWindowOverlayRedisplay
+  glutPostWindowRedisplay
   glutPushWindow
   glutRemoveMenuItem
   glutRemoveOverlay
+  glutReportErrors
   glutReshapeFunc
   glutReshapeWindow
   glutSetColor
@@ -140,9 +151,11 @@ data. The underlying OpenGL function will be passed a pointer to that data.
   glutShowWindow
   glutSolidCone
   glutSolidCube
+  glutSolidCylinder
   glutSolidDodecahedron
   glutSolidIcosahedron
   glutSolidOctahedron
+  glutSolidRhombicDodecahedron
   glutSolidSphere
   glutSolidTeapot
   glutSolidTetrahedron
@@ -153,6 +166,9 @@ data. The underlying OpenGL function will be passed a pointer to that data.
   glutSpecialFunc
   glutSpecialUpFunc
   glutStrokeCharacter
+  glutStrokeHeight
+  glutStrokeLength
+  glutStrokeString
   glutStrokeWidth
   glutSwapBuffers
   glutTabletButtonFunc
@@ -160,12 +176,15 @@ data. The underlying OpenGL function will be passed a pointer to that data.
   glutTimerFunc
   glutUseLayer
   glutVisibilityFunc
+  glutWarpPointer
   glutWindowStatusFunc
   glutWireCone
   glutWireCube
+  glutWireCylinder
   glutWireDodecahedron
   glutWireIcosahedron
   glutWireOctahedron
+  glutWireRhombicDodecahedron
   glutWireSphere
   glutWireTeapot
   glutWireTetrahedron
@@ -1235,7 +1254,7 @@ data. The underlying OpenGL function will be passed a pointer to that data.
 
 GLX is only supported to the degree that Stan's original module supported 
 it. Without an entire X binding it is of limited use, and I recommend using 
-glut instead.
+GLUT/FreeGLUT instead.
 
   XPending
   glXSwapBuffers
@@ -1898,7 +1917,7 @@ POGL Developer's Site: http://graphcomp.com/opengl
 
 CPAN: http://search.cpan.org/~chm/
 
-GIT:     TBD
+GIT:  git://pdl.git.sourceforge.net/gitroot/pdl/pogl (Read only)
 
 SVN:     TBD
 

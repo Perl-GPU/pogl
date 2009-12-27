@@ -1,4 +1,25 @@
 +------------------------------------------------------------------------+
+|                      OpenGL-0.62 Release Notes                         |
++------------------------------------------------------------------------+
+
+  Highlights:
+
+  * Improved build support for Solaris OpenGL and FreeGLUT libraries.
+
+  * Corrected install for win32 DLL.
+
+  * Fixed build for AGL to only use AGL, not X11 on Mac OS X.
+
+  * Fixed _have_freeglut() checks in test.pl and elsewhere.
+
+  * Fix glut_const.h typos that broke some GLUT macros.  Exiting
+    the FreeGLUT event loop should work.
+
+  Please see the GIT_CHANGES file for more details.  Thanks.
+
+
+
++------------------------------------------------------------------------+
 |                    OpenGL-0.61_001 Release Notes                       |
 +------------------------------------------------------------------------+
 
@@ -7,6 +28,7 @@
     tests ok on CPAN Testers, it will become the stable release.
 
   * The fix means that exiting the FreeGLUT event loop should work.
+
 
 
 +------------------------------------------------------------------------+

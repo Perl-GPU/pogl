@@ -1,20 +1,15 @@
 * Build may not complete if you do not have the
   required FreeGLUT or Apple GLUT (on Mac OS X systems).
-  While this is not a bug, we would like to enable as
-  much GLUT compatibility as possible.
 
   NOTE: PDL::Graphics::TriD does require either FreeGLUT
   or Apple GLUT to function.  An OpenGL using plain old
-  GLUT will not work at the moment.
+  GLUT will not work with PDL-2.4.6.
 
 * On one Mac OS system, glutBitmapCharacter() appears to 
   to be rendering into the Overlay.  This makes text and
   legends always on top, even if the glRasterPos() was
   set with depth.
   
-  If you see this with PDL::Graphics::TriD, please report.
-  We need help debugging.  Thanks.
-
 * ActiveState automated PPM builds currently fail due to
   what appears to be interface detection failures in their
   build environment.  You'll need to use another PPM site
