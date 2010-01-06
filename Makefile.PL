@@ -121,6 +121,7 @@ our @libdirs = qw
   -L/usr/local/lib
   -L/usr/openwin/lib
   -L/opt/csw/lib
+  -L/usr/local/freeglut/lib
 };
 
 our @check_libs = qw
@@ -461,6 +462,7 @@ else # Everyone else
     -I/usr/local/include
     -I/usr/openwin/include
     -I/opt/csw/include
+    -I/usr/local/freeglut/include
   };
   $INCS = "@includes";
 
