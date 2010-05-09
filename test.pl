@@ -18,7 +18,8 @@ my $hasShader = !$@;
 eval 'use Image::Magick';
 my $hasIM = !$@;
 
-use Math::Trig;
+# use Math::Trig;  # does not appear to be needed
+
 eval 'use Time::HiRes qw( gettimeofday )';
 my $hasHires = !$@;
 $|++;
