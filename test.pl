@@ -18,7 +18,12 @@ my $hasShader = !$@;
 eval 'use Image::Magick';
 my $hasIM = !$@;
 
-use Math::Trig;
+# This does not seem to be needed and it adds an extra, unneeded
+# dependency to the build process.  Leaving this in as a comment
+# just in case it is being used somewhere here
+#
+# use Math::Trig;
+
 eval 'use Time::HiRes qw( gettimeofday )';
 my $hasHires = !$@;
 $|++;
