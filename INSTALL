@@ -122,12 +122,3 @@
 
 Read the included README files for additional notes on your particular
 platform.
-
-================================================================================
-
-If you get an error about __eprintf missing, add
-
-   -L/opt/gnu/lib/gcc-lib/sparc-sun-solaris2.7/2.96/ -lgcc
-
-to the @LIBS initializer in Makefile.PL (change the directory for the
-appropriate one for your system).

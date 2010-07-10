@@ -1,3 +1,12 @@
+    0.63 This file is still not up to date with the current code.
+
+         POGL builds "out of the box" on more system types
+	 than ever, including: Linux, MSWin32, and Mac OS X.
+
+	 TBD: generate a more complete/specific list
+
+    ----------------------------------------------------------
+
     0.62 This file is still not up to date with the current code.
 
          POGL builds "out of the box" on more system types

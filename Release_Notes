@@ -1,4 +1,27 @@
 +------------------------------------------------------------------------+
+|                      OpenGL-0.63 Release Notes                         |
++------------------------------------------------------------------------+
+
+  Highlights:
+
+  * Make glpDisplay() handle all XOpenDisplay input
+    argument and return the Display structure pointer.
+    This allows glpDisplay to be used to check for
+    the ability to open the X display avoiding a
+    problem with glutInit exiting when no display
+    is found.
+
+  * Remove use Math::Trig from test.pl
+
+  * Fix typo reported in OpenGL.pod
+
+  * Add /usr/local/freeglut/* to Makefile.PL location
+
+  Please see the GIT_CHANGES file for more details.  Thanks.
+
+
+
++------------------------------------------------------------------------+
 |                      OpenGL-0.62 Release Notes                         |
 +------------------------------------------------------------------------+
 
