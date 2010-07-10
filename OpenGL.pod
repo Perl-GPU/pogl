@@ -1256,10 +1256,10 @@ GLX is only supported to the degree that Stan's original module supported
 it. Without an entire X binding it is of limited use, and I recommend using 
 GLUT/FreeGLUT instead.
 
-  XPending
-  glXSwapBuffers
-  glpXNextEvent
-  glpXQueryPointer
+  XPending              (X11 only)
+  glXSwapBuffers        (X11 only)
+  glpXNextEvent         (X11 only)
+  glpXQueryPointer      (X11 only)
 
   glpcOpenWindow	(Not exported, must use fully qualified package name)
 
@@ -1743,7 +1743,7 @@ GLUT/FreeGLUT instead.
   glVertex4s
   glVertex4sv
   glViewport
-  glXSwapBuffers
+  glXSwapBuffers        (X11 only)
   gluLookAt
   gluOrtho2D
   gluPerspective
@@ -1751,27 +1751,27 @@ GLUT/FreeGLUT instead.
 =head2 "Perl" GL access shortcuts
 
   glpClipPlane
-  glpDisplay
+  glpDisplay            (X11 only)
   glpFlush
   glpFullScreen
   glpGetClipPlane
   glpLoadMatrixd
   glpLoadMatrixf
   glpMainLoop
-  glpMoveResizeWindow
-  glpMoveWindow
+  glpMoveResizeWindow   (X11 only)
+  glpMoveWindow         (X11 only)
   glpMultMatrixd
   glpMultMatrixf
-  glpOpenWindow
+  glpOpenWindow         (X11 only)
   glpPrintString	(from PDL)
-  glpRasterFont 	(from PDL)
+  glpRasterFont 	(from PDL, X11 only)
   glpReadTex
-  glpResizeWindow
+  glpResizeWindow       (X11 only)
   glpRestoreScreen
   glpSetDebug		(from PDL)
   glpSolidSphere
-  glpXNextEvent
-  glpXQueryPointer
+  glpXNextEvent         (X11 only)
+  glpXQueryPointer      (X11 only)
 
 glpOpenWindow() provides the preferred interface to glpcOpenWindow().
 Both these functions have a special (mis)feature to handle cases when

@@ -1,4 +1,4 @@
-/*  Last saved: Sun 27 Sep 2009 10:20:35 PM*/
+/*  Last saved: Sat 10 Jul 2010 12:57:04 PM*/
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -594,17 +594,20 @@ glpPrintString(base,str)
         }
 
 #// glpDisplay();
-void *
-glpDisplay()
+Display *
+glpDisplay(name)
+        char *name
 	CODE:
 	    /* get a connection */
 	    if (!dpy_open) {
-		dpy = XOpenDisplay(0);
+		dpy = XOpenDisplay(name);
 		dpy_open = 1;
 	    }
 	    if (!dpy)
 		croak("No display!");
 	    RETVAL = dpy;
+        OUTPUT:
+	RETVAL
 
 #// glpMoveResizeWindow($x, $y, $width, $height[, $winID[, $display]]);
 void
