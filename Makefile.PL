@@ -436,23 +436,6 @@ elsif ($interface_lib eq 'AGL')					# Mac OS X
   $DEFS .= " -DHAVE_AGL_GLUT";  # So we know we have glutWMCloseFunc() and glutCheckLoop()
   $DYNS = { OTHERLDFLAGS => "-framework OpenGL -framework GLUT" };
 }
-## elsif (($^O ne 'cygwin') && ($interface_lib =~ m|GLUT|))	# GLUT/FreeGLUT
-## {
-##   delete($found_libs->{GLX});
-##   $DEFS =~ s|-DHAVE_GLX||;
-## 
-##   my @includes = qw
-##   {
-##     -I/usr/include
-##     -I/usr/local/include
-##   };
-##   $INCS = "@includes";
-## 
-##   # Marshall libs
-##   my $libs = ' -l'.join(' -l',values(%$found_libs));
-##   $LIBS = "@libdirs $libs";
-##   $DEFS .= " -DGL_GLEXT_LEGACY";
-## }
 else # Everyone else
 {
   my @includes = qw
@@ -550,6 +533,12 @@ else # Everyone else
       }
     }
   }
+}
+
+# Check for gcc version 3.2.3 and turn off OPTIMIZE to work
+# around compiler bug reported via cpan testers reports
+if ( defined( $Config{gccversion} )  and $Config{gccversion} =~ /^3\.2\.3 / ) {
+   $OPTS = '-O0';       # turn off optimization for gcc 3.2.3
 }
 
 clean_incs( $INCS );
