@@ -1,4 +1,36 @@
 +------------------------------------------------------------------------+
+|                  OpenGL-0.63_002 Release Notes                         |
++------------------------------------------------------------------------+
+
+  This is a CPAN Developers release for testing purposes.
+  Feedback welcome.
+
+  Highlights:
+
+  * Add Test::More as a prerequisite for OpenGL
+    (it is used by the tests)
+
+  Please see the GIT_CHANGES file for more details.  Thanks.
+
+
+
++------------------------------------------------------------------------+
+|                  OpenGL-0.63_001 Release Notes                         |
++------------------------------------------------------------------------+
+
+  This is a CPAN Developers release for testing purposes.
+  Feedback welcome.
+
+  Highlights:
+
+  * Work around a gcc 3.2.3 optimizer bug which caused
+    build failures on some linux systems.
+
+  Please see the GIT_CHANGES file for more details.  Thanks.
+
+
+
++------------------------------------------------------------------------+
 |                      OpenGL-0.63 Release Notes                         |
 +------------------------------------------------------------------------+
 
