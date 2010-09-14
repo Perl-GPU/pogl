@@ -1,7 +1,20 @@
+    0.64 This file is still not up to date with the current code.
+
+         POGL builds "out of the box" on more system types
+	 than ever, including: Linux, MSWin32, and Mac OS X.
+
+	 Used by PDL-2.4.7 to implement 3D graphics and plots.
+
+	 TBD: generate a more complete/specific list
+
+    ----------------------------------------------------------
+
     0.63 This file is still not up to date with the current code.
 
          POGL builds "out of the box" on more system types
 	 than ever, including: Linux, MSWin32, and Mac OS X.
+
+	 Used by PDL-2.4.7 to implement 3D graphics and plots.
 
 	 TBD: generate a more complete/specific list
 

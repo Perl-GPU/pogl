@@ -51,7 +51,3 @@
     glTexCoordPointer_p(size, oga)
     glVertexPointerEXT_p(size, oga)
     glVertexPointer_p(size, oga)
-
-* gcc 3.2.3 on Red Hat Enterprise Linux has been reported to
-  crash compiling pogl_const.c.  A work around is to disable
-  optimizations for that file or use a different compiler/version.
