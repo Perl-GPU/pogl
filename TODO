@@ -1,6 +1,11 @@
 Last saved: Sat 10 Jul 2010 02:19:44 PM
 
 
+Make code handle "missing" windows:
+    * Calls glutGetWindow() and assumes win is valid
+    * If win==0, need to handle appropriately and *not* do anything with win
+
+
 Resolve ASPerl PPM build problems:
     * win32 fails because of the FreeGLUT install during Makefile.PL
     * linux fails because FreeGLUT is not found
