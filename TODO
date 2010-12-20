@@ -1,6 +1,11 @@
 Last saved: Sat 10 Jul 2010 02:19:44 PM
 
 
+Add support for more GLUT variant export control:
+    * :freeglutconstants and :freeglutfunctions
+    * :appleglutconstants and :appleglutfunctions
+
+
 Make code handle "missing" windows:
     * Calls glutGetWindow() and assumes win is valid
     * If win==0, need to handle appropriately and *not* do anything with win
