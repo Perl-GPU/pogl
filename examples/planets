@@ -1,7 +1,8 @@
 #!/usr/bin/perl -w
 
 use strict;
-use OpenGL ':old', ':glutfunctions';
+use Time::HiRes qw(sleep);
+use OpenGL ':old', ':glutfunctions', ':glutconstants';
 
 my $where = (@ARGV ? 'far away' : 'near Earth');
 print "Camera position: $where.\n";
@@ -10,31 +11,6 @@ print "Give arguments to position camera far away.\n";
 my $field_of_view = (@ARGV ? 20 : 100); # Degrees
 my $minviewdist = 0.1;
 my $maxviewdist = 1000;
-
-sub resizeHandler {		# Not auto yet
-  my ($wind_w, $wind_h) = @_;
-  
-  glMatrixMode( GL_PROJECTION );
-   glLoadIdentity();
-   gluPerspective( $field_of_view, $wind_w/$wind_h,
-		   $minviewdist, $maxviewdist );
-  glMatrixMode( GL_MODELVIEW );
-}
-
-glpOpenWindow( attributes => [GLX_RGBA, GLX_DOUBLEBUFFER] );
-
-
-
-#gluOrtho2D(-10,10,-10,10);
-#glOrtho(-10,10,-10,10,-100,100);	# Last two args are 0,10 in the example ?!
-resizeHandler(1,1);
-
-#glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-glEnable( GL_DEPTH_TEST );
-glEnable( GL_LIGHTING );
-glEnable( GL_LIGHT0 );
-glEnable( GL_COLOR_MATERIAL );
-glLightModelfv( GL_LIGHT_MODEL_AMBIENT, pack 'f4', 0.1, 0.1, 0.1, 1);
 
 my $mercury = 0;
 my $venus = 0;
@@ -48,6 +24,16 @@ my $jups2 = 0;
 my $jups3 = 0;
 my $jups4 = 0;
 my $saturn = 250;		# Make them visible
+
+sub resizeHandler {		# Not auto yet
+  my ($wind_w, $wind_h) = @_;
+  
+  glMatrixMode( GL_PROJECTION );
+   glLoadIdentity();
+   gluPerspective( $field_of_view, $wind_w/$wind_h,
+		   $minviewdist, $maxviewdist );
+  glMatrixMode( GL_MODELVIEW );
+}
 
 sub display {
   # clear the canvas
@@ -225,12 +211,25 @@ sub display {
   
   glPopMatrix();
   
-  glXSwapBuffers();
+  glutSwapBuffers();
 }
 
 glutInit();
+glutInitDisplayMode( GLUT_DOUBLE | GLUT_DEPTH );
+glutCreateWindow('Planets Example');
+glutDisplayFunc(\&display);
+glutReshapeFunc(\&resizeHandler);
 
-while (1) {
+#glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+glEnable( GL_DEPTH_TEST );
+glEnable( GL_LIGHTING );
+glEnable( GL_LIGHT0 );
+glEnable( GL_COLOR_MATERIAL );
+glLightModelfv( GL_LIGHT_MODEL_AMBIENT, pack 'f4', 0.1, 0.1, 0.1, 1);
+
+
+while ( sleep(0.1) ) {
+  glutMainLoopEvent();
   $mercury += 1/0.24;
   $mercury -= 360 if $mercury >= 360;
   
@@ -270,5 +269,5 @@ while (1) {
   $saturn += 1/29.46;
   $saturn -= 360 if $saturn >= 360;
   
-  display();
+  glutPostRedisplay();
 }

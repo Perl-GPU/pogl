@@ -1,4 +1,4 @@
-Last saved: Sat 10 Jul 2010 02:19:44 PM
+Last saved: Mon 10 Jan 2011 11:00:48 AM 
 
 
 Add support for more GLUT variant export control:
@@ -69,6 +69,21 @@ Fix examples/ directory
     * update to use GLUT rather than glp()
     * verify all examples work (most appear to)
     * remove broken cruft
+    * redo planets example to be more realistic:
+        * planets aren't spheres
+	* sun has no depth + jaggies
+	* colors are off
+	* animation is jumpy (how to smooth out)
+	* give saturn *real* rings
+	* what is blue wedge in earth view?
+	* basic texture for planets
+
+
+Implement basic template for GLUT/GLUI apps
+   * Simple default/bare bones option
+   * Generic version with typical interaction
+   * Customizable version (runtime?)
+   * Maybe in examples directory as a module to use
 
 
 Add Geometry Shader support
