@@ -1,4 +1,14 @@
-Last saved: Mon 10 Jan 2011 11:00:48 AM 
+Last saved: Sun 13 Feb 2011 02:59:58 PM 
+
+
+Remove support for PM on OS/2
+    * Strip out
+    * Add documentation to last version with support
+    * May be moot since GLX needs to go as well
+       * All we need as far as GLX goes is the ability
+         to create an X11 window and context for rendering
+	 via Perl OpenGL.  Should be able to take a GLX
+	 context (Tk embedding, for example)
 
 
 Add support for more GLUT variant export control:
@@ -60,9 +70,10 @@ Clean up glp*() routine support:
     * strip out required GLX or X11 specific code
     * layer over GLUT environment
         * N.B. *GLUT is on *all* GLX systems but may not use GLX
-	* Keep minimal GLX+X11 code to support Tk bindings
-	* Is Tk even being used?  Contact perl/Tk about better support.
-	* Investigate Gtk+ or wxWidgets instead of Tk for embedding
+	* What is needed to support Tk+X11 bindings (just context?)
+	* Is Tk even being used?
+	* Investigate Gtk+ or wxWidgets for embedding
+	* GLUI as an easy, simple starter (performance?)
 
 
 Fix examples/ directory
@@ -165,6 +176,7 @@ Fix current POGL configuration and build process
             * System info flags: HAVE_GLX, HAVE_GLUT, ...
             * Build flags: BUILD_GLUT, BUILD_FREEGLUT, ...
         * Exactly what libraries are being used
+	* Library versions and locations/paths
         * What are the compile and link configuration
 	    * split out compile/link by libraries
 	        * OpenGL
@@ -183,6 +195,7 @@ Fix current POGL configuration and build process
 
 Refactor config/build for portability and simplicity
     * use Module::Build framework
+    * use constant rather than XS constant function
     * use GLEW and autogeneration for bindings
         * why does GLEW require GLX_VERSION_1_2?
 
@@ -196,7 +209,7 @@ Implement complete matrix test capability
     * document/implement a test matrix for regression and stability tests
     * setup virtualized test environment for POGL and PDL
     * factors to include
-        * perl vs activeperl
+        * perl vs activeperl vs strawberry
         * GLX vs WGL vs CGL/AGL
         * hardware vs software/Mesa
         * OS
