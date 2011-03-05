@@ -3,6 +3,7 @@
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
  *  Copyright (c) 2009 Chris Marshall. All rights reserved.
+ *  Copyright (c) 2011 Paul Seamons. All rights reserved.
  *  This program is free software; you can redistribute it and/or
  *  modify it under the same terms as Perl itself.
  */
@@ -29,95 +30,334 @@
 
 #ifdef IN_POGL_GLU_XS
 
-/* Begin a named callback handler */
-#define begin_void_specific_marshaller(name, assign_handler_av, params) \
-static void _s_marshal_ ## name params					\
-{                                                                       \
-    SV * handler;                                                       \
-	AV * handler_av;                                                \
-	dSP;                                                            \
-	int i;                                                          \
-	assign_handler_av;                                              \
-	if (!handler_av) croak("Failure of callback handler");          \
-	handler = *av_fetch(handler_av, 0, 0);                          \
-    PUSHMARK(sp);                                                       \
-    for (i=1; i<=av_len(handler_av); i++)                               \
-        XPUSHs(sv_2mortal(newSVsv(*av_fetch(handler_av, i, 0))));
+#ifndef CALLBACK
+#define CALLBACK
+#endif
 
-/* End a named callback handler */
-#define end_void_specific_marshaller()                                  \
+struct PGLUtess {
+	GLUtesselator * triangulator;
+#ifdef GLU_VERSION_1_2
+	SV * begin_callback;
+	SV * edgeFlag_callback;
+	SV * vertex_callback;
+	SV * end_callback;
+	SV * error_callback;
+	SV * combine_callback;
+#endif
+        bool do_colors;
+        bool do_normals;
+        bool use_vertex_data;
+        GLdouble * vertex_data; /* used during non-GLU_TESS_VERTEX_DATA */
+	SV * polygon_data;
+	AV * vertex_datas;
+	AV * tess_datas;
+};
+
+typedef struct PGLUtess PGLUtess;
+
+#define delete_vertex_datas() \
+		if (tess->vertex_datas) {                    \
+                  AV * vds = tess->vertex_datas;             \
+                  SV** svp;                                  \
+                  I32 i;                                     \
+                  for (i=0; i<=av_len(vds); i++) {           \
+                    svp = av_fetch(vds, i, FALSE);           \
+                    free(INT2PTR(GLdouble*, SvIV(*svp)));    \
+                  }                                          \
+                  SvREFCNT_dec(tess->vertex_datas);          \
+                  tess->vertex_datas = 0;                    \
+                }
+
+#define delete_tess_datas() \
+		if (tess->tess_datas) {                      \
+                  AV * tds = tess->tess_datas;               \
+                  SV** svp;                                  \
+                  I32 i;                                     \
+                  for (i=0; i<=av_len(tds); i++) {           \
+                    svp = av_fetch(tds, i, FALSE);           \
+                    free(INT2PTR(PGLUtess*, SvIV(*svp)));    \
+                  }                                          \
+                  SvREFCNT_dec(tess->tess_datas);            \
+                  tess->tess_datas = 0;                      \
+                }
+
+#define delete_polygon_data()                             \
+		if (tess->polygon_data) {                 \
+			SvREFCNT_dec(tess->polygon_data); \
+			tess->polygon_data = 0;           \
+		}
+
+
+
+#ifdef GLU_VERSION_1_2
+
+
+/* Begin a named callback handler */
+#define begin_tess_marshaller(name, type, params, croak_msg, default_handler) \
+void CALLBACK _s_marshal_glu_t_callback_ ## name params			\
+{                                                                       \
+    dSP;                                                                \
+    int i; int j = 3;                                                   \
+    PGLUtess * t = (PGLUtess*)gl_polygon_data;                          \
+    SV * handler = t-> type ## _callback;                               \
+    if (!handler) croak(croak_msg);                                     \
+    if (! SvROK(handler)) { /* default */                               \
+      default_handler;                                                  \
+      return;                                                           \
+    }                                                                   \
+    PUSHMARK(sp);
+
+/* End a gluTess callback handler */
+#define end_tess_marshaller()                                           \
 	PUTBACK;                                                        \
 	perl_call_sv(handler, G_DISCARD);                               \
 }
 
 
-struct PGLUtess {
-	GLUtriangulatorObj * triangulator;
-
-#ifdef GLU_VERSION_1_2
-	AV * polygon_data_av;
-	AV * begin_callback;
-	AV * edgeFlag_callback;
-	AV * vertex_callback;
-	AV * end_callback;
-	AV * error_callback;
-	AV * combine_callback;
-#endif
-	
-	AV * vertex_datas;
-};
-
-typedef struct PGLUtess PGLUtess;
-
-#ifdef GLU_VERSION_1_2
-
-
-/* Begin a gluTess callback handler */
-#define begin_tess_marshaller(type, params)				\
-begin_void_specific_marshaller(glu_t_callback_ ## type,                 \
-	PGLUtess * t = (PGLUtess*)polygon_data;                         \
-	handler_av = t-> type ## _callback                              \
-	, params)                                                       \
-    if (t->polygon_data_av)                                             \
-      for (i=0; i<=av_len(t->polygon_data_av); i++)                     \
-        XPUSHs(sv_2mortal(newSVsv(*av_fetch(t->polygon_data_av, i, 0))));
-
-/* End a gluTess callback handler */
-#define end_tess_marshaller()                                           \
-end_void_specific_marshaller()
-
 /* Declare gluTess BEGIN */
-begin_tess_marshaller(begin, (GLenum type, void * polygon_data))
+begin_tess_marshaller(begin, begin, (GLenum type, void * gl_polygon_data), "Missing tess callback for begin", glBegin(type))
 	XPUSHs(sv_2mortal(newSViv(type)));
 end_tess_marshaller()
 
+/* Declare gluTess BEGIN_DATA */
+begin_tess_marshaller(begin_data, begin, (GLenum type, void * gl_polygon_data), "Missing tess callback for begin_data", glBegin(type))
+	XPUSHs(sv_2mortal(newSViv(type)));
+    if (t->polygon_data) XPUSHs((SV*)t->polygon_data);
+end_tess_marshaller()
+
 /* Declare gluTess END */
-begin_tess_marshaller(end, (void * polygon_data))
+begin_tess_marshaller(end, end, (void * gl_polygon_data), "Missing tess callback for end", glEnd())
+end_tess_marshaller()
+
+/* Declare gluTess END_DATA */
+begin_tess_marshaller(end_data, end, (void * gl_polygon_data), "Missing tess callback for end_data", glEnd())
+    if (t->polygon_data) XPUSHs((SV*)t->polygon_data);
 end_tess_marshaller()
 
 /* Declare gluTess EDGEFLAG */
-begin_tess_marshaller(edgeFlag, (GLboolean flag, void * polygon_data))
+begin_tess_marshaller(edgeFlag, edgeFlag, (GLboolean flag, void * gl_polygon_data), "Missing tess callback for edgeFlag", glEdgeFlag(flag))
 	XPUSHs(sv_2mortal(newSViv(flag)));
 end_tess_marshaller()
 
+/* Declare gluTess EDGEFLAG_DATA */
+begin_tess_marshaller(edgeFlag_data, edgeFlag, (GLboolean flag, void * gl_polygon_data), "Missing tess callback for edgeFlag_data", glEdgeFlag(flag))
+	XPUSHs(sv_2mortal(newSViv(flag)));
+    if (t->polygon_data) XPUSHs((SV*)t->polygon_data);
+end_tess_marshaller()
+
 /* Declare gluTess VERTEX */
-begin_tess_marshaller(vertex, (void * vertex_data, void * polygon_data))
-	if (vertex_data) {
-      AV * vd = (AV*)vertex_data;
-      for (i=0; i<=av_len(vd); i++)
-        XPUSHs(sv_2mortal(newSVsv(*av_fetch(vd, i, 0))));
+begin_tess_marshaller(vertex, vertex, (void * gl_polygon_data), "Missing tess callback for vertex", \
+                      GLdouble * vd = t->vertex_data;                                   \
+                      if (t->do_colors) { \
+                         glColor4f(vd[j], vd[j+1], vd[j+2], vd[j+3]); \
+                         j += 4; \
+                      } \
+                      if (t->do_normals) glNormal3f(vd[j], vd[j+1], vd[j+2]);           \
+                      glVertex3f(vd[0], vd[1], vd[2]);                                  \
+                      )
+    GLdouble * vd = (GLdouble*) t->vertex_data;
+    for (i = 0; i < 3; i++)
+      XPUSHs(sv_2mortal(newSVnv(vd[i])));
+    if (t->do_colors) {
+      int J = j + 4;
+      for ( ; j < J; j++)
+        XPUSHs(sv_2mortal(newSVnv(vd[j])));
     }
+    if (t->do_normals)
+      for (i = 0; i < 3; i++)
+        XPUSHs(sv_2mortal(newSVnv(vd[j++])));
+    if (t->polygon_data) XPUSHs((SV*)t->polygon_data);
+end_tess_marshaller()
+
+/* Declare gluTess VERTEX_DATA */
+begin_tess_marshaller(vertex_data, vertex, (void * vertex_data, void * gl_polygon_data), "Missing tess callback for vertex_data", \
+                      GLdouble * vd = (GLdouble*) vertex_data;                          \
+                      if (t->do_colors) { \
+                         glColor4f(vd[j], vd[j+1], vd[j+2], vd[j+3]); \
+                         j += 4; \
+                      } \
+                      if (t->do_normals) glNormal3f(vd[j], vd[j+1], vd[j+2]);           \
+                      glVertex3f(vd[0], vd[1], vd[2]);                                  \
+                     )
+    if (! vertex_data) croak("Missing vertex data in tess vertex_data callback");
+    GLdouble * vd = (GLdouble*) vertex_data;
+    for (i = 0; i < 3; i++)
+      XPUSHs(sv_2mortal(newSVnv(vd[i])));
+    if (t->do_colors) {
+      int J = j + 4;
+      for ( ; j < J; j++)
+        XPUSHs(sv_2mortal(newSVnv(vd[j])));
+    }
+    if (t->do_normals)
+      for (i = 0; i < 3; i++)
+        XPUSHs(sv_2mortal(newSVnv(vd[j++])));
+    if (t->polygon_data) XPUSHs((SV*)t->polygon_data);
 end_tess_marshaller()
 
 /* Declare gluTess ERROR */
-begin_tess_marshaller(error, (GLenum errno_, void * polygon_data))
+begin_tess_marshaller(error, error, (GLenum errno_, void * gl_polygon_data), "Missing tess callback for error", \
+                      warn("Tesselation error: %s", gluErrorString(errno_)); \
+                     )
 	XPUSHs(sv_2mortal(newSViv(errno_)));
 end_tess_marshaller()
 
-/* Declare gluTess COMBINE */
-begin_tess_marshaller(combine, (GLdouble coords[3], void * vertex_data[4], GLfloat weight[4], void ** outd, void * polygon_data))
-	croak("combine tess marshaller needs FIXME (see OpenGL.xs)");
+/* Declare gluTess ERROR_DATA */
+begin_tess_marshaller(error_data, error, (GLenum errno_, void * gl_polygon_data), "Missing tess callback for error_data", \
+                      warn("Tesselation error: %s", gluErrorString(errno_)); \
+                     )
+	XPUSHs(sv_2mortal(newSViv(errno_)));
+    if (t->polygon_data) XPUSHs((SV*)t->polygon_data);
 end_tess_marshaller()
+
+/* Declare gluTess COMBINE AND COMBINE_DATA */
+void CALLBACK _s_marshal_glu_t_callback_combine (GLdouble coords[3], void * vertex_data[4],
+                                                 GLfloat weight[4], void ** out_data,
+                                                 void * gl_polygon_data)
+{
+        SV * handler;
+	AV * vds;
+        SV * item;
+        I32 n;
+	int i, j = 3;
+	dSP;
+        GLdouble *vd[4];
+	PGLUtess *t = (PGLUtess*)gl_polygon_data;
+        bool has_data = FALSE;
+        int size = 3 + (t->do_colors ? 4 : 0) + (t->do_normals ? 3 : 0);
+        GLdouble *vertex = malloc(sizeof(GLdouble) * size);
+        if (vertex == NULL) croak("Couldn't allocate combination vertex during tesselation");
+        vds = t->vertex_datas;
+        if (!vds) croak("Missing vertex data storage");
+	av_push(vds, newSViv((int)vertex));
+
+	handler = t->combine_callback;
+        if (!handler) croak("Missing tess callback for combine_data");
+
+	if (t->use_vertex_data) {
+            PGLUtess * opaque = malloc(sizeof(PGLUtess));
+            if (!opaque) croak("Couldn't allocate storage for vertex opaque data");
+	    opaque->triangulator     = t->triangulator;
+            opaque->vertex_datas     = t->vertex_datas;
+            opaque->vertex_callback  = t->vertex_callback;
+            opaque->combine_callback = t->combine_callback;
+            opaque->vertex_data      = vertex;
+            opaque->polygon_data     = &PL_sv_undef;
+            opaque->use_vertex_data  = TRUE;
+            opaque->do_colors        = t->do_colors;
+            opaque->do_normals       = t->do_normals;
+            if (! t->tess_datas) t->tess_datas = newAV();
+            av_push(t->tess_datas, newSViv((int)opaque));
+            *out_data = opaque;
+            for (i = 0; i < 4; i++) {
+                PGLUtess* ot = (PGLUtess*)vertex_data[i];
+                vd[i] = (GLdouble*)ot->vertex_data;
+            }
+	} else {
+            *out_data = vertex;
+            for (i = 0; i < 4; i++)
+               vd[i] = (GLdouble*)vertex_data[i];
+        }
+
+        if (! SvROK(handler)) { /* default */
+          vertex[0] = coords[0];
+          vertex[1] = coords[1];
+          vertex[2] = coords[2];
+          if (t->do_colors) {
+            int J = j + 4;
+            for ( ; j < J; j++) {
+              vertex[j] = 0;
+              for (i = 0; i < 4; i++)
+                if (weight[i]) vertex[j] += weight[i] * vd[i][j];
+            }
+          }
+          if (t->do_normals) {
+            int J = j + 3;
+            for ( ; j < J; j++) {
+              vertex[j] = 0;
+              for (i = 0; i < 4; i++)
+                if (weight[i]) vertex[j] += weight[i] * vd[i][j];
+            }
+          }
+        } else {
+          PUSHMARK(sp);
+          for (i = 0; i < 3; i++)
+            XPUSHs(sv_2mortal(newSVnv(coords[i])));
+          for (i = 0; i < 4; i++) {
+            AV* vec = (AV*)sv_2mortal((SV*)newAV());
+            XPUSHs(newRV_inc((SV*)vec));
+            for (j = 0 ; j < 3; j++)
+                av_push(vec, sv_2mortal(newSVnv(weight[i] ? vd[i][j] : 0)));
+            if (t->do_colors) {
+              int J = j + 4;
+              for ( ; j < J; j++)
+                av_push(vec, sv_2mortal(newSVnv(weight[i] ? vd[i][j] : 0)));
+            }
+            if (t->do_normals) {
+              int J = j + 3;
+              for ( ; j < J; j++)
+                av_push(vec, sv_2mortal(newSVnv(weight[i] ? vd[i][j] : 0)));
+            }
+            if (t->use_vertex_data) {
+              PGLUtess* ot = (PGLUtess*)vertex_data[i];
+              av_push(vec, ot->polygon_data ? ot->polygon_data : &PL_sv_undef);
+            }
+          }
+          for (i = 0; i < 4; i++)
+            XPUSHs(sv_2mortal(newSVnv(weight[i])));
+          XPUSHs(t->polygon_data ? t->polygon_data : &PL_sv_undef); /* would be nice to have the option to only do this on COMBINE_DATA */
+
+	  PUTBACK;
+
+          n = perl_call_sv(handler, G_ARRAY);
+
+          SPAGAIN;
+
+          if (t->do_colors) {
+              if (t->do_normals) {
+                  if (n == 11 && t->use_vertex_data) has_data = TRUE;
+                  else if (n != 10) {
+                    if (t->use_vertex_data) croak("Callback expects (x,y,z, r,g,b,a, nx,ny,nz [,polygon_data])");
+                    else  croak("Callback expects (x,y,z, r,g,b,a, nx,ny,nz)");
+                  }
+              } else {
+                  if (n == 8 && t->use_vertex_data) has_data = TRUE;
+                  else if (n != 7) {
+                    if (t->use_vertex_data) croak("Callback expects (x,y,z, r,g,b,a [,polygon_data])");
+                    else  croak("Callback expects (x,y,z, r,g,b,a)");
+                  }
+              }
+          } else {
+              if (t->do_normals) {
+                  if (n == 7 && t->use_vertex_data) has_data = TRUE;
+                  else if (n != 6) {
+                    if (t->use_vertex_data) croak("Callback expects (x,y,z, nx,ny,nz [,polygon_data])");
+                    else  croak("Callback expects (x,y,z, nx,ny,nz)");
+                  }
+              } else {
+                  if (n == 4 && t->use_vertex_data) has_data = TRUE;
+                  else if (n != 3) {
+                    if (t->use_vertex_data) croak("Callback expects (x,y,z [,polygon_data])");
+                    else  croak("Callback expects (x,y,z)");
+                  }
+              }
+          }
+
+          if (t->use_vertex_data) {
+              PGLUtess* opaque = (PGLUtess*)*out_data;
+              opaque->polygon_data = (has_data) ? POPs : 0;
+          }
+
+          for (i = n - (has_data ? 2 : 1); i >= 0; i--) {
+              GLdouble val;
+              item = POPs;
+              if (! item || (! SvIOK(item) && ! SvNOK(item)))
+                  croak("Value returned in index %d was not a valid number", i);
+              val = (GLdouble)SvNV(item);
+              vertex[i] = val;
+          }
+	  PUTBACK;
+        }
+}
 
 #endif
 
@@ -276,8 +516,6 @@ gluDeleteTess(tess)
 		if (tess->triangulator)
 			gluDeleteTess(tess->triangulator);
 #ifdef GLU_VERSION_1_2
-		if (tess->polygon_data_av)
-			SvREFCNT_dec(tess->polygon_data_av);
 		if (tess->begin_callback)
 			SvREFCNT_dec(tess->begin_callback);
 		if (tess->edgeFlag_callback)
@@ -290,9 +528,10 @@ gluDeleteTess(tess)
 			SvREFCNT_dec(tess->error_callback);
 		if (tess->combine_callback)
 			SvREFCNT_dec(tess->combine_callback);
-		if (tess->vertex_datas)
-			SvREFCNT_dec(tess->vertex_datas);
 #endif
+delete_vertex_datas()
+delete_tess_datas()
+delete_polygon_data()
 		free(tess);
 	}
 
@@ -389,10 +628,12 @@ gluNewQuadric()
 
 #// gluNewTess();
 PGLUtess *
-gluNewTess()
+gluNewTess(...)
 	CODE:
 	{
 		RETVAL = calloc(sizeof(PGLUtess), 1);
+                RETVAL->do_colors  = (items > 0) ? SvTRUE(ST(0)) : FALSE;
+                RETVAL->do_normals = (items > 1) ? SvTRUE(ST(1)) : FALSE;
 		RETVAL->triangulator = gluNewTess();
 	}
 	OUTPUT:
@@ -602,9 +843,9 @@ gluGetTessProperty_p(tess, property)
 #void
 #gluQuadricCallback
 
-#// gluTessBeginCountour(tess);
+#// gluTessBeginContour(tess);
 void
-gluTessBeginCountour(tess)
+gluTessBeginContour(tess)
 	PGLUtess *	tess
 	CODE:
 	gluTessBeginContour(tess->triangulator);
@@ -622,15 +863,13 @@ gluTessBeginPolygon(tess, ...)
 	PGLUtess *	tess
 	CODE:
 	{
-		if (tess->polygon_data_av) {
-			SvREFCNT_dec(tess->polygon_data_av);
-			tess->polygon_data_av = 0;
-		}
+delete_polygon_data()
 		if (items > 1) {
-			tess->polygon_data_av = newAV();
-			PackCallbackST(tess->polygon_data_av, 1);
+			tess->polygon_data = newSVsv(ST(1));
 		}
-		gluTessBeginPolygon(tess->triangulator, tess);
+              	if (!tess->vertex_datas)
+			tess->vertex_datas = newAV();
+                gluTessBeginPolygon(tess->triangulator, tess);
 	}
 
 #// gluTessEndPolygon(tess);
@@ -639,10 +878,10 @@ gluTessEndPolygon(tess)
 	PGLUtess *	tess
 	CODE:
 	{
-		if (tess->polygon_data_av) {
-			SvREFCNT_dec(tess->polygon_data_av);
-			tess->polygon_data_av = 0;
-		}
+                gluTessEndPolygon(tess->triangulator);
+delete_vertex_datas()
+delete_tess_datas()
+delete_polygon_data()
 	}
 
 #// gluTessNormal(tess, valueX, valueY, valueZ)
@@ -686,22 +925,105 @@ gluTessCallback(tess, which, ...)
 				tess->end_callback = 0;
 			}
 			break;
+		case GLU_TESS_VERTEX:
+		case GLU_TESS_VERTEX_DATA:
+			if (tess->vertex_callback) {
+				SvREFCNT_dec(tess->vertex_callback);
+				tess->vertex_callback = 0;
+			}
+			break;
+		case GLU_TESS_ERROR:
+		case GLU_TESS_ERROR_DATA:
+			if (tess->error_callback) {
+				SvREFCNT_dec(tess->error_callback);
+				tess->error_callback = 0;
+			}
+			break;
+		case GLU_TESS_COMBINE:
+		case GLU_TESS_COMBINE_DATA:
+			if (tess->combine_callback) {
+				SvREFCNT_dec(tess->combine_callback);
+				tess->combine_callback = 0;
+			}
+			break;
+		case GLU_TESS_EDGE_FLAG:
+		case GLU_TESS_EDGE_FLAG_DATA:
+			if (tess->edgeFlag_callback) {
+				SvREFCNT_dec(tess->edgeFlag_callback);
+				tess->edgeFlag_callback = 0;
+			}
+			break;
 		}
-		
-		if ((items > 3) && !SvOK(ST(2))) {
-			AV * callback = newAV();
-			PackCallbackST(callback, 2);
 
+                if (items > 2) {
+			SV * callback;
+                        if (SvPOK(ST(2))
+                            && sv_eq(ST(2), sv_2mortal(newSVpv("DEFAULT", 0)))) {
+				callback = newSViv(1);
+				switch (which) {
+				case GLU_TESS_BEGIN_DATA:
+					which = GLU_TESS_BEGIN; break;
+				case GLU_TESS_END_DATA:
+					which = GLU_TESS_END; break;
+				case GLU_TESS_ERROR_DATA:
+					which = GLU_TESS_ERROR; break;
+				case GLU_TESS_EDGE_FLAG_DATA:
+					which = GLU_TESS_EDGE_FLAG; break;
+                                case GLU_TESS_VERTEX:
+					which = GLU_TESS_VERTEX_DATA; break; /* vertex data handler has less overhead and both pass opaque pointers anyway */
+                                }
+                        } else if (!SvROK(ST(2)) || SvTYPE(SvRV(ST(2))) != SVt_PVCV) {
+                            croak("3rd argument to gluTessCallback must be a perl code ref");
+                        } else {
+                            callback = newSVsv(ST(2));
+                        }
 			switch (which) {
 			case GLU_TESS_BEGIN:
+				tess->begin_callback = callback;
+				gluTessCallback(tess->triangulator, GLU_TESS_BEGIN_DATA, (void (CALLBACK*)()) _s_marshal_glu_t_callback_begin);
+				break;
 			case GLU_TESS_BEGIN_DATA:
 				tess->begin_callback = callback;
-				gluTessCallback(tess->triangulator, which, (void (CALLBACK*)()) _s_marshal_glu_t_callback_begin);
+				gluTessCallback(tess->triangulator, GLU_TESS_BEGIN_DATA, (void (CALLBACK*)()) _s_marshal_glu_t_callback_begin_data);
 				break;
 			case GLU_TESS_END:
+				tess->end_callback = callback;
+				gluTessCallback(tess->triangulator, GLU_TESS_END_DATA, (void (CALLBACK*)()) _s_marshal_glu_t_callback_end);
+				break;
 			case GLU_TESS_END_DATA:
 				tess->end_callback = callback;
-				gluTessCallback(tess->triangulator, which, (void (CALLBACK*)()) _s_marshal_glu_t_callback_end);
+				gluTessCallback(tess->triangulator, GLU_TESS_END_DATA, (void (CALLBACK*)()) _s_marshal_glu_t_callback_end_data);
+				break;
+			case GLU_TESS_VERTEX:
+                                tess->use_vertex_data = TRUE;
+				tess->vertex_callback = callback;
+				gluTessCallback(tess->triangulator, GLU_TESS_VERTEX, (void (CALLBACK*)()) _s_marshal_glu_t_callback_vertex);
+				break;
+			case GLU_TESS_VERTEX_DATA:
+                                tess->use_vertex_data = FALSE;
+				tess->vertex_callback = callback;
+				gluTessCallback(tess->triangulator, GLU_TESS_VERTEX_DATA, (void (CALLBACK*)()) _s_marshal_glu_t_callback_vertex_data);
+				break;
+			case GLU_TESS_ERROR:
+				tess->error_callback = callback;
+				gluTessCallback(tess->triangulator, GLU_TESS_ERROR_DATA, (void (CALLBACK*)()) _s_marshal_glu_t_callback_error);
+				break;
+			case GLU_TESS_ERROR_DATA:
+				tess->error_callback = callback;
+				gluTessCallback(tess->triangulator, GLU_TESS_ERROR_DATA, (void (CALLBACK*)()) _s_marshal_glu_t_callback_error_data);
+				break;
+			case GLU_TESS_COMBINE:
+			case GLU_TESS_COMBINE_DATA:
+				tess->combine_callback = callback;
+				gluTessCallback(tess->triangulator, GLU_TESS_COMBINE_DATA, (void (CALLBACK*)()) _s_marshal_glu_t_callback_combine);
+				break;
+			case GLU_TESS_EDGE_FLAG:
+				tess->edgeFlag_callback = callback;
+				gluTessCallback(tess->triangulator, GLU_TESS_EDGE_FLAG_DATA, (void (CALLBACK*)()) _s_marshal_glu_t_callback_edgeFlag);
+				break;
+			case GLU_TESS_EDGE_FLAG_DATA:
+				tess->edgeFlag_callback = callback;
+				gluTessCallback(tess->triangulator, GLU_TESS_EDGE_FLAG_DATA, (void (CALLBACK*)()) _s_marshal_glu_t_callback_edgeFlag_data);
 				break;
 			}
 		}
@@ -710,33 +1032,63 @@ gluTessCallback(tess, which, ...)
 
 #endif
 
-#// gluTessVertex(tess, x, y, z, ...);
+#// gluTessVertex(tess, x, y, z);
 void
-gluTessVertex(tess, x, y, z, ...)
+gluTessVertex_p(tess, x, y, z, ...)
 	PGLUtess *	tess
 	GLdouble	x
 	GLdouble	y
 	GLdouble	z
 	CODE:
 	{
-		AV * data = 0;
-		GLdouble v[3];
-		v[0] = x;
-		v[1] = y;
-		v[2] = z;
-
-		if (items > 4) {
-			data = newAV();
-			PackCallbackST(data, 4);
-			
-			if (!tess->vertex_datas)
-				tess->vertex_datas = newAV();
-			
-			av_push(tess->vertex_datas, newRV_inc((SV*)data));
-			SvREFCNT_dec(data);
-		}
-
-		gluTessVertex(tess->triangulator, &v[0], (void*)data);
+                int i;
+                int j = 3;
+                AV * vds = tess->vertex_datas;
+                int size = 3 + (tess->do_colors ? 4 : 0) + (tess->do_normals ? 3 : 0);
+		GLdouble* data = malloc(sizeof(GLdouble) * size);
+                if (!vds) croak("Missing vertex data storage during gluTessVertex");
+                if (data == NULL) croak("Couldn't allocate vertex during gluTessVertex");
+		data[0] = x;
+		data[1] = y;
+		data[2] = z;
+                av_push(vds, newSViv((int)data)); /* store for freeing later */
+                if (tess->do_colors) {
+                    int J = j + 4;
+                    if (tess->do_normals) {
+                        if (items != 12 && items != 11) croak("gluTessVertex_p(tess, x,y,z, r,g,b,a, nx,ny,nz [,polygon_data])");
+                    } else {
+                        if (items != 9  && items != 8 ) croak("gluTessVertex_p(tess, x,y,z, r,g,b,a [,polygon_data])");
+                    }
+                    for ( ; j < J; j++) data[j] = (GLdouble)SvNV(ST(j+1));
+                } else {
+                    if (tess->do_normals) {
+                        if (items != 8 && items != 7) croak("gluTessVertex_p(tess, x,y,z, nx,ny,nz [,polygon_data])");
+                    } else {
+                        if (items != 5 && items != 4) croak("gluTessVertex_p(tess, x,y,z [,polygon_data])");
+                    }
+                }
+                if (tess->do_normals) {
+                    int J = j + 3;
+                    for ( ; j < J; j++) data[j] = (GLdouble)SvNV(ST(j+1));
+                }
+		if (tess->use_vertex_data) {
+                    PGLUtess * opaque = malloc(sizeof(PGLUtess));
+                    if (!opaque) croak("Couldn't allocate storage for vertex opaque data");
+		    opaque->triangulator     = tess->triangulator;
+                    opaque->vertex_datas     = tess->vertex_datas;
+                    opaque->vertex_callback  = tess->vertex_callback;
+                    opaque->combine_callback = tess->combine_callback;
+                    opaque->vertex_data      = data;
+                    opaque->polygon_data     = (items > j+1) ? newSVsv(ST(j+1)) : 0;
+                    opaque->use_vertex_data  = TRUE;
+                    opaque->do_colors        = tess->do_colors;
+                    opaque->do_normals       = tess->do_normals;
+                    if (! tess->tess_datas) tess->tess_datas = newAV();
+                    av_push(tess->tess_datas, newSViv((int)opaque));
+                    gluTessVertex(tess->triangulator, data, (void*)opaque);
+		} else {
+                    gluTessVertex(tess->triangulator, data, data);
+                }
 	}
 
 #//# gluUnProject_p($winx,$winy,$winz, @m4x4, @o4x4, $v1,$v2,$v3,$v4);

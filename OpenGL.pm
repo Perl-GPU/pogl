@@ -1163,14 +1163,14 @@ our $glext_dependencies =
    gluQuadricTexture
    gluScaleImage_s
    gluSphere
-   gluTessBeginCountour
+   gluTessBeginContour
    gluTessBeginPolygon
    gluTessCallback
    gluTessEndContour
    gluTessEndPolygon
    gluTessNormal
    gluTessProperty
-   gluTessVertex
+   gluTessVertex_p
    gluUnProject_p
 );
 
@@ -4283,6 +4283,24 @@ our $glext_dependencies =
    GLU_INTERIOR
    GLU_EXTERIOR
    GLU_UNKNOWN
+   GLU_TESS_ERROR
+   GLU_TESS_BEGIN
+   GLU_TESS_EDGE_FLAG
+   GLU_TESS_VERTEX
+   GLU_TESS_COMBINE
+   GLU_TESS_END
+   GLU_TESS_ERROR_DATA
+   GLU_TESS_BEGIN_DATA
+   GLU_TESS_EDGE_FLAG_DATA
+   GLU_TESS_VERTEX_DATA
+   GLU_TESS_COMBINE_DATA
+   GLU_TESS_END_DATA
+   GLU_TESS_WINDING_RULE
+   GLU_TESS_WINDING_ODD
+   GLU_TESS_WINDING_NONZERO
+   GLU_TESS_WINDING_POSITIVE
+   GLU_TESS_WINDING_NEGATIVE
+   GLU_TESS_WINDING_ABS_GEQ_TWO
    GLU_TESS_ERROR1
    GLU_TESS_ERROR2
    GLU_TESS_ERROR3

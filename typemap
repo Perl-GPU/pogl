@@ -24,7 +24,7 @@ GLhandleARB		T_U_INT
 GLUnurbsObj *	T_PTROBJ
 GLUquadricObj *	T_PTROBJ
 
-PGLUtess *	T_FASTPTROBJ
+PGLUtess *	T_PTROBJ
 
 OpenGL::Array		T_PTROBJ
 
