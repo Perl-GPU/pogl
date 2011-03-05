@@ -1,4 +1,21 @@
 +------------------------------------------------------------------------+
+|                  OpenGL-0.64_001
++------------------------------------------------------------------------+
+
+  This is a point release for the Perl OpenGL module with
+  some minor fixes to improve buildability.
+
+  Highlights:
+
+  * Newly revised GLU tesselation support provided
+    by Paul Seamons.  See examples/tesselation.pl
+    if you wish to test drive the functionality.
+
+  Please see the GIT_CHANGES file for more details.  Thanks.
+
+
+
++------------------------------------------------------------------------+
 |                  OpenGL-0.64
 +------------------------------------------------------------------------+
 
