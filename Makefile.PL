@@ -554,6 +554,7 @@ my $build_config =
   {
     'OpenGL.pm' => '$(INST_LIBDIR)/OpenGL.pm',
     'OpenGL.pod'=> '$(INST_LIBDIR)/OpenGL.pod',
+    'Tessellation.pod'=> '$(INST_LIBDIR)/OpenGL/Tessellation.pod',
     'Config.pm' => '$(INST_LIBDIR)/OpenGL/Config.pm'
   },
   'PREREQ_PM' => { 'Test::More' => 0 },
