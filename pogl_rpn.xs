@@ -134,7 +134,24 @@ enum
   RPN_SIN,
   RPN_COS,
   RPN_TAN,
-  RPN_AT2
+  RPN_AT2,
+
+  RPN_DMP,
+  RPN_FLR,
+  RPN_CGT,
+  RPN_CST,
+  RPN_RGT,
+  RPN_RST
+};
+
+/* RPN breaks */
+enum
+{
+  RPNF_CONTINUE = 0,
+  RPNF_END,
+  RPNF_ENDROW,
+  RPNF_RETURN,
+  RPNF_RETURNROW
 };
 
 /* RPN OP link-list */
@@ -444,6 +461,30 @@ rpn_stack * rpn_parse(int size,char * string)
       cur->value = (float)M_PI;
       size++;
     }
+    else if (!strcmp(pos,"dump"))
+    {
+      cur->op = RPN_DMP;
+    }
+    else if (!strcmp(pos,"floor"))
+    {
+      cur->op = RPN_FLR;
+    }
+    else if (!strcmp(pos,"colget"))
+    {
+      cur->op = RPN_CGT;
+    }
+    else if (!strcmp(pos,"colset"))
+    {
+      cur->op = RPN_CST;
+    }
+    else if (!strcmp(pos,"rowget"))
+    {
+      cur->op = RPN_RGT;
+    }
+    else if (!strcmp(pos,"rowset"))
+    {
+      cur->op = RPN_RST;
+    }
     /* Default to a numeric push */
     else
     {
@@ -572,6 +613,22 @@ GLfloat rpn_pop(rpn_stack * stack)
   return(value);
 }
 
+/* Dump out the current stack */
+void rpn_dump(rpn_stack * stack, int row, int col, float reg)
+{
+  if (stack && stack->count)
+  {
+    int i;
+    warn("-----------------(row: %d, col: %d)----\n", row, col);
+    warn("Register: %.7f\n", reg);
+    for (i = stack->count - 1; i >= 0 ; i--)
+      warn("Stack %2d: %.7f\n", i, stack->data[stack->count - i - 1]);
+  }
+  else {
+    warn("Empty Stack\n");
+  }
+}
+
 /* Execute RPN OPs stack */
 void rpn_exec(rpn_context * ctx)
 {
@@ -584,7 +641,7 @@ void rpn_exec(rpn_context * ctx)
     for (j=0;j<ctx->cols;j++)
     {
       rpn_stack *	stack = ctx->stacks[j];
-      int		end = 0;
+      int		flow  = RPNF_CONTINUE; /* or 0 */
       rpn_op *		ops;
 
       /* Skip for NOP columns */
@@ -673,6 +730,55 @@ void rpn_exec(rpn_context * ctx)
               ctx->cols*sizeof(GLfloat));
             break;
           }
+          case RPN_CGT:
+          {
+            //printf("RPN_CGT row %d\n",r);
+            int _col = (int)rpn_pop(stack);
+            if (_col < 0) _col = 0;
+            if (_col > ctx->cols-1) _col = ctx->cols-1;
+            rpn_push(stack,(float)((GLfloat *)ctx->oga_list[0]->data)[r+_col]);
+            break;
+          }
+          case RPN_CST:
+          {
+            //printf("RPN_CST row %d\n",r);
+            int _col = (int)rpn_pop(stack);
+            if (_col < 0) _col = 0;
+            if (_col > ctx->cols-1) _col = ctx->cols-1;
+            ((GLfloat *)ctx->oga_list[0]->data)[r+_col] = stack->data[pos > 0 ? pos-1 : 0];
+            break;
+          }
+          case RPN_RGT:
+          {
+            //printf("RPN_RGT row %d\n",r);
+            int _col = (int)rpn_pop(stack);
+            int _row = (int)rpn_pop(stack);
+            if (_row < 0) _row = 0;
+            if (_row > ctx->rows-1) _row = ctx->rows-1;
+            if (_col < 0) _col = 0;
+            if (_col > ctx->cols-1) _col = ctx->cols-1;
+            rpn_push(stack,(float)((GLfloat *)ctx->oga_list[0]->data)[_row*ctx->cols+_col]);
+            break;
+          }
+          case RPN_RST:
+          {
+            //printf("RPN_RST row %d\n",r);
+            int _col = (int)rpn_pop(stack);
+            int _row = (int)rpn_pop(stack);
+            if (_row < 0) _row = 0;
+            if (_row > ctx->rows-1) _row = ctx->rows-1;
+            if (_col < 0) _col = 0;
+            if (_col > ctx->cols-1) _col = ctx->cols-1;
+            ((GLfloat *)ctx->oga_list[0]->data)[_row*ctx->cols+_col] = stack->data[pos > 1 ? pos-2 : 0];
+            break;
+          }
+          case RPN_FLR:
+          {
+            //printf("RPN_FLR %d: %f\n",j,ctx->store[j]);
+            int flr = (int)stack->data[pos];
+            stack->data[pos] = (float)flr;
+            break;
+          }
           case RPN_LOD:
           {
             //printf("RPN_LOD rwo %d\n",r);
@@ -743,7 +849,7 @@ void rpn_exec(rpn_context * ctx)
           case RPN_END:
           {
             //printf("RPN_END\n");
-            end = 1;
+            flow = RPNF_END;
             ops = 0;
             continue;
           }
@@ -753,7 +859,7 @@ void rpn_exec(rpn_context * ctx)
             v1 = rpn_pop(stack);
             if (v1 != 0.0)
             {
-              end = 1;
+              flow = RPNF_END;
               ops = 0;
               continue;
             }
@@ -762,8 +868,7 @@ void rpn_exec(rpn_context * ctx)
           case RPN_ERW:
           {
             //printf("RPN_ERW\n");
-            j = ctx->rows;
-            end = 1;
+            flow = RPNF_ENDROW;
             ops = 0;
             continue;
           }
@@ -773,8 +878,7 @@ void rpn_exec(rpn_context * ctx)
             v1 = rpn_pop(stack);
             if (v1 != 0.0)
             {
-              j = ctx->rows;
-              end = 1;
+              flow = RPNF_ENDROW;
               ops = 0;
               continue;
             }
@@ -783,6 +887,7 @@ void rpn_exec(rpn_context * ctx)
           case RPN_RET:
           {
             //printf("RPN_RET\n");
+            flow = RPNF_RETURN;
             ops = 0;
             continue;
           }
@@ -792,6 +897,7 @@ void rpn_exec(rpn_context * ctx)
             v1 = rpn_pop(stack);
             if (v1 != 0.0)
             {
+              flow = RPNF_RETURN;
               ops = 0;
               continue;
             }
@@ -800,7 +906,7 @@ void rpn_exec(rpn_context * ctx)
           case RPN_RRW:
           {
             //printf("RPN_RRW\n");
-            j = ctx->rows;
+            flow = RPNF_RETURNROW;
             ops = 0;
             continue;
           }
@@ -810,7 +916,7 @@ void rpn_exec(rpn_context * ctx)
             v1 = rpn_pop(stack);
             if (v1 != 0.0)
             {
-              j = ctx->rows;
+              flow = RPNF_RETURNROW;
               ops = 0;
               continue;
             }
@@ -831,10 +937,10 @@ void rpn_exec(rpn_context * ctx)
           case RPN_SWP:
           {
             //printf("RPN_SWP\n");
-            if (stack->count > 1)
+            if (pos >= 1)
             {
-              v1 = stack->data[pos];
-              stack->data[pos] = stack->data[--pos];
+              v1 = stack->data[pos-1];
+              stack->data[pos-1] = stack->data[pos];
               stack->data[pos] = v1;
             }
             break;
@@ -977,6 +1083,12 @@ void rpn_exec(rpn_context * ctx)
               rpn_push(stack,(float)atan2(v1,v2));
             break;
           }
+          case RPN_DMP:
+          {
+            //printf("RPN_DMP\n");
+            rpn_dump(stack, i, j, ctx->store[j]);
+            break;
+          }
           case RPN_NOP:
           {
             //printf("RPN_NOP\n");
@@ -990,7 +1102,30 @@ void rpn_exec(rpn_context * ctx)
 
         ops = ops->next;
       }
-      if (!end) ((GLfloat *)ctx->oga_list[0]->data)[r+j] = rpn_pop(stack);
+      if (!flow) { /* RPNF_CONTINUE */
+        ((GLfloat *)ctx->oga_list[0]->data)[r+j] = rpn_pop(stack);
+      }
+      else {
+        switch(flow)
+        {
+          case RPNF_RETURN:
+          {
+            ((GLfloat *)ctx->oga_list[0]->data)[r+j] = rpn_pop(stack);
+            break;
+          }
+          case RPNF_RETURNROW:
+          {
+            ((GLfloat *)ctx->oga_list[0]->data)[r+j] = rpn_pop(stack);
+            j = ctx->cols;
+            break;
+          }
+          case RPNF_ENDROW:
+          {
+            j = ctx->cols;
+            break;
+          }
+        }
+      }
     }
     r += ctx->cols;
   }
@@ -1139,7 +1274,7 @@ new_pointer(Class, type, ptr, elements)
 		oga->type_offset = malloc(sizeof(GLint) * oga->type_count);
 		oga->types[0] = type;
 		oga->type_offset[0] = 0;
-		oga->total_types_width = 1;
+		oga->total_types_width = width;
 		
 		oga->data_length = elements * width;
 		
