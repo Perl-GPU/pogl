@@ -29,6 +29,10 @@
 
 # Avoid Devel::Cover files.
 \bcover_db\b
+
+# Don't include extra DLL and lib files
+^FreeGLUT/new.*
+^FreeGLUT/orig.*
 #!end included /usr/lib/perl5/5.10/ExtUtils/MANIFEST.SKIP
 
 EL-ELI.c

@@ -1,4 +1,25 @@
 +------------------------------------------------------------------------+
+|                  OpenGL-0.64_002
++------------------------------------------------------------------------+
+
+  This is a CPAN developers release for the Perl OpenGL module with
+  some minor fixes to improve buildability and updates and bug
+  fixes to check.
+
+  Highlights:
+
+  * win32 freeglut.dll has been updated to 2.6.0, the
+    current stable release.
+
+  * Many fixes to OpenGL::Array and new tests for the
+    functionality.  Still in progress but more complete
+    and correct nonetheless.
+
+  Please see the GIT_CHANGES file for more details.  Thanks.
+
+
+
++------------------------------------------------------------------------+
 |                  OpenGL-0.64_001
 +------------------------------------------------------------------------+
 
