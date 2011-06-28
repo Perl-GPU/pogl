@@ -358,6 +358,14 @@ int gl_get_count(GLenum param)
 	}
 #endif
 
+#ifdef GL_ARB_point_sprite
+	switch (param) {
+	case GL_POINT_SPRITE_ARB:
+	case GL_COORD_REPLACE_ARB:
+		return 1;
+	}
+#endif
+
 #ifdef GL_ARB_point_parameters
 	switch (param) {
 	case GL_POINT_SIZE_MIN_ARB:
