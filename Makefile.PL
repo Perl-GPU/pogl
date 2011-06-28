@@ -1,3 +1,5 @@
+use strict;
+use warnings;
 use ExtUtils::MakeMaker;
 use ExtUtils::Liblist;
 use Data::Dumper;
@@ -44,7 +46,7 @@ sub Usage
   };
 
   print "\n";
-  foreach $xface (sort keys %$is_valid_interface)
+  foreach my $xface (sort keys %$is_valid_interface)
   {
     print substr("      $xface                  ",0,24).
       "$is_valid_interface->{$xface}\n";
@@ -52,7 +54,7 @@ sub Usage
   print "\n";
   exit(0);
 }
-Usage() if ($ARGV[0] =~ m|^([-/]*)?h(elp)?|i);
+Usage() if (@ARGV and $ARGV[0] =~ m|^([-/]*)?h(elp)?|i);
 
 
 # Detect CYGWIN - some versions don't report $^O correctly
@@ -60,7 +62,7 @@ open(SAVEERR, ">&STDERR");
 close(STDERR);
 my $uname = `uname`;
 open(STDERR, ">&SAVEERR");
-our $IS_CYGWIN = ($uname =~ m|^CYGWIN|);
+our $IS_CYGWIN = $^O eq 'cygwin';
 our $IS_W32API = ($IS_CYGWIN && grep { m/^interface=(W32API|WGL)/i } @ARGV );
 
 
@@ -200,7 +202,7 @@ if ( grep { m/^interface=/i } @ARGV )
       {
         if ($^O ne 'darwin' || !$found_libs->{GLUT})
         {
-          "AGL interface requires GLUT.framework\n";
+          print "AGL interface requires GLUT.framework\n";
           next;
         }
       }
@@ -476,7 +478,7 @@ else # Everyone else
 
   # Test for obfuscated Freeglut
   # quite often Freeglut is in -lglut...  Test for GL/freeglut.h instead...
-  my $out = cfile_text('GL/freeglut.h');
+  $out = cfile_text('GL/freeglut.h');
 
   # The cpp would not let this macro through. Check for something else
   # that still exists after the cpp pass. a typedef, or type would work
@@ -566,7 +568,7 @@ my $build_config =
   'INC'		=> $INCS,
   'LIBS' 	=> $LIBS,
   'dynamic_lib'	=> $DYNS,
-  'LDFROM'      => '$(OBJECT) '.$LDFROM,
+  'LDFROM'      => '$(OBJECT) '.defined($LDFROM)?$LDFROM:'',
   'EXE_FILES'	=> $EXES,
   'OPTIMIZE'	=> $OPTS,
   'clean'       => 
@@ -928,6 +930,7 @@ sub get_extensions
 # non-existant directories produce a minimal configuration value
 sub clean_incs {
    my $inincs = $_[0];
+   return unless defined $inincs;
    print "clean_incs: got input INCS='$inincs'\n" if $verbose>1;
 
    my @inincs = split / /, $inincs;
@@ -946,6 +949,7 @@ sub clean_incs {
 # minimal configuration value
 sub clean_libs {
    my $inlibs = $_[0];
+   return unless defined $inlibs;
    print "clean_libs: got input LIBS='$inlibs'\n" if $verbose>1;
 
    my @inlibs = split ' ', $inlibs;
@@ -968,7 +972,7 @@ sub WriteConfigPM
 
   die "Unable to write to Config.pm\n" if (!open(CONFIGPM, ">Config.pm"));
 
-  print CONFIGPM qq
+  print CONFIGPM q
 {
 # This is the Perl OpenGL build configuration file.
 # It contains the final OpenGL build arguements from
