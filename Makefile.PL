@@ -425,7 +425,7 @@ if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
   # clear that this step is even needed since the freeglut.dll is installed
   # by this Makefile.PL if no FreeGLUT is found.
   #
-  ## $EXES = ['FreeGLUT/freeglut.dll']; 
+  ## $EXES = ['FreeGLUT/freeglut.dll'];
   {
      system $^X , qw[-MExtUtils::Command -e mkpath --], qw[blib/bin];
      system $^X , qw[-MExtUtils::Command -e cp --], qw[FreeGLUT/freeglut.dll blib/bin/freeglut.dll];
@@ -568,10 +568,10 @@ my $build_config =
   'INC'		=> $INCS,
   'LIBS' 	=> $LIBS,
   'dynamic_lib'	=> $DYNS,
-  'LDFROM'      => '$(OBJECT) '.defined($LDFROM)?$LDFROM:'',
+  'LDFROM'      => '$(OBJECT) '.(defined($LDFROM)?$LDFROM:''),
   'EXE_FILES'	=> $EXES,
   'OPTIMIZE'	=> $OPTS,
-  'clean'       => 
+  'clean'       =>
   {
     FILES =>
       "Config.pm ".
@@ -700,7 +700,7 @@ sub get_libs
       if (-e "$dll_dir/freeglut.dll")
       {
         print "Installed freeglut.dll at $dll_dir\n";
-        $found->{FREEGLUT32} = 'freeglut' 
+        $found->{FREEGLUT32} = 'freeglut'
       }
       else
       {
