@@ -409,7 +409,8 @@ if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
 
     $LIBS = "-L/usr/lib/w32api $glut_lib";
     $LDFROM = $glut_lib;
-    $INCS = '-I/usr/include/w32api';
+    ### $INCS = '-I/usr/include/w32api';
+    $INCS = '-I/usr/include/opengl';
     $DEFS .= " -DHAVE_W32API";
     $DYNS = { OTHERLDFLAGS => '-Wl,--exclude-symbols,'."\x7F".$glut.'_NULL_THUNK_DATA' };
   }

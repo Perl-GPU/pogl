@@ -5,12 +5,12 @@ CC=gcc
 LINK=g++
 
 # For FreeGLUT over WGL
-CCFLAGS=-DWIN32 -DHAVE_FREEGLUT
-LDFLAGS=-L../FreeGLUT -lfreeglut /cygdrive/c/WINDOWS/system32/opengl32.dll
+CCFLAGS=-DWIN32 -DHAVE_FREEGLUT -I/usr/include/opengl
+LDFLAGS=-L../FreeGLUT -lopengl32 -lglu32 -lfreeglut
 
 # For FreeGLUT over GLX (set default for now)
-CCFLAGS=-DHAVE_FREEGLUT
-LDFLAGS=-lGL -lglut
+#### CCFLAGS=-DHAVE_FREEGLUT
+#### LDFLAGS=-lGL -lglut
 
 all: glversion.txt
 

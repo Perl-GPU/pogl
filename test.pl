@@ -7,6 +7,7 @@ our $PERL_VERSION = $^V;
 $PERL_VERSION =~ s|^v||;
 
 use OpenGL qw/ :all /;
+use OpenGL::Config;     # for build information
 
 eval 'use OpenGL::Image 1.03';  # Need to use OpenGL::Image 1.03 or higher!
 my $hasImage = !$@;
@@ -1490,7 +1491,7 @@ glutInit();
 # To see OpenGL drawing, take out the GLUT_DOUBLE request.
 glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_ALPHA);
 
-if ($^O ne 'MSWin32') { # skip these MODE checks on win32, they don't work
+if ($^O ne 'MSWin32' and $OpenGL::Config->{DEFINE} !~ /-DHAVE_W32API/) { # skip these MODE checks on win32, they don't work
 
    if (not glutGet(GLUT_DISPLAY_MODE_POSSIBLE))
    {
