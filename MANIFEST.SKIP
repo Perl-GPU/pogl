@@ -41,10 +41,12 @@ EL-ELI.c
 ^.git
 ^Config.pm
 ^Makefile$
+^META.yml$
 ^OpenGL.bs
 ^OpenGL.c
 ^OpenGL.o
 ^gl-funs.txt
+^gl_exclude.h$
 ^gl_util.o
 ^gllist
 ^pdl.h

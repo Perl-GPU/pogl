@@ -12,6 +12,7 @@ Config.pm
 Makefile
 Makefile.old
 MANIFEST
+META.yml
 OpenGL.c
 OpenGL.xs-orig
 blib/
