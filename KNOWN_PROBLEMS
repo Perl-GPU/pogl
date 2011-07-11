@@ -23,10 +23,6 @@
   are in a state of flux and may not be in sync with the
   current API documentation.
 
-* The Cygwin interface options W32API and WGL do not work
-  so you don't get hardware accelerated graphics.  The
-  FreeGLUT code does work but uses the Mesa software renderer.
-
 * Too many "extra" variants of standard OpenGL functions.
   Implementation progress with PDL has suggested a way
   to simplify the bindings a la OpenGL::Simple.  TBD.

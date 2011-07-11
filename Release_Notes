@@ -8,7 +8,13 @@
 
   Highlights:
 
-  * TBD
+  * Fix interface=w32api to work for cygwin again.  Requires a
+    current cygwin install---greater than 1.7.x.
+
+  * Minor cleanup in Makefile.PL and documentation/readme updates
+    reflecting the newly set up Perl OpenGL project at sf.net:
+
+      http://sourceforge.net/projects/pogl/
 
 
 
