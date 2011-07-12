@@ -72,7 +72,7 @@ use constant DO_TESTS => 0;
 
 # Run in Game Mode
 my $gameMode;
-if ($#ARGV and lc($ARGV[0]) eq 'gamemode')
+if (scalar(@ARGV) and lc($ARGV[0]) eq 'gamemode')
 {
   $gameMode = $ARGV[1] || '';
 }
