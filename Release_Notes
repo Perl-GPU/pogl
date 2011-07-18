@@ -8,7 +8,11 @@
 
   Highlights:
 
-  * TBD
+  * Add META.yml information to the build process
+
+  * Fix bug in test.pl
+
+  * First POGL code to be placed on new sf.net site.
 
 
 
