@@ -1,4 +1,10 @@
-Last saved: Sun 13 Feb 2011 02:59:58 PM 
+Last saved: Mon 18 Jul 2011 02:08:52 PM 
+
+
+Update POD documentation
+    * OpenGL.pod refer to POGL project at sf.net
+    * Clean up refs to source, bins, information
+    * Deprecate old support and clean up bindings
 
 
 Remove support for PM on OS/2
