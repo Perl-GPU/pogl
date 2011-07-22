@@ -1,4 +1,37 @@
 +------------------------------------------------------------------------+
+|                  OpenGL-0.65_001
++------------------------------------------------------------------------+
+
+General Notes:
+
+ * This is a CPAN developers release for the OpenGL module.
+
+   - It is a snapshot of the current git development tree
+     and everything may not work correctly or have complete
+     documentation.
+
+   - These release notes may not be fully complete.  Please
+     see the git log for full details.
+
+   - All tests may not pass, especially ones corresponding
+     to issues in KNOWN_PROBLEMS.
+
+   - Manual build/install is recommended although the
+     cpan shell may be used by specifying the distribution
+     path rather than just the module name, e.g.:
+
+     cpan> get  CHM/OpenGL-0.65_001.tar.gz
+     cpan> make CHM/OpenGL-0.65_001.tar.gz
+     cpan> test CHM/OpenGL-0.65_001.tar.gz
+     cpan> look CHM/OpenGL-0.65_001.tar.gz
+
+  Highlights:
+
+  * TBD
+
+
+
++------------------------------------------------------------------------+
 |                  OpenGL-0.65
 +------------------------------------------------------------------------+
 
@@ -31,8 +64,6 @@ Highlights:
     toolkit in addition to bug fixes and code cleanup.
     Thanks, Dmitry!  See http://search.cpan.org/~karasik/Prima-1.30/
     for details.
- 
-
 
 
 
