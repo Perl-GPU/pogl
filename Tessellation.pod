@@ -812,6 +812,6 @@ data.
 
 =head1 AUTHOR
 
-Paul Seamons - paul@seamons.com - 2011
+  Paul Seamons - paul AT seamons dot com - 2011
 
 =cut

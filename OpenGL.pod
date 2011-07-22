@@ -1,29 +1,29 @@
 
 =head1 NAME
 
-OpenGL - v0.64_005
+OpenGL - v0.65
 
 =head1 SYNOPSIS
 
 
-	use OpenGL qw(:old); # Exports much old functionality of OpenGL 0.4
+    use OpenGL qw(:all); # exports all new functionality, without
+                         # the OpenGL-0.4 compatibility functions
+    
+    use OpenGL qw(:glfunctions :glconstants); # exports functions and
+                         # constants for using OpenGL, without exporting
+			 # GLU, GLUT, or GLX stuff.
+    
+    use OpenGL qw(:old); # Exports much old functionality of OpenGL 0.4
+    
+    use OpenGL; # DEPRECATED!  Same as above.  DEPRECATED!
 
-	use OpenGL; # DEPRECATED!  Same as above.  DEPRECATED!
-
-	use OpenGL qw(:glfunctions :glconstants); # exports functions and
-	            # constants for using OpenGL, without exporting GLU, GLUT,
-	            # or GLX stuff.
-
-	use OpenGL qw(:all); # exports all new functionality, without the OpenGL
-	                     # 0.4 compatibility functions
-
-	See also: POGL Objects
-
-	* OpenGL::Array - optimized data arrays via C pointers
-
-	* OpenGL::Image - direct C pointer acces to ImageMagick image cache
-
-	* OpenGL::Shader - abstracted shader interface: ARB, GLSL and Cg
+  See also: POGL Objects
+    
+    * OpenGL::Array - optimized data arrays via C pointers
+    
+    * OpenGL::Image - direct C pointer acces to ImageMagick image cache
+    
+    * OpenGL::Shader - abstracted shader interface: ARB, GLSL and Cg
 
 
 
@@ -1809,8 +1809,9 @@ Chris Marshall has been responsible for the OpenGL module development
 starting with OpenGL-0.58 on 06-Sep-2009.
 
 Compatibility with these earlier libraries is in a state of flux with
-with on-going work to re-integrate the Perl OpenGL module into the Perl
-Data Language and replacing its fork of the OpenGL-0.5.
+with on-going work to refactor the Perl OpenGL module to improve support
+for other GUI toolkits with Perl bindings and to update the version of
+OpenGL API supported. 
 
 =head1 EXPORTS
 
@@ -1878,8 +1879,8 @@ Exports all symbols needed for the old functions.
 
 =head1 AUTHORS
 
-Primary CPAN OpenGL Owner/Maintainer: Bob "grafman" Free - http://graphcomp.com/opengl
-Co-Maintainer Chris Marshall (PAUSE id CHM)
+Primary OpenGL Maintainer Chris Marshall (PAUSE id CHM)
+Co-Maintainer: Bob "grafman" Free - http://graphcomp.com/opengl
 
 Original Author: Stan Melax 
 
@@ -1911,22 +1912,18 @@ under the same terms as Perl itself.
 
 =head1 DISTRIBUTIONS
 
-POGL Developer's Site: http://graphcomp.com/opengl
+POGL Project site: http://sourceforge.net/projects/pogl/
 
 =head2 SOURCE
 
-CPAN: http://search.cpan.org/~chm/
-
-GIT:  git://pdl.git.sourceforge.net/gitroot/pdl/pogl (Read only)
-
-SVN:     TBD
-
-TARBALL: TBD
-
-ZIP:     TBD
+  CPAN: http://search.cpan.org/~chm/
+  GIT:  git://pogl.git.sourceforge.net/gitroot/pogl/pogl (Read only)
+  TARBALL: http://sourceforge.net/projects/pogl/files/
 
 =head2 WINDOWS BINARIES
 
-PPM 5.6.x: TBD
-
-PPM 5.8.x: TBD
+  For 32-bit perls 5.8.x and later:
+    ppm install http://www.sisyphusion.tk/ppm/OpenGL.ppd
+  
+  For 64-bit perls 5.8.x and later:
+    ppm install http://www.sisyphusion.tk/ppm/OpenGL.ppd

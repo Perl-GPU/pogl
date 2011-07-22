@@ -1,5 +1,43 @@
 +------------------------------------------------------------------------+
-|                  OpenGL-0.64_005
+|                  OpenGL-0.65
++------------------------------------------------------------------------+
+
+General Notes:
+
+ * This is a point release for the Perl OpenGL module (POGL)
+   with new features, bugs fixed and improved documentation.
+ 
+ * OS/2 is no longer supported by POGL directly.
+
+
+Highlights:
+
+  * Paul Seamons contributed full tessellation support,
+    documentation for OpenGL::Tessellation, and a *major* set
+    of fixes and POD for the existing OpenGL::Array module.
+
+  * The cygwin build of POGL now supports either the native
+    win32 platform drivers or the X11/GLX bindings (default).
+    Use interface=w32api or interface=wgl as args to the
+    perl Makefile.PL to select.  NOTE: you have to pick one
+    or the other.  If you change, any dependencies such as
+    PDL::Graphics::TriD will need to be recompiled.
+
+  * The included FreeGLUT DLL has been upgraded to 2.6.0
+    thanks to Rob/sisyphus.
+
+  * Prima::OpenGL has been released by Dmitry Karasik which
+    adds support for Perl OpenGL to his cross-platform GUI
+    toolkit in addition to bug fixes and code cleanup.
+    Thanks, Dmitry!  See http://search.cpan.org/~karasik/Prima-1.30/
+    for details.
+ 
+
+
+
+
++------------------------------------------------------------------------+
+|                  OpenGL-0.64_004
 +------------------------------------------------------------------------+
 
 General Notes:
@@ -20,24 +58,10 @@ General Notes:
      cpan shell may be used by specifying the distribution
      path rather than just the module name, e.g.:
 
-     cpan> get  CHM/OpenGL-0.64_005.tar.gz
-     cpan> make CHM/OpenGL-0.64_005.tar.gz
-     cpan> test CHM/OpenGL-0.64_005.tar.gz
-     cpan> look CHM/OpenGL-0.64_005.tar.gz
-
-Highlights:
-
-  * TBD
-
-
-
-+------------------------------------------------------------------------+
-|                  OpenGL-0.64_004
-+------------------------------------------------------------------------+
-
-  This is a CPAN developers release for the Perl OpenGL module with
-  some minor fixes to improve buildability and updates and bug
-  fixes to check.
+     cpan> get  CHM/OpenGL-0.64_004.tar.gz
+     cpan> make CHM/OpenGL-0.64_004.tar.gz
+     cpan> test CHM/OpenGL-0.64_004.tar.gz
+     cpan> look CHM/OpenGL-0.64_004.tar.gz
 
   Highlights:
 
