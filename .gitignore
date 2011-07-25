@@ -22,7 +22,7 @@ pogl_*.c
 utils/glversion.txt
 PDL-Graphics-OpenGL-Perl-OpenGL-*.tar.gz
 GIT_CHANGES
-/OpenGL-*_*.tar.gz
+/OpenGL-*.tar.gz
 
 # Some junk files I added to ignore
 gl-funs.txt
