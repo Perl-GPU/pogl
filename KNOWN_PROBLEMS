@@ -52,6 +52,6 @@
     glVertexPointerEXT_p(size, oga)
     glVertexPointer_p(size, oga)
 
-* Some of the new tests for OpenGL::Array fail but cause perl
-  to crash which makes the report fail (even though it is in
-  a TODO block).
+* OpenGL::RPN operations can segfault.  Work is underway
+  to debug the stack issues which appear to be the root
+  cause.
