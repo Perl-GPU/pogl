@@ -91,7 +91,7 @@ TODO: {
    ###----------------------------------------------------------------###
    SKIP: {
 
-      skip "KNOWN_PROBLEM with OpenGL::RPN calc tests", 111;
+      # skip "KNOWN_PROBLEM with OpenGL::RPN calc tests", 111 ;
 
       # affine
       my $left   = -800;
