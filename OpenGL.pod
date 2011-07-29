@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-OpenGL - v0.65_001
+OpenGL - v0.66
 
 =head1 SYNOPSIS
 
@@ -26,11 +26,6 @@ OpenGL - v0.65_001
     * OpenGL::Shader - abstracted shader interface: ARB, GLSL and Cg
 
 
-
-=head1 DOCUMENTATION
-
-Documentation, tips, sample source, benchmarks and binary distributions available
-at http://graphcomp.com/opengl
 
 =head1 PREREQUISITES
 
@@ -1912,7 +1907,12 @@ under the same terms as Perl itself.
 
 =head1 DISTRIBUTIONS
 
-POGL Project site: http://sourceforge.net/projects/pogl/
+POGL Project site: L<http://sourceforge.net/projects/pogl/>
+
+=head1 OTHER DOCUMENTATION
+
+Documentation, tips, sample source, benchmarks and available at
+L<http://graphcomp.com/opengl>.
 
 =head2 SOURCE
 
