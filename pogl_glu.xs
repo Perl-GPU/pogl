@@ -155,6 +155,7 @@ begin_tess_marshaller(vertex, vertex, (void * gl_polygon_data), "Missing tess ca
                       if (t->do_normals) glNormal3f(vd[j], vd[j+1], vd[j+2]);           \
                       glVertex3f(vd[0], vd[1], vd[2]);                                  \
                       )
+{
     GLdouble * vd = (GLdouble*) t->vertex_data;
     for (i = 0; i < 3; i++)
       XPUSHs(sv_2mortal(newSVnv(vd[i])));
@@ -167,6 +168,7 @@ begin_tess_marshaller(vertex, vertex, (void * gl_polygon_data), "Missing tess ca
       for (i = 0; i < 3; i++)
         XPUSHs(sv_2mortal(newSVnv(vd[j++])));
     if (t->polygon_data) XPUSHs((SV*)t->polygon_data);
+}
 end_tess_marshaller()
 
 /* Declare gluTess VERTEX_DATA */
@@ -180,6 +182,7 @@ begin_tess_marshaller(vertex_data, vertex, (void * vertex_data, void * gl_polygo
                       glVertex3f(vd[0], vd[1], vd[2]);                                  \
                      )
     if (! vertex_data) croak("Missing vertex data in tess vertex_data callback");
+{
     GLdouble * vd = (GLdouble*) vertex_data;
     for (i = 0; i < 3; i++)
       XPUSHs(sv_2mortal(newSVnv(vd[i])));
@@ -192,6 +195,7 @@ begin_tess_marshaller(vertex_data, vertex, (void * vertex_data, void * gl_polygo
       for (i = 0; i < 3; i++)
         XPUSHs(sv_2mortal(newSVnv(vd[j++])));
     if (t->polygon_data) XPUSHs((SV*)t->polygon_data);
+}
 end_tess_marshaller()
 
 /* Declare gluTess ERROR */
