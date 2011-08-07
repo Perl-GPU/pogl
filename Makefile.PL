@@ -465,12 +465,6 @@ else # Everyone else
   {
     #delete($found_libs->{GLX});
     $DEFS .= " -DHAVE_GLX";
-
-    # Handle OS2 - why?
-    if ($^O eq 'os2')
-    {
-       $DEFS .= ' -DOS2_GL_DISABLE_MISSING_EXT -DAPIENTRY= -D__PM__';
-    }
   }
   elsif (!$found_libs->{GLX} && $verbose)
   {

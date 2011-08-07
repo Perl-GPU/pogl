@@ -125,6 +125,3 @@ BOOT:
   PGOPOGL_CALL_BOOT(boot_OpenGL__GL__VertMulti);
   PGOPOGL_CALL_BOOT(boot_OpenGL__GLU);
   PGOPOGL_CALL_BOOT(boot_OpenGL__GLUT);
-#ifdef __PM__
-  InitSys();
-#endif /* defined __PM__ */

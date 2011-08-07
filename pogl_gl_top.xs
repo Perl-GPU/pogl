@@ -58,17 +58,6 @@ static Bool WaitForNotify(Display *d, XEvent *e, char *arg) {
 #endif	/* defined HAVE_GLX */ 
 
 
-#ifdef __PM__
-
-#  define HAVE_GLpc			/* Perl interface */
-#  define auxXWindow()	(croak("Not implemented: auxXWindow"),0)
-
-HMQ hmq;
-AV *EventAv;
-unsigned long LastEventMask;	/* !! Common for all the windows */
-Display myDisplay;
-
-#endif	/* defined __PM__ */ 
 
 static int debug = 0;
 
@@ -394,18 +383,11 @@ _have_glp()
 
 # /* The following material is directly copied from Stan Melax's original OpenGL-0.4 */
 
-#ifdef __PM__
-
-#// morphPM();
-void
-morphPM()
-
-#endif
 
 int
 __had_dbuffer_hack()
 
-#ifdef HAVE_GLpc			/* GLX or __PM__ */
+#ifdef HAVE_GLpc			/* GLX */
 
 #// $ID = glpcOpenWindow($x,$y,$w,$h,$pw,$steal,$event_mask,@attribs);
 HV *
