@@ -1,22 +1,6 @@
 Last saved: Mon 18 Jul 2011 02:08:52 PM 
 
 
-Update POD documentation
-    * OpenGL.pod refer to POGL project at sf.net
-    * Clean up refs to source, bins, information
-    * Deprecate old support and clean up bindings
-
-
-Remove support for PM on OS/2
-    * Strip out
-    * Add documentation to last version with support
-    * May be moot since GLX needs to go as well
-       * All we need as far as GLX goes is the ability
-         to create an X11 window and context for rendering
-	 via Perl OpenGL.  Should be able to take a GLX
-	 context (Tk embedding, for example)
-
-
 Add support for more GLUT variant export control:
     * :freeglutconstants and :freeglutfunctions
     * :appleglutconstants and :appleglutfunctions
