@@ -1,4 +1,4 @@
-Last saved: Mon 18 Jul 2011 02:08:52 PM 
+Last saved: Mon 22 Aug 2011 09:04:20 AM 
 
 
 Add support for more GLUT variant export control:
@@ -68,6 +68,9 @@ Clean up glp*() routine support:
 
 Fix examples/ directory
     * update to use GLUT rather than glp()
+        * make simple toolkit wrapper
+	* hide details of the underlying GUI layer
+	* simplify demo code
     * verify all examples work (most appear to)
     * remove broken cruft
     * redo planets example to be more realistic:
@@ -122,6 +125,8 @@ Fix OpenGL/GLUT error handling for perl
         * No return value if not in debug mode (or always undef?)
         * undef for error; 1 for void or vice versa?
     * Add toggle & display of OpenGL errors a la glutReportErrors()
+        * Call glGetError in a loop until no errors returned
+	* Do check for all OpenGL commands
 
 
 Finish perl bindings to remaining FreeGLUT functions:
@@ -144,6 +149,7 @@ Improve support for non-standard OpenGL configurations
 OpenGLUT support for building
     * OpenGLUT appears to be a dead project, use FreeGLUT.
     * OpenGL support not planned at this time
+    * Add info to docs re OpenGLUT support
 
 
 Make POGL GLUT-proof
