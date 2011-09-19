@@ -51,7 +51,6 @@ neoconstant(char * name, int arg)
 #include "glu_const.h"
 #include "glut_const.h"
 #include "glx_const.h"
-#include "glpm_const.h"
 	;
 	return 0;
 }

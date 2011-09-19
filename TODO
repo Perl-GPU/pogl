@@ -186,6 +186,10 @@ Fix current POGL configuration and build process
 Refactor config/build for portability and simplicity
     * use Module::Build framework
     * use constant rather than XS constant function
+       * Extract GL, GLX, and WGL constants from glew.h, glxew.h and wglew.h
+       * Extract GLU constants from glu.h
+       * Extract GLUT and FreeGLUT from glut.h and freeglut_*.h
+       * Verify that these pre-extracted versions work ok
     * use GLEW and autogeneration for bindings
         * why does GLEW require GLX_VERSION_1_2?
 
