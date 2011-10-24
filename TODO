@@ -1,168 +1,11 @@
-Last saved: Mon 22 Aug 2011 09:04:20 AM 
+Last saved: Tue 20 Sep 2011 09:52:40 AM 
 
 
-Add support for more GLUT variant export control:
-    * :freeglutconstants and :freeglutfunctions
-    * :appleglutconstants and :appleglutfunctions
-
-
-Make code handle "missing" windows:
-    * Calls glutGetWindow() and assumes win is valid
-    * If win==0, need to handle appropriately and *not* do anything with win
-
-
-Resolve ASPerl PPM build problems:
-    * win32 fails because of the FreeGLUT install during Makefile.PL
-    * linux fails because FreeGLUT is not found
-    * Mac OS X fails because the GLUT compile env is not right
-    * What does ASPerl do re external packages needed to build?
-
-
-Evaluate local include directory usage
-    * needed for win32 since we install
-    * check we're using the systemwide files
-    * if not, why not
-
-
-Refactor XS files partition
-    * move common macro defs to single place
-    * make separate include headers for RPN, OGA ...
-    * split out constants by library
-    * resplit pogl_gl.xs by function groups
-
-
-Enhance CPAN Testers automated testing support
-    * Improve diagnostic output for debugging test results
-    * Add a "compile and link only" build of POGL
-
-
-Improve library and headers checks in Makefile.PL
-    * Required libraries are OpenGL and GLUT/FreeGLUT
-        * what about GLU, GLX, others?
-        * GLUT is available on *all* GLX platforms
-	* Mac OS X has a non-X11 GLUT library with extensions:
-	    * glutCheckLoop()   -- same as glutMainLoopEvent()
-	    * glutWMCloseFunc() -- same as glutCloseFunc()
-    * If libraries and headers are not available exit 0
-    * Devel::CheckLib to check
-
-
-Evaluate backwards compatibility
-    * document compatibility, at a minimum
-    * provide feedback info to report issuues
-    * primary goal is OpenGL, GLUT, GLU support
-    * secondary goal is more perlish interface
-
-
-Clean up glp*() routine support:
-    * add friendlier display selection function (glpInitDisplayString?)
-    * backwards compatible where possible
-    * strip out required GLX or X11 specific code
-    * layer over GLUT environment
-        * N.B. *GLUT is on *all* GLX systems but may not use GLX
-	* What is needed to support Tk+X11 bindings (just context?)
-	* Is Tk even being used?
-	* Investigate Gtk+ or wxWidgets for embedding
-	* GLUI as an easy, simple starter (performance?)
-
-
-Fix examples/ directory
-    * update to use GLUT rather than glp()
-        * make simple toolkit wrapper
-	* hide details of the underlying GUI layer
-	* simplify demo code
-    * verify all examples work (most appear to)
-    * remove broken cruft
-    * redo planets example to be more realistic:
-        * planets aren't spheres
-	* sun has no depth + jaggies
-	* colors are off
-	* animation is jumpy (how to smooth out)
-	* give saturn *real* rings
-	* what is blue wedge in earth view?
-	* basic texture for planets
-
-
-Implement basic template for GLUT/GLUI apps
-   * Simple default/bare bones option
-   * Generic version with typical interaction
-   * Customizable version (runtime?)
-   * Maybe in examples directory as a module to use
-
-
-Add Geometry Shader support
-
-
-Add bindings to GLUI
-
-
-Move test apps to t/ subdirectory from test.pl
-    * Split into interactive and non-interactive tests
-    * Skip interactive tests if no OpenGL context
-    * need to test for each major functionality
-        * GL
-        * GLU
-        * GLUT/FreeGLUT
-        * RPN
-        * Array
-        * back compatibility (glp routines)
-    * NOTE: require_ok() and use_ok() don't like $VERSION w git suffix
-
-
-Implement safe glutInit
-    * check if done_glutInit before calling glutInit()
-    * carp/croak/quiet error settings
-
-
-Fix OpenGL/GLUT error handling for perl
-    * GLUT errors should not kill the interpreter
-        * Add carp/croak on no glutInit to glut functions to prevent exit(1)
-        * Add carp/croak to glutDisplayFunc() with null callback.
-        * Add carp/croak to glutSetKeyRepeat() with invalid repeat mode
-        * Add carp/croak to glutSetCursor() with unknown cursor type
-    * Investigate addition of adding return values to perl code
-        * This would be great for a debug mode
-        * No return value if not in debug mode (or always undef?)
-        * undef for error; 1 for void or vice versa?
-    * Add toggle & display of OpenGL errors a la glutReportErrors()
-        * Call glGetError in a loop until no errors returned
-	* Do check for all OpenGL commands
-
-
-Finish perl bindings to remaining FreeGLUT functions:
-    * glutGetProcAddress
-        * what does this mean at perl level?
-        * maybe use Inline to generate a new binding
-        * is there a runtime alternative?
-    * glutJoystickFunc
-        * need to add non-callback argument
-        * document current function
-
-
-Improve support for non-standard OpenGL configurations
-    * Add command line options for perl Makefile.PL
-        * set CFLAGS and other build options
-        * Make single point override for INCLUDE information
-    * Document how to edit Makefile.PL
-
-
-OpenGLUT support for building
-    * OpenGLUT appears to be a dead project, use FreeGLUT.
-    * OpenGL support not planned at this time
-    * Add info to docs re OpenGLUT support
-
-
-Make POGL GLUT-proof
-    * Make build work with GLUT-only and GLUT+FreeGLUT configurations
-      * GLUT-only: build and run with reduced functionality
-      * GLUT+FreeGLUT: build should correctly select and use FreeGLUT
-    * Nothing should break if you have GLUT rather than FreeGLUT
-        (as long as you are only using the GLUT subset of FreeGLUT)
-    * Some functionality may be quietly disabled (glutMainLoop extensions)
-    * Some functionality may be emulated (glutBitmapString)
-    * make work with readline event loop for perldl shell
-        * reverse callback strategy
-        * what about a GUI window mode for perldl in that case?
+Fix segfault in glutMainLoop() for test.pl on vista
+    * Build debug perl for win32
+    * Get gdb for MinGW
+    * Same with MSVC 6.0 and latest
+    * Does same code with Prima::OpenGL not segfault?
 
 
 Fix current POGL configuration and build process
@@ -199,6 +42,180 @@ Refactor config/build for portability and simplicity
 Miscellaneous portability improvements
     * Convert malloc() and calloc() calls to Newx(), Newxc(), and Newxz()
     * Convert free() to Safefree() to match.
+
+
+Resolve ASPerl PPM build problems:
+    * win32 fails because of the FreeGLUT install during Makefile.PL
+    * linux fails because FreeGLUT is not found
+    * Mac OS X fails because the GLUT compile env is not right
+    * What does ASPerl do re external packages needed to build?
+
+
+Evaluate local include directory usage
+    * needed for win32 since we install
+    * check we're using the systemwide files
+    * if not, why not
+
+
+Evaluate strategy for legacy POGL going forward:
+    * Factor out RPN, OGA, ...
+    * Can implementation be less OGA specific
+    * Support OGA, PDLs, ...
+    * What about using just PDL::Core stuff
+
+
+Enhance CPAN Testers automated testing support
+    * Improve diagnostic output for debugging test results
+    * Add a "compile and link only" build of POGL
+    * Base on GLEW or GLee implementation
+       * Start with GLEW for more cross-platform
+       * Can implementation be made wrapper library independent?
+
+
+Improve library and headers checks in Makefile.PL
+    * Required libraries are OpenGL and a GUI/context providing toolkit
+        * GLUT/FreeGLUT, Prima::OpenGL, GTk+, WxWidgets,...
+        * GLUT is available on *all* GLX platforms
+	* Mac OS X has a non-X11 GLUT library with extensions:
+	    * glutCheckLoop()   -- same as glutMainLoopEvent()
+	    * glutWMCloseFunc() -- same as glutCloseFunc()
+        * what about GLU, GLX, others?
+    * If libraries and headers are not available exit 0
+    * Devel::CheckLib to check
+
+
+Evaluate backwards compatibility
+    * document compatibility, at a minimum
+    * provide feedback info to report issuues
+    * primary goal is OpenGL, GLUT, GLU support
+    * secondary goal is more perlish interface
+    * move to common, clear choice as default!
+
+
+Clean up glp*() routine support:
+    * add friendlier display selection function (glpInitDisplayString?)
+    * backwards compatible where possible
+    * strip out required GLX or X11 specific code
+    * layer over GLUT or other GUI/context environment
+        * N.B. *GLUT is on *all* GLX systems but may not use GLX
+	* What is needed to support Tk+X11 bindings (just context?)
+	* Investigate Gtk+ or wxWidgets for embedding
+	* GLUI as an easy, simple starter (performance?)
+
+
+Fix examples/ directory
+    * update to use GLUT rather than glp()
+        * make simple toolkit wrapper
+	* hide details of the underlying GUI layer
+	* simplify demo code
+    * verify all examples work (most appear to)
+    * remove broken cruft
+    * redo planets example to be more realistic:
+        * planets aren't spheres
+	* sun has no depth + jaggies
+	* colors are off
+	* animation is jumpy (how to smooth out)
+	* give saturn *real* rings
+	* what is blue wedge in earth view?
+	* basic texture for planets
+
+
+Implement basic template for GLUT/GLUI apps
+   * Simple default/bare bones option
+   * Generic version with typical interaction
+   * Customizable version (runtime?)
+   * Maybe in examples directory as a module to use
+
+
+Add Geometry Shader support
+
+
+Add bindings to GLUI
+
+
+Add support for more GLUT variant export control:
+    * Split GLUT into a separate module
+        * I.e., remove GUI dependencies from POGL
+        * Need generic context interface standard
+	* Should be able to use Prima instead
+	* or WxWidgets or GTk or ...
+    * :freeglutconstants and :freeglutfunctions
+    * :appleglutconstants and :appleglutfunctions
+
+
+Make code handle "missing" windows:
+    * This is for OpenGL::GLUT
+    * Calls glutGetWindow() and assumes win is valid
+    * If win==0, need to handle appropriately and *not* do anything with win
+
+
+Implement safe glutInit
+    * check if done_glutInit before calling glutInit()
+    * carp/croak/quiet error settings
+
+
+Fix OpenGL/GLUT error handling for perl
+    * GLUT errors should not kill the interpreter
+        * Add carp/croak on no glutInit to glut functions to prevent exit(1)
+        * Add carp/croak to glutDisplayFunc() with null callback.
+        * Add carp/croak to glutSetKeyRepeat() with invalid repeat mode
+        * Add carp/croak to glutSetCursor() with unknown cursor type
+    * Investigate addition of adding return values to perl code
+        * This would be great for a debug mode
+        * No return value if not in debug mode (or always undef?)
+        * undef for error; 1 for void or vice versa?
+    * Add toggle & display of OpenGL errors a la glutReportErrors()
+        * Call glGetError in a loop until no errors returned
+	* Do check for all OpenGL commands
+
+
+Finish perl bindings to remaining FreeGLUT functions:
+    * glutGetProcAddress
+        * what does this mean at perl level?
+        * maybe use Inline to generate a new binding
+        * is there a runtime alternative?
+    * glutJoystickFunc
+        * need to add non-callback argument
+        * document current function
+
+
+OpenGLUT support for building
+    * OpenGLUT is a dead project, use FreeGLUT.
+    * Add info to docs re *no* OpenGLUT
+
+
+Make POGL GLUT-proof
+    * Make build work with GLUT-only and GLUT+FreeGLUT configurations
+      * GLUT-only: build and run with reduced functionality
+      * GLUT+FreeGLUT: build should correctly select and use FreeGLUT
+    * Nothing should break if you have GLUT rather than FreeGLUT
+        (as long as you are only using the GLUT subset of FreeGLUT)
+    * Some functionality may be quietly disabled (glutMainLoop extensions)
+    * Some functionality may be emulated (glutBitmapString)
+    * make work with readline event loop for perldl shell
+        * reverse callback strategy
+        * what about a GUI window mode for perldl in that case?
+
+
+Move test apps to t/ subdirectory from test.pl
+    * Split into interactive and non-interactive tests
+    * Skip interactive tests if no OpenGL context
+    * need to test for each major functionality
+        * GL
+        * GLU
+        * GLUT/FreeGLUT
+        * RPN
+        * Array
+        * back compatibility (glp routines)
+	* PDL object support
+    * NOTE: require_ok() and use_ok() don't like $VERSION w git suffix
+
+
+Improve support for non-standard OpenGL configurations
+    * Add command line options for perl Makefile.PL
+        * set CFLAGS and other build options
+        * Make single point override for INCLUDE information
+    * Document how to edit Makefile.PL
 
 
 Implement complete matrix test capability
