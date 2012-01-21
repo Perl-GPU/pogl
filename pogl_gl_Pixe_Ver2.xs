@@ -1,4 +1,4 @@
-/*  Last saved: Sun 06 Sep 2009 02:10:02 PM */
+/*  Last saved: Fri 26 Aug 2011 10:48:16 AM */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -1469,7 +1469,10 @@ glVertexPointer_s(size, type, stride, pointer)
 	CODE:
 	{
 		int width = stride ? stride : (sizeof(type)*size);
-		void * pointer_s = EL(pointer, width);
+		void * pointer_s = NULL;
+		if ( pointer ) {
+			pointer_s = EL(pointer, width);
+		} 
 		glVertexPointer(size, type, stride, pointer_s);
 	}
 
