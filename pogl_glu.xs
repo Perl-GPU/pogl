@@ -232,7 +232,7 @@ void CALLBACK _s_marshal_glu_t_callback_combine (GLdouble coords[3], void * vert
         if (vertex == NULL) croak("Couldn't allocate combination vertex during tesselation");
         vds = t->vertex_datas;
         if (!vds) croak("Missing vertex data storage");
-	av_push(vds, newSViv((int)vertex));
+	av_push(vds, newSViv(PTR2IV(vertex)));
 
 	handler = t->combine_callback;
         if (!handler) croak("Missing tess callback for combine_data");
@@ -250,7 +250,7 @@ void CALLBACK _s_marshal_glu_t_callback_combine (GLdouble coords[3], void * vert
             opaque->do_colors        = t->do_colors;
             opaque->do_normals       = t->do_normals;
             if (! t->tess_datas) t->tess_datas = newAV();
-            av_push(t->tess_datas, newSViv((int)opaque));
+            av_push(t->tess_datas, newSViv(PTR2IV(opaque)));
             *out_data = opaque;
             for (i = 0; i < 4; i++) {
                 PGLUtess* ot = (PGLUtess*)vertex_data[i];
@@ -1055,7 +1055,7 @@ gluTessVertex_p(tess, x, y, z, ...)
 		data[0] = x;
 		data[1] = y;
 		data[2] = z;
-                av_push(vds, newSViv((int)data)); /* store for freeing later */
+                av_push(vds, newSViv(PTR2IV(data))); /* store for freeing later */
                 if (tess->do_colors) {
                     int J = j + 4;
                     if (tess->do_normals) {
@@ -1088,7 +1088,7 @@ gluTessVertex_p(tess, x, y, z, ...)
                     opaque->do_colors        = tess->do_colors;
                     opaque->do_normals       = tess->do_normals;
                     if (! tess->tess_datas) tess->tess_datas = newAV();
-                    av_push(tess->tess_datas, newSViv((int)opaque));
+                    av_push(tess->tess_datas, newSViv(PTR2IV(opaque)));
                     gluTessVertex(tess->triangulator, data, (void*)opaque);
 		} else {
                     gluTessVertex(tess->triangulator, data, data);
