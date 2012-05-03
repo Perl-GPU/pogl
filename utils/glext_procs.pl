@@ -3,6 +3,7 @@ die "Unable to read '$file'" if (!open(FILE,$file));
 
 my $exts = '../glext_procs.h';
 die "Unable to write to '$exts'" if (!open(EXTS,">$exts"));
+binmode EXTS;
 
 my $exps = 'exports.txt';
 die "Unable to read '$exps'" if (!open(EXPS,$exps));
