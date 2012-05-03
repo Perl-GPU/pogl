@@ -287,20 +287,6 @@ GLAPI void APIENTRY glUniformMatrix4x2fv (GLint, GLsizei, GLboolean, const GLflo
 GLAPI void APIENTRY glUniformMatrix3x4fv (GLint, GLsizei, GLboolean, const GLfloat *);
 GLAPI void APIENTRY glUniformMatrix4x3fv (GLint, GLsizei, GLboolean, const GLfloat *);
 #endif /* GL_GLEXT_PROTOTYPES */
-typedef void (APIENTRYP PFNGLUNIFORMMATRIX2X3FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
-typedef void (APIENTRYP PFNGLUNIFORMMATRIX3X2FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
-typedef void (APIENTRYP PFNGLUNIFORMMATRIX2X4FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
-typedef void (APIENTRYP PFNGLUNIFORMMATRIX4X2FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
-typedef void (APIENTRYP PFNGLUNIFORMMATRIX3X4FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
-typedef void (APIENTRYP PFNGLUNIFORMMATRIX4X3FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
-#ifdef GL_GLEXT_PROCS
-static PFNGLUNIFORMMATRIX2X3FVPROC glUniformMatrix2x3fv = NULL;
-static PFNGLUNIFORMMATRIX3X2FVPROC glUniformMatrix3x2fv = NULL;
-static PFNGLUNIFORMMATRIX2X4FVPROC glUniformMatrix2x4fv = NULL;
-static PFNGLUNIFORMMATRIX4X2FVPROC glUniformMatrix4x2fv = NULL;
-static PFNGLUNIFORMMATRIX3X4FVPROC glUniformMatrix3x4fv = NULL;
-static PFNGLUNIFORMMATRIX4X3FVPROC glUniformMatrix4x3fv = NULL;
-#endif /* GL_GLEXT_PROCS */
 #endif
 #endif
 
