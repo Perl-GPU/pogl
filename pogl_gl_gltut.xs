@@ -25,3 +25,39 @@
 
 
 MODULE = OpenGL::GL::gltut	PACKAGE = OpenGL
+
+
+
+
+
+#//# @vertex_arrays = glGenVertexArrays_p($n);
+void
+glGenVertexArrays_p(n)
+	GLsizei n
+	INIT:
+		loadProc(glGenVertexArrays,"glGenVertexArrays");
+	PPCODE:
+	if (n)
+	{
+		GLuint * vertex_arrays = malloc(sizeof(GLuint) * n);
+		int i;
+
+		glGenVertexArrays(n, vertex_arrays);
+
+		EXTEND(sp, n);
+		for(i=0;i<n;i++)
+			PUSHs(sv_2mortal(newSViv(vertex_arrays[i])));
+
+		free(vertex_arrays);
+	}
+
+#//# glBindVertexArray(vertex_array);
+void
+glBindVertexArray(vertex_array)
+	GLuint vertex_array
+	INIT:
+		loadProc(glBindVertexArray,"glBindVertexArray");
+	CODE:
+	{
+		glBindVertexArray(vertex_array);
+	}
