@@ -1191,6 +1191,12 @@ our $glext_dependencies =
 );
 # gl_func
 
+# gltut
+push @gl_func, qw(
+   glGenVertexArrays_p
+   glBindVertexArray
+);
+
 @glu_func = qw(
    gluBeginCurve
    gluBeginPolygon
