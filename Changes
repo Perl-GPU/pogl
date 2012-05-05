@@ -1,5 +1,6 @@
 - incorporate Acme::MITHALDU::BleedingOpenGL changes - thanks @wchristian
 - add glGenVertexArrays_p, glBindVertexArray, glDeleteVertexArrays
+- add glAttachShader, glDeleteShader, glGetShaderiv_p, glGetShaderInfoLog_p
 
 0.7005 2025-04-13
 - OpenGL::Shader improved error reporting for shader compiles - thanks Ivan Baidakou

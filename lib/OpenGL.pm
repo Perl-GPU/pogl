@@ -121,6 +121,7 @@ our $glext_dependencies =
 my @gl_func_common = qw(
    glAccum
    glAlphaFunc
+   glAttachShader
    glBegin
    glBlendColorEXT
    glBlendEquationEXT
@@ -151,6 +152,7 @@ my @gl_func_common = qw(
    glCopyPixels
    glCullFace
    glDeleteLists
+   glDeleteShader
    glDepthFunc
    glDepthMask
    glDepthRange
@@ -176,6 +178,8 @@ my @gl_func_common = qw(
    glFrustum
    glGenLists
    glGetError
+   glGetShaderiv_p
+   glGetShaderInfoLog_p
    glHint
    glIndexMask
    glIndexd
