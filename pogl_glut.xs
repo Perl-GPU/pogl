@@ -1496,3 +1496,35 @@ glutCloseFunc(handler=0, ...)
 	        _done_glutCloseFunc_warn++;
             }
         }
+
+#ifdef HAVE_FREEGLUT
+
+#//# glutInitContextVersion($majorVersion, $minorVersion);
+void
+glutInitContextVersion(majorVersion, minorVersion)
+    int majorVersion
+    int minorVersion
+	CODE:
+	{
+		glutInitContextVersion(majorVersion, minorVersion);
+	}
+
+#//# glutInitContextFlags($flags);
+void
+glutInitContextFlags(flags)
+    int flags
+	CODE:
+	{
+		glutInitContextFlags(flags);
+	}
+
+#//# glutInitContextProfile($profile);
+void
+glutInitContextProfile(profile)
+    int profile
+	CODE:
+	{
+		glutInitContextProfile(profile);
+	}
+
+#endif
