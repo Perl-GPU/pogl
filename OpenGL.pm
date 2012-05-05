@@ -1125,6 +1125,10 @@ our $glext_dependencies =
 push @gl_func, qw(
    glGenVertexArrays_p
    glBindVertexArray
+   glAttachShader
+   glDeleteShader
+   glGetShaderiv_p
+   glGetShaderInfoLog_p
 );
 
 @glu_func = qw(
