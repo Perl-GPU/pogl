@@ -1310,6 +1310,13 @@ push @gl_func, qw(
    glutWireTorus
 );
 
+# gltut
+push @glut_func, qw(
+   glutInitContextVersion
+   glutInitContextFlags
+   glutInitContextProfile
+);
+
 ##------------------------------------------------------------------------
 ## FreeGLUT not implemented yet       -chm 2009-08-31
 ##------------------------------------------------------------------------
@@ -4537,6 +4544,8 @@ push @gl_func, qw(
    GLUT_GAME_MODE_PIXEL_DEPTH
    GLUT_GAME_MODE_REFRESH_RATE
    GLUT_GAME_MODE_DISPLAY_CHANGED
+   GLUT_CORE_PROFILE
+   GLUT_DEBUG
 );
 
 @glx_const = qw(
