@@ -47,6 +47,7 @@
 	i(GLUT_KEY_HOME)
 	i(GLUT_KEY_END)
 	i(GLUT_KEY_INSERT)
+	i(GLUT_KEY_DELETE)
 #endif
 	i(GLUT_LEFT)
 	i(GLUT_ENTERED)
@@ -189,6 +190,8 @@
 	i(GLUT_ACTION_ON_WINDOW_CLOSE)
 	i(GLUT_VERSION)
 #endif
+    i(GLUT_CORE_PROFILE)
+    i(GLUT_DEBUG)
 	}
 	else
 #endif /* def GTK_API_VERSION */
