@@ -1370,6 +1370,13 @@ our $glext_dependencies =
    glutWireTorus
 );
 
+# gltut
+push @glut_func, qw(
+   glutInitContextVersion
+   glutInitContextFlags
+   glutInitContextProfile
+);
+
 ##------------------------------------------------------------------------
 ## FreeGLUT not implemented yet       -chm 2009-08-31
 ##------------------------------------------------------------------------
