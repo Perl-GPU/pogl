@@ -27,7 +27,11 @@ General Notes:
 
   Highlights:
 
-  * TBD
+  * New example/glxgears.pl ported by Brian Medley (thanks!)
+
+  * Removed OS/2 support code (no longer supported)
+
+  * Various other fixes (see GIT_CHANGES)
 
 
 
