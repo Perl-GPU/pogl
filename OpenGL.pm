@@ -1130,6 +1130,15 @@ push @gl_func, qw(
    glGetShaderiv_p
    glGetShaderInfoLog_p
    glGetProgramiv_p
+
+   glGenQueries_p
+   glDeleteQueries
+   glBeginQuery
+   glEndQuery
+   glGetQueryObjectiv
+   glGetQueryObjectuiv
+   glGetQueryiv
+
 );
 
 @glu_func = qw(
