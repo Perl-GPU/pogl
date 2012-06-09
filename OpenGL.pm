@@ -1129,6 +1129,7 @@ push @gl_func, qw(
    glDeleteShader
    glGetShaderiv_p
    glGetShaderInfoLog_p
+   glGetProgramiv_p
 );
 
 @glu_func = qw(
