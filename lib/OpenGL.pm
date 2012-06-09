@@ -123,6 +123,7 @@ my @gl_func_common = qw(
    glAlphaFunc
    glAttachShader
    glBegin
+   glBeginQuery
    glBlendColorEXT
    glBlendEquationEXT
    glBlendFunc
@@ -152,6 +153,7 @@ my @gl_func_common = qw(
    glCopyPixels
    glCullFace
    glDeleteLists
+   glDeleteQueries
    glDeleteShader
    glDepthFunc
    glDepthMask
@@ -162,6 +164,7 @@ my @gl_func_common = qw(
    glEnable
    glEnd
    glEndList
+   glEndQuery
    glEvalCoord1d
    glEvalCoord1f
    glEvalCoord2d
@@ -177,8 +180,12 @@ my @gl_func_common = qw(
    glFrontFace
    glFrustum
    glGenLists
+   glGenQueries_p
    glGetError
    glGetProgramiv_p
+   glGetQueryObjectiv
+   glGetQueryObjectuiv
+   glGetQueryiv
    glGetShaderiv_p
    glGetShaderInfoLog_p
    glHint

@@ -8575,6 +8575,112 @@ glMultiTexCoord4sv_p(target,s,t,r,q)
 
 #endif // defined(GL_VERSION_1_2_1) || defined(GL_VERSION_1_3)
 
+#ifdef GL_VERSION_1_5
+
+#//# @queryIDs = glGenQueries_p($n);
+void
+glGenQueries_p(n)
+	GLint	n
+	INIT:
+		loadProc(glGenQueries,"glGenQueries");
+	PPCODE:
+	if (n) {
+		GLuint * ids = malloc(sizeof(GLuint) * n);
+		int i;
+
+		glGenQueries(n, ids);
+
+		EXTEND(sp, n);
+		for(i=0;i<n;i++)
+			PUSHs(sv_2mortal(newSViv(ids[i])));
+
+		free(ids);
+	}
+
+#//# glDeleteQueries(@textureIDs);
+void
+glDeleteQueries(...)
+	INIT:
+		loadProc(glDeleteQueries,"glDeleteQueries");
+	PPCODE:
+	{
+		GLsizei n = items;
+		GLuint * ids = malloc(sizeof(GLuint) * (n+1));
+		int i;
+
+		for (i=0;i<n;i++)
+			ids[i] = SvIV(ST(i));
+
+		glDeleteQueries(n, ids);
+
+		free(ids);
+	}
+
+#//# $result = glGetQueryObjectiv($id, $pname);
+GLint
+glGetQueryObjectiv(id, pname)
+	GLuint	id
+	GLenum	pname
+	INIT:
+		loadProc(glGetQueryObjectiv,"glGetQueryObjectiv");
+	CODE:
+		{
+		GLuint result;
+		glGetQueryObjectiv(id, pname, &result);
+		RETVAL = result;
+		}
+	OUTPUT:
+	    RETVAL
+
+#//# $result = glGetQueryObjectuiv($id, $pname);
+GLuint
+glGetQueryObjectuiv(id, pname)
+	GLuint	id
+	GLenum	pname
+	INIT:
+		loadProc(glGetQueryObjectuiv,"glGetQueryObjectuiv");
+	CODE:
+		{
+		GLuint result;
+		glGetQueryObjectuiv(id, pname, &result);
+		RETVAL = result;
+		}
+	OUTPUT:
+	    RETVAL
+
+#//# $result = glGetQueryiv($target, $pname);
+GLint
+glGetQueryiv(target, pname)
+	GLenum	target
+	GLenum	pname
+	INIT:
+		loadProc(glGetQueryiv,"glGetQueryiv");
+	CODE:
+		{
+		GLint result;
+		glGetQueryiv(target, pname, &result);
+		RETVAL = result;
+		}
+	OUTPUT:
+	    RETVAL
+
+#//# glBeginQuery($target, $id);
+void
+glBeginQuery(target, id)
+	GLenum	target
+	GLuint id
+	INIT:
+		loadProc(glBeginQuery,"glBeginQuery");
+
+#//# glEndQuery($target, $id);
+void
+glEndQuery(target)
+	GLenum	target
+	INIT:
+		loadProc(glEndQuery,"glEndQuery");
+
+#endif // GL_VERSION_1_5
+
 #ifdef GL_MESA_resize_buffers
 
 #// glResizeBuffersMESA();
