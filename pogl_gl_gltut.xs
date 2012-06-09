@@ -138,4 +138,20 @@ glGetShaderInfoLog_p(shader)
 	OUTPUT:
 		RETVAL
 
+#//# $value = glGetProgramiv_p($target,$pname);
+GLuint
+glGetProgramiv_p(target,pname)
+	GLenum	target
+	GLenum	pname
+	INIT:
+		loadProc(glGetProgramiv,"glGetProgramiv");
+	CODE:
+	{
+		GLuint param;
+		glGetProgramiv(target,pname,(void *)&param);
+		RETVAL = param;
+	}
+	OUTPUT:
+		RETVAL
+
 #endif // GL_VERSION_2_0
