@@ -178,6 +178,7 @@ my @gl_func_common = qw(
    glFrustum
    glGenLists
    glGetError
+   glGetProgramiv_p
    glGetShaderiv_p
    glGetShaderInfoLog_p
    glHint
