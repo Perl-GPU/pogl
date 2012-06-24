@@ -160,6 +160,7 @@ my @gl_func_common = qw(
    glDepthRange
    glDisable
    glDrawBuffer
+   glDrawElementsBaseVertex_c
    glEdgeFlag
    glEnable
    glEnd
