@@ -262,3 +262,21 @@ glEndQuery(target)
 		loadProc(glEndQuery,"glEndQuery");
 
 #endif // GL_VERSION_1_5
+
+
+#ifdef GL_VERSION_3_2
+
+#//# glDrawElementsBaseVertex_c($mode, $count, $type, (CPTR)indices, $basevertex);
+void
+glDrawElementsBaseVertex_c(mode, count, type, indices, basevertex)
+	GLenum	mode
+	GLint	count
+	GLenum	type
+	void *	indices
+	GLint	basevertex
+	INIT:
+		loadProc(glDrawElementsBaseVertex,"glDrawElementsBaseVertex");
+	CODE:
+		glDrawElementsBaseVertex(mode, count, type, indices, basevertex);
+
+#endif // GL_VERSION_3_2
