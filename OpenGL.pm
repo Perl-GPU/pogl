@@ -1130,6 +1130,7 @@ push @gl_func, qw(
    glGetShaderiv_p
    glGetShaderInfoLog_p
    glGetProgramiv_p
+   glDrawElementsBaseVertex_c
 
    glGenQueries_p
    glDeleteQueries
