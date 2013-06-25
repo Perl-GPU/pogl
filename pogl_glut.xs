@@ -1,4 +1,4 @@
-/*  Last saved: Fri 16 Oct 2009 10:11:21 AM */
+/*  Last saved: Tue 02 Apr 2013 02:45:10 PM */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -7,57 +7,29 @@
  *  modify it under the same terms as Perl itself.
  */
 
-/* OpenGL *GLUT bindings */
-#define IN_POGL_GLUT_XS
-
 #include <stdio.h>
 
 #include "pgopogl.h"
 
 
-#ifdef HAVE_GL
-#include "gl_util.h"
-#endif
+/* glut_util.h is where you include the appropriate GLUT header
+ * file based on what is available.  It also defines some constants
+ * that may not be defined everywhere.  Replace this by user
+ * specified include information for the include and compile-time
+ * perl constants rather than some special cases
+ */
+#include "glut_util.h"
 
-#ifdef HAVE_GLX
-#include "glx_util.h"
-#endif
 
-#ifdef HAVE_GLU
-#include "glu_util.h"
-#endif
-
-#ifdef IN_POGL_GLUT_XS
-#if defined(HAVE_GLUT) || defined(HAVE_FREEGLUT)
+/* TODO: calculate this from the actual GLUT include file */
 #ifndef GLUT_API_VERSION
 #define GLUT_API_VERSION 4
 #endif
-#include "glut_util.h"
-#endif
 
 static int _done_glutInit = 0;
-#endif /* End IN_POGL_GLUT_XS */
 
 
-
-/* This does not seem to be used */
-#if 0
-static char *SWIZZLE[4] = {"x","y","z","w"}; */
-#endif 
-
-/* This does not seem to be used */
-#if 0
-static int
-not_here(s)
-char *s;
-{
-    croak("%s not implemented on this architecture", s);
-    return -1;
-}
-#endif
-
-
-#ifdef IN_POGL_GLUT_XS
+/* Macros for GLUT callback and handler declarations */
 #  define DO_perl_call_sv(handler, flag) perl_call_sv(handler, flag)
 #  define ENSURE_callback_thread
 #  define GLUT_PUSH_NEW_SV(sv)		XPUSHs(sv_2mortal(newSVsv(sv)))
@@ -65,30 +37,9 @@ char *s;
 #  define GLUT_PUSH_NEW_U8(c)		XPUSHs(sv_2mortal(newSViv((int)c)))
 #  define GLUT_EXTEND_STACK(sp,n)
 #  define GLUT_PUSHMARK(sp)		PUSHMARK(sp)
-#endif /* End IN_POGL_GLUT_XS */
 
 
-
-/*
-#define PackCallbackST(av,first)					\
-	if (SvROK(ST(first)) && (SvTYPE(SvRV(ST(first))) == SVt_PVAV)){	\
-		int i;							\
-		AV * x = (AV*)SvRV(ST(first));				\
-		for(i=0;i<=av_len(x);i++) {				\
-			av_push(av, newSVsv(*av_fetch(x, i, 0)));	\
-		}							\
-	} else {							\
-		int i;							\
-		for(i=first;i<items;i++)				\
-			av_push(av, newSVsv(ST(i)));			\
-	}
-
-*/
-
-#ifdef IN_POGL_GLUT_XS
-
-#ifdef GLUT_API_VERSION
-
+/* Set up for all the GLUT callback handlers */
 static AV * glut_handlers = 0;
 
 /* Attach a handler to a window */
@@ -538,96 +489,11 @@ static void generic_glut_menu_handler(int value)
 	PUTBACK;
 	DO_perl_call_sv(handler, G_DISCARD);
 }
-
-
-#endif /* def GLUT_API_VERSION */
-
-#endif /* End IN_POGL_GLUT_XS */
-
-
-#if 0
-typedef void * ptr;
-#endif  /* Does not seem to be used.  Uncomment if breaks. chm 29-May-2009 */
-
-
-#if 0
-/* Get a Perl parameter, cast to C type */
-#define SvItems(type,offset,count,dst)					\
-{									\
-	GLuint i;							\
-	switch (type)							\
-	{								\
-		case GL_UNSIGNED_BYTE:					\
-		case GL_BITMAP:						\
-			for (i=0;i<(count);i++)				\
-			{						\
-			  ((GLubyte*)(dst))[i] = (GLubyte)SvIV(ST(i+(offset)));	\
-			}						\
-			break;						\
-		case GL_BYTE:						\
-			for (i=0;i<(count);i++)				\
-			{						\
-			  ((GLbyte*)(dst))[i] = (GLbyte)SvIV(ST(i+(offset)));	\
-			}						\
-			break;						\
-		case GL_UNSIGNED_SHORT:					\
-			for (i=0;i<(count);i++)				\
-			{						\
-			  ((GLushort*)(dst))[i] = (GLushort)SvIV(ST(i+(offset)));	\
-			}						\
-			break;						\
-		case GL_SHORT:						\
-			for (i=0;i<(count);i++)				\
-			{						\
-			  ((GLshort*)(dst))[i] = (GLshort)SvIV(ST(i+(offset)));	\
-			}						\
-			break;						\
-		case GL_UNSIGNED_INT:					\
-			for (i=0;i<(count);i++)				\
-			{						\
-			  ((GLuint*)(dst))[i] = (GLuint)SvIV(ST(i+(offset)));	\
-			}						\
-			break;						\
-		case GL_INT:						\
-			for (i=0;i<(count);i++)				\
-			{						\
-			  ((GLint*)(dst))[i] = (GLint)SvIV(ST(i+(offset)));	\
-			}						\
-			break;						\
-		case GL_FLOAT:						\
-			for (i=0;i<(count);i++)				\
-			{						\
-			  ((GLfloat*)(dst))[i] = (GLfloat)SvNV(ST(i+(offset)));	\
-			}						\
-			break;						\
-		case GL_DOUBLE:						\
-			for (i=0;i<(count);i++)				\
-			{						\
-			  ((GLdouble*)(dst))[i] = (GLdouble)SvNV(ST(i+(offset)));	\
-			}						\
-			break;						\
-		default:						\
-			croak("unknown type");				\
-	}								\
-}
-#endif /* Moved SvItems to gl_util.h */
-
-
-
-
-
-
-
-
+/* End of set up for GLUT callback stuff */
 
 
 
 MODULE = OpenGL::GLUT		PACKAGE = OpenGL
-
-
-
-
-#ifdef IN_POGL_GLUT_XS
 
 #// Test for done with glutInit
 int
@@ -637,17 +503,6 @@ done_glutInit()
 	OUTPUT:
 	RETVAL
 
-#endif /* End IN_POGL_GLUT_XS */
-
-
-##################### GLU #########################
-
-
-############################## GLUT #########################
-
-#ifdef IN_POGL_GLUT_XS
-
-#ifdef GLUT_API_VERSION
 
 # GLUT
 
@@ -1044,19 +899,12 @@ glutVisibilityFunc(handler=0, ...)
 	CODE:
 	decl_gwh_xs(Visibility)
 
-# OS/2 PM implementation calls itself v2, but does not support these functions
-# It is very hard to test for this, so we check for some other omission...
-
-#if !defined(GL_SRC_ALPHA_SATURATE) || defined(GL_CONSTANT_COLOR)
-
 #//# glutEntryFunc(\&callback);
 void
 glutEntryFunc(handler=0, ...)
 	SV *	handler
 	CODE:
 	decl_gwh_xs(Entry)
-
-#endif
 
 #if GLUT_API_VERSION >= 2
 
@@ -1066,11 +914,6 @@ glutSpecialFunc(handler=0, ...)
 	SV *	handler
 	CODE:
 	decl_gwh_xs(Special)
-
-# OS/2 PM implementation calls itself v2, but does not support these functions
-# It is very hard to test for this, so we check for some other omission...
-
-#  if !defined(GL_SRC_ALPHA_SATURATE) || defined(GL_CONSTANT_COLOR)
 
 #//# glutJoystickFunc(\&callback);	/* Open/FreeGLUT -chm */
 # void					/* Not implemented, don't know how */
@@ -1127,8 +970,6 @@ glutTabletButtonFunc(handler=0, ...)
 	SV *	handler
 	CODE:
 	decl_gwh_xs(TabletButton)
-
-#  endif
 
 #endif
 
@@ -1252,11 +1093,6 @@ glutStrokeCharacter(font, character)
 	void *	font
 	int	character
 
-# OS/2 PM implementation calls itself v2, but does not support these functions
-# It is very hard to test for this, so we check for some other omission...
-
-#if GLUT_API_VERSION >= 2 && (!defined(GL_SRC_ALPHA_SATURATE) || defined(GL_CONSTANT_COLOR))
-
 #//# glutBitmapWidth($font, $character);
 int
 glutBitmapWidth(font, character)
@@ -1268,9 +1104,6 @@ int
 glutStrokeWidth(font, character)
 	void *	font
 	int	character
-
-#endif
-
 
 #if GLUT_API_VERSION >= 3
 
@@ -1289,7 +1122,6 @@ void
 glutForceJoystickFunc()
 
 #endif
-
 
 # Solids
 
@@ -1650,10 +1482,3 @@ glutCloseFunc(handler=0, ...)
 		decl_gwh_xs(WMClose)
 #endif
         }
-
-#endif /* def GLUT_API_VERSION */
-
-#endif /* End IN_POGL_GLUT_XS */
-
-# /* This is assigned to GLX for now.  The glp*() functions should be split out */
-
