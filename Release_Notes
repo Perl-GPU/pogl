@@ -1,5 +1,5 @@
 +------------------------------------------------------------------------+
-|                  OpenGL-0.66_002
+|                  OpenGL-0.67
 +------------------------------------------------------------------------+
 
 General Notes:
@@ -7,28 +7,7 @@ General Notes:
  * This is a quick bugfix release to work around a build
    problem for Debian sid on AMD platforms.
 
- * This is a CPAN developers release for the OpenGL module.
-
-   - It is a snapshot of the current git development tree
-     and everything may not work correctly or have complete
-     documentation.
-
-   - These release notes may not be fully complete.  Please
-     see the git log for full details.
-
-   - All tests may not pass, especially ones corresponding
-     to issues in KNOWN_PROBLEMS.
-
-   - Manual build/install is recommended although the
-     cpan shell may be used by specifying the distribution
-     path rather than just the module name, e.g.:
-
-     cpan> get  CHM/OpenGL-0.66_002.tar.gz
-     cpan> make CHM/OpenGL-0.66_002.tar.gz
-     cpan> test CHM/OpenGL-0.66_002.tar.gz
-     cpan> look CHM/OpenGL-0.66_002.tar.gz
-
-  Highlights:
+Highlights:
 
   * Comment out failing tests in t/10_opengl_array.t.  Ideally,
     we could replace this implementation with something using
