@@ -57,28 +57,6 @@ sub Usage
 Usage() if (@ARGV and $ARGV[0] =~ m|^([-/]*)?h(elp)?|i);
 
 
-# Detect CYGWIN - some versions don't report $^O correctly
-open(SAVEERR, ">&STDERR");
-close(STDERR);
-my $uname = `uname`;
-open(STDERR, ">&SAVEERR");
-our $IS_CYGWIN = $^O eq 'cygwin';
-our $IS_W32API = ($IS_CYGWIN && grep { m/^interface=(W32API|WGL)/i } @ARGV );
-
-
-# Detect MINGW
-our $IS_MINGW = 0;
-if ($^O eq 'MSWin32' && !$IS_CYGWIN)
-{
-#  open(SAVEERR, ">&STDERR");
-#  close(STDERR);
-#  $IS_MINGW = `gcc -dumpversion`;
-#  open(STDERR, ">&SAVEERR");
-
-  $IS_MINGW = (($Config{make} =~ /\bdmake/i) && ($Config{cc} =~ /\bgcc/i))
-}
-
-
 # Get debugging flags
 our $verbose = 0;
 if ( grep { if (m/^verbose/i) { $verbose++; 1; } else { 0; } } @ARGV )
@@ -108,6 +86,34 @@ if ( grep { m/^dist=/i } @ARGV )
   # Strip out interface args
   @ARGV = grep { !m/^dist=/i } @ARGV;
 }
+
+
+# Detect CYGWIN
+our $IS_CYGWIN = $^O eq 'cygwin';
+print "Build platform \$IS_CYGWIN==$IS_CYGWIN\n" if $IS_CYGWIN and $verbose;
+
+our $IS_W32API = ($IS_CYGWIN && grep { m/^interface=(W32API|WGL)/i } @ARGV );
+print "Build platform \$IS_W32API==$IS_W32API\n" if $IS_W32API and $verbose;
+
+
+# Detect MINGW
+our $IS_MINGW = 0;
+if ($^O eq 'MSWin32' && !$IS_CYGWIN)
+{
+  $IS_MINGW = (($Config{make} =~ /\bdmake/i) && ($Config{cc} =~ /\bgcc/i));
+  print "Build platform \$IS_MINGW==$IS_MINGW\n" if $IS_MINGW and $verbose;
+}
+
+
+# Detect Strawberry Perl
+our $IS_STRAWBERRY = 0;
+if ($IS_MINGW)
+{
+  $IS_STRAWBERRY = ($Config{cf_by} =~ m/strawberry-perl/i);
+  print "Build platform \$IS_STRAWBERRY==$IS_STRAWBERRY\n" if $IS_STRAWBERRY and $verbose;
+}
+
+
 # Default to NO_EXCLUSIONS on Windows
 if ($^O eq 'MSWin32' || $IS_W32API)
 {
@@ -344,7 +350,15 @@ print "\nUsing interface: $interface_lib\n\n";
 
 # Marshall compiler defines
 our $DEFS = $DIST_DEFS;
-if (($^O eq 'MSWin32') || $IS_W32API || $IS_MINGW)
+if ($IS_STRAWBERRY)
+{
+  delete($found_libs->{'GLX'});
+  delete($found_libs->{'MESA'});
+  $found_libs->{'GLU'} = $found_libs->{'GLU32'};
+  $found_libs->{'GL'} = $found_libs->{'OPENGL32'};
+  $DEFS .= " -DIS_STRAWBERRY";
+}
+elsif (($^O eq 'MSWin32') || $IS_W32API || $IS_MINGW)
 {
   delete($found_libs->{'GLX'});
   delete($found_libs->{'MESA'});
@@ -393,6 +407,10 @@ if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
   if ($interface_lib eq 'GLUT')
   {
     $glut_lib .= '-lglut32';
+  }
+  elsif ($interface_lib eq 'FREEGLUT' and $IS_STRAWBERRY)
+  {
+    $glut_lib .= '-lglut';
   }
   else
   {
@@ -477,6 +495,7 @@ else # Everyone else
 
   # The cpp would not let this macro through. Check for something else
   # that still exists after the cpp pass. a typedef, or type would work
+  $DB::single = 1;
   my $has_freeglut = ($out =~ m|glutMainLoopEvent|);
 
   if ($has_freeglut)
@@ -649,7 +668,14 @@ sub get_libs
   }
 
   # Win32
-  if (($^O eq 'MSWin32') || $IS_W32API)
+  if ($IS_STRAWBERRY)
+  {
+     # libs for strawberry perl go here
+     $found->{FREEGLUT} = 'glut';
+     $found->{OPENGL32} = 'opengl32';
+     $found->{GLU32} = 'glu32';
+  }
+  elsif (($^O eq 'MSWin32') || $IS_W32API)
   {
     my $paths = $ENV{PATH};
     $paths =~ s|\\|/|g;
@@ -675,7 +701,7 @@ sub get_libs
     }
 
     # Install FreeGLUT if not found
-    if (!$found->{FREEGLUT32})
+    if (!$found->{FREEGLUT32} and !$IS_STRAWBERRY)
     {
       my $dll_dir = $Config{installsitebin};
 
@@ -791,10 +817,14 @@ sub get_extensions
 
   # Platform-specific makefiles for glversion
   my $make_ver;
-  if ($IS_MINGW)
+  if ($IS_STRAWBERRY)
+  {
+    $make_ver = "&strawberry.bat";
+    print "strawberry glversion: '$make_ver'\n" if $verbose>1;
+  }
+  elsif ($IS_MINGW)
   {
     $make_ver = "&mingw.bat";
-#    $make_ver = '&dmake -f makefile.mingw GLUT_DEF='.$def;
     print "mingw glversion: '$make_ver'\n" if $verbose>1;
   }
   elsif ($IS_W32API)

@@ -1,4 +1,9 @@
-#if defined(HAVE_FREEGLUT) && (defined(_WIN32) || defined(HAVE_W32API))
+#if defined(IS_STRAWBERRY)
+
+#undef exit
+#include <GL/freeglut.h>
+
+#elif defined(HAVE_FREEGLUT) && (defined(_WIN32) || defined(HAVE_W32API))
 
 #include "./include/GL/freeglut.h"
 
