@@ -1,4 +1,21 @@
 +------------------------------------------------------------------------+
+|                  OpenGL-0.6701
++------------------------------------------------------------------------+
+
+General Notes:
+
+ * This is a work-around release to work around a problem with
+   segfaults during the glutCloseFunc() processing.  Until a
+   real fix is found, the feature has been disabled.
+
+Highlights:
+
+  * glutCloseFunc() feature has been disabled.  A warning is given
+    the first time the close handler is called.
+
+
+
++------------------------------------------------------------------------+
 |                  OpenGL-0.67
 +------------------------------------------------------------------------+
 

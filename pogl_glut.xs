@@ -27,6 +27,7 @@
 #endif
 
 static int _done_glutInit = 0;
+static int _done_glutCloseFunc_warn = 0;
 
 
 /* Macros for GLUT callback and handler declarations */
@@ -1476,9 +1477,8 @@ glutCloseFunc(handler=0, ...)
 	SV *	handler
 	CODE:
         {
-#if defined HAVE_FREEGLUT
-		decl_gwh_xs(Close)
-#elif defined HAVE_AGL_GLUT
-		decl_gwh_xs(WMClose)
-#endif
+	    if (_done_glutCloseFunc_warn == 0) {
+	        warn("glutCloseFunc: not implemented\n");
+	        _done_glutCloseFunc_warn++;
+            }
         }
