@@ -13,6 +13,9 @@ Highlights:
   * glutCloseFunc() feature has been disabled.  A warning is given
     the first time the close handler is called.
 
+  * Strawberry perl builds are now detected and the build configuration
+    is corrected.  This should allow for automated builds.
+
 
 
 +------------------------------------------------------------------------+

@@ -495,7 +495,6 @@ else # Everyone else
 
   # The cpp would not let this macro through. Check for something else
   # that still exists after the cpp pass. a typedef, or type would work
-  $DB::single = 1;
   my $has_freeglut = ($out =~ m|glutMainLoopEvent|);
 
   if ($has_freeglut)
