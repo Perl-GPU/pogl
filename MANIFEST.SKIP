@@ -41,6 +41,8 @@ EL-ELI.c
 ^.git
 ^Config.pm
 ^Makefile$
+^MYMETA.json
+^MYMETA.yml
 ^META.yml$
 ^OpenGL.bs
 ^OpenGL.c
