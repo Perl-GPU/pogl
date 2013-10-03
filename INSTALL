@@ -5,7 +5,10 @@
     from your vendor.
 
     Install FreeGLUT (or compatible) - you can find this at
-    http://freeglut.sourceforge.net/.
+    http://freeglut.sourceforge.net/.  NOTE: Strawberry Perl
+    includes the FreeGLUT library and the binary distributions
+    at http://www.sisyphusion.tk provide the needed FreeGLUT
+    as well.
 
     On 32-bit MS Windows, a binary FreeGLUT library is installed
     automatically by this module if needed.

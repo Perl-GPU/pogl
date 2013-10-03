@@ -1,4 +1,28 @@
 +------------------------------------------------------------------------+
+|                  OpenGL-0.6702
++------------------------------------------------------------------------+
+
+General Notes:
+
+ * This release fixes some minor build issures for Strawberry Perl 32bit
+   where the wrong FreeGLUT library would be linked in---this failed at
+   runtime during the 'perl Makefile.PL' step.
+
+Highlights:
+
+  * Clean up INSTALL, README, and bring more up-to-date.
+
+  * Put util/strawberry.bat under git configuration management.
+
+  * glutCloseFunc() feature has been disabled.  A warning is given
+    the first time the close handler is called.
+
+  * Strawberry perl builds are now detected and the build configuration
+    is corrected.  This should allow for automated builds.
+
+
+
++------------------------------------------------------------------------+
 |                  OpenGL-0.6701
 +------------------------------------------------------------------------+
 

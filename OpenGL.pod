@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-OpenGL - v0.67_02
+OpenGL - v0.6702
 
 =head1 SYNOPSIS
 
@@ -1917,8 +1917,8 @@ L<http://graphcomp.com/opengl>.
 =head2 SOURCE
 
   CPAN: http://search.cpan.org/~chm/
-  GIT:  git://pogl.git.sourceforge.net/gitroot/pogl/pogl (Read only)
-  TARBALL: http://sourceforge.net/projects/pogl/files/
+  GIT:  git clone git://git.code.sf.net/p/pogl/code pogl-code (Read only)
+  TARBALL: http://sourceforge.net/p/pogl/code/ci/master/tarball
 
 =head2 WINDOWS BINARIES
 

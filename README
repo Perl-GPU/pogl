@@ -24,7 +24,8 @@ As such, FreeGLUT is assumed.  See INSTALL for options to override
 this default.
 
 
-NOTE: POGL automatically installs a binary FreeGLUT library on win32.
+NOTE: POGL automatically installs a binary FreeGLUT library on 32bit
+      win32 perl platforms.
 
 
 POGL provides access to most of the OpenGL 1.0, 1.1, and 1.2 APIs, and
@@ -98,7 +99,7 @@ PPM for 64-bit perl 5.10+: http://www.sisyphusion.tk/ppm/OpenGL.ppd
 
 Changes:
 
-0.58+:  Chris Marhall <devel DOT chm DOT 01 at gmail DOT com>
+0.58+:  Chris Marshall <devel DOT chm DOT 01 at gmail DOT com>
         See GIT_CHANGES file in CPAN releases or use git log --stat on
         a git repository
 
