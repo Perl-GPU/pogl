@@ -11,7 +11,7 @@ require DynaLoader;
 
 use Carp;
 
-$VERSION = '0.6702';
+$VERSION = '0.6703';
 $BUILD_VERSION = $XS_VERSION = $VERSION;
 $VERSION = eval($VERSION);
 
@@ -6179,8 +6179,10 @@ sub glpMultMatrixf { glMultMatrixf_p(@_) }
 
 sub glpMainLoop {
   if (_have_glx()) {
-    print "Control-D to quit...\n";
-    while(<>){;} # control-D to quit
+     ## print "Control-D to quit...\n";
+     ## while(<>){;} # control-D to quit
+    print "Type <Enter> to quit...\n";
+    until(<>){;} # control-D to quit
   } else {				# OS/2 PM
     OS2::Process_Messages(0) while 1;  
   }

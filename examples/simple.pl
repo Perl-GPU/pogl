@@ -22,5 +22,5 @@ glBegin(GL_POLYGON);
 glEnd();
 glpFlush();
 
-print "Program 1-1 Simple, hit control-D to quit:\n\n";
+print "Program 1-1 Simple, hit Enter in terminal window to quit:\n\n";
 glpMainLoop;

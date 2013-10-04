@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-OpenGL - v0.6702
+OpenGL - v0.6703
 
 =head1 SYNOPSIS
 

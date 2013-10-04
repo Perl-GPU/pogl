@@ -92,7 +92,7 @@ my $hasVBO = 0;
 my $hasFragProg = 0;
 my $hasImagePointer = 0;
 my $idleTime = time();
-my $idleSecsMax = 30;
+my $idleSecsMax = 5;
 my $er;
 
 # Window and texture IDs, window width and height.
