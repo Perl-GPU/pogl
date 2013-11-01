@@ -1,3 +1,7 @@
+* Does not support dynamic detection of OpenGL API support
+  and does not have bindings for modern OpenGL API since
+  approximately version 2.0
+
 * No way to specify/override the compile and link
   options which causes problems on systems with multiple
   OpenGL libraries installed (e.g., 32-bit and 64-bit).

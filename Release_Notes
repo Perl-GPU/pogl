@@ -1,4 +1,21 @@
 +------------------------------------------------------------------------+
+|                  OpenGL-0.6703
++------------------------------------------------------------------------+
+
+General Notes:
+
+ * Minor update to tolerate absence of several extensions removed
+   in Mesa 9.2.0.  Thanks to Colin Watson for reporting and fixing
+   the problem.
+
+
+Highlights:
+
+  * Tolerate absence of several extensions removed in Mesa 9.2.0
+
+
+
++------------------------------------------------------------------------+
 |                  OpenGL-0.6702
 +------------------------------------------------------------------------+
 
