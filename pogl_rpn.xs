@@ -1157,7 +1157,7 @@ new(Class, count, type, ...)
 		memset(oga,0,oga_len);
 		
 		oga->type_count = items - 2;
-		oga->item_count = count;
+		oga->item_count = count * (items - 2);
 		
 		oga->types = malloc(sizeof(GLenum) * oga->type_count);
 		oga->type_offset = malloc(sizeof(GLint) * oga->type_count);
