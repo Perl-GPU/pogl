@@ -167,6 +167,7 @@ typedef struct tag_rpn_op rpn_op;
 struct tag_rpn_stack
 {
   int		count;
+  int		max_count;
   GLfloat *	data;
   rpn_op *	ops;
 };
@@ -497,6 +498,7 @@ rpn_stack * rpn_parse(int size,char * string)
   /* release string copy */
   if (data) free(data);
   stack->data = malloc(sizeof(GLfloat)*size);
+  stack->max_count = size;
   stack->ops = op;
   return(stack);
 }
@@ -596,7 +598,11 @@ void rpn_term(rpn_context * ctx)
 /* Push an RPN value on the stack */
 void rpn_push(rpn_stack * stack, GLfloat value)
 {
-  if (stack) stack->data[stack->count++] = value;
+  if (stack){
+    if(stack->count == stack->max_count)
+      croak("Trying to push past allocated rpn stack size: %d", stack->count);
+    stack->data[stack->count++] = value;
+  }
 }
 
 /* Pop an RPN value from the stack */
