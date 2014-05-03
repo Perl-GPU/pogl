@@ -278,16 +278,19 @@ rpn_stack * rpn_parse(int size,char * string)
         case '=':
         {
           cur->op = RPN_EQU;
+          size++;
           continue;
         }
         case '>':
         {
           cur->op = RPN_GRE;
+          size++;
           continue;
         }
         case '<':
         {
           cur->op = RPN_LES;
+          size++;
           continue;
         }
         case '?':
