@@ -205,7 +205,7 @@ Populates each row of the array with @values, assuming rows have the
 same width as the length of @values.  If the number of passed values
 must be evenly divisible by the number of elements in the array.
 The number of values becomes the number of "columns."  The number of
-"rows" is the total number of elements of the array devided by the
+"rows" is the total number of elements of the array divided by the
 columns.
 
     $array->calc(1.0, '3,*', '2,*,rand,+', '');
