@@ -6129,6 +6129,8 @@ sub AUTOLOAD {
 
 bootstrap OpenGL;
 
+*OpenGL::Array::CLONE_SKIP = sub { 1 };  # OpenGL::Array is not thread safe
+
 # The following material is directly copied from Stan Melax's original OpenGL-0.4
 # (with modifications for OS/2).
 
