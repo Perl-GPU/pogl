@@ -1,4 +1,4 @@
-/*  Last saved: Sun 06 Sep 2009 02:10:22 PM */
+/*  Last saved: Wed 17 Dec 2014 03:14:02 PM */
 
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -635,7 +635,8 @@ PGLUtess *
 gluNewTess(...)
 	CODE:
 	{
-		RETVAL = calloc(sizeof(PGLUtess), 1);
+		RETVAL = malloc(sizeof(PGLUtess));
+		memset(RETVAL, 0, sizeof(PGLUtess));
                 RETVAL->do_colors  = (items > 0) ? SvTRUE(ST(0)) : FALSE;
                 RETVAL->do_normals = (items > 1) ? SvTRUE(ST(1)) : FALSE;
 		RETVAL->triangulator = gluNewTess();
