@@ -8,6 +8,26 @@ package Acme::MITHALDU::BleedingOpenGL;
 #  This program is free software; you can redistribute it and/or
 #  modify it under the same terms as Perl itself.
 
+=head1 NAME
+
+Acme::MITHALDU::BleedingOpenG - bleeding edge OpenGL experiments - you WILL get cut
+
+=head1 DESCRIPTION
+
+This is a fork of the official L<OpenGL> in which i implement modern OpenGL
+functions not available in L<OpenGL> crudely, cluelessly and without any error
+checking. The only reason this is on CPAN is to make development of
+L<Microidium|https://github.com/wchristian/Microidium> a little easier.
+
+You'd be insane to use this. I make no guarantees to not break this horribly at
+any point.
+
+Seriously, just use L<OpenGL>.
+
+(PS: I'll probably be force-pushing the repo at various points too.)
+
+=cut
+
 require Exporter;
 require DynaLoader;
 
