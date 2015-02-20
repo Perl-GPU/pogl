@@ -433,8 +433,8 @@ if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
   #
   ## $EXES = ['FreeGLUT/freeglut.dll'];
   {
-     system $^X , qw[-MExtUtils::Command -e mkpath --], qw[blib/arch/auto/OpenGL];
-     system $^X , qw[-MExtUtils::Command -e cp --], qw[FreeGLUT/freeglut.dll blib/arch/auto/OpenGL/freeglut.dll];
+     system $^X , qw[-MExtUtils::Command -e mkpath --], qw[blib/arch/auto/Acme/MITHALDU/BleedingOpenGL];
+     system $^X , qw[-MExtUtils::Command -e cp --], qw[FreeGLUT/freeglut.dll blib/arch/auto/Acme/MITHALDU/BleedingOpenGL/freeglut.dll];
      my @other_installs = grep { -e "$_\\freeglut.dll" } split /;/, $ENV{PATH};
      if(@other_installs) {
       print "\n" ;
@@ -560,17 +560,14 @@ clean_libs( $LIBS );
 # This is the final build configuration
 my $build_config =
 {
-  'NAME'	=> 'OpenGL',
-  'VERSION_FROM'=> 'OpenGL.pm',
+  'NAME'	=> 'Acme::MITHALDU::BleedingOpenGL',
+  'VERSION_FROM'=> 'BleedingOpenGL.pm',
   'PM' 		=>
   {
-    'OpenGL.pm' => '$(INST_LIBDIR)/OpenGL.pm',
-    'OpenGL.pod'=> '$(INST_LIBDIR)/OpenGL.pod',
-    'Array.pod'=> '$(INST_LIBDIR)/OpenGL/Array.pod',
-    'Tessellation.pod'=> '$(INST_LIBDIR)/OpenGL/Tessellation.pod',
-    'Config.pm' => '$(INST_LIBDIR)/OpenGL/Config.pm'
+    'BleedingOpenGL.pm' => '$(INST_LIBDIR)/BleedingOpenGL.pm',
+    'Config.pm' => '$(INST_LIBDIR)/BleedingOpenGL/Config.pm'
   },
-  'PREREQ_PM' => { 'Test::More' => 0 },
+  'PREREQ_PM' => { 'Test::More' => 0, 'Import::Into' => 0 },
   'AUTHOR'	=> "Chris Marshall ".'<chm at cpan dot org>',
   'OBJECT' 	=> '$(BASEEXT)$(OBJ_EXT) gl_util$(OBJ_EXT) pogl_const$(OBJ_EXT) pogl_gl_top$(OBJ_EXT) pogl_glu$(OBJ_EXT) pogl_rpn$(OBJ_EXT) pogl_matrix$(OBJ_EXT) pogl_glut$(OBJ_EXT) pogl_gl_Accu_GetM$(OBJ_EXT) pogl_gl_GetP_Pass$(OBJ_EXT) pogl_gl_Mult_Prog$(OBJ_EXT) pogl_gl_Pixe_Ver2$(OBJ_EXT) pogl_gl_Prog_Clam$(OBJ_EXT) pogl_gl_Tex2_Draw$(OBJ_EXT) pogl_gl_Ver3_Tex1$(OBJ_EXT) pogl_gl_Vert_Multi$(OBJ_EXT) pogl_gl_gltut$(OBJ_EXT)',
   'XSPROTOARG'	=> '-noprototypes',
@@ -1047,7 +1044,7 @@ sub WriteConfigPM
 #
 };
 
-  print CONFIGPM Data::Dumper->Dump( [$config], [qw(OpenGL::Config)] );
+  print CONFIGPM Data::Dumper->Dump( [$config], [qw(Acme::MITHALDU::BleedingOpenGL::Config)] );
 
   print CONFIGPM qq
 {

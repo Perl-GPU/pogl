@@ -47,7 +47,7 @@
 
 
 
-MODULE = OpenGL::GL::AccuGetM	PACKAGE = OpenGL
+MODULE = Acme::MITHALDU::BleedingOpenGL::GL::AccuGetM	PACKAGE = Acme::MITHALDU::BleedingOpenGL
 
 
 

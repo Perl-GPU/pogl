@@ -495,7 +495,7 @@ static void generic_glut_menu_handler(int value)
 
 
 
-MODULE = OpenGL::GLUT		PACKAGE = OpenGL
+MODULE = Acme::MITHALDU::BleedingOpenGL::GLUT		PACKAGE = Acme::MITHALDU::BleedingOpenGL
 
 #// Test for done with glutInit
 int

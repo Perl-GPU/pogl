@@ -16,8 +16,8 @@ MANIFEST
 META.yml
 MYMETA.yml
 MYMETA.json
-OpenGL.c
-OpenGL.xs-orig
+BleedingOpenGL.c
+BleedingOpenGL.xs-orig
 blib/
 gl_exclude.h
 pm_to_blib
@@ -27,6 +27,7 @@ utils/glversion.txt
 PDL-Graphics-OpenGL-Perl-OpenGL-*.tar.gz
 GIT_CHANGES
 /OpenGL-*.tar.gz
+/Acme-MITHALDU-BleedingOpenGL-*.tar.gz
 
 # Some junk files I added to ignore
 gl-funs.txt
