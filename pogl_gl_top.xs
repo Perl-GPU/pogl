@@ -289,7 +289,7 @@ void disable_fbo(oga_struct * oga)
 
 
 
-MODULE = OpenGL::GL::Top		PACKAGE = OpenGL
+MODULE = Acme::MITHALDU::BleedingOpenGL::GL::Top		PACKAGE = Acme::MITHALDU::BleedingOpenGL
 
 
 

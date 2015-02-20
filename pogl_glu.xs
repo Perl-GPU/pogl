@@ -368,7 +368,7 @@ void CALLBACK _s_marshal_glu_t_callback_combine (GLdouble coords[3], void * vert
 #endif /* End IN_POGL_GLU_XS */
 
 
-MODULE = OpenGL::GLU		PACKAGE = OpenGL
+MODULE = Acme::MITHALDU::BleedingOpenGL::GLU		PACKAGE = Acme::MITHALDU::BleedingOpenGL
 
 
 #ifdef IN_POGL_GLU_XS

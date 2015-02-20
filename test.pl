@@ -6,8 +6,8 @@ our $IS_ACTIVEPERL = ($stat =~ m|ActiveState|s);
 our $PERL_VERSION = $^V;
 $PERL_VERSION =~ s|^v||;
 
-use OpenGL qw/ :all /;
-use OpenGL::Config;     # for build information
+use Acme::MITHALDU::BleedingOpenGL qw/ :all /;
+use Acme::MITHALDU::BleedingOpenGL::Config;     # for build information
 
 eval 'use OpenGL::Image 1.03';  # Need to use OpenGL::Image 1.03 or higher!
 my $hasImage = !$@;
@@ -413,7 +413,7 @@ sub ourInit
 {
   my ($Width, $Height) = @_;
 
-  printf("\nUsing POGL v$OpenGL::VERSION\n");
+  printf("\nUsing POGL v$Acme::MITHALDU::BleedingOpenGL::VERSION\n");
 
   # Build texture.
   ($TextureID_image,$TextureID_FBO) = glGenTextures_p(2);
@@ -1257,7 +1257,7 @@ sub cbKeyPressed
   elsif ($c eq 'K')
   {
     # ignore keypress if not FreeGLUT
-    glutLeaveMainLoop() if OpenGL::_have_freeglut();
+    glutLeaveMainLoop() if Acme::MITHALDU::BleedingOpenGL::_have_freeglut();
   }
   elsif ($c eq 'L')
   {
@@ -1522,7 +1522,7 @@ glutInit();
 # To see OpenGL drawing, take out the GLUT_DOUBLE request.
 glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_ALPHA);
 
-if ($^O ne 'MSWin32' and $OpenGL::Config->{DEFINE} !~ /-DHAVE_W32API/) { # skip these MODE checks on win32, they don't work
+if ($^O ne 'MSWin32' and $Acme::MITHALDU::BleedingOpenGL::Config->{DEFINE} !~ /-DHAVE_W32API/) { # skip these MODE checks on win32, they don't work
 
    if (not glutGet(GLUT_DISPLAY_MODE_POSSIBLE))
    {
@@ -1564,7 +1564,7 @@ print "\n\n";
 my $version = glGetString(GL_VERSION);
 my $vendor = glGetString(GL_VENDOR);
 my $renderer = glGetString(GL_RENDERER);
-print "Using POGL v$OpenGL::BUILD_VERSION\n";
+print "Using POGL v$Acme::MITHALDU::BleedingOpenGL::BUILD_VERSION\n";
 print "OpenGL installation: $version\n$vendor\n$renderer\n\n";
 
 print "Installed extensions (* implemented in the module):\n";
@@ -1577,19 +1577,19 @@ foreach my $ext (sort @extensions)
   print("    $stat\n") if ($stat && $stat !~ m|^$ext |);
 }
 
-if (!OpenGL::glpCheckExtension('GL_ARB_vertex_buffer_object'))
+if (!Acme::MITHALDU::BleedingOpenGL::glpCheckExtension('GL_ARB_vertex_buffer_object'))
 {
   #$hasVBO = 1;
   # Perl 5.10 crashes on VBOs!
   $hasVBO = ($PERL_VERSION !~ m|^5\.10\.|);
 }
 
-if (!OpenGL::glpCheckExtension('GL_EXT_framebuffer_object'))
+if (!Acme::MITHALDU::BleedingOpenGL::glpCheckExtension('GL_EXT_framebuffer_object'))
 {
   $hasFBO = 1;
   $FBO_On = 1;
 
-  if (!OpenGL::glpCheckExtension('GL_ARB_fragment_program'))
+  if (!Acme::MITHALDU::BleedingOpenGL::glpCheckExtension('GL_ARB_fragment_program'))
   {
     $hasFragProg = 1;
     $FBO_On++;
@@ -1619,7 +1619,7 @@ glutMouseFunc(\&cbMouseClick);
 #glutPassiveMotionFunc(\&cbMouseTrack);
 
 # Handle window close events.
-glutCloseFunc(\&cbClose) if OpenGL::_have_freeglut();
+glutCloseFunc(\&cbClose) if Acme::MITHALDU::BleedingOpenGL::_have_freeglut();
 
 # OK, OpenGL's ready to go.  Let's call our own init function.
 ourInit($Window_Width, $Window_Height);
@@ -1639,7 +1639,7 @@ Press 'c' to capture/save a RGBA targa file.
 
 # Pass off control to OpenGL.
 # Above functions are called as appropriate.
-if (OpenGL::_have_freeglut()) {
+if (Acme::MITHALDU::BleedingOpenGL::_have_freeglut()) {
    print "Setting window close to trigger return from mainloop.\n";
    glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE,GLUT_ACTION_GLUTMAINLOOP_RETURNS)
 }

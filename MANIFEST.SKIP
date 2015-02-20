@@ -44,9 +44,9 @@ EL-ELI.c
 ^MYMETA.json
 ^MYMETA.yml
 ^META.yml$
-^OpenGL.bs
-^OpenGL.c
-^OpenGL.o
+^BleedingOpenGL.bs
+^BleedingOpenGL.c
+^BleedingOpenGL.o
 ^gl-funs.txt
 ^gl_exclude.h$
 ^gl_util.o

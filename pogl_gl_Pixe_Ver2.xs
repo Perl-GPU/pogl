@@ -47,7 +47,7 @@
 
 
 
-MODULE = OpenGL::GL::PixeVer2	PACKAGE = OpenGL
+MODULE = Acme::MITHALDU::BleedingOpenGL::GL::PixeVer2	PACKAGE = Acme::MITHALDU::BleedingOpenGL
 
 
 

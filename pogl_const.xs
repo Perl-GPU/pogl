@@ -61,7 +61,7 @@ neoconstant(char * name, int arg)
 #endif /* defined IN_POGL_CONST_XS */
 
 
-MODULE = OpenGL::Const		PACKAGE = OpenGL
+MODULE = Acme::MITHALDU::BleedingOpenGL::Const		PACKAGE = Acme::MITHALDU::BleedingOpenGL
 
 #ifdef IN_POGL_CONST_XS
 
