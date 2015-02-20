@@ -47,7 +47,7 @@
 
 
 
-MODULE = OpenGL::GL::VertMulti	PACKAGE = OpenGL
+MODULE = Acme::MITHALDU::BleedingOpenGL::GL::VertMulti	PACKAGE = Acme::MITHALDU::BleedingOpenGL
 
 
 

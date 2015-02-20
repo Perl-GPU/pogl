@@ -47,7 +47,7 @@
 
 
 
-MODULE = OpenGL::GL::Tex2Draw	PACKAGE = OpenGL
+MODULE = Acme::MITHALDU::BleedingOpenGL::GL::Tex2Draw	PACKAGE = Acme::MITHALDU::BleedingOpenGL
 
 
 

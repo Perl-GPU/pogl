@@ -47,7 +47,7 @@
 
 
 
-MODULE = OpenGL::GL::Ver3Tex1	PACKAGE = OpenGL
+MODULE = Acme::MITHALDU::BleedingOpenGL::GL::Ver3Tex1	PACKAGE = Acme::MITHALDU::BleedingOpenGL
 
 
 

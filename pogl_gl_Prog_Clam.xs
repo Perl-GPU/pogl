@@ -47,7 +47,7 @@
 
 
 
-MODULE = OpenGL::GL::ProgClam	PACKAGE = OpenGL
+MODULE = Acme::MITHALDU::BleedingOpenGL::GL::ProgClam	PACKAGE = Acme::MITHALDU::BleedingOpenGL
 
 
 

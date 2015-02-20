@@ -563,15 +563,12 @@ clean_libs( $LIBS );
 # This is the final build configuration
 my $build_config =
 {
-  'NAME'	=> 'OpenGL',
-  'VERSION_FROM'=> 'OpenGL.pm',
+  'NAME'	=> 'Acme::MITHALDU::BleedingOpenGL',
+  'VERSION_FROM'=> 'BleedingOpenGL.pm',
   'PM' 		=>
   {
-    'OpenGL.pm' => '$(INST_LIBDIR)/OpenGL.pm',
-    'OpenGL.pod'=> '$(INST_LIBDIR)/OpenGL.pod',
-    'Array.pod'=> '$(INST_LIBDIR)/OpenGL/Array.pod',
-    'Tessellation.pod'=> '$(INST_LIBDIR)/OpenGL/Tessellation.pod',
-    'Config.pm' => '$(INST_LIBDIR)/OpenGL/Config.pm'
+    'BleedingOpenGL.pm' => '$(INST_LIBDIR)/BleedingOpenGL.pm',
+    'Config.pm' => '$(INST_LIBDIR)/BleedingOpenGL/Config.pm'
   },
   'PREREQ_PM' => { 'Test::More' => 0 },
   'AUTHOR'	=> "Chris Marshall ".'<chm at cpan dot org>',
@@ -1015,7 +1012,7 @@ sub WriteConfigPM
 #
 };
 
-  print CONFIGPM Data::Dumper->Dump( [$config], [qw(OpenGL::Config)] );
+  print CONFIGPM Data::Dumper->Dump( [$config], [qw(Acme::MITHALDU::BleedingOpenGL::Config)] );
 
   print CONFIGPM qq
 {

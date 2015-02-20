@@ -24,7 +24,7 @@
 
 
 
-MODULE = OpenGL::GL::gltut	PACKAGE = OpenGL
+MODULE = Acme::MITHALDU::BleedingOpenGL::GL::gltut	PACKAGE = Acme::MITHALDU::BleedingOpenGL
 
 
 

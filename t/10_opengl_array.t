@@ -1,5 +1,5 @@
 use strict;
-use OpenGL qw(GL_FLOAT GL_INT GL_UNSIGNED_BYTE);
+use Acme::MITHALDU::BleedingOpenGL qw(GL_FLOAT GL_INT GL_UNSIGNED_BYTE);
 use Test::More tests => 141;
 
 my $o1 = OpenGL::Array->new(5, GL_FLOAT);

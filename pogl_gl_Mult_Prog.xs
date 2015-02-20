@@ -47,7 +47,7 @@
 
 
 
-MODULE = OpenGL::GL::MultProg	PACKAGE = OpenGL
+MODULE = Acme::MITHALDU::BleedingOpenGL::GL::MultProg	PACKAGE = Acme::MITHALDU::BleedingOpenGL
 
 
 
