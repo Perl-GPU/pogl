@@ -47,7 +47,7 @@
 
 
 
-MODULE = OpenGL::GL::GetPPass	PACKAGE = OpenGL
+MODULE = Acme::MITHALDU::BleedingOpenGL::GL::GetPPass	PACKAGE = Acme::MITHALDU::BleedingOpenGL
 
 
 

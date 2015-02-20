@@ -1153,7 +1153,7 @@ void rpn_exec(rpn_context * ctx)
 
 
 
-MODULE = OpenGL::RPN		PACKAGE = OpenGL::Array
+MODULE = Acme::MITHALDU::BleedingOpenGL::RPN		PACKAGE = OpenGL::Array
 
 #ifdef IN_POGL_ARRAY_XS
 

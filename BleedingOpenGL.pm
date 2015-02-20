@@ -1,4 +1,4 @@
-package OpenGL;
+package Acme::MITHALDU::BleedingOpenGL;
 
 #  Copyright (c) 1998,1999 Kenneth Albanowski. All rights reserved.
 #  Copyright (c) 2007 Bob Free. All rights reserved.
@@ -6233,7 +6233,7 @@ sub AUTOLOAD {
     goto &$AUTOLOAD;
 }
 
-bootstrap OpenGL;
+bootstrap Acme::MITHALDU::BleedingOpenGL;
 
 *OpenGL::Array::CLONE_SKIP = sub { 1 };  # OpenGL::Array is not thread safe
 *OpenGL::Matrix::CLONE_SKIP = sub { 1 };  # OpenGL::Matrix is not thread safe
@@ -6308,9 +6308,9 @@ sub glpFlush {
   glXSwapBuffers() if __had_dbuffer_hack();
 }
 
-sub OpenGL::Quad::DESTROY ($) {gluDeleteQuadric(shift)}
-@OpenGL::Quad::ISA = 'GLUquadricObjPtr';
-sub __new_gluQuad () {bless gluNewQuadric(), 'OpenGL::Quad'}
+sub Acme::MITHALDU::BleedingOpenGL::Quad::DESTROY ($) {gluDeleteQuadric(shift)}
+@Acme::MITHALDU::BleedingOpenGL::Quad::ISA = 'GLUquadricObjPtr';
+sub __new_gluQuad () {bless gluNewQuadric(), 'Acme::MITHALDU::BleedingOpenGL::Quad'}
 
 sub glpSolidSphere ($$$) {
   gluSphere(__new_gluQuad, shift, shift, shift);
@@ -6392,6 +6392,15 @@ sub glpCheckExtension
   }
   return 0;
 }
+use Import::Into;
+*OpenGL::import = sub {
+   my %known = map { $_ => 1 } qw (OpenGL::Shader::Objects OpenGL::Shader::GLSL OpenGL::Shader::CG OpenGL::Shader::ARB OpenGL::Image::Magick OpenGL::Image::Targa);
+   shift;
+   my $target = caller;
+   die "use Acme::MITHALDU::BleedingOpenGL" if !$known{$target};
+   __PACKAGE__->import::into($target, @_);
+};
+$INC{"OpenGL.pm"} = 1;
 
 
 

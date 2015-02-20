@@ -143,7 +143,7 @@ static void set_data_frustrum(GLfloat * data,
 static int inverse_lookup[] = {0,3,6,9,1,4,7,10,2,5,8,11};
 
 
-MODULE = OpenGL::Matrix		PACKAGE = OpenGL::Matrix
+MODULE = Acme::MITHALDU::BleedingOpenGL::Matrix		PACKAGE = Acme::MITHALDU::BleedingOpenGL::Matrix
 
 #ifdef IN_POGL_MATRIX_XS
 

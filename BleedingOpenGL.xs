@@ -7,7 +7,7 @@
  *  modify it under the same terms as Perl itself.
  */
 
-/* This ends up being OpenGL.pm */
+/* This ends up being BleedingOpenGL.pm */
 #define IN_POGL_MAIN_XS
 
 #include <stdio.h>
@@ -18,7 +18,7 @@
 
 =head2 Miscellaneous
 
-Various BOOT utilities defined in OpenGL.xs
+Various BOOT utilities defined in BleedingOpenGL.xs
 
 =over
 
@@ -95,7 +95,7 @@ char *s;
 
 
 
-MODULE = OpenGL		PACKAGE = OpenGL
+MODULE = Acme::MITHALDU::BleedingOpenGL		PACKAGE = Acme::MITHALDU::BleedingOpenGL
 
 
 
@@ -112,18 +112,18 @@ MODULE = OpenGL		PACKAGE = OpenGL
 
 
 BOOT:
-  PGOPOGL_CALL_BOOT(boot_OpenGL__RPN);
-  PGOPOGL_CALL_BOOT(boot_OpenGL__Matrix);
-  PGOPOGL_CALL_BOOT(boot_OpenGL__Const);
-  PGOPOGL_CALL_BOOT(boot_OpenGL__GL__Top);
-  PGOPOGL_CALL_BOOT(boot_OpenGL__GL__AccuGetM);
-  PGOPOGL_CALL_BOOT(boot_OpenGL__GL__GetPPass);
-  PGOPOGL_CALL_BOOT(boot_OpenGL__GL__MultProg);
-  PGOPOGL_CALL_BOOT(boot_OpenGL__GL__PixeVer2);
-  PGOPOGL_CALL_BOOT(boot_OpenGL__GL__ProgClam);
-  PGOPOGL_CALL_BOOT(boot_OpenGL__GL__Tex2Draw);
-  PGOPOGL_CALL_BOOT(boot_OpenGL__GL__Ver3Tex1);
-  PGOPOGL_CALL_BOOT(boot_OpenGL__GL__VertMulti);
-  PGOPOGL_CALL_BOOT(boot_OpenGL__GL__gltut);
-  PGOPOGL_CALL_BOOT(boot_OpenGL__GLU);
-  PGOPOGL_CALL_BOOT(boot_OpenGL__GLUT);
+  PGOPOGL_CALL_BOOT(boot_Acme__MITHALDU__BleedingOpenGL__RPN);
+  PGOPOGL_CALL_BOOT(boot_Acme__MITHALDU__BleedingOpenGL__Matrix);
+  PGOPOGL_CALL_BOOT(boot_Acme__MITHALDU__BleedingOpenGL__Const);
+  PGOPOGL_CALL_BOOT(boot_Acme__MITHALDU__BleedingOpenGL__GL__Top);
+  PGOPOGL_CALL_BOOT(boot_Acme__MITHALDU__BleedingOpenGL__GL__AccuGetM);
+  PGOPOGL_CALL_BOOT(boot_Acme__MITHALDU__BleedingOpenGL__GL__GetPPass);
+  PGOPOGL_CALL_BOOT(boot_Acme__MITHALDU__BleedingOpenGL__GL__MultProg);
+  PGOPOGL_CALL_BOOT(boot_Acme__MITHALDU__BleedingOpenGL__GL__PixeVer2);
+  PGOPOGL_CALL_BOOT(boot_Acme__MITHALDU__BleedingOpenGL__GL__ProgClam);
+  PGOPOGL_CALL_BOOT(boot_Acme__MITHALDU__BleedingOpenGL__GL__Tex2Draw);
+  PGOPOGL_CALL_BOOT(boot_Acme__MITHALDU__BleedingOpenGL__GL__Ver3Tex1);
+  PGOPOGL_CALL_BOOT(boot_Acme__MITHALDU__BleedingOpenGL__GL__VertMulti);
+  PGOPOGL_CALL_BOOT(boot_Acme__MITHALDU__BleedingOpenGL__GL__gltut);
+  PGOPOGL_CALL_BOOT(boot_Acme__MITHALDU__BleedingOpenGL__GLU);
+  PGOPOGL_CALL_BOOT(boot_Acme__MITHALDU__BleedingOpenGL__GLUT);
