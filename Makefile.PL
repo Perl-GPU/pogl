@@ -565,6 +565,7 @@ my $build_config =
 {
   'NAME'	=> 'Acme::MITHALDU::BleedingOpenGL',
   'VERSION_FROM'=> 'BleedingOpenGL.pm',
+  ABSTRACT => 'bleeding edge OpenGL experiments - you WILL get cut',
   'PM' 		=>
   {
     'BleedingOpenGL.pm' => '$(INST_LIBDIR)/BleedingOpenGL.pm',
@@ -580,11 +581,15 @@ my $build_config =
   'dynamic_lib'	=> $DYNS,
   'LDFROM'      => '$(OBJECT) '.(defined($LDFROM)?$LDFROM:''),
   'META_MERGE' => {
-     abstract  => 'Perl bindings to the OpenGL API, GLU, and GLUT/FreeGLUT',
+     'meta-spec' => { version => 2 },
      resources => {
-        homepage => 'http://sourceforge.net/projects/pogl/',
-        bugtracker  => 'http://sourceforge.net/tracker/?group_id=562483&atid=2281758',
-        repository  => 'git://pogl.git.sourceforge.net/gitroot/pogl/pogl',
+        homepage => 'https://github.com/wchristian/OpenGL.pm',
+        bugtracker  => 'https://github.com/wchristian/OpenGL.pm/issues',
+        repository => {
+            type => 'git',
+            url => 'https://github.com/wchristian/OpenGL.pm.git',
+            web => 'https://github.com/wchristian/OpenGL.pm',
+        },
      },
   },
   'EXE_FILES'	=> $EXES,
