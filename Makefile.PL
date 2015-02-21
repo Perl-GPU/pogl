@@ -446,8 +446,8 @@ if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
   #
   ## $EXES = ['FreeGLUT/freeglut.dll'];
   {
-     system $^X , qw[-MExtUtils::Command -e mkpath --], qw[blib/bin];
-     system $^X , qw[-MExtUtils::Command -e cp --], qw[FreeGLUT/freeglut.dll blib/bin/freeglut.dll];
+     system $^X , qw[-MExtUtils::Command -e mkpath --], qw[blib/arch/auto/Acme/MITHALDU/BleedingOpenGL];
+     system $^X , qw[-MExtUtils::Command -e cp --], qw[FreeGLUT/freeglut.dll blib/arch/auto/Acme/MITHALDU/BleedingOpenGL/freeglut.dll];
   }
 
 }
@@ -695,6 +695,10 @@ sub get_libs
         my $lib = $libs->{$key};
         next if (!-e "$path/$lib");
         $lib =~ s/\.dll$//i;
+        if ( $lib eq "freeglut" ) {
+          my @p = split m@[/\\]@, $Config{installsitebin};
+          next if $path eq join "/", @p or $path eq join "\\", @p;
+        }
         # print "  $key: $lib\n";
         $found->{$key} = $lib;
         last;
@@ -704,7 +708,7 @@ sub get_libs
     # Install FreeGLUT if not found
     if (!$found->{FREEGLUT32} and !$IS_STRAWBERRY)
     {
-      my $dll_dir = $Config{installsitebin};
+      my $dll_dir = "utils";
 
       my $exec;
       if ($IS_W32API)
@@ -857,7 +861,7 @@ sub get_extensions
   print "glversion: $exec\n" if ($verbose);
   my $stat = `$exec`;
   print "\n$stat\n\n" if ($verbose);
-
+  unlink "utils/freeglut.dll" or die "could not remove temporary freeglut: $!" if -f "utils/freeglut.dll";
 
   # Parse glversion.txt file
   if ( !defined(open(GLDATA,$glv_file)) ) {
