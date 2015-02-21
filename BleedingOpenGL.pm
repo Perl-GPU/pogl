@@ -31,7 +31,7 @@ require DynaLoader;
 
 use Carp;
 
-$VERSION = '0.67041';
+$VERSION = '0.67042';
 $BUILD_VERSION = $XS_VERSION = $VERSION;
 $VERSION = eval($VERSION);
 
