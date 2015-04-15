@@ -3112,6 +3112,8 @@ if (!strncmp(name, "GL_", 3)) {
 	i(GL_DEPTH_ATTACHMENT)
 	i(GL_FRAMEBUFFER)
 	i(GL_FRAMEBUFFER_COMPLETE)
+    i(GL_FRAMEBUFFER_SRGB)
+	i(GL_SRGB_ALPHA)
 #endif
 
 /* 
