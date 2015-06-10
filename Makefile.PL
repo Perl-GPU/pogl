@@ -125,7 +125,9 @@ if ($^O eq 'MSWin32' || $IS_W32API)
 our @libdirs = qw
 {
   -L/usr/lib
+  -L/usr/lib/i386-linux-gnu
   -L/usr/X11R6/lib
+  -L/opt/X11/lib
   -L/usr/local/lib
   -L/usr/openwin/lib
   -L/opt/csw/lib
@@ -141,8 +143,9 @@ our @check_libs = qw
   -lglu
   -lMesaGLU
   -lfreeglut
-  -lGLUT
+  -lglut3
   -lglut
+  -lGLUT
   -lMesaGLUT
 };
 
@@ -462,7 +465,9 @@ else # Everyone else
   my @includes = qw
   {
     -I/usr/include
+    -I/usr/include
     -I/usr/X11R6/include
+    -I/opt/X11/include
     -I/usr/local/include
     -I/usr/openwin/include
     -I/opt/csw/include
@@ -513,6 +518,7 @@ else # Everyone else
     -lXi
     -lICE
     -lX11
+    -lstdc++
     -lm
   };
   #-lXIE
