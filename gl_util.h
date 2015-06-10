@@ -370,6 +370,9 @@ extern int gl_type_size(GLenum type);
 
 extern int gl_component_count(GLenum format, GLenum type);
 
+// Only support 2 for now
+#define MAX_ARRAY_DIMENSIONS	2
+
 struct oga_struct {
 	int type_count, item_count;
 	GLint bind;
@@ -378,6 +381,8 @@ struct oga_struct {
 	int total_types_width;
 	void * data;
 	int data_length;
+  int dimension_count;
+  int dimensions[MAX_ARRAY_DIMENSIONS];
 
 	GLuint target, pixel_type, pixel_format, element_size;
 	GLuint affine_handle;
@@ -391,3 +396,4 @@ struct oga_struct {
 typedef struct oga_struct oga_struct;
 
 typedef oga_struct * OpenGL__Array;
+typedef oga_struct * OpenGL__Matrix;
