@@ -11,12 +11,12 @@ use Config;
 # Supported windowing interfaces
 our $is_valid_interface =
 {
-  'AGL'			=> 'GLUT framework on Mac OS X',
-  'FREEGLUT'	=> 'FreeGLUT, preferred over GLUT',
-  'GLUT'		=> 'GLUT; often really FreeGLUT on Linux',
-  'GLX'			=> 'GLX+X11 not supported; use GLUT or FreeGLUT',
-  'W32API'		=> 'Uses WGL+FreeGLUT on CYGWIN, instead of GLX+FreeGLUT',
-  'WGL'         => 'Same as W32API',
+  'AGL'       => 'Default GLUT framework on Mac OS X',
+  'FREEGLUT'  => 'FreeGLUT, preferred over GLUT',
+  'GLUT'      => 'GLUT; often really FreeGLUT on Linux',
+  'GLX'       => 'Default GLX+X11 on Linux; use XQuartz on Mac OS X',
+  'W32API'    => 'Uses WGL+FreeGLUT on CYGWIN, instead of GLX+FreeGLUT',
+  'WGL'       => 'Same as W32API',
 };
 
 
@@ -256,14 +256,6 @@ if ( grep { m/^interface=/i } @ARGV )
       }
       elsif ($interface eq 'GLX')
       {
-         print "\n";
-         print "***********************************************************************\n";
-         print "* ERROR: GLX interface is not supported, use GLUT or FreeGLUT instead *\n";
-         print "***********************************************************************\n";
-         print "\n";
-
-         exit 0;
-
         if (!$found_libs->{GL} && !$found_libs->{MESA} && !$found_libs->{GLX})
         {
           print "GLX interface requires GLX/X11 but the libraries were not found\n";
@@ -316,7 +308,7 @@ elsif ($IS_CYGWIN)
     die "No suitable OpenGL+GLUT interface found for CYGWIN\n";
   }
 }
-elsif ($^O eq 'darwin' && $found_libs->{GLUT})
+elsif ($^O eq 'darwin' && $found_libs->{GLUT} && !$found_libs->{FREEGLUT})
 {
   $interface_lib = 'AGL';
 }
@@ -658,7 +650,14 @@ sub get_libs
   {
     $found->{GL} = 'OpenGL.framework';
     $found->{GLU} = 'AGL.framework';
-    $found->{GLUT} = 'GLUT.framework';
+    if (-e '/opt/X11/lib/libglut.3.dylib')
+    {
+      $found->{FREEGLUT} = 'glut';
+    }
+    else
+    {
+      $found->{GLUT} = 'GLUT.framework';
+    }
     return $found;
   }
 
