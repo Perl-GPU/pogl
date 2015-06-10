@@ -902,19 +902,23 @@ sub get_extensions
   print GLEXC "// OpenGL v".$gldata->{VERSION}.", using ";
 
   # Fix GLUT flags based on results
-  if ($gldata->{GLUT} > 0)
+  if ($gldata->{FREEGLUT})
   {
-    print 'Found FreeGLUT v'.$gldata->{GLUT}."\n";
-    print GLEXC 'FreeGLUT v'.$gldata->{GLUT}."\n";
+    print 'Found FreeGLUT v'.$gldata->{FREEGLUT}."\n";
+    print GLEXC 'FreeGLUT v'.$gldata->{FREEGLUT}."\n";
 
     if (!$found->{FREEGLUT} && !$found->{FREEGLUT32})
     {
       $found->{FREEGLUT} = $lib;
     }
   }
+  elsif ($gldata->{GLUT})
+  {
+    print "Found GLUT - Version: $gldata->{GLUT}\n";
+  }
   else
   {
-    print "Found GLUT - unknown version\n";
+    print "Found no GLUT\n"
   }
 
   my $GL_VERSION;
