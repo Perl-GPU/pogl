@@ -1149,6 +1149,49 @@ glResizeBuffersMESA()
 #endif // GL_MESA_resize_buffers
 
 
+#ifdef GL_VERSION_2_0
+
+#//# glDrawBuffers_c($n,(CPTR)buffers);
+void
+glDrawBuffers_c(n,buffers)
+	GLsizei n
+	void *	buffers
+	CODE:
+	{
+		glDrawBuffers(n,buffers);
+	}
+
+#//# glDrawBuffers_s($n,(PACKED)buffers);
+void
+glDrawBuffers_s(n,buffers)
+	GLsizei n
+	SV *	buffers
+	CODE:
+	{
+		void * buffers_s = EL(buffers, sizeof(GLuint)*n);
+		glDrawBuffers(n,buffers_s);
+	}
+
+#//# glDrawBuffers_p(@buffers);
+void
+glDrawBuffers_p(...)
+	CODE:
+	{
+		if (items) {
+			GLuint * list = malloc(sizeof(GLuint) * items);
+			int i;
+
+			for (i=0;i<items;i++)
+				list[i] = SvIV(ST(i));
+
+			glDrawBuffers(items, list);
+			free(list);
+		}
+	}
+
+#endif // GL_VERSION_2_0
+
+
 #ifdef GL_ARB_draw_buffers
 
 #//# glDrawBuffersARB_c($n,(CPTR)buffers);
@@ -1195,49 +1238,6 @@ glDrawBuffersARB_p(...)
 	}
 
 #endif // GL_ARB_draw_buffers
-
-
-#ifdef GL_VERSION_2_0
-
-#//# glDrawBuffers_c($n,(CPTR)buffers);
-void
-glDrawBuffers_c(n,buffers)
-	GLsizei n
-	void *	buffers
-	CODE:
-	{
-		glDrawBuffers(n,buffers);
-	}
-
-#//# glDrawBuffers_s($n,(PACKED)buffers);
-void
-glDrawBuffers_s(n,buffers)
-	GLsizei n
-	SV *	buffers
-	CODE:
-	{
-		void * buffers_s = EL(buffers, sizeof(GLuint)*n);
-		glDrawBuffers(n,buffers_s);
-	}
-
-#//# glDrawBuffers_p(@buffers);
-void
-glDrawBuffers_p(...)
-	CODE:
-	{
-		if (items) {
-			GLuint * list = malloc(sizeof(GLuint) * items);
-			int i;
-
-			for (i=0;i<items;i++)
-				list[i] = SvIV(ST(i));
-
-			glDrawBuffers(items, list);
-			free(list);
-		}
-	}
-
-#endif // GL_VERSION_2_0
 
 
 #ifdef GL_VERSION_3_0
