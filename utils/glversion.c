@@ -39,14 +39,15 @@ int main(int argc, char **argv)
   idWindow = glutCreateWindow(PROGRAM);
   glutHideWindow();
 
-  glutVersion = glutGet(0x01FC);
   version =     (char*)glGetString(GL_VERSION);
   vendor =      (char*)glGetString(GL_VENDOR);
   renderer =    (char*)glGetString(GL_RENDERER);
   extensions =  (char*)glGetString(GL_EXTENSIONS);
 
-  printf("GLUT=%d\nVERSION=%s\nVENDOR=%s\nRENDERER=%s\nEXTENSIONS=%s\n",
-    glutVersion,version,vendor,renderer,extensions);
+  glutVersion = glutGet(0x01FC);
+  printf("GLUT=%d\n", (glutVersion == -1) ? GLUT_API_VERSION : glutVersion);
+
+  printf("VERSION=%s\nVENDOR=%s\nRENDERER=%s\nEXTENSIONS=%s\n", version, vendor, renderer, extensions);
 
   glutDestroyWindow(idWindow);
   return(0);

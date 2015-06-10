@@ -3,6 +3,7 @@
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
  *  Copyright (c) 2009 Chris Marshall. All rights reserved.
+ *  Copyright (c) 2015 Bob Free. All rights reserved.
  *  This program is free software; you can redistribute it and/or
  *  modify it under the same terms as Perl itself.
  */
@@ -1029,7 +1030,8 @@ void rpn_exec(rpn_context * ctx)
             if (stack->count > 1)
             {
               v1 = rpn_pop(stack);
-              stack->data[--pos] = (float)pow(stack->data[pos],v1);
+              pos--;
+              stack->data[pos] = (float)pow(stack->data[pos],v1);
             }
             break;
           }
@@ -1039,7 +1041,8 @@ void rpn_exec(rpn_context * ctx)
             if (stack->count > 1)
             {
               v1 = rpn_pop(stack);
-              stack->data[--pos] = (float)fmod(stack->data[pos],v1);
+              pos--;
+              stack->data[pos] = (float)fmod(stack->data[pos],v1);
             }
             break;
           }
@@ -1152,7 +1155,7 @@ MODULE = OpenGL::RPN		PACKAGE = OpenGL::Array
 #ifdef IN_POGL_ARRAY_XS
 
 #//# $oga = OpenGL::Array->new($count, @types);
-#//- Contructor for multi-type OGA - unpopulated
+#//- Constructor for multi-type OGA - unpopulated
 OpenGL::Array
 new(Class, count, type, ...)
 	GLsizei	count
@@ -1194,7 +1197,7 @@ new(Class, count, type, ...)
 
 
 #//# $oga = OpenGL::Array->new_list($type, @data);
-#//- Contructor for mono-type OGA - populated
+#//- Constructor for mono-type OGA - populated
 OpenGL::Array
 new_list(Class, type, ...)
 	GLenum	type
@@ -1226,7 +1229,7 @@ new_list(Class, type, ...)
 		RETVAL
 
 #//# $oga = OpenGL::Array->new_scalar($type, (PACKED)data, $length);
-#//- Contructor for mono-type OGA - populated by string
+#//- Constructor for mono-type OGA - populated by string
 OpenGL::Array
 new_scalar(Class, type, data, length)
 	GLenum	type
@@ -1262,7 +1265,7 @@ new_scalar(Class, type, data, length)
 		RETVAL
 
 #//# $oga = OpenGL::Array->new_pointer($type, (CPTR)ptr, $elements);
-#//- Contructor for mono-type OGA wrapper over a C pointer
+#//- Constructor for mono-type OGA wrapper over a C pointer
 OpenGL::Array
 new_pointer(Class, type, ptr, elements)
 	GLenum	type
@@ -1296,7 +1299,7 @@ new_pointer(Class, type, ptr, elements)
 		RETVAL
 
 #//# $oga = OpenGL::Array->new_from_pointer((CPTR)ptr, $length);
-#//- Contructor for GLubyte OGA wrapper over a C pointer
+#//- Constructor for GLubyte OGA wrapper over a C pointer
 OpenGL::Array
 new_from_pointer(Class, ptr, length)
 	void *	ptr
@@ -1335,7 +1338,7 @@ update_pointer(oga, ptr)
 	void *	ptr
 	CODE:
 	{
-                RETVAL = (oga->data != ptr);
+        RETVAL = (oga->data != ptr);
 		oga->data = ptr;
 	}
 	OUTPUT:
@@ -1683,7 +1686,7 @@ retrieve_data(oga, ...)
 		RETVAL = newSVpv((char*)offset, len);
 	}
 	OUTPUT:
-	RETVAL
+	    RETVAL
 
 #//# $count = $oga->elements();
 #//- Get number of OGA elements
@@ -1711,9 +1714,9 @@ void *
 ptr(oga)
 	OpenGL::Array	oga
 	CODE:
-	RETVAL = oga->data;
+	    RETVAL = oga->data;
 	OUTPUT:
-	RETVAL
+	    RETVAL
 
 #//# (CPTR)ptr = $oga->offset($pos);
 #//- Get C pointer to OGA data, by element offset
@@ -1722,11 +1725,11 @@ offset(oga, pos)
 	OpenGL::Array	oga
 	GLint	pos
 	CODE:
-	RETVAL = ((char*)oga->data) +
+	    RETVAL = ((char*)oga->data) +
 		(pos / oga->type_count * oga->total_types_width) + 
 		oga->type_offset[pos % oga->type_count];
 	OUTPUT:
-	RETVAL
+	    RETVAL
 
 #//# $oga->affine((OGA)matrix|@matrix|$scalar);
 #//- Perform affine transform on an OGA
@@ -1908,10 +1911,10 @@ DESTROY(oga)
 		free(oga);
 	}
 
+
 #endif /* End IN_POGL_ARRAY_XS */
 
 
-MODULE = OpenGL::RPN		PACKAGE = OpenGL
 
 
 

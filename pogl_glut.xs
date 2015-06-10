@@ -3,6 +3,7 @@
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
  *  Copyright (c) 2009 Chris Marshall. All rights reserved.
+ *  Copyright (c) 2015 Bob Free. All rights reserved.
  *  This program is free software; you can redistribute it and/or
  *  modify it under the same terms as Perl itself.
  */
@@ -239,7 +240,7 @@ enum {
 	HANDLE_GLUT_Keyboard,
 	HANDLE_GLUT_KeyboardUp,
 	HANDLE_GLUT_Mouse,
-        HANDLE_GLUT_MouseWheel,             /* Open/FreeGLUT -chm */
+    HANDLE_GLUT_MouseWheel,             /* Open/FreeGLUT -chm */
 	HANDLE_GLUT_Motion,
 	HANDLE_GLUT_PassiveMotion,
 	HANDLE_GLUT_Entry,
@@ -247,7 +248,7 @@ enum {
 	HANDLE_GLUT_WindowStatus,
 	HANDLE_GLUT_Special,
 	HANDLE_GLUT_SpecialUp,
-        HANDLE_GLUT_Joystick,               /* Open/FreeGLUT -chm */
+    HANDLE_GLUT_Joystick,               /* Open/FreeGLUT -chm */
 	HANDLE_GLUT_SpaceballMotion,
 	HANDLE_GLUT_SpaceballRotate,
 	HANDLE_GLUT_SpaceballButton,
@@ -255,7 +256,7 @@ enum {
 	HANDLE_GLUT_Dials,
 	HANDLE_GLUT_TabletMotion,
 	HANDLE_GLUT_TabletButton,
-        HANDLE_GLUT_MenuDestroy,            /* Open/FreeGLUT -chm */
+    HANDLE_GLUT_MenuDestroy,            /* Open/FreeGLUT -chm */
 	HANDLE_GLUT_Close,                  /* Open/FreeGLUT -chm */
 	HANDLE_GLUT_WMClose,                /* AGL GLUT      -chm */
 };
@@ -1279,6 +1280,8 @@ glutBitmapHeight(font)
 		RETVAL = glutBitmapHeight(font);
 #endif
 	}
+	OUTPUT:
+		RETVAL
 
 #//# FreeGLUT/OpenGLUT feature
 #//# int  glutBitmapLength (void *font, const unsigned char *string)
@@ -1292,6 +1295,8 @@ glutBitmapLength(font, string)
 		RETVAL = glutBitmapLength(font, string);
 #endif
 	}
+	OUTPUT:
+		RETVAL
 
 #//# FreeGLUT/OpenGLUT feature
 #//# void  glutBitmapString (void *font, const unsigned char *string)
@@ -1300,17 +1305,17 @@ glutBitmapString(font, string)
 	void * font
 	const unsigned char * string
 	CODE:
-{
+    {
 #if defined HAVE_FREEGLUT
-	glutBitmapString(font, string);
+	    glutBitmapString(font, string);
 #else
-	int len, i;
-	len = (int) strlen(string);
-	for (i = 0; i < len; i++) {
-		glutBitmapCharacter(font, string[i]);
-	}
+    	int len, i;
+    	len = (int) strlen(string);
+    	for (i = 0; i < len; i++) {
+    		glutBitmapCharacter(font, string[i]);
+    	}
 #endif
-}
+    }
 
 #//# FreeGLUT/OpenGLUT feature
 #//# void *  glutGetProcAddress (const char *procName)
@@ -1379,6 +1384,8 @@ glutStrokeHeight(font)
 		RETVAL = glutStrokeHeight(font);
 #endif
 	}
+	OUTPUT:
+		RETVAL
 
 
 #//# float  glutStrokeLength (void *font, const unsigned char *string)
@@ -1386,6 +1393,14 @@ GLfloat
 glutStrokeLength(font, string)
 	void * font
 	const unsigned char * string
+	CODE:
+	{
+#if defined HAVE_FREEGLUT
+		glutStrokeLength(font, string);
+#endif
+	}
+	OUTPUT:
+		RETVAL
 
 #//# void  glutStrokeString (void *fontID, const unsigned char *string)
 void
@@ -1418,7 +1433,6 @@ glutWireCylinder(radius, height, slices, stacks)
 		glutWireCylinder(radius, height, slices, stacks);
 #endif
 	}
-
 
 #//# void  glutWireRhombicDodecahedron (void)
 void
@@ -1465,7 +1479,7 @@ void
 glutMenuDestroyFunc(handler=0, ...)
 	SV *	handler
 	CODE:
-        {
+    {
 #if defined HAVE_FREEGLUT
 		decl_gwh_xs(MenuDestroy)
 #endif
@@ -1476,9 +1490,16 @@ void
 glutCloseFunc(handler=0, ...)
 	SV *	handler
 	CODE:
+    {
+#ifdef HAVE_AGL_GLUT
+        decl_gwh_xs(WMClose)
+#elif defined HAVE_FREEGLUT
+        decl_gwh_xs(Close)
+#else
+        if (_done_glutCloseFunc_warn == 0) 
         {
-	    if (_done_glutCloseFunc_warn == 0) {
-	        warn("glutCloseFunc: not implemented\n");
-	        _done_glutCloseFunc_warn++;
-            }
+            warn("glutCloseFunc: not implemented\n");
+            _done_glutCloseFunc_warn++;
         }
+#endif
+    }
