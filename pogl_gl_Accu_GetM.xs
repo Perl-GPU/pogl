@@ -764,7 +764,7 @@ glEdgeFlag(flag)
 #//# glEdgeFlagPointer_c($stride, (CPTR)pointer);
 void
 glEdgeFlagPointer_c(stride, pointer)
-	GLint	stride
+	GLsizei	stride
 	void *	pointer
 	CODE:
 		glEdgeFlagPointer(stride, pointer);
