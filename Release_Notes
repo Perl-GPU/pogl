@@ -16,6 +16,8 @@ Highlights:
 
   * suppress osx 10.9 deprecation warnings
 
+  * fix OSX warnings about data types
+
 
 
 +------------------------------------------------------------------------+

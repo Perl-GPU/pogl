@@ -1137,7 +1137,7 @@ glGetBufferSubDataARB_p(target,offset,count,...)
 	CODE:
 	{
 		oga_struct * oga = malloc(sizeof(oga_struct));
-		GLsizeiptrARB size;
+		GLint size;
 		
 		oga->item_count = count;
 		oga->type_count = (items - 3);
@@ -1167,7 +1167,7 @@ glGetBufferSubDataARB_p(target,offset,count,...)
 		}
 		if (!oga->total_types_width) croak("Unable to determine type sizes\n");
 
-		glGetBufferParameterivARB(target,GL_BUFFER_SIZE_ARB,(GLint*)&size);
+		glGetBufferParameterivARB(target,GL_BUFFER_SIZE_ARB,&size);
 		size /= oga->total_types_width;
 		if (offset > size) croak("Offset is greater than elements in buffer: %d\n",size);
 
