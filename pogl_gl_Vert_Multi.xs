@@ -130,6 +130,35 @@ glVertexPointerEXT_p(size, oga)
 #endif
 	}
 
+#//# glVertexPointer_p($size, (OGA)pointer);
+void
+glVertexPointer_p(size, oga)
+	GLint	size
+	OpenGL::Array oga
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glVertexPointerEXT,"glVertexPointerEXT");
+#endif
+	CODE:
+	{
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
+		if (testProc(glBindBufferARB,"glBindBufferARB"))
+		{
+			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
+		}
+#endif
+#ifdef GL_VERSION_1_1
+		glVertexPointer(size, oga->types[0], 0, data);
+#else // GL_EXT_vertex_array
+		glVertexPointerEXT(size, oga->types[0], 0, oga->item_count/size, data);
+#endif
+	}
+
 #//# glNormalPointerEXT_c($size, $type, $stride, $count, (CPTR)pointer);
 void
 glNormalPointerEXT_c(size, type, stride, count, pointer)
@@ -175,6 +204,34 @@ glNormalPointerEXT_s(size, type, stride, count, pointer)
 #//# glNormalPointerEXT_p((OGA)pointer);
 void
 glNormalPointerEXT_p(oga)
+	OpenGL::Array oga
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glNormalPointerEXT,"glNormalPointerEXT");
+#endif
+	CODE:
+	{
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
+		if (testProc(glBindBufferARB,"glBindBufferARB"))
+		{
+			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
+		}
+#endif
+#ifdef GL_VERSION_1_1
+		glNormalPointer(oga->types[0], 0, data);
+#else // GL_EXT_vertex_array
+		glNormalPointerEXT(oga->types[0], 0, oga->item_count/3, data);
+#endif
+	}
+
+#//# glNormalPointer_p((OGA)pointer);
+void
+glNormalPointer_p(oga)
 	OpenGL::Array oga
 	INIT:
 #ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
@@ -271,6 +328,35 @@ glColorPointerEXT_p(size, oga)
 #endif
 	}
 
+#//# glColorPointer_p($size, (OGA)pointer);
+void
+glColorPointer_p(size, oga)
+	GLint	size
+	OpenGL::Array oga
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glColorPointerEXT,"glColorPointerEXT");
+#endif
+	CODE:
+	{
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
+		if (testProc(glBindBufferARB,"glBindBufferARB"))
+		{
+			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
+		}
+#endif
+#ifdef GL_VERSION_1_1
+		glColorPointer(size, oga->types[0], 0, data);
+#else // GL_EXT_vertex_array
+		glColorPointerEXT(size, oga->types[0], 0, oga->item_count/size, data);
+#endif
+	}
+
 #//# glIndexPointerEXT_c($size, $type, $stride, $count, (CPTR)pointer);
 void
 glIndexPointerEXT_c(size, type, stride, count, pointer)
@@ -316,6 +402,34 @@ glIndexPointerEXT_s(size, type, stride, count, pointer)
 #//# glIndexPointerEXT_p((OGA)pointer);
 void
 glIndexPointerEXT_p(oga)
+	OpenGL::Array oga
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glIndexPointerEXT,"glIndexPointerEXT");
+#endif
+	CODE:
+	{
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
+		if (testProc(glBindBufferARB,"glBindBufferARB"))
+		{
+			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
+		}
+#endif
+#ifdef GL_VERSION_1_1
+		glIndexPointer(oga->types[0], 0, data);
+#else // GL_EXT_vertex_array
+		glIndexPointerEXT(oga->types[0], 0, oga->item_count, data);
+#endif
+	}
+
+#//# glIndexPointer_p((OGA)pointer);
+void
+glIndexPointer_p(oga)
 	OpenGL::Array oga
 	INIT:
 #ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
@@ -412,6 +526,35 @@ glTexCoordPointerEXT_p(size, oga)
 #endif
 	}
 
+#//# glTexCoordPointer_p($size, (OGA)pointer);
+void
+glTexCoordPointer_p(size, oga)
+	GLint	size
+	OpenGL::Array oga
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glTexCoordPointerEXT,"glTexCoordPointerEXT");
+#endif
+	CODE:
+	{
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
+		if (testProc(glBindBufferARB,"glBindBufferARB"))
+		{
+			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
+		}
+#endif
+#ifdef GL_VERSION_1_1
+		glTexCoordPointer(size, oga->types[0], 0, data);
+#else // GL_EXT_vertex_array
+		glTexCoordPointerEXT(size, oga->types[0], 0, oga->item_count/size, data);
+#endif
+	}
+
 #//# glEdgeFlagPointerEXT_c($size, $type, $stride, $count, (CPTR)pointer);
 void
 glEdgeFlagPointerEXT_c(size, type, stride, count, pointer)
@@ -482,7 +625,216 @@ glEdgeFlagPointerEXT_p(oga)
 #endif
 	}
 
+#//# glEdgeFlagPointer_p((OGA)pointer);
+void
+glEdgeFlagPointer_p(oga)
+	OpenGL::Array oga
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glTexCoordPointerEXT,"glEdgeFlagPointerEXT");
+#endif
+	CODE:
+	{
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
+		if (testProc(glBindBufferARB,"glBindBufferARB"))
+		{
+			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
+		}
+#endif
+#ifdef GL_VERSION_1_1
+		glEdgeFlagPointer(0, data);
+#else // GL_EXT_vertex_array
+		glEdgeFlagPointerEXT(0, oga->item_count, data);
+#endif
+	}
+
 #endif // GL_EXT_vertex_array || GL_VERSION_1_1
+
+
+#ifdef GL_VERSION_1_1
+
+#// 1.1
+#//# glVertexPointer_c($size, $type, $stride, (CPTR)pointer);
+void
+glVertexPointer_c(size, type, stride, pointer)
+	GLint	size
+	GLenum	type
+	GLsizei	stride
+	void *	pointer
+	CODE:
+		glVertexPointer(size, type, stride, pointer);
+
+#//# glVertexPointer_s($size, $type, $stride, (PACKED)pointer);
+void
+glVertexPointer_s(size, type, stride, pointer)
+	GLint	size
+	GLenum	type
+	GLsizei	stride
+	SV *	pointer
+	CODE:
+	{
+		int width = stride ? stride : (sizeof(type)*size);
+		void * pointer_s = NULL;
+		if ( pointer ) {
+			pointer_s = EL(pointer, width);
+		}
+		glVertexPointer(size, type, stride, pointer_s);
+	}
+
+#//# glNormalPointer_c($type, $stride, (CPTR)pointer);
+void
+glNormalPointer_c(type, stride, pointer)
+	GLenum	type
+	GLsizei	stride
+	void *	pointer
+	CODE:
+		glNormalPointer(type, stride, pointer);
+
+#//# glNormalPointer_s($type, $stride, (PACKED)pointer);
+void
+glNormalPointer_s(type, stride, pointer)
+	GLenum	type
+	GLsizei	stride
+	SV *	pointer
+	CODE:
+	{
+		int width = stride ? stride : (gl_type_size(type)*3);
+		void * pointer_s = NULL;
+		if ( pointer ) {
+			pointer_s = EL(pointer, width);
+		}
+		glNormalPointer(type, stride, pointer_s);
+	}
+
+#//# glColorPointer_c($size, $type, $stride, (CPTR)pointer);
+void
+glColorPointer_c(size, type, stride, pointer)
+	GLint	size
+	GLenum	type
+	GLsizei	stride
+	void *	pointer
+	CODE:
+		glColorPointer(size, type, stride, pointer);
+
+#//# glColorPointer_s($size, $type, $stride, (PACKED)pointer);
+void
+glColorPointer_s(size, type, stride, pointer)
+	GLint	size
+	GLenum	type
+	GLsizei	stride
+	SV *	pointer
+	CODE:
+	{
+		int width = stride ? stride : (sizeof(type)*size);
+		void * pointer_s = NULL;
+		if ( pointer ) {
+			pointer_s = EL(pointer, width);
+		}
+		glColorPointer(size, type, stride, pointer_s);
+	}
+
+#//# glIndexPointer_c($type, $stride, (CPTR)pointer);
+void
+glIndexPointer_c(type, stride, pointer)
+	GLenum	type
+	GLsizei	stride
+	void *	pointer
+	CODE:
+		glIndexPointer(type, stride, pointer);
+
+#//# glIndexPointer_s($type, $stride, (PACKED)pointer);
+void
+glIndexPointer_s(type, stride, pointer)
+	GLenum	type
+	GLsizei	stride
+	SV *	pointer
+	CODE:
+	{
+		int width = stride ? stride : gl_type_size(type);
+		void * pointer_s = NULL;
+		if ( pointer ) {
+			pointer_s = EL(pointer, width);
+		}
+		glIndexPointer(type, stride, pointer_s);
+	}
+
+#//# glTexCoordPointer_c($size, $type, $stride, (CPTR)pointer);
+void
+glTexCoordPointer_c(size, type, stride, pointer)
+	GLint	size
+	GLenum	type
+	GLsizei	stride
+	void *	pointer
+	CODE:
+		glTexCoordPointer(size, type, stride, pointer);
+
+#//# glTexCoordPointer_s($size, $type, $stride, (PACKED)pointer);
+void
+glTexCoordPointer_s(size, type, stride, pointer)
+	GLint	size
+	GLenum	type
+	GLsizei	stride
+	SV *	pointer
+	CODE:
+	{
+		int width = stride ? stride : (sizeof(type)*size);
+		void * pointer_s = NULL;
+		if ( pointer ) {
+			pointer_s = EL(pointer, width);
+		}
+		glTexCoordPointer(size, type, stride, pointer_s);
+	}
+
+#//# glEdgeFlagPointer_c($stride, (CPTR)pointer);
+void
+glEdgeFlagPointer_c(stride, pointer)
+	GLsizei	stride
+	void *	pointer
+	CODE:
+		glEdgeFlagPointer(stride, pointer);
+
+#//# glEdgeFlagPointer_s($stride, (PACKED)pointer);
+void
+glEdgeFlagPointer_s(stride, pointer)
+	GLsizei	stride
+	SV *	pointer
+	CODE:
+	{
+		int width = stride ? stride : sizeof(GLboolean);
+		void * pointer_s = NULL;
+		if ( pointer ) {
+			pointer_s = EL(pointer, width);
+		}
+		glEdgeFlagPointer(stride, pointer_s);
+	}
+
+#endif // GL_VERSION_1_1
+
+
+#ifdef GL_EXT_vertex_array
+
+#//# glArrayElementEXT($i);
+void
+glArrayElementEXT(i)
+	GLint	i
+	INIT:
+		loadProc(glArrayElementEXT,"glArrayElementEXT");
+
+#//# glDrawArraysEXT($mode, $first, $count);
+void
+glDrawArraysEXT(mode, first, count)
+	GLenum	mode
+	GLint	first
+	GLsizei	count
+	INIT:
+		loadProc(glDrawArraysEXT,"glDrawArraysEXT");
+
+#endif // GL_EXT_vertex_array
 
 
 #ifdef GL_MESA_resize_buffers
@@ -3393,6 +3745,450 @@ glMultiTexCoord2svARB_p(target,s,t)
 		param[0] = s;
 		param[1] = t;
 		glMultiTexCoord2svARB(target,param);
+	}
+
+#//# glMultiTexCoord3dARB($target,$s,$t,$r);
+void
+glMultiTexCoord3dARB(target,s,t,r)
+	GLenum target
+	GLdouble s
+	GLdouble t
+	GLdouble r
+	INIT:
+		loadProc(glMultiTexCoord3dARB,"glMultiTexCoord3dARB");
+	CODE:
+		glMultiTexCoord3dARB(target,s,t,r);
+
+#//# glMultiTexCoord3dvARB_c(target,(CPTR)v);
+void
+glMultiTexCoord3dvARB_c(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord3dvARB,"glMultiTexCoord3dvARB");
+	CODE:
+		glMultiTexCoord3dvARB(target,v);
+
+#//# glMultiTexCoord3dvARB_s(target,(PACKED)v);
+void
+glMultiTexCoord3dvARB_s(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord3dvARB,"glMultiTexCoord3dvARB");
+	CODE:
+	{
+		GLdouble * v_s = EL(v, sizeof(GLdouble));
+		glMultiTexCoord3dvARB(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord3dARB
+#//# glMultiTexCoord3dvARB_p($target,$s,$t,$r);
+void
+glMultiTexCoord3dvARB_p(target,s,t,r)
+	GLenum target
+	GLdouble s
+	GLdouble t
+	GLdouble r
+	INIT:
+		loadProc(glMultiTexCoord3dvARB,"glMultiTexCoord3dvARB");
+	CODE:
+	{
+		GLdouble param[3];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		glMultiTexCoord3dvARB(target,param);
+	}
+
+#//# glMultiTexCoord3fARB($target,$s,$t,$r);
+void
+glMultiTexCoord3fARB(target,s,t,r)
+	GLenum target
+	GLfloat s
+	GLfloat t
+	GLfloat r
+	INIT:
+		loadProc(glMultiTexCoord3fARB,"glMultiTexCoord3fARB");
+	CODE:
+		glMultiTexCoord3fARB(target,s,t,r);
+
+#//# glMultiTexCoord3fvARB_c($target,(CPTR)v);
+void
+glMultiTexCoord3fvARB_c(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord3fvARB,"glMultiTexCoord3fvARB");
+	CODE:
+		glMultiTexCoord3fvARB(target,v);
+
+#//# glMultiTexCoord3fvARB_s($target,(PACKED)v);
+void
+glMultiTexCoord3fvARB_s(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord3fvARB,"glMultiTexCoord3fvARB");
+	CODE:
+	{
+		GLfloat * v_s = EL(v, sizeof(GLfloat));
+		glMultiTexCoord3fvARB(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord3fARB
+#//# glMultiTexCoord3fvARB_p($target,$s,$t,$r);
+void
+glMultiTexCoord3fvARB_p(target,s,t,r)
+	GLenum target
+	GLfloat s
+	GLfloat t
+	GLfloat r
+	INIT:
+		loadProc(glMultiTexCoord3fvARB,"glMultiTexCoord3fvARB");
+	CODE:
+	{
+		GLfloat param[3];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		glMultiTexCoord3fvARB(target,param);
+	}
+
+#//# glMultiTexCoord3iARB($target,$s,$t,$r);
+void
+glMultiTexCoord3iARB(target,s,t,r)
+	GLenum target
+	GLint s
+	GLint t
+	GLint r
+	INIT:
+		loadProc(glMultiTexCoord3iARB,"glMultiTexCoord3iARB");
+	CODE:
+		glMultiTexCoord3iARB(target,s,t,r);
+
+#//# glMultiTexCoord3ivARB_c($target,(CPTR)v);
+void
+glMultiTexCoord3ivARB_c(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord3ivARB,"glMultiTexCoord3ivARB");
+	CODE:
+		glMultiTexCoord3ivARB(target,v);
+
+#//# glMultiTexCoord3ivARB_s($target,(PACKED)v);
+void
+glMultiTexCoord3ivARB_s(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord3ivARB,"glMultiTexCoord3ivARB");
+	CODE:
+	{
+		GLint * v_s = EL(v, sizeof(GLint));
+		glMultiTexCoord3ivARB(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord3iARB
+#//# glMultiTexCoord3ivARB_p($target,$s,$t,$r);
+void
+glMultiTexCoord3ivARB_p(target,s,t,r)
+	GLenum target
+	GLint s
+	GLint t
+	GLint r
+	INIT:
+		loadProc(glMultiTexCoord3ivARB,"glMultiTexCoord3ivARB");
+	CODE:
+	{
+		GLint param[3];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		glMultiTexCoord3ivARB(target,param);
+	}
+
+#//# glMultiTexCoord3sARB($target,$s,$t,$r);
+void
+glMultiTexCoord3sARB(target,s,t,r)
+	GLenum target
+	GLshort s
+	GLshort t
+	GLshort r
+	INIT:
+		loadProc(glMultiTexCoord3sARB,"glMultiTexCoord3sARB");
+	CODE:
+		glMultiTexCoord3sARB(target,s,t,r);
+
+#//# glMultiTexCoord3svARB_c($target,(CPTR)v);
+void
+glMultiTexCoord3svARB_c(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord3svARB,"glMultiTexCoord3svARB");
+	CODE:
+		glMultiTexCoord3svARB(target,v);
+
+#//# glMultiTexCoord3svARB_s($target,(PACKED)v);
+void
+glMultiTexCoord3svARB_s(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord3svARB,"glMultiTexCoord3svARB");
+	CODE:
+	{
+		GLshort * v_s = EL(v, sizeof(GLshort));
+		glMultiTexCoord3svARB(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord3sARB
+#//# glMultiTexCoord3svARB_p($target,$s,$t,$r);
+void
+glMultiTexCoord3svARB_p(target,s,t,r)
+	GLenum target
+	GLshort s
+	GLshort t
+	GLshort r
+	INIT:
+		loadProc(glMultiTexCoord3svARB,"glMultiTexCoord3svARB");
+	CODE:
+	{
+		GLshort param[3];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		glMultiTexCoord3svARB(target,param);
+	}
+
+#//# glMultiTexCoord4dARB($target,$s,$t,$r,$q);
+void
+glMultiTexCoord4dARB(target,s,t,r,q)
+	GLenum target
+	GLdouble s
+	GLdouble t
+	GLdouble r
+	GLdouble q
+	INIT:
+		loadProc(glMultiTexCoord4dARB,"glMultiTexCoord4dARB");
+	CODE:
+		glMultiTexCoord4dARB(target,s,t,r,q);
+
+#//# glMultiTexCoord4dvARB_c($target,(CPTR)v);
+void
+glMultiTexCoord4dvARB_c(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord4dvARB,"glMultiTexCoord4dvARB");
+	CODE:
+		glMultiTexCoord4dvARB(target,v);
+
+#//# glMultiTexCoord4dvARB_s($target,(PACKED)v);
+void
+glMultiTexCoord4dvARB_s(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord4dvARB,"glMultiTexCoord4dvARB");
+	CODE:
+	{
+		GLdouble * v_s = EL(v, sizeof(GLdouble));
+		glMultiTexCoord4dvARB(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord4dARB
+#//# glMultiTexCoord4dvARB_p($target,$s,$t,$r,$q);
+void
+glMultiTexCoord4dvARB_p(target,s,t,r,q)
+	GLenum target
+	GLdouble s
+	GLdouble t
+	GLdouble r
+	GLdouble q
+	INIT:
+		loadProc(glMultiTexCoord4dvARB,"glMultiTexCoord4dvARB");
+	CODE:
+	{
+		GLdouble param[4];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		param[3] = q;
+		glMultiTexCoord4dvARB(target,param);
+	}
+
+#//# glMultiTexCoord4fARB($target,$s,$t,$r,$q);
+void
+glMultiTexCoord4fARB(target,s,t,r,q)
+	GLenum target
+	GLfloat s
+	GLfloat t
+	GLfloat r
+	GLfloat q
+	INIT:
+		loadProc(glMultiTexCoord4fARB,"glMultiTexCoord4fARB");
+	CODE:
+		glMultiTexCoord4fARB(target,s,t,r,q);
+
+#//# glMultiTexCoord4fvARB_c($target,(CPTR)v);
+void
+glMultiTexCoord4fvARB_c(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord4fvARB,"glMultiTexCoord4fvARB");
+	CODE:
+		glMultiTexCoord4fvARB(target,v);
+
+#//# glMultiTexCoord4fvARB_s($target,(PACKED)v);
+void
+glMultiTexCoord4fvARB_s(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord4fvARB,"glMultiTexCoord4fvARB");
+	CODE:
+	{
+		GLfloat * v_s = EL(v, sizeof(GLfloat));
+		glMultiTexCoord4fvARB(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord4fARB
+#//# glMultiTexCoord4fvARB_p($target,$s,$t,$r,$q);
+void
+glMultiTexCoord4fvARB_p(target,s,t,r,q)
+	GLenum target
+	GLfloat s
+	GLfloat t
+	GLfloat r
+	GLfloat q
+	INIT:
+		loadProc(glMultiTexCoord4fvARB,"glMultiTexCoord4fvARB");
+	CODE:
+	{
+		GLfloat param[4];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		param[3] = q;
+		glMultiTexCoord4fvARB(target,param);
+	}
+
+#//# glMultiTexCoord4iARB($target,$s,$t,$r,$q)
+void
+glMultiTexCoord4iARB(target,s,t,r,q)
+	GLenum target
+	GLint s
+	GLint t
+	GLint r
+	GLint q
+	INIT:
+		loadProc(glMultiTexCoord4iARB,"glMultiTexCoord4iARB");
+	CODE:
+		glMultiTexCoord4iARB(target,s,t,r,q);
+
+#//# glMultiTexCoord4ivARB_c($target,(CPTR)v);
+void
+glMultiTexCoord4ivARB_c(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord4ivARB,"glMultiTexCoord4ivARB");
+	CODE:
+		glMultiTexCoord4ivARB(target,v);
+
+#//# glMultiTexCoord4ivARB_s($target,(PACKED)v);
+void
+glMultiTexCoord4ivARB_s(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord4ivARB,"glMultiTexCoord4ivARB");
+	CODE:
+	{
+		GLint * v_s = EL(v, sizeof(GLint));
+		glMultiTexCoord4ivARB(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord4iARB
+#//# glMultiTexCoord4ivARB_p($target,$s,$t,$r,$q);
+void
+glMultiTexCoord4ivARB_p(target,s,t,r,q)
+	GLenum target
+	GLint s
+	GLint t
+	GLint r
+	GLint q
+	INIT:
+		loadProc(glMultiTexCoord4ivARB,"glMultiTexCoord4ivARB");
+	CODE:
+	{
+		GLint param[4];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		param[3] = q;
+		glMultiTexCoord4ivARB(target,param);
+	}
+
+#//# glMultiTexCoord4sARB($target,$s,$t,$r,$q);
+void
+glMultiTexCoord4sARB(target,s,t,r,q)
+	GLenum target
+	GLshort s
+	GLshort t
+	GLshort r
+	GLshort q
+	INIT:
+		loadProc(glMultiTexCoord4sARB,"glMultiTexCoord4sARB");
+	CODE:
+		glMultiTexCoord4sARB(target,s,t,r,q);
+
+#//# glMultiTexCoord4svARB_c($target,(CPTR)v);
+void
+glMultiTexCoord4svARB_c(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord4svARB,"glMultiTexCoord4svARB");
+	CODE:
+		glMultiTexCoord4svARB(target,v);
+
+#//# glMultiTexCoord4svARB_s($target,(PACKED)v);
+void
+glMultiTexCoord4svARB_s(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord4svARB,"glMultiTexCoord4svARB");
+	CODE:
+	{
+		GLshort * v_s = EL(v, sizeof(GLshort));
+		glMultiTexCoord4svARB(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord4sARB
+#//# glMultiTexCoord4svARB_p($target,$s,$t,$r,$q);
+void
+glMultiTexCoord4svARB_p(target,s,t,r,q)
+	GLenum target
+	GLshort s
+	GLshort t
+	GLshort r
+	GLshort q
+	INIT:
+		loadProc(glMultiTexCoord4svARB,"glMultiTexCoord4svARB");
+	CODE:
+	{
+		GLshort param[4];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		param[3] = q;
+		glMultiTexCoord4svARB(target,param);
 	}
 
 #endif // GL_ARB_multitexture
