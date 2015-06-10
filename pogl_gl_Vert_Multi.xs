@@ -974,6 +974,456 @@ glGenerateMipmapEXT(target)
 #endif // GL_EXT_framebuffer_object
 
 
+#ifdef GL_VERSION_1_4
+
+#//# glBindBuffer($target,$buffer);
+void
+glBindBuffer(target,buffer)
+	GLenum target
+	GLuint buffer
+	CODE:
+	{
+		glBindBuffer(target,buffer);
+	}
+
+#//# glDeleteBuffers_c($n,(CPTR)buffers);
+void
+glDeleteBuffers_c(n,buffers)
+	GLsizei	n
+	void *	buffers
+	CODE:
+	{
+		glDeleteBuffers(n,buffers);
+	}
+
+#//# glDeleteBuffers_s($n,(PACKED)buffers);
+void
+glDeleteBuffers_s(n,buffers)
+	GLsizei n
+	SV *	buffers
+	CODE:
+	{
+		void * buffers_s = EL(buffers, sizeof(GLuint)*n);
+		glDeleteBuffers(n,buffers_s);
+	}
+
+#//# glDeleteBuffers_p(@buffers);
+void
+glDeleteBuffers_p(...)
+	CODE:
+	{
+		if (items) {
+			GLuint * list = malloc(sizeof(GLuint) * items);
+			int i;
+
+			for (i=0;i<items;i++)
+				list[i] = SvIV(ST(i));
+
+			glDeleteBuffers(items, list);
+			free(list);
+		}
+	}
+
+#//# glGenBuffers_c($n,(CPTR)buffers);
+void
+glGenBuffers_c(n,buffers)
+	GLsizei n
+	void *	buffers
+	CODE:
+	{
+		glGenBuffers(n, buffers);
+	}
+
+#//# glGenBuffers_s($n,(PACKED)buffers);
+void
+glGenBuffers_s(n,buffers)
+	GLsizei n
+	SV *	buffers
+	CODE:
+	{
+		void * buffers_s = EL(buffers, sizeof(GLuint)*n);
+		glGenBuffers(n, buffers_s);
+	}
+
+#//# @buffers = glGenBuffers_p($n);
+void
+glGenBuffers_p(n)
+	GLsizei n
+	PPCODE:
+	if (n)
+	{
+		GLuint * buffers = malloc(sizeof(GLuint) * n);
+		int i;
+
+		glGenBuffers(n, buffers);
+
+		EXTEND(sp, n);
+		for(i=0;i<n;i++)
+			PUSHs(sv_2mortal(newSViv(buffers[i])));
+
+		free(buffers);
+	}
+
+#//# glIsBuffer($buffer);
+GLboolean
+glIsBuffer(buffer)
+	GLuint buffer
+	CODE:
+	{
+		RETVAL = glIsBuffer(buffer);
+	}
+	OUTPUT:
+		RETVAL
+
+#//# glBufferData_c($target,$size,(CPTR)data,$usage);
+void
+glBufferData_c(target,size,data,usage)
+	GLenum	target
+	GLsizei	size
+	void *	data
+	GLenum	usage
+	CODE:
+	{
+		glBufferData(target,size,data,usage);
+	}
+
+#//# glBufferData_s($target,$size,(PACKED)data,$usage);
+void
+glBufferData_s(target,size,data,usage)
+	GLenum	target
+	GLsizei	size
+	SV *	data
+	GLenum	usage
+	CODE:
+	{
+		void * data_s = EL(data, size);
+		glBufferData(target,size,data_s,usage);
+	}
+
+#//# glBufferData_p($target,(OGA)data,$usage);
+void
+glBufferData_p(target,oga,usage)
+	GLenum target
+	OpenGL::Array oga
+	GLenum usage
+	CODE:
+	{
+		glBufferData(target,oga->data_length,oga->data,usage);
+	}
+
+#//# glBufferSubData_c($target,$offset,$size,(CPTR)data);
+void
+glBufferSubData_c(target,offset,size,data)
+	GLenum	target
+	GLint	offset
+	GLsizei	size
+	void *	data
+	CODE:
+	{
+		glBufferSubData(target,offset,size,data);
+	}
+
+#//# glBufferSubData_s($target,$offset,$size,(PACKED)data);
+void
+glBufferSubData_s(target,offset,size,data)
+	GLenum	target
+	GLint	offset
+	GLsizei	size
+	SV *	data
+	CODE:
+	{
+		void * data_s = EL(data, size);
+		glBufferSubData(target,offset,size,data);
+	}
+
+#//# glBufferSubData_p($target,$offset,(OGA)data);
+void
+glBufferSubData_p(target,offset,oga)
+	GLenum	target
+	GLint	offset
+	OpenGL::Array oga
+	CODE:
+	{
+		glBufferSubData(target,offset*oga->total_types_width,oga->data_length,oga->data);
+	}
+
+#//# glGetBufferSubData_c($target,$offset,$size,(CPTR)data)
+void
+glGetBufferSubData_c(target,offset,size,data)
+	GLenum	target
+	GLint	offset
+	GLsizei	size
+	void *	data
+	CODE:
+		glGetBufferSubData(target,offset,size,data);
+
+#//# glGetBufferSubData_s($target,$offset,$size,(PACKED)data)
+void
+glGetBufferSubData_s(target,offset,size,data)
+	GLenum	target
+	GLint	offset
+	GLsizei	size
+	SV *	data
+	CODE:
+	{
+		GLubyte * data_s = EL(data,size);
+		glGetBufferSubData(target,offset,size,data_s);
+	}
+
+#//# $oga = glGetBufferSubData_p($target,$offset,$count,@types);
+#//- If no types are provided, GLubyte is assumed
+OpenGL::Array
+glGetBufferSubData_p(target,offset,count,...)
+	GLenum	target
+	GLint	offset
+	GLsizei	count
+	CODE:
+	{
+		oga_struct * oga = malloc(sizeof(oga_struct));
+		GLint size;
+
+		oga->item_count = count;
+		oga->type_count = (items - 3);
+
+				if (oga->type_count)
+		{
+			int i,j;
+
+			oga->types = malloc(sizeof(GLenum) * oga->type_count);
+			oga->type_offset = malloc(sizeof(GLint) * oga->type_count);
+			for(i=0,j=0;i<oga->type_count;i++) {
+				oga->types[i] = SvIV(ST(i+3));
+				oga->type_offset[i] = j;
+				j += gl_type_size(oga->types[i]);
+			}
+			oga->total_types_width = j;
+		}
+		else
+		{
+			oga->type_count = 1;
+			oga->types = malloc(sizeof(GLenum) * oga->type_count);
+			oga->type_offset = malloc(sizeof(GLint) * oga->type_count);
+
+			oga->types[0] = GL_UNSIGNED_BYTE;
+			oga->type_offset[0] = 0;
+			oga->total_types_width = gl_type_size(oga->types[0]);
+		}
+		if (!oga->total_types_width) croak("Unable to determine type sizes\n");
+
+		glGetBufferParameteriv(target,GL_BUFFER_SIZE,&size);
+		size /= oga->total_types_width;
+		if (offset > size) croak("Offset is greater than elements in buffer: %d\n",size);
+
+		if ((offset+count) > size) count = size - offset;
+
+		oga->data_length = oga->total_types_width * count;
+		oga->data = malloc(oga->data_length);
+
+		glGetBufferSubData(target,offset*oga->total_types_width,
+			oga->data_length,oga->data);
+
+		oga->free_data = 1;
+
+		RETVAL = oga;
+	}
+	OUTPUT:
+		RETVAL
+
+#//# (CPTR)buffer = glMapBuffer_c($target,$access);
+void *
+glMapBuffer_c(target,access)
+	GLenum	target
+	GLenum	access
+	CODE:
+		RETVAL = glMapBuffer(target,access);
+	OUTPUT:
+		RETVAL
+
+#define FIXME /* !!! Need to refactor with glGetBufferPointerv_p */
+
+#//# $oga = glMapBuffer_p($target,$access,@types);
+#//- If no types are provided, GLubyte is assumed
+OpenGL::Array
+glMapBuffer_p(target,access,...)
+	GLenum	target
+	GLenum	access
+	CODE:
+	{
+		GLsizeiptr size;
+		oga_struct * oga;
+		int i,j;
+
+		void * buffer =	glMapBuffer(target,access);
+		if (!buffer) croak("Unable to map buffer\n");
+
+		glGetBufferParameteriv(target,GL_BUFFER_SIZE,(GLint*)&size);
+		if (!size) croak("Buffer has no size\n");
+
+		oga = malloc(sizeof(oga_struct));
+
+		oga->type_count = (items - 2);
+
+				if (oga->type_count)
+		{
+			oga->types = malloc(sizeof(GLenum) * oga->type_count);
+			oga->type_offset = malloc(sizeof(GLint) * oga->type_count);
+			for(i=0,j=0;i<oga->type_count;i++) {
+				oga->types[i] = SvIV(ST(i+2));
+				oga->type_offset[i] = j;
+				j += gl_type_size(oga->types[i]);
+			}
+			oga->total_types_width = j;
+		}
+		else
+		{
+			oga->type_count = 1;
+			oga->types = malloc(sizeof(GLenum) * oga->type_count);
+			oga->type_offset = malloc(sizeof(GLint) * oga->type_count);
+
+			oga->types[0] = GL_UNSIGNED_BYTE;
+			oga->type_offset[0] = 0;
+			oga->total_types_width = gl_type_size(oga->types[0]);
+		}
+
+		if (!oga->total_types_width) croak("Unable to determine type sizes\n");
+		oga->item_count = size / oga->total_types_width;
+
+		oga->data_length = oga->total_types_width * oga->item_count;
+
+		oga->data = buffer;
+
+		oga->free_data = 0;
+
+		RETVAL = oga;
+	}
+	OUTPUT:
+		RETVAL
+
+#//# glUnmapBuffer($target);
+GLboolean
+glUnmapBuffer(target)
+	GLenum	target
+	CODE:
+		RETVAL = glUnmapBuffer(target);
+	OUTPUT:
+		RETVAL
+
+#//# glGetBufferParameteriv_c($target,$pname,(CPTR)params);
+void
+glGetBufferParameteriv_c(target,pname,params)
+	GLenum	target
+	GLenum	pname
+	void *	params
+	CODE:
+		glGetBufferParameteriv(target,pname,params);
+
+#//# glGetBufferParameteriv_s($target,$pname,(PACKED)params);
+void
+glGetBufferParameteriv_s(target,pname,params)
+	GLenum	target
+	GLenum	pname
+	SV *	params
+	CODE:
+	{
+		GLint * params_s = EL(params, sizeof(GLint)*1);
+		glGetBufferParameteriv(target,pname,params_s);
+	}
+
+#//# @params = glGetBufferParameteriv_p($target,$pname);
+void
+glGetBufferParameteriv_p(target,pname)
+	GLenum	target
+	GLenum	pname
+	PPCODE:
+	{
+		GLint	ret;
+		glGetBufferParameteriv(target,pname,&ret);
+		PUSHs(sv_2mortal(newSViv(ret)));
+	}
+
+#//# glGetBufferPointerv_c($target,$pname,(CPTR)params);
+void
+glGetBufferPointerv_c(target,pname,params)
+	GLenum	target
+	GLenum	pname
+	void *	params
+	CODE:
+		glGetBufferPointerv(target,pname,&params);
+
+#//# glGetBufferPointerv_s($target,$pname,(PACKED)params);
+void
+glGetBufferPointerv_s(target,pname,params)
+	GLenum	target
+	GLenum	pname
+	SV *	params
+	CODE:
+	{
+		void ** params_s = EL(params, sizeof(void*));
+		glGetBufferPointerv(target,pname,params_s);
+	}
+
+#//# $oga = glGetBufferPointerv_p($target,$pname,@types);
+#//- If no types are provided, GLubyte is assumed
+OpenGL::Array
+glGetBufferPointerv_p(target,pname,...)
+	GLenum	target
+	GLenum	pname
+	CODE:
+	{
+		GLsizeiptr size;
+		oga_struct * oga;
+		void * buffer;
+		int i,j;
+
+		glGetBufferPointerv(target,pname,&buffer);
+		if (!buffer) croak("Buffer is not mapped\n");
+
+		glGetBufferParameteriv(target,GL_BUFFER_SIZE,(GLint*)&size);
+		if (!size) croak("Buffer has no size\n");
+
+		oga = malloc(sizeof(oga_struct));
+
+		oga->type_count = (items - 2);
+
+				if (oga->type_count)
+		{
+			oga->types = malloc(sizeof(GLenum) * oga->type_count);
+			oga->type_offset = malloc(sizeof(GLint) * oga->type_count);
+			for(i=0,j=0;i<oga->type_count;i++) {
+				oga->types[i] = SvIV(ST(i+2));
+				oga->type_offset[i] = j;
+				j += gl_type_size(oga->types[i]);
+			}
+			oga->total_types_width = j;
+		}
+		else
+		{
+			oga->type_count = 1;
+			oga->types = malloc(sizeof(GLenum) * oga->type_count);
+			oga->type_offset = malloc(sizeof(GLint) * oga->type_count);
+
+			oga->types[0] = GL_UNSIGNED_BYTE;
+			oga->type_offset[0] = 0;
+			oga->total_types_width = gl_type_size(oga->types[0]);
+		}
+
+		if (!oga->total_types_width) croak("Unable to determine type sizes\n");
+		oga->item_count = size / oga->total_types_width;
+
+		oga->data_length = oga->total_types_width * oga->item_count;
+
+		oga->data = buffer;
+
+		oga->free_data = 0;
+
+		RETVAL = oga;
+	}
+	OUTPUT:
+		RETVAL
+
+#endif // GL_VERSION_1_4
+
+
 #ifdef GL_ARB_vertex_buffer_object
 
 #//# glBindBufferARB($target,$buffer);
