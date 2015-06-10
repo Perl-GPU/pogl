@@ -355,71 +355,6 @@ glColorMaterial(face, mode)
 	GLenum	face
 	GLenum	mode
 
-#ifdef GL_VERSION_1_1
-
-#// 1.1
-#//# glColorPointer_c($size, $type, $stride, (CPTR)pointer);
-void
-glColorPointer_c(size, type, stride, pointer)
-	GLint	size
-	GLenum	type
-	GLsizei	stride
-	void *	pointer
-	CODE:
-		glColorPointer(size, type, stride, pointer);
-
-
-#//# glColorPointer_s($size, $type, $stride, (PACKED)pointer);
-void
-glColorPointer_s(size, type, stride, pointer)
-	GLint	size
-	GLenum	type
-	GLsizei	stride
-	SV *	pointer
-	CODE:
-	{
-		int width = stride ? stride : (sizeof(type)*size);
-		void * pointer_s = NULL;
-		if ( pointer ) {
-			pointer_s = EL(pointer, width);
-		}
-		glColorPointer(size, type, stride, pointer_s);
-	}
-
-#endif // GL_VERSION_1_1
-
-#if defined(GL_VERSION_1_1) || defined(GL_EXT_vertex_array)
-
-#//# glColorPointer_p($size, (OGA)pointer);
-void
-glColorPointer_p(size, oga)
-	GLint	size
-	OpenGL::Array oga
-	INIT:
-#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
-		loadProc(glColorPointerEXT,"glColorPointerEXT");
-#endif
-	CODE:
-	{
-		GLvoid * data = oga->data;
-#ifdef GL_VERSION_2_0
-		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
-		data = NULL;
-#elif defined(GL_ARB_vertex_buffer_object)
-		if (testProc(glBindBufferARB,"glBindBufferARB"))
-		{
-			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
-			data = NULL;
-		}
-#endif
-#ifdef GL_VERSION_1_1
-		glColorPointer(size, oga->types[0], 0, data);
-#else // GL_EXT_vertex_array
-		glColorPointerEXT(size, oga->types[0], 0, oga->item_count/size, data);
-#endif
-	}
-
-#endif
 
 #// 1.0
 #//# glCopyPixels($x, $y, $width, $height, $type);
@@ -776,65 +711,6 @@ void
 glEdgeFlag(flag)
 	GLboolean	flag
 
-#ifdef GL_VERSION_1_1
-
-#// 1.1
-#//# glEdgeFlagPointer_c($stride, (CPTR)pointer);
-void
-glEdgeFlagPointer_c(stride, pointer)
-	GLsizei	stride
-	void *	pointer
-	CODE:
-		glEdgeFlagPointer(stride, pointer);
-
-#//# glEdgeFlagPointer_s($stride, (PACKED)pointer);
-void
-glEdgeFlagPointer_s(stride, pointer)
-	GLsizei	stride
-	SV *	pointer
-	CODE:
-	{
-		int width = stride ? stride : sizeof(GLboolean);
-		void * pointer_s = NULL;
-		if ( pointer ) {
-			pointer_s = EL(pointer, width);
-		}
-		glEdgeFlagPointer(stride, pointer_s);
-	}
-
-#endif // GL_VERSION_1_1
-
-#if defined(GL_VERSION_1_1) || defined(GL_EXT_vertex_array)
-
-#//# glEdgeFlagPointer_p((OGA)pointer);
-void
-glEdgeFlagPointer_p(oga)
-	OpenGL::Array oga
-	INIT:
-#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
-		loadProc(glTexCoordPointerEXT,"glEdgeFlagPointerEXT");
-#endif
-	CODE:
-	{
-		GLvoid * data = oga->data;
-#ifdef GL_VERSION_2_0
-		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
-		data = NULL;
-#elif defined(GL_ARB_vertex_buffer_object)
-		if (testProc(glBindBufferARB,"glBindBufferARB"))
-		{
-			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
-			data = NULL;
-		}
-#endif
-#ifdef GL_VERSION_1_1
-		glEdgeFlagPointer(0, data);
-#else // GL_EXT_vertex_array
-		glEdgeFlagPointerEXT(0, oga->item_count, data);
-#endif
-	}
-
-#endif
 
 #// 1.0
 #//# glEnable($cap);
