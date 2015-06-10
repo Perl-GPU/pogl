@@ -6130,6 +6130,7 @@ sub AUTOLOAD {
 bootstrap OpenGL;
 
 *OpenGL::Array::CLONE_SKIP = sub { 1 };  # OpenGL::Array is not thread safe
+*OpenGL::Matrix::CLONE_SKIP = sub { 1 };  # OpenGL::Matrix is not thread safe
 
 # The following material is directly copied from Stan Melax's original OpenGL-0.4
 # (with modifications for OS/2).
@@ -6285,6 +6286,12 @@ sub glpCheckExtension
   }
   return 0;
 }
+
+
+
+#OpenGL::Array helper methods for normalizing names and chaining operations
+@OpenGL::Matrix::ISA = 'OpenGL::Array';
+
 
 1;
 __END__

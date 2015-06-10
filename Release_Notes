@@ -4,6 +4,8 @@
 
 General Notes:
 
+  * Added OpenGL::Matrix to support uniform shader matrices.
+
   * fixed some formatting/documentation issues
 
   * Fixed some outstanding bugs from sf.net
@@ -33,6 +35,11 @@ Highlights:
   * Added GLUT_VERSION to exported constant values
 
   * fix OSX warnings about data types
+
+  * Updated OpenGL::Array to support 2D matrices;
+    added OpenGL::Array->get_dimensions method.
+
+  * Added OpenGL::Matrix subclass of OpenGL::Array
 
   * Fixed sf.net #21 "delete functions removed from Mesa 10.6"
 
