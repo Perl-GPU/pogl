@@ -1,3 +1,5 @@
+  * Fixed glutCloseFunc for Mac OS X.
+
 0.70 2016-10-08
 
 General Notes:

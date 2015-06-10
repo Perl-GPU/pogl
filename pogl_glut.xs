@@ -30,7 +30,6 @@
 static int _done_glutInit = 0;
 static int _done_glutCloseFunc_warn = 0;
 
-
 /* Macros for GLUT callback and handler declarations */
 #  define DO_perl_call_sv(handler, flag) perl_call_sv(handler, flag)
 #  define ENSURE_callback_thread
@@ -93,7 +92,6 @@ static SV * get_glut_win_handler(int win, int type)
 static void destroy_glut_win_handlers(int win)
 {
 	SV ** h;
-
 	if (!glut_handlers)
 		return;
 
@@ -1490,9 +1488,15 @@ void
 glutCloseFunc(handler=0, ...)
 	SV *	handler
 	CODE:
-        {
-	    if (_done_glutCloseFunc_warn == 0) {
-	        warn("glutCloseFunc: not implemented\n");
-	        _done_glutCloseFunc_warn++;
-            }
-        }
+	{
+#ifdef HAVE_AGL_GLUT
+		decl_gwh_xs(WMClose)
+#elif defined HAVE_FREEGLUT
+		decl_gwh_xs(Close)
+#else
+		if (_done_glutCloseFunc_warn == 0) {
+			warn("glutCloseFunc: not implemented\n");
+			_done_glutCloseFunc_warn++;
+		}
+#endif
+	}
