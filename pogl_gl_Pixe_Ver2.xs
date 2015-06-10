@@ -671,7 +671,10 @@ glTexCoordPointer_s(size, type, stride, pointer)
 	CODE:
 	{
 		int width = stride ? stride : (sizeof(type)*size);
-		void * pointer_s = EL(pointer, width);
+		void * pointer_s = NULL;
+		if ( pointer ) {
+			pointer_s = EL(pointer, width);
+		}
 		glTexCoordPointer(size, type, stride, pointer_s);
 	}
 
