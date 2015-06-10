@@ -678,11 +678,19 @@ glTexCoordPointer_s(size, type, stride, pointer)
 		glTexCoordPointer(size, type, stride, pointer_s);
 	}
 
+#endif // GL_VERSION_1_1
+
+#if defined(GL_VERSION_1_1) || defined(GL_EXT_vertex_array)
+
 #//# glTexCoordPointer_p($size, (OGA)pointer);
 void
 glTexCoordPointer_p(size, oga)
 	GLint	size
 	OpenGL::Array oga
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glTexCoordPointerEXT,"glTexCoordPointerEXT");
+#endif
 	CODE:
 	{
 		GLvoid * data = oga->data;
@@ -696,7 +704,11 @@ glTexCoordPointer_p(size, oga)
 			data = NULL;
 		}
 #endif
+#ifdef GL_VERSION_1_1
 		glTexCoordPointer(size, oga->types[0], 0, data);
+#else // GL_EXT_vertex_array
+		glTexCoordPointerEXT(size, oga->types[0], 0, oga->item_count/size, data);
+#endif
 	}
 
 #endif
@@ -1482,11 +1494,19 @@ glVertexPointer_s(size, type, stride, pointer)
 		glVertexPointer(size, type, stride, pointer_s);
 	}
 
+#endif // GL_VERSION_1_1
+
+#if defined(GL_VERSION_1_1) || defined(GL_EXT_vertex_array)
+
 #//# glVertexPointer_p($size, (OGA)pointer);
 void
 glVertexPointer_p(size, oga)
 	GLint	size
 	OpenGL::Array oga
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glVertexPointerEXT,"glVertexPointerEXT");
+#endif
 	CODE:
 	{
 		GLvoid * data = oga->data;
@@ -1500,7 +1520,11 @@ glVertexPointer_p(size, oga)
 			data = NULL;
 		}
 #endif
+#ifdef GL_VERSION_1_1
 		glVertexPointer(size, oga->types[0], 0, data);
+#else // GL_EXT_vertex_array
+		glVertexPointerEXT(size, oga->types[0], 0, oga->item_count/size, data);
+#endif
 	}
 
 #endif
