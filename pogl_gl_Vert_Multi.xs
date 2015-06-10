@@ -56,7 +56,8 @@ MODULE = OpenGL::GL::VertMulti	PACKAGE = OpenGL
 
 #ifdef HAVE_GL
 
-#ifdef GL_EXT_vertex_array
+
+#if defined(GL_VERSION_1_1) || defined(GL_EXT_vertex_array)
 
 #//# glVertexPointerEXT_c($size, $type, $stride, $count, (CPTR)pointer);
 void
@@ -67,9 +68,15 @@ glVertexPointerEXT_c(size, type, stride, count, pointer)
 	GLsizei	count
 	void *	pointer
 	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glVertexPointerEXT,"glVertexPointerEXT");
+#endif
 	CODE:
+#ifdef GL_VERSION_1_1
+		glVertexPointer(size, type, stride, pointer);
+#else // GL_EXT_vertex_array
 		glVertexPointerEXT(size, type, stride, count, pointer);
+#endif
 
 #//# glVertexPointerEXT_s($size, $type, $stride, $count, (PACKED)pointer);
 void
@@ -80,12 +87,18 @@ glVertexPointerEXT_s(size, type, stride, count, pointer)
 	GLsizei	count
 	SV *	pointer
 	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glVertexPointerEXT,"glVertexPointerEXT");
+#endif
 	CODE:
 	{
 		int width = stride ? stride : (sizeof(type)*size);
 		void * pointer_s = EL(pointer, width*count);
+#ifdef GL_VERSION_1_1
+		glVertexPointer(size, type, stride, pointer_s);
+#else // GL_EXT_vertex_array
 		glVertexPointerEXT(size, type, stride, count, pointer_s);
+#endif
 	}
 
 #//# glVertexPointerEXT_p($size, (OGA)pointer);
@@ -94,7 +107,9 @@ glVertexPointerEXT_p(size, oga)
 	GLint	size
 	OpenGL::Array oga
 	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glVertexPointerEXT,"glVertexPointerEXT");
+#endif
 	CODE:
 	{
 		GLvoid * data = oga->data;
@@ -108,35 +123,53 @@ glVertexPointerEXT_p(size, oga)
 			data = NULL;
 		}
 #endif
+#ifdef GL_VERSION_1_1
+		glVertexPointer(size, oga->types[0], 0, data);
+#else // GL_EXT_vertex_array
 		glVertexPointerEXT(size, oga->types[0], 0, oga->item_count/size, data);
+#endif
 	}
 
-#//# glNormalPointerEXT_c($type, $stride, $count, (CPTR)pointer);
+#//# glNormalPointerEXT_c($size, $type, $stride, $count, (CPTR)pointer);
 void
-glNormalPointerEXT_c(type, stride, count, pointer)
+glNormalPointerEXT_c(size, type, stride, count, pointer)
+	GLint	size
 	GLenum	type
 	GLsizei	stride
 	GLsizei	count
 	void *	pointer
 	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glNormalPointerEXT,"glNormalPointerEXT");
+#endif
 	CODE:
+#ifdef GL_VERSION_1_1
+		glNormalPointer(type, stride, pointer);
+#else // GL_EXT_vertex_array
 		glNormalPointerEXT(type, stride, count, pointer);
+#endif
 
-#//# glNormalPointerEXT_s($type, $stride, $count, (PACKED)pointer);
+#//# glNormalPointerEXT_s($size, $type, $stride, $count, (PACKED)pointer);
 void
-glNormalPointerEXT_s(type, stride, count, pointer)
+glNormalPointerEXT_s(size, type, stride, count, pointer)
+	GLint	size
 	GLenum	type
 	GLsizei	stride
 	GLsizei	count
 	SV *	pointer
 	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glNormalPointerEXT,"glNormalPointerEXT");
+#endif
 	CODE:
 	{
-		int width = stride ? stride : (sizeof(type)*3);
+		int width = stride ? stride : (sizeof(type)*size);
 		void * pointer_s = EL(pointer, width*count);
+#ifdef GL_VERSION_1_1
+		glNormalPointer(type, stride, pointer_s);
+#else // GL_EXT_vertex_array
 		glNormalPointerEXT(type, stride, count, pointer_s);
+#endif
 	}
 
 #//# glNormalPointerEXT_p((OGA)pointer);
@@ -144,7 +177,9 @@ void
 glNormalPointerEXT_p(oga)
 	OpenGL::Array oga
 	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glNormalPointerEXT,"glNormalPointerEXT");
+#endif
 	CODE:
 	{
 		GLvoid * data = oga->data;
@@ -158,7 +193,11 @@ glNormalPointerEXT_p(oga)
 			data = NULL;
 		}
 #endif
+#ifdef GL_VERSION_1_1
+		glNormalPointer(oga->types[0], 0, data);
+#else // GL_EXT_vertex_array
 		glNormalPointerEXT(oga->types[0], 0, oga->item_count/3, data);
+#endif
 	}
 
 #//# glColorPointerEXT_c($size, $type, $stride, $count, (CPTR)pointer);
@@ -170,9 +209,15 @@ glColorPointerEXT_c(size, type, stride, count, pointer)
 	GLsizei	count
 	void *	pointer
 	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glColorPointerEXT,"glColorPointerEXT");
+#endif
 	CODE:
+#ifdef GL_VERSION_1_1
+		glColorPointer(size, type, stride, pointer);
+#else // GL_EXT_vertex_array
 		glColorPointerEXT(size, type, stride, count, pointer);
+#endif
 
 #//# glColorPointerEXT_s($size, $type, $stride, $count, (PACKED)pointer);
 void
@@ -183,12 +228,18 @@ glColorPointerEXT_s(size, type, stride, count, pointer)
 	GLsizei	count
 	SV *	pointer
 	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glColorPointerEXT,"glColorPointerEXT");
+#endif
 	CODE:
 	{
 		int width = stride ? stride : (sizeof(type)*size);
 		void * pointer_s = EL(pointer, width*count);
+#ifdef GL_VERSION_1_1
+		glColorPointer(size, type, stride, pointer_s);
+#else // GL_EXT_vertex_array
 		glColorPointerEXT(size, type, stride, count, pointer_s);
+#endif
 	}
 
 #//# glColorPointerEXT_p($size, (OGA)pointer);
@@ -197,7 +248,9 @@ glColorPointerEXT_p(size, oga)
 	GLint	size
 	OpenGL::Array oga
 	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glColorPointerEXT,"glColorPointerEXT");
+#endif
 	CODE:
 	{
 		GLvoid * data = oga->data;
@@ -211,35 +264,53 @@ glColorPointerEXT_p(size, oga)
 			data = NULL;
 		}
 #endif
+#ifdef GL_VERSION_1_1
+		glColorPointer(size, oga->types[0], 0, data);
+#else // GL_EXT_vertex_array
 		glColorPointerEXT(size, oga->types[0], 0, oga->item_count/size, data);
+#endif
 	}
 
-#//# glIndexPointerEXT_c($type, $stride, $count, (CPTR)pointer);
+#//# glIndexPointerEXT_c($size, $type, $stride, $count, (CPTR)pointer);
 void
-glIndexPointerEXT_c(type, stride, count, pointer)
+glIndexPointerEXT_c(size, type, stride, count, pointer)
+	GLint	size
 	GLenum	type
 	GLsizei	stride
 	GLsizei	count
 	void *	pointer
 	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glIndexPointerEXT,"glIndexPointerEXT");
+#endif
 	CODE:
+#ifdef GL_VERSION_1_1
+		glIndexPointer(type, stride, pointer);
+#else // GL_EXT_vertex_array
 		glIndexPointerEXT(type, stride, count, pointer);
+#endif
 
-#//# glIndexPointerEXT_s($type, $stride, $count, (PACKED)pointer);
+#//# glIndexPointerEXT_s($size, $type, $stride, $count, (PACKED)pointer);
 void
-glIndexPointerEXT_s(type, stride, count, pointer)
+glIndexPointerEXT_s(size, type, stride, count, pointer)
+	GLint	size
 	GLenum	type
 	GLsizei	stride
 	GLsizei	count
 	SV *	pointer
 	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glIndexPointerEXT,"glIndexPointerEXT");
+#endif
 	CODE:
 	{
-		int width = stride ? stride : (sizeof(type));
+		int width = stride ? stride : (sizeof(type)*size);
 		void * pointer_s = EL(pointer, width*count);
+#ifdef GL_VERSION_1_1
+		glIndexPointer(type, stride, pointer_s);
+#else // GL_EXT_vertex_array
 		glIndexPointerEXT(type, stride, count, pointer_s);
+#endif
 	}
 
 #//# glIndexPointerEXT_p((OGA)pointer);
@@ -247,7 +318,9 @@ void
 glIndexPointerEXT_p(oga)
 	OpenGL::Array oga
 	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glIndexPointerEXT,"glIndexPointerEXT");
+#endif
 	CODE:
 	{
 		GLvoid * data = oga->data;
@@ -261,7 +334,11 @@ glIndexPointerEXT_p(oga)
 			data = NULL;
 		}
 #endif
+#ifdef GL_VERSION_1_1
+		glIndexPointer(oga->types[0], 0, data);
+#else // GL_EXT_vertex_array
 		glIndexPointerEXT(oga->types[0], 0, oga->item_count, data);
+#endif
 	}
 
 #//# glTexCoordPointerEXT_c($size, $type, $stride, $count, (CPTR)pointer);
@@ -269,13 +346,19 @@ void
 glTexCoordPointerEXT_c(size, type, stride, count, pointer)
 	GLint	size
 	GLenum	type
-	GLsizei	count
 	GLsizei	stride
+	GLsizei	count
 	void *	pointer
 	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glTexCoordPointerEXT,"glTexCoordPointerEXT");
+#endif
 	CODE:
+#ifdef GL_VERSION_1_1
+		glTexCoordPointer(size, type, stride, pointer);
+#else // GL_EXT_vertex_array
 		glTexCoordPointerEXT(size, type, stride, count, pointer);
+#endif
 
 #//# glTexCoordPointerEXT_s($size, $type, $stride, $count, (PACKED)pointer);
 void
@@ -286,12 +369,18 @@ glTexCoordPointerEXT_s(size, type, stride, count, pointer)
 	GLsizei	count
 	SV *	pointer
 	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glTexCoordPointerEXT,"glTexCoordPointerEXT");
+#endif
 	CODE:
 	{
 		int width = stride ? stride : (sizeof(type)*size);
 		void * pointer_s = EL(pointer, width*count);
+#ifdef GL_VERSION_1_1
+		glTexCoordPointer(size, type, stride, pointer_s);
+#else // GL_EXT_vertex_array
 		glTexCoordPointerEXT(size, type, stride, count, pointer_s);
+#endif
 	}
 
 #//# glTexCoordPointerEXT_p($size, (OGA)pointer);
@@ -300,7 +389,9 @@ glTexCoordPointerEXT_p(size, oga)
 	GLint	size
 	OpenGL::Array oga
 	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glTexCoordPointerEXT,"glTexCoordPointerEXT");
+#endif
 	CODE:
 	{
 		GLvoid * data = oga->data;
@@ -314,33 +405,53 @@ glTexCoordPointerEXT_p(size, oga)
 			data = NULL;
 		}
 #endif
+#ifdef GL_VERSION_1_1
+		glTexCoordPointer(size, oga->types[0], 0, data);
+#else // GL_EXT_vertex_array
 		glTexCoordPointerEXT(size, oga->types[0], 0, oga->item_count/size, data);
+#endif
 	}
 
-#//# glEdgeFlagPointerEXT_c($stride, $count, (CPTR)pointer);
+#//# glEdgeFlagPointerEXT_c($size, $type, $stride, $count, (CPTR)pointer);
 void
-glEdgeFlagPointerEXT_c(stride, count, pointer)
-	GLint	stride
+glEdgeFlagPointerEXT_c(size, type, stride, count, pointer)
+	GLint	size
+	GLenum	type
+	GLsizei	stride
 	GLsizei	count
 	void *	pointer
 	INIT:
-		loadProc(glEdgeFlagPointerEXT,"glEdgeFlagPointerEXT");
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glTexCoordPointerEXT,"glEdgeFlagPointerEXT");
+#endif
 	CODE:
+#ifdef GL_VERSION_1_1
+		glEdgeFlagPointer(stride, pointer);
+#else // GL_EXT_vertex_array
 		glEdgeFlagPointerEXT(stride, count, pointer);
+#endif
 
-#//# glEdgeFlagPointerEXT_s($stride, $count, (PACKED)pointer);
+#//# glEdgeFlagPointerEXT_s($size, $type, $stride, $count, (PACKED)pointer);
 void
-glEdgeFlagPointerEXT_s(stride, count, pointer)
+glEdgeFlagPointerEXT_s(size, type, stride, count, pointer)
+	GLint	size
+	GLenum	type
 	GLsizei	stride
 	GLsizei	count
 	SV *	pointer
 	INIT:
-		loadProc(glEdgeFlagPointerEXT,"glEdgeFlagPointerEXT");
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glTexCoordPointerEXT,"glEdgeFlagPointerEXT");
+#endif
 	CODE:
 	{
-		int width = stride ? stride : (sizeof(GLboolean));
+		int width = stride ? stride : (sizeof(type)*size);
 		void * pointer_s = EL(pointer, width*count);
+#ifdef GL_VERSION_1_1
+		glEdgeFlagPointer(stride, pointer_s);
+#else // GL_EXT_vertex_array
 		glEdgeFlagPointerEXT(stride, count, pointer_s);
+#endif
 	}
 
 #//# glEdgeFlagPointerEXT_p((OGA)pointer);
@@ -348,7 +459,9 @@ void
 glEdgeFlagPointerEXT_p(oga)
 	OpenGL::Array oga
 	INIT:
-		loadProc(glEdgeFlagPointerEXT,"glEdgeFlagPointerEXT");
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glTexCoordPointerEXT,"glEdgeFlagPointerEXT");
+#endif
 	CODE:
 	{
 		GLvoid * data = oga->data;
@@ -362,10 +475,14 @@ glEdgeFlagPointerEXT_p(oga)
 			data = NULL;
 		}
 #endif
+#ifdef GL_VERSION_1_1
+		glEdgeFlagPointer(0, data);
+#else // GL_EXT_vertex_array
 		glEdgeFlagPointerEXT(0, oga->item_count, data);
+#endif
 	}
 
-#endif // GL_EXT_vertex_array
+#endif // GL_EXT_vertex_array || GL_VERSION_1_1
 
 
 #ifdef GL_MESA_resize_buffers
