@@ -97,17 +97,18 @@ glVertexPointerEXT_p(size, oga)
 		loadProc(glVertexPointerEXT,"glVertexPointerEXT");
 	CODE:
 	{
-#ifdef GL_ARB_vertex_buffer_object
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))
 		{
 			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
 		}
-		glVertexPointerEXT(size, oga->types[0], 0, oga->item_count/size,
-			oga->bind ? 0 : oga->data);
-#else
-		glVertexPointerEXT(size, oga->types[0], 0, oga->item_count/size,
-			oga->data);
 #endif
+		glVertexPointerEXT(size, oga->types[0], 0, oga->item_count/size, data);
 	}
 
 #//# glNormalPointerEXT_c($type, $stride, $count, (CPTR)pointer);
@@ -146,17 +147,18 @@ glNormalPointerEXT_p(oga)
 		loadProc(glNormalPointerEXT,"glNormalPointerEXT");
 	CODE:
 	{
-#ifdef GL_ARB_vertex_buffer_object
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))
 		{
 			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
 		}
-		glNormalPointerEXT(oga->types[0], 0, oga->item_count/3,
-			oga->bind ? 0 : oga->data);
-#else
-		glNormalPointerEXT(oga->types[0], 0, oga->item_count/3,
-			oga->data);
 #endif
+		glNormalPointerEXT(oga->types[0], 0, oga->item_count/3, data);
 	}
 
 #//# glColorPointerEXT_c($size, $type, $stride, $count, (CPTR)pointer);
@@ -198,17 +200,18 @@ glColorPointerEXT_p(size, oga)
 		loadProc(glColorPointerEXT,"glColorPointerEXT");
 	CODE:
 	{
-#ifdef GL_ARB_vertex_buffer_object
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))
 		{
 			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
 		}
-		glColorPointerEXT(size, oga->types[0], 0, oga->item_count/size,
-			oga->bind ? 0 : oga->data);
-#else
-		glColorPointerEXT(size, oga->types[0], 0, oga->item_count/size,
-			oga->data);
 #endif
+		glColorPointerEXT(size, oga->types[0], 0, oga->item_count/size, data);
 	}
 
 #//# glIndexPointerEXT_c($type, $stride, $count, (CPTR)pointer);
@@ -247,17 +250,18 @@ glIndexPointerEXT_p(oga)
 		loadProc(glIndexPointerEXT,"glIndexPointerEXT");
 	CODE:
 	{
-#ifdef GL_ARB_vertex_buffer_object
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))
 		{
 			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
 		}
-		glIndexPointerEXT(oga->types[0], 0, oga->item_count,
-			oga->bind ? 0 : oga->data);
-#else
-		glIndexPointerEXT(oga->types[0], 0, oga->item_count,
-			oga->data);
 #endif
+		glIndexPointerEXT(oga->types[0], 0, oga->item_count, data);
 	}
 
 #//# glTexCoordPointerEXT_c($size, $type, $stride, $count, (CPTR)pointer);
@@ -299,17 +303,18 @@ glTexCoordPointerEXT_p(size, oga)
 		loadProc(glTexCoordPointerEXT,"glTexCoordPointerEXT");
 	CODE:
 	{
-#ifdef GL_ARB_vertex_buffer_object
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))
 		{
 			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
 		}
-		glTexCoordPointerEXT(size, oga->types[0], 0, oga->item_count/size,
-			oga->bind ? 0 : oga->data);
-#else
-		glTexCoordPointerEXT(size, oga->types[0], 0, oga->item_count/size,
-			oga->data);
 #endif
+		glTexCoordPointerEXT(size, oga->types[0], 0, oga->item_count/size, data);
 	}
 
 #//# glEdgeFlagPointerEXT_c($stride, $count, (CPTR)pointer);
@@ -346,15 +351,18 @@ glEdgeFlagPointerEXT_p(oga)
 		loadProc(glEdgeFlagPointerEXT,"glEdgeFlagPointerEXT");
 	CODE:
 	{
-#ifdef GL_ARB_vertex_buffer_object
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))
 		{
 			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
 		}
-		glEdgeFlagPointerEXT(0, oga->item_count, oga->bind ? 0 : oga->data);
-#else
-		glEdgeFlagPointerEXT(0, oga->item_count, oga->data);
 #endif
+		glEdgeFlagPointerEXT(0, oga->item_count, data);
 	}
 
 #endif // GL_EXT_vertex_array

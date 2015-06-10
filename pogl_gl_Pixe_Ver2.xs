@@ -685,15 +685,18 @@ glTexCoordPointer_p(size, oga)
 	OpenGL::Array oga
 	CODE:
 	{
-#ifdef GL_ARB_vertex_buffer_object
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))
 		{
 			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
 		}
-		glTexCoordPointer(size, oga->types[0], 0, oga->bind ? 0 : oga->data);
-#else
-		glTexCoordPointer(size, oga->types[0], 0, oga->data);
 #endif
+		glTexCoordPointer(size, oga->types[0], 0, data);
 	}
 
 #endif
@@ -1486,15 +1489,18 @@ glVertexPointer_p(size, oga)
 	OpenGL::Array oga
 	CODE:
 	{
-#ifdef GL_ARB_vertex_buffer_object
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))
 		{
 			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
 		}
-		glVertexPointer(size, oga->types[0], 0, oga->bind ? 0 : oga->data);
-#else
-		glVertexPointer(size, oga->types[0], 0, oga->data);
 #endif
+		glVertexPointer(size, oga->types[0], 0, data);
 	}
 
 #endif
