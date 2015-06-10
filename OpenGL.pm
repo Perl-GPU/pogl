@@ -3,6 +3,7 @@ package OpenGL;
 #  Copyright (c) 1998,1999 Kenneth Albanowski. All rights reserved.
 #  Copyright (c) 2007 Bob Free. All rights reserved.
 #  Copyright (c) 2009 Christopher Marshall. All rights reserved.
+#  Copyright (c) 2015 Bob Free. All rights reserved.
 #  This program is free software; you can redistribute it and/or
 #  modify it under the same terms as Perl itself.
 
@@ -964,68 +965,68 @@ our $glext_dependencies =
    glClientActiveTextureARB
    glMultiTexCoord1dARB
    glMultiTexCoord1dvARB_c
-   glMultiTexCoord1dvARB_c
-   glMultiTexCoord1dvARB_c
+   glMultiTexCoord1dvARB_s
+   glMultiTexCoord1dvARB_p
    glMultiTexCoord1fARB
    glMultiTexCoord1fvARB_c
-   glMultiTexCoord1fvARB_c
-   glMultiTexCoord1fvARB_c
+   glMultiTexCoord1fvARB_s
+   glMultiTexCoord1fvARB_p
    glMultiTexCoord1iARB
    glMultiTexCoord1ivARB_c
-   glMultiTexCoord1ivARB_c
-   glMultiTexCoord1ivARB_c
+   glMultiTexCoord1ivARB_s
+   glMultiTexCoord1ivARB_p
    glMultiTexCoord1sARB
    glMultiTexCoord1svARB_c
-   glMultiTexCoord1svARB_c
-   glMultiTexCoord1svARB_c
+   glMultiTexCoord1svARB_s
+   glMultiTexCoord1svARB_p
    glMultiTexCoord2dARB
    glMultiTexCoord2dvARB_c
-   glMultiTexCoord2dvARB_c
-   glMultiTexCoord2dvARB_c
+   glMultiTexCoord2dvARB_s
+   glMultiTexCoord2dvARB_p
    glMultiTexCoord2fARB
    glMultiTexCoord2fvARB_c
-   glMultiTexCoord2fvARB_c
-   glMultiTexCoord2fvARB_c
+   glMultiTexCoord2fvARB_s
+   glMultiTexCoord2fvARB_p
    glMultiTexCoord2iARB
    glMultiTexCoord2ivARB_c
-   glMultiTexCoord2ivARB_c
-   glMultiTexCoord2ivARB_c
+   glMultiTexCoord2ivARB_s
+   glMultiTexCoord2ivARB_p
    glMultiTexCoord2sARB
    glMultiTexCoord2svARB_c
-   glMultiTexCoord2svARB_c
-   glMultiTexCoord2svARB_c
+   glMultiTexCoord2svARB_s
+   glMultiTexCoord2svARB_p
    glMultiTexCoord3dARB
    glMultiTexCoord3dvARB_c
-   glMultiTexCoord3dvARB_c
-   glMultiTexCoord3dvARB_c
+   glMultiTexCoord3dvARB_s
+   glMultiTexCoord3dvARB_p
    glMultiTexCoord3fARB
    glMultiTexCoord3fvARB_c
-   glMultiTexCoord3fvARB_c
-   glMultiTexCoord3fvARB_c
+   glMultiTexCoord3fvARB_s
+   glMultiTexCoord3fvARB_p
    glMultiTexCoord3iARB
    glMultiTexCoord3ivARB_c
-   glMultiTexCoord3ivARB_c
-   glMultiTexCoord3ivARB_c
+   glMultiTexCoord3ivARB_s
+   glMultiTexCoord3ivARB_p
    glMultiTexCoord3sARB
    glMultiTexCoord3svARB_c
-   glMultiTexCoord3svARB_c
-   glMultiTexCoord3svARB_c
+   glMultiTexCoord3svARB_s
+   glMultiTexCoord3svARB_p
    glMultiTexCoord4dARB
    glMultiTexCoord4dvARB_c
-   glMultiTexCoord4dvARB_c
-   glMultiTexCoord4dvARB_c
+   glMultiTexCoord4dvARB_s
+   glMultiTexCoord4dvARB_p
    glMultiTexCoord4fARB
    glMultiTexCoord4fvARB_c
-   glMultiTexCoord4fvARB_c
-   glMultiTexCoord4fvARB_c
+   glMultiTexCoord4fvARB_s
+   glMultiTexCoord4fvARB_p
    glMultiTexCoord4iARB
    glMultiTexCoord4ivARB_c
-   glMultiTexCoord4ivARB_c
-   glMultiTexCoord4ivARB_c
+   glMultiTexCoord4ivARB_s
+   glMultiTexCoord4ivARB_p
    glMultiTexCoord4sARB
    glMultiTexCoord4svARB_c
-   glMultiTexCoord4svARB_c
-   glMultiTexCoord4svARB_c
+   glMultiTexCoord4svARB_s
+   glMultiTexCoord4svARB_p
    glDeleteObjectARB
    glGetGLhandleARB
    glDetachObjectARB
@@ -6107,6 +6108,7 @@ sub AUTOLOAD {
     }
     
 	$AutoLoader::AUTOLOAD = $AUTOLOAD;
+printf($AUTOLOAD); printf("\n");
 	goto &AutoLoader::AUTOLOAD;
     }
     local($constname);

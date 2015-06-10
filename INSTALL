@@ -84,22 +84,20 @@
     overridden by using the EXCLUSIONS option.
 
 
-    To install in non-standard locations, use the PREFIX and LIB options
+    To install in non-standard locations, use the INSTALL_BASE option
     when generating the Makefiles:
 
-        perl Makefile.PL prefix=/PREFIXPATH [LIB=/PREFIXPATH/perl/lib]
+        perl Makefile.PL INSTALL_BASE=BASEPATH
 
-    where PREFIXPATH is the path of the directory where you wish
-    the module to be installed (e.g. binary executables in /PREFIXPATH/bin,
-    manual pages in /PREFIXPATH/man, library files in /PREFIXPATH/lib...).
-    The LIB option allows you to control where the perl module stuff goes
-    rather than the default /PREFIXPATH/lib/perl5).
+    where BASEPATH is the path of the directory where you wish
+    the module to be installed (e.g. binary executables in /BASEPATH/bin,
+    manual pages in /BASEPATH/man, library files in /BASEPATH/lib/perl5).
 
     Then either set the PERL5LIB environment variable before you run
     scripts that use the modules/libraries (see perlrun) or in your
     programs say:
  
-      use lib '/PREFIXPATH/perl/lib';
+      use lib '/BASEPATH/lib/perl5';
 
 
  3. Run 'make' ('nmake' on Windows, 'dmake' on MinGW) to build OpenGL.

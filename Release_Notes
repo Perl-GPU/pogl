@@ -4,7 +4,31 @@
 
 General Notes:
 
+  * Restored support for GLX.
+
+  * Fixed/improved a number of GLUT issues.
+
 Highlights:
+
+  * Fixed a c++ name-mangling issue that was breaking builds on Linux.
+
+  * Fixed/improved GLUT version reporting in util/glversion.c.
+
+  * Updated GL Version definitions in Makefile.PL.
+
+  * Restored GLX interface support for Makefile.PL.
+
+  * Improved FREEGLUT searching/linking for Linux and Mac OS X.
+
+  * Fixed missing OUTPUT for several pogl_glut methods.
+
+  * Added missing glutStrokeLength implementation.
+
+  * Fixed ambiguous warning messages in some OpenGL::Array methods.
+
+  * Fixed multi-texture constants/APIs/exports
+
+  * Fixed glXXXXPointer APIs
 
   * Enhanced test.pl for OpenGL::Shader and VBOs
 

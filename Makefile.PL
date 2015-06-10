@@ -11,12 +11,12 @@ use Config;
 # Supported windowing interfaces
 our $is_valid_interface =
 {
-  'AGL'		=> 'GLUT framework on Mac OS X',
-  'FREEGLUT'	=> 'FreeGLUT, preferred over GLUT',
-  'GLUT'	=> 'GLUT; often really FreeGLUT on Linux',
-  'GLX'		=> 'GLX+X11 not supported; use GLUT or FreeGLUT',
-  'W32API'	=> 'Uses WGL+FreeGLUT on CYGWIN, instead of GLX+FreeGLUT',
-  'WGL'         => 'Same as W32API',
+  'AGL'       => 'Default GLUT framework on Mac OS X',
+  'FREEGLUT'  => 'FreeGLUT, preferred over GLUT',
+  'GLUT'      => 'GLUT; often really FreeGLUT on Linux',
+  'GLX'       => 'Default GLX+X11 on Linux; use XQuartz on Mac OS X',
+  'W32API'    => 'Uses WGL+FreeGLUT on CYGWIN, instead of GLX+FreeGLUT',
+  'WGL'       => 'Same as W32API',
 };
 
 
@@ -125,7 +125,9 @@ if ($^O eq 'MSWin32' || $IS_W32API)
 our @libdirs = qw
 {
   -L/usr/lib
+  -L/usr/lib/i386-linux-gnu
   -L/usr/X11R6/lib
+  -L/opt/X11/lib
   -L/usr/local/lib
   -L/usr/openwin/lib
   -L/opt/csw/lib
@@ -141,8 +143,9 @@ our @check_libs = qw
   -lglu
   -lMesaGLU
   -lfreeglut
-  -lGLUT
+  -lglut3
   -lglut
+  -lGLUT
   -lMesaGLUT
 };
 
@@ -269,14 +272,6 @@ if ( grep { m/^interface=/i } @ARGV )
       }
       elsif ($interface eq 'GLX')
       {
-         print "\n";
-         print "***********************************************************************\n";
-         print "* ERROR: GLX interface is not supported, use GLUT or FreeGLUT instead *\n";
-         print "***********************************************************************\n";
-         print "\n";
-
-         exit 0;
-
         if (!$found_libs->{GL} && !$found_libs->{MESA} && !$found_libs->{GLX})
         {
           print "GLX interface requires GLX/X11 but the libraries were not found\n";
@@ -329,10 +324,6 @@ elsif ($IS_CYGWIN)
     die "No suitable OpenGL+GLUT interface found for CYGWIN\n";
   }
 }
-elsif ($^O eq 'darwin' && $found_libs->{GLUT})
-{
-  $interface_lib = 'AGL';
-}
 elsif ($found_libs->{FREEGLUT} || $found_libs->{FREEGLUT32})
 {
   $interface_lib = 'FREEGLUT';
@@ -340,6 +331,10 @@ elsif ($found_libs->{FREEGLUT} || $found_libs->{FREEGLUT32})
 elsif ($found_libs->{GLUT} || $found_libs->{GLUT32})
 {
   $interface_lib = 'GLUT';
+}
+elsif ($^O eq 'darwin' && $found_libs->{GLUT})
+{
+  $interface_lib = 'AGL';
 }
 else
 {
@@ -462,7 +457,9 @@ else # Everyone else
   my @includes = qw
   {
     -I/usr/include
+    -I/usr/include
     -I/usr/X11R6/include
+    -I/opt/X11/include
     -I/usr/local/include
     -I/usr/openwin/include
     -I/opt/csw/include
@@ -513,6 +510,7 @@ else # Everyone else
     -lXi
     -lICE
     -lX11
+    -lstdc++
     -lm
   };
   #-lXIE
@@ -659,10 +657,16 @@ sub get_libs
   # Mac OS X
   if ($^O eq 'darwin' && -d '/System/Library/Frameworks/OpenGL.framework')
   {
-
     $found->{GL} = 'OpenGL.framework';
     $found->{GLU} = 'AGL.framework';
-    $found->{GLUT} = 'GLUT.framework';
+    if (-e '/opt/X11/lib/libglut.3.dylib')
+    {
+      $found->{FREEGLUT} = 'glut';
+    }
+    else
+    {
+      $found->{GLUT} = 'GLUT.framework';
+    }
     return $found;
   }
 
@@ -916,6 +920,14 @@ sub get_extensions
     print "Found GLUT - unknown version\n";
   }
 
+  my $GL_VERSION;
+  my($GL_VERSION_MAJOR, $GL_VERSION_MINOR);
+  if ($gldata->{VERSION} =~ m|^(\d\.\d+)|)
+  {
+    $GL_VERSION = $1;
+    ($GL_VERSION_MAJOR,$GL_VERSION_MINOR) = split('.', $GL_VERSION);
+  }
+
   # Make an empty exclusion file if a Windows distribution build
   if ($no_excl)
   {
@@ -926,15 +938,25 @@ sub get_extensions
   else
   {
     print GLEXC "\n";
-    if ($gldata->{VERSION} =~ m|^(\d\.\d+)|)
+    if ($GL_VERSION)
     {
-      my $ver = $1;
-      print GLEXC "#define NO_GL_VERSION_2_0\n" if ($ver < 2.0);
-      print GLEXC "#define NO_GL_VERSION_1_5\n" if ($ver < 1.5);
-      print GLEXC "#define NO_GL_VERSION_1_4\n" if ($ver < 1.4);
-      print GLEXC "#define NO_GL_VERSION_1_3\n" if ($ver < 1.3);
-      print GLEXC "#define NO_GL_VERSION_1_2\n" if ($ver < 1.2);
-      print GLEXC "#define NO_GL_VERSION_1_1\n" if ($ver < 1.1);
+      print GLEXC "#define NO_GL_VERSION_4_5\n" if ($GL_VERSION < 4.5);
+      print GLEXC "#define NO_GL_VERSION_4_4\n" if ($GL_VERSION < 4.4);
+      print GLEXC "#define NO_GL_VERSION_4_3\n" if ($GL_VERSION < 4.3);
+      print GLEXC "#define NO_GL_VERSION_4_2\n" if ($GL_VERSION < 4.2);
+      print GLEXC "#define NO_GL_VERSION_4_1\n" if ($GL_VERSION < 4.1);
+      print GLEXC "#define NO_GL_VERSION_4_0\n" if ($GL_VERSION < 4.0);
+      print GLEXC "#define NO_GL_VERSION_3_3\n" if ($GL_VERSION < 3.3);
+      print GLEXC "#define NO_GL_VERSION_3_2\n" if ($GL_VERSION < 3.2);
+      print GLEXC "#define NO_GL_VERSION_3_1\n" if ($GL_VERSION < 3.1);
+      print GLEXC "#define NO_GL_VERSION_3_0\n" if ($GL_VERSION < 3.0);
+      print GLEXC "#define NO_GL_VERSION_2_1\n" if ($GL_VERSION < 2.1);
+      print GLEXC "#define NO_GL_VERSION_2_0\n" if ($GL_VERSION < 2.0);
+      print GLEXC "#define NO_GL_VERSION_1_5\n" if ($GL_VERSION < 1.5);
+      print GLEXC "#define NO_GL_VERSION_1_4\n" if ($GL_VERSION < 1.4);
+      print GLEXC "#define NO_GL_VERSION_1_3\n" if ($GL_VERSION < 1.3);
+      print GLEXC "#define NO_GL_VERSION_1_2\n" if ($GL_VERSION < 1.2);
+      print GLEXC "#define NO_GL_VERSION_1_1\n" if ($GL_VERSION < 1.1);
     }
 
     foreach my $ext (split(' ',$gldata->{EXTENSIONS}))
@@ -955,7 +977,9 @@ sub get_extensions
 
   # return Distributable Defs
   print "Have Version Data\n" if ($verbose);
-  return '-DHAVE_VER';
+  my $defines = '-DHAVE_VER';
+  $defines .= " -DGL_VERSION_USED=$GL_VERSION" if ($GL_VERSION);
+  return $defines;
 }
 
 # Takes as input a INCS string ready for MakeMaker and cleans out
