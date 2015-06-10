@@ -1351,7 +1351,6 @@ glGetBufferPointervARB_p(target,pname,...)
 	OUTPUT:
 		RETVAL
 
-
 #endif // GL_ARB_vertex_buffer_object
 
 

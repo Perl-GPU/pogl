@@ -659,7 +659,7 @@ glTexCoordPointer_c(size, type, stride, pointer)
 	GLsizei	stride
 	void *	pointer
 	CODE:
-	glTexCoordPointer(size, type, stride, pointer);
+		glTexCoordPointer(size, type, stride, pointer);
 
 #//# glTexCoordPointer_s($size, $type, $stride, (PACKED)pointer);
 void
@@ -1472,11 +1472,11 @@ glVertexPointer_s(size, type, stride, pointer)
 		void * pointer_s = NULL;
 		if ( pointer ) {
 			pointer_s = EL(pointer, width);
-		} 
+		}
 		glVertexPointer(size, type, stride, pointer_s);
 	}
 
-#//# glVertexPointer_p($size, $type, $stride, (OGA)pointer);
+#//# glVertexPointer_p($size, (OGA)pointer);
 void
 glVertexPointer_p(size, oga)
 	GLint	size
