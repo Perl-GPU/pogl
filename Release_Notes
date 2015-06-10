@@ -4,6 +4,8 @@
 
 General Notes:
 
+  * Added OpenGL::Matrix to support uniform shader matrices.
+
   * Restored support for GLX.
 
   * Fixed/improved a number of GLUT issues.
@@ -31,6 +33,11 @@ Highlights:
   * Added GLUT_VERSION to exported constant values
 
   * Fixed ambiguous warning messages in some OpenGL::Array methods.
+
+  * Updated OpenGL::Array to support 2D matrices;
+    added OpenGL::Array->get_dimensions method.
+
+  * Added OpenGL::Matrix subclass of OpenGL::Array
 
   * Fixed multi-texture constants/APIs/exports
 

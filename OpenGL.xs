@@ -113,6 +113,7 @@ MODULE = OpenGL		PACKAGE = OpenGL
 
 BOOT:
   PGOPOGL_CALL_BOOT(boot_OpenGL__RPN);
+  PGOPOGL_CALL_BOOT(boot_OpenGL__Matrix);
   PGOPOGL_CALL_BOOT(boot_OpenGL__Const);
   PGOPOGL_CALL_BOOT(boot_OpenGL__GL__Top);
   PGOPOGL_CALL_BOOT(boot_OpenGL__GL__AccuGetM);
