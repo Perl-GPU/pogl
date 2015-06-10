@@ -1554,6 +1554,6 @@ glDrawArraysEXT(mode, first, count)
 		loadProc(glDrawArraysEXT,"glDrawArraysEXT");
 
 #endif
- 
+
 #endif /* HAVE_GL */
 
