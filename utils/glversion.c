@@ -31,7 +31,7 @@ int main(int argc, char **argv)
   char *renderer = NULL;
   char *extensions = NULL;
   GLuint idWindow = 0;
-  int	glutVersion;
+  int	freeglutVersion;
 
   glutInit(&argc, argv);
   glutInitWindowSize(1,1);
@@ -39,14 +39,18 @@ int main(int argc, char **argv)
   idWindow = glutCreateWindow(PROGRAM);
   glutHideWindow();
 
-  glutVersion = glutGet(0x01FC);
   version =     (char*)glGetString(GL_VERSION);
   vendor =      (char*)glGetString(GL_VENDOR);
   renderer =    (char*)glGetString(GL_RENDERER);
   extensions =  (char*)glGetString(GL_EXTENSIONS);
 
-  printf("GLUT=%d\nVERSION=%s\nVENDOR=%s\nRENDERER=%s\nEXTENSIONS=%s\n",
-    glutVersion,version,vendor,renderer,extensions);
+  freeglutVersion = glutGet(0x01FC);
+  if(freeglutVersion != -1) {
+    printf("FREEGLUT=%d\n", freeglutVersion);
+  }
+  printf("GLUT=%d\n", GLUT_API_VERSION);
+
+  printf("VERSION=%s\nVENDOR=%s\nRENDERER=%s\nEXTENSIONS=%s\n", version, vendor, renderer, extensions);
 
   glutDestroyWindow(idWindow);
   return(0);

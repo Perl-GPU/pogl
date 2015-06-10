@@ -30,6 +30,8 @@ Highlights:
 
   * Improved FREEGLUT searching/linking for Linux and Mac OS X.
 
+  * Fixed/improved GLUT version reporting in util/glversion.c.
+
   * Enhanced test.pl for OpenGL::Shader and VBOs
 
   * suppress osx 10.9 deprecation warnings
