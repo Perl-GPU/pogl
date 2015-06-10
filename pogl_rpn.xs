@@ -1030,7 +1030,8 @@ void rpn_exec(rpn_context * ctx)
             if (stack->count > 1)
             {
               v1 = rpn_pop(stack);
-              stack->data[--pos] = (float)pow(stack->data[pos],v1);
+              pos--;
+              stack->data[pos] = (float)pow(stack->data[pos],v1);
             }
             break;
           }
@@ -1040,7 +1041,8 @@ void rpn_exec(rpn_context * ctx)
             if (stack->count > 1)
             {
               v1 = rpn_pop(stack);
-              stack->data[--pos] = (float)fmod(stack->data[pos],v1);
+              pos--;
+              stack->data[pos] = (float)fmod(stack->data[pos],v1);
             }
             break;
           }

@@ -10,6 +10,8 @@ Highlights:
 
   * Fixed multi-texture constants/APIs/exports
 
+  * fix OpenGL::Array RPN calculation issues on osx
+
   * Enhanced test.pl for OpenGL::Shader and VBOs
 
 
