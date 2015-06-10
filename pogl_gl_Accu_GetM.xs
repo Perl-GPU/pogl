@@ -393,15 +393,18 @@ glColorPointer_p(size, oga)
 	OpenGL::Array oga
 	CODE:
 	{
-#ifdef GL_ARB_vertex_buffer_object
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))
 		{
 			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
 		}
-		glColorPointer(size, oga->types[0], 0, oga->bind ? 0 : oga->data);
-#else
-		glColorPointer(size, oga->types[0], 0, oga->data);
 #endif
+		glColorPointer(size, oga->types[0], 0, data);
 	}
 
 #endif
@@ -793,15 +796,18 @@ glEdgeFlagPointer_p(oga)
 	OpenGL::Array oga
 	CODE:
 	{
-#ifdef GL_ARB_vertex_buffer_object
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))
 		{
 			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
 		}
-		glEdgeFlagPointer(0, oga->bind ? 0 : oga->data);
-#else
-		glEdgeFlagPointer(0, oga->data);
 #endif
+		glEdgeFlagPointer(0, data);
 	}
 
 #endif
