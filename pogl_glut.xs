@@ -1387,6 +1387,14 @@ GLfloat
 glutStrokeLength(font, string)
 	void * font
 	const unsigned char * string
+	CODE:
+	{
+#if defined HAVE_FREEGLUT
+		glutStrokeLength(font, string);
+#endif
+	}
+	OUTPUT:
+		RETVAL
 
 #//# void  glutStrokeString (void *fontID, const unsigned char *string)
 void
