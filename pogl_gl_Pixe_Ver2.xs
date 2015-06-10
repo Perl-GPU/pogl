@@ -648,52 +648,6 @@ glStencilOp(fail, zfail, zpass)
 	GLenum	zpass
 
 
-#ifdef GL_VERSION_1_1
-
-#// 1.1
-#//# glTexCoordPointer_c($size, $type, $stride, (CPTR)pointer);
-void
-glTexCoordPointer_c(size, type, stride, pointer)
-	GLint	size
-	GLenum	type
-	GLsizei	stride
-	void *	pointer
-	CODE:
-	glTexCoordPointer(size, type, stride, pointer);
-
-#//# glTexCoordPointer_s($size, $type, $stride, (PACKED)pointer);
-void
-glTexCoordPointer_s(size, type, stride, pointer)
-	GLint	size
-	GLenum	type
-	GLsizei	stride
-	SV *	pointer
-	CODE:
-	{
-		int width = stride ? stride : (sizeof(type)*size);
-		void * pointer_s = EL(pointer, width);
-		glTexCoordPointer(size, type, stride, pointer_s);
-	}
-
-#//# glTexCoordPointer_p($size, (OGA)pointer);
-void
-glTexCoordPointer_p(size, oga)
-	GLint	size
-	OpenGL::Array oga
-	CODE:
-	{
-#ifdef GL_ARB_vertex_buffer_object
-		if (testProc(glBindBufferARB,"glBindBufferARB"))
-		{
-			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
-		}
-		glTexCoordPointer(size, oga->types[0], 0, oga->bind ? 0 : oga->data);
-#else
-		glTexCoordPointer(size, oga->types[0], 0, oga->data);
-#endif
-	}
-
-#endif
 
 #// 1.0
 #//# glTexEnvf($target, $pname, $param);
@@ -1445,56 +1399,6 @@ glTranslatef(x, y, z)
 	GLfloat	y
 	GLfloat	z
 
-
-#ifdef GL_VERSION_1_1
-
-#// 1.1
-#//# glVertexPointer_c($size, $type, $stride, (CPTR)pointer);
-void
-glVertexPointer_c(size, type, stride, pointer)
-	GLint	size
-	GLenum	type
-	GLsizei	stride
-	void *	pointer
-	CODE:
-		glVertexPointer(size, type, stride, pointer);
-
-#//# glVertexPointer_s($size, $type, $stride, (PACKED)pointer);
-void
-glVertexPointer_s(size, type, stride, pointer)
-	GLint	size
-	GLenum	type
-	GLsizei	stride
-	SV *	pointer
-	CODE:
-	{
-		int width = stride ? stride : (sizeof(type)*size);
-		void * pointer_s = NULL;
-		if ( pointer ) {
-			pointer_s = EL(pointer, width);
-		} 
-		glVertexPointer(size, type, stride, pointer_s);
-	}
-
-#//# glVertexPointer_p($size, $type, $stride, (OGA)pointer);
-void
-glVertexPointer_p(size, oga)
-	GLint	size
-	OpenGL::Array oga
-	CODE:
-	{
-#ifdef GL_ARB_vertex_buffer_object
-		if (testProc(glBindBufferARB,"glBindBufferARB"))
-		{
-			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
-		}
-		glVertexPointer(size, oga->types[0], 0, oga->bind ? 0 : oga->data);
-#else
-		glVertexPointer(size, oga->types[0], 0, oga->data);
-#endif
-	}
-
-#endif
 
 #// 1.0
 #//# glViewport($x, $y, $width, $height);

@@ -39,7 +39,13 @@ int main(int argc, char **argv)
   idWindow = glutCreateWindow(PROGRAM);
   glutHideWindow();
 
+#ifdef GLUT_API_VERSION
+  glutVersion = GLUT_API_VERSION;
+#elif defined(FREEGLUT)
+  glutVersion = -1;
+#else
   glutVersion = glutGet(0x01FC);
+#endif
   version =     (char*)glGetString(GL_VERSION);
   vendor =      (char*)glGetString(GL_VENDOR);
   renderer =    (char*)glGetString(GL_RENDERER);

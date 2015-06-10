@@ -1534,26 +1534,6 @@ glBlendColorEXT(red, green, blue, alpha)
 		glBlendColorEXT(red, green, blue, alpha);
 
 #endif
-
-#ifdef GL_EXT_vertex_array
-
-#//# glArrayElementEXT($i);
-void
-glArrayElementEXT(i)
-	GLint	i
-	INIT:
-		loadProc(glArrayElementEXT,"glArrayElementEXT");
-
-#//# glDrawArraysEXT($mode, $first, $count);
-void
-glDrawArraysEXT(mode, first, count)
-	GLenum	mode
-	GLint	first
-	GLsizei	count
-	INIT:
-		loadProc(glDrawArraysEXT,"glDrawArraysEXT");
-
-#endif
  
 #endif /* HAVE_GL */
 

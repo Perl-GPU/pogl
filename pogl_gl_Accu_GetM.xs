@@ -355,53 +355,6 @@ glColorMaterial(face, mode)
 	GLenum	face
 	GLenum	mode
 
-#ifdef GL_VERSION_1_1
-
-#// 1.1
-#//# glColorPointer_c($size, $type, $stride, (CPTR)pointer);
-void
-glColorPointer_c(size, type, stride, pointer)
-	GLint	size
-	GLenum	type
-	GLsizei	stride
-	void *	pointer
-	CODE:
-	glColorPointer(size, type, stride, pointer);
-
-
-#//# glColorPointer_s($size, $type, $stride, (PACKED)pointer);
-void
-glColorPointer_s(size, type, stride, pointer)
-	GLint	size
-	GLenum	type
-	GLsizei	stride
-	SV *	pointer
-	CODE:
-	{
-		int width = stride ? stride : (sizeof(type)*size);
-		void * pointer_s = EL(pointer, width);
-		glColorPointer(size, type, stride, pointer_s);
-	}
-
-#//# glColorPointer_p($size, $type, $stride, (OGA)pointer);
-void
-glColorPointer_p(size, oga)
-	GLint	size
-	OpenGL::Array oga
-	CODE:
-	{
-#ifdef GL_ARB_vertex_buffer_object
-		if (testProc(glBindBufferARB,"glBindBufferARB"))
-		{
-			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
-		}
-		glColorPointer(size, oga->types[0], 0, oga->bind ? 0 : oga->data);
-#else
-		glColorPointer(size, oga->types[0], 0, oga->data);
-#endif
-	}
-
-#endif
 
 #// 1.0
 #//# glCopyPixels($x, $y, $width, $height, $type);
@@ -758,47 +711,6 @@ void
 glEdgeFlag(flag)
 	GLboolean	flag
 
-#ifdef GL_VERSION_1_1
-
-#// 1.1
-#//# glEdgeFlagPointer_c($stride, (CPTR)pointer);
-void
-glEdgeFlagPointer_c(stride, pointer)
-	GLint	stride
-	void *	pointer
-	CODE:
-	glEdgeFlagPointer(stride, pointer);
-
-#//# glEdgeFlagPointer_s($stride, (PACKED)pointer);
-void
-glEdgeFlagPointer_s(stride, pointer)
-	GLsizei	stride
-	SV *	pointer
-	CODE:
-	{
-		int width = stride ? stride : sizeof(GLboolean);
-		void * pointer_s = EL(pointer, width);
-		glEdgeFlagPointer(stride, pointer_s);
-	}
-
-#//# glEdgeFlagPointer_p($stride, (OGA)pointer);
-void
-glEdgeFlagPointer_p(oga)
-	OpenGL::Array oga
-	CODE:
-	{
-#ifdef GL_ARB_vertex_buffer_object
-		if (testProc(glBindBufferARB,"glBindBufferARB"))
-		{
-			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
-		}
-		glEdgeFlagPointer(0, oga->bind ? 0 : oga->data);
-#else
-		glEdgeFlagPointer(0, oga->data);
-#endif
-	}
-
-#endif
 
 #// 1.0
 #//# glEnable($cap);

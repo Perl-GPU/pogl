@@ -342,69 +342,7 @@ sub ourInit
 {
   my ($Width, $Height) = @_;
 
-  # Set initial colors for rainbow face
-  for (my $i=0; $i<16; $i++)
-  {
-    $rainbow[$i] = rand(1.0);
-    $rainbow_inc[$i] = 0.01 - rand(0.02);
-  }
-
-  # Initialize VBOs if supported
-  if ($hasVBO)
-  {
-    ($VertexObjID,$NormalObjID,$ColorObjID,$TexCoordObjID,$IndexObjID) =
-      glGenBuffersARB_p(5);
-
-    #glBindBufferARB(GL_ARRAY_BUFFER_ARB, $VertexObjID);
-    $verts->bind($VertexObjID);
-    glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $verts, GL_STATIC_DRAW_ARB);
-    glVertexPointer_c(3, GL_FLOAT, 0, 0);
-
-    if (DO_TESTS)
-    {
-      print "\nTests:\n";
-
-      my $size = glGetBufferParameterivARB_p(GL_ARRAY_BUFFER_ARB,
-        GL_BUFFER_SIZE_ARB);
-      print "  Vertex Buffer Size (bytes): $size\n";
-      my $count = $verts->elements();
-      print "  Vertex Buffer Size (elements): $count\n";
-
-      my $test = glGetBufferSubDataARB_p(GL_ARRAY_BUFFER_ARB,12,3,GL_FLOAT);
-      my @test = $test->retrieve(0,3);
-      my $ords = join('/',@test);
-      print "  glGetBufferSubDataARB_p: $ords\n";
-    }
-
-    #glBindBufferARB(GL_ARRAY_BUFFER_ARB, $NormalObjID);
-    $norms->bind($NormalObjID);
-    glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $norms, GL_STATIC_DRAW_ARB);
-    glNormalPointer_c(GL_FLOAT, 0, 0);
-
-    #glBindBufferARB(GL_ARRAY_BUFFER_ARB, $ColorObjID);
-    $colors->bind($ColorObjID);
-    glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $colors, GL_DYNAMIC_DRAW_ARB);
-    $rainbow->assign(0,@rainbow);
-    glBufferSubDataARB_p(GL_ARRAY_BUFFER_ARB, $rainbow_offset, $rainbow);
-    glColorPointer_c(4, GL_FLOAT, 0, 0);
-
-    #glBindBufferARB(GL_ARRAY_BUFFER_ARB, $TexCoordObjID);
-    $texcoords->bind($TexCoordObjID);
-    glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $texcoords, GL_STATIC_DRAW_ARB);
-    glTexCoordPointer_c(2, GL_FLOAT, 0, 0);
-
-    #glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, $IndexObjID);
-    $indices->bind($IndexObjID);
-    glBufferDataARB_p(GL_ELEMENT_ARRAY_BUFFER_ARB, $indices, GL_STATIC_DRAW_ARB);
-  }
-  else
-  {
-    glVertexPointer_p(3, $verts);
-    glNormalPointer_p($norms);
-    $colors->assign($rainbow_offset,@rainbow);
-    glColorPointer_p(4, $colors);
-    glTexCoordPointer_p(2, $texcoords);
-  }
+  printf("\nUsing POGL v$OpenGL::VERSION\n");
 
   # Build texture.
   ($TextureID_image,$TextureID_FBO) = glGenTextures_p(2);
@@ -413,6 +351,9 @@ sub ourInit
 
   # Initialize shaders.
   ourInitShaders();
+  
+  # Initialize vertex buffers
+  ourInitVertexBuffers();
 
   # Initialize rendering parameters
   glEnable(GL_TEXTURE_2D);
@@ -457,7 +398,6 @@ sub ourBuildTextures
 
   # Build Image Texture
   ($TextureID_image,$TextureID_FBO) = glGenTextures_p(2);
-  print "\n";
 
   # Use OpenGL::Image to load texture
   if ($hasImage && -e $Tex_File)
@@ -612,6 +552,8 @@ sub ourBuildTextures
   # Build FBO texture
   if ($hasFBO)
   {
+    printf("Using FBOs\n");
+    
     ($FrameBufferID) = glGenFramebuffersEXT_p(1);
     ($RenderBufferID) = glGenRenderbuffersEXT_p(1);
 
@@ -652,13 +594,95 @@ sub ourSelectTexture
     glBindTexture(GL_TEXTURE_2D, $FBO_On ? $TextureID_FBO : $TextureID_image);
 }
 
+sub ourInitVertexBuffers
+{
+  # Set initial colors for rainbow face
+  for (my $i=0; $i<16; $i++)
+  {
+    $rainbow[$i] = rand(1.0);
+    $rainbow_inc[$i] = 0.01 - rand(0.02);
+  }
+
+  # Initialize VBOs if supported
+  if ($hasVBO)
+  {
+    printf("Using VBOs\n");
+    
+    ($VertexObjID,$NormalObjID,$ColorObjID,$TexCoordObjID,$IndexObjID) =
+      glGenBuffersARB_p(5);
+
+    #glBindBufferARB(GL_ARRAY_BUFFER_ARB, $VertexObjID);
+    $verts->bind($VertexObjID);
+    glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $verts, GL_STATIC_DRAW_ARB);
+    glVertexPointer_c(3, GL_FLOAT, 0, 0);
+
+    if (DO_TESTS)
+    {
+      print "\nTests:\n";
+
+      my $size = glGetBufferParameterivARB_p(GL_ARRAY_BUFFER_ARB,
+        GL_BUFFER_SIZE_ARB);
+      print "  Vertex Buffer Size (bytes): $size\n";
+      my $count = $verts->elements();
+      print "  Vertex Buffer Size (elements): $count\n";
+
+      my $test = glGetBufferSubDataARB_p(GL_ARRAY_BUFFER_ARB,12,3,GL_FLOAT);
+      my @test = $test->retrieve(0,3);
+      my $ords = join('/',@test);
+      print "  glGetBufferSubDataARB_p: $ords\n";
+    }
+
+    #glBindBufferARB(GL_ARRAY_BUFFER_ARB, $NormalObjID);
+    $norms->bind($NormalObjID);
+    glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $norms, GL_STATIC_DRAW_ARB);
+    glNormalPointer_c(GL_FLOAT, 0, 0);
+
+    #glBindBufferARB(GL_ARRAY_BUFFER_ARB, $ColorObjID);
+    $colors->bind($ColorObjID);
+    glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $colors, GL_DYNAMIC_DRAW_ARB);
+    $rainbow->assign(0,@rainbow);
+    glBufferSubDataARB_p(GL_ARRAY_BUFFER_ARB, $rainbow_offset, $rainbow);
+    glColorPointer_c(4, GL_FLOAT, 0, 0);
+
+    #glBindBufferARB(GL_ARRAY_BUFFER_ARB, $TexCoordObjID);
+    $texcoords->bind($TexCoordObjID);
+    glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $texcoords, GL_STATIC_DRAW_ARB);
+    glTexCoordPointer_c(2, GL_FLOAT, 0, 0);
+
+    #glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, $IndexObjID);
+    $indices->bind($IndexObjID);
+    glBufferDataARB_p(GL_ELEMENT_ARRAY_BUFFER_ARB, $indices, GL_STATIC_DRAW_ARB);
+  }
+  else
+  {
+    glVertexPointer_p(3, $verts);
+    glNormalPointer_p($norms);
+    $colors->assign($rainbow_offset,@rainbow);
+    glColorPointer_p(4, $colors);
+    glTexCoordPointer_p(2, $texcoords);
+  }
+}
+
 sub ourInitShaders
 {
   # Setup Vertex/Fragment Programs to render FBO texture
 
-  # Use OpenGL::Shader
-  if ($hasShader && ($Shader = new OpenGL::Shader()))
+  if ($hasShader)
   {
+    my $version = $OpenGL::Shader::VERSION;
+    printf("Using OpenGL::Shader v$version\n");
+    my $types = OpenGL::Shader->GetTypes();
+    my @types = keys(%$types);
+    printf("This installation supports the following shader types: %s\n", join(',', @types));
+
+    # Use OpenGL::Shader
+    $Shader = new OpenGL::Shader();
+    if (!$Shader)
+    {
+      printf("Unable to instantiate OpenGL::Shader\n");
+      return;
+    }
+    
     my $type = $Shader->GetType();
     my $ext = lc($type);
 
@@ -674,10 +698,10 @@ sub ourInitShaders
       print "$stat\n";
     }
   }
-
   # Fall back to doing it manually
-  if ($hasFragProg)
+  elsif ($hasFragProg)
   {
+    printf("Using native OpenGL ARB Shader functions\n");
     ($VertexProgID,$FragProgID) = glGenProgramsARB_p(2);
 
     # NOP Vertex shader

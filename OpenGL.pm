@@ -3,6 +3,7 @@ package OpenGL;
 #  Copyright (c) 1998,1999 Kenneth Albanowski. All rights reserved.
 #  Copyright (c) 2007 Bob Free. All rights reserved.
 #  Copyright (c) 2009 Christopher Marshall. All rights reserved.
+#  Copyright (c) 2015 Bob Free. All rights reserved.
 #  This program is free software; you can redistribute it and/or
 #  modify it under the same terms as Perl itself.
 
@@ -11,7 +12,7 @@ require DynaLoader;
 
 use Carp;
 
-$VERSION = '0.6704';
+$VERSION = '0.6704_01';
 $BUILD_VERSION = $XS_VERSION = $VERSION;
 $VERSION = eval($VERSION);
 
@@ -31,7 +32,7 @@ our $glext_dependencies =
    GL_ARB_fragment_shader=>'1.4;ARB_shader_objects', #32
    GL_ARB_half_float_pixel=>'1.5', #40
    GL_ARB_multisample=>'1.0', #5
-   GL_ARB_multitexture=>'1.1',
+   GL_ARB_multitexture=>'1.1', # Moved to 1.2.1
    GL_ARB_pixel_buffer_object=>'1.5', #42
    GL_ARB_point_parameters=>'1.0', #14
    GL_ARB_point_sprite=>'1.4', #35
@@ -724,6 +725,74 @@ our $glext_dependencies =
    glRasterPos4sv_p
    glRasterPos4sv_s
    glRasterPos4sv_c
+
+   glActiveTexture
+   glClientActiveTexture
+   glMultiTexCoord1d
+   glMultiTexCoord1dv_c
+   glMultiTexCoord1dv_s
+   glMultiTexCoord1dv_p
+   glMultiTexCoord1f
+   glMultiTexCoord1fv_c
+   glMultiTexCoord1fv_s
+   glMultiTexCoord1fv_p
+   glMultiTexCoord1i
+   glMultiTexCoord1iv_c
+   glMultiTexCoord1iv_s
+   glMultiTexCoord1iv_p
+   glMultiTexCoord1s
+   glMultiTexCoord1sv_c
+   glMultiTexCoord1sv_s
+   glMultiTexCoord1sv_p
+   glMultiTexCoord2d
+   glMultiTexCoord2dv_c
+   glMultiTexCoord2dv_s
+   glMultiTexCoord2dv_p
+   glMultiTexCoord2f
+   glMultiTexCoord2fv_c
+   glMultiTexCoord2fv_s
+   glMultiTexCoord2fv_p
+   glMultiTexCoord2i
+   glMultiTexCoord2iv_c
+   glMultiTexCoord2iv_s
+   glMultiTexCoord2iv_p
+   glMultiTexCoord2s
+   glMultiTexCoord2sv_c
+   glMultiTexCoord2sv_s
+   glMultiTexCoord2sv_p
+   glMultiTexCoord3d
+   glMultiTexCoord3dv_c
+   glMultiTexCoord3dv_s
+   glMultiTexCoord3dv_p
+   glMultiTexCoord3f
+   glMultiTexCoord3fv_c
+   glMultiTexCoord3fv_s
+   glMultiTexCoord3fv_p
+   glMultiTexCoord3i
+   glMultiTexCoord3iv_c
+   glMultiTexCoord3iv_s
+   glMultiTexCoord3iv_p
+   glMultiTexCoord3s
+   glMultiTexCoord3sv_c
+   glMultiTexCoord3sv_s
+   glMultiTexCoord3sv_p
+   glMultiTexCoord4d
+   glMultiTexCoord4dv_c
+   glMultiTexCoord4dv_s
+   glMultiTexCoord4dv_p
+   glMultiTexCoord4f
+   glMultiTexCoord4fv_c
+   glMultiTexCoord4fv_s
+   glMultiTexCoord4fv_p
+   glMultiTexCoord4i
+   glMultiTexCoord4iv_c
+   glMultiTexCoord4iv_s
+   glMultiTexCoord4iv_p
+   glMultiTexCoord4s
+   glMultiTexCoord4sv_c
+   glMultiTexCoord4sv_s
+   glMultiTexCoord4sv_p
+   
    glPolygonOffsetEXT
    glIsTextureEXT
    glPrioritizeTexturesEXT_p
@@ -964,68 +1033,68 @@ our $glext_dependencies =
    glClientActiveTextureARB
    glMultiTexCoord1dARB
    glMultiTexCoord1dvARB_c
-   glMultiTexCoord1dvARB_c
-   glMultiTexCoord1dvARB_c
+   glMultiTexCoord1dvARB_s
+   glMultiTexCoord1dvARB_p
    glMultiTexCoord1fARB
    glMultiTexCoord1fvARB_c
-   glMultiTexCoord1fvARB_c
-   glMultiTexCoord1fvARB_c
+   glMultiTexCoord1fvARB_s
+   glMultiTexCoord1fvARB_p
    glMultiTexCoord1iARB
    glMultiTexCoord1ivARB_c
-   glMultiTexCoord1ivARB_c
-   glMultiTexCoord1ivARB_c
+   glMultiTexCoord1ivARB_s
+   glMultiTexCoord1ivARB_p
    glMultiTexCoord1sARB
    glMultiTexCoord1svARB_c
-   glMultiTexCoord1svARB_c
-   glMultiTexCoord1svARB_c
+   glMultiTexCoord1svARB_s
+   glMultiTexCoord1svARB_p
    glMultiTexCoord2dARB
    glMultiTexCoord2dvARB_c
-   glMultiTexCoord2dvARB_c
-   glMultiTexCoord2dvARB_c
+   glMultiTexCoord2dvARB_s
+   glMultiTexCoord2dvARB_p
    glMultiTexCoord2fARB
    glMultiTexCoord2fvARB_c
-   glMultiTexCoord2fvARB_c
-   glMultiTexCoord2fvARB_c
+   glMultiTexCoord2fvARB_s
+   glMultiTexCoord2fvARB_p
    glMultiTexCoord2iARB
    glMultiTexCoord2ivARB_c
-   glMultiTexCoord2ivARB_c
-   glMultiTexCoord2ivARB_c
+   glMultiTexCoord2ivARB_s
+   glMultiTexCoord2ivARB_p
    glMultiTexCoord2sARB
    glMultiTexCoord2svARB_c
-   glMultiTexCoord2svARB_c
-   glMultiTexCoord2svARB_c
+   glMultiTexCoord2svARB_s
+   glMultiTexCoord2svARB_p
    glMultiTexCoord3dARB
    glMultiTexCoord3dvARB_c
-   glMultiTexCoord3dvARB_c
-   glMultiTexCoord3dvARB_c
+   glMultiTexCoord3dvARB_s
+   glMultiTexCoord3dvARB_p
    glMultiTexCoord3fARB
    glMultiTexCoord3fvARB_c
-   glMultiTexCoord3fvARB_c
-   glMultiTexCoord3fvARB_c
+   glMultiTexCoord3fvARB_s
+   glMultiTexCoord3fvARB_p
    glMultiTexCoord3iARB
    glMultiTexCoord3ivARB_c
-   glMultiTexCoord3ivARB_c
-   glMultiTexCoord3ivARB_c
+   glMultiTexCoord3ivARB_s
+   glMultiTexCoord3ivARB_p
    glMultiTexCoord3sARB
    glMultiTexCoord3svARB_c
-   glMultiTexCoord3svARB_c
-   glMultiTexCoord3svARB_c
+   glMultiTexCoord3svARB_s
+   glMultiTexCoord3svARB_p
    glMultiTexCoord4dARB
    glMultiTexCoord4dvARB_c
-   glMultiTexCoord4dvARB_c
-   glMultiTexCoord4dvARB_c
+   glMultiTexCoord4dvARB_s
+   glMultiTexCoord4dvARB_p
    glMultiTexCoord4fARB
    glMultiTexCoord4fvARB_c
-   glMultiTexCoord4fvARB_c
-   glMultiTexCoord4fvARB_c
+   glMultiTexCoord4fvARB_s
+   glMultiTexCoord4fvARB_p
    glMultiTexCoord4iARB
    glMultiTexCoord4ivARB_c
-   glMultiTexCoord4ivARB_c
-   glMultiTexCoord4ivARB_c
+   glMultiTexCoord4ivARB_s
+   glMultiTexCoord4ivARB_p
    glMultiTexCoord4sARB
    glMultiTexCoord4svARB_c
-   glMultiTexCoord4svARB_c
-   glMultiTexCoord4svARB_c
+   glMultiTexCoord4svARB_s
+   glMultiTexCoord4svARB_p
    glDeleteObjectARB
    glGetGLhandleARB
    glDetachObjectARB
@@ -6107,6 +6176,7 @@ sub AUTOLOAD {
     }
     
 	$AutoLoader::AUTOLOAD = $AUTOLOAD;
+printf($AUTOLOAD); printf("\n");
 	goto &AutoLoader::AUTOLOAD;
     }
     local($constname);
@@ -6130,6 +6200,7 @@ sub AUTOLOAD {
 bootstrap OpenGL;
 
 *OpenGL::Array::CLONE_SKIP = sub { 1 };  # OpenGL::Array is not thread safe
+*OpenGL::Matrix::CLONE_SKIP = sub { 1 };  # OpenGL::Matrix is not thread safe
 
 # The following material is directly copied from Stan Melax's original OpenGL-0.4
 # (with modifications for OS/2).
@@ -6285,6 +6356,12 @@ sub glpCheckExtension
   }
   return 0;
 }
+
+
+
+#OpenGL::Array helper methods for normalizing names and chaining operations
+@OpenGL::Matrix::ISA = 'OpenGL::Array';
+
 
 1;
 __END__

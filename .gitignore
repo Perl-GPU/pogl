@@ -1,4 +1,5 @@
 # Various junk to skip
+.DS_Store
 *.bs
 *.exe
 *.o
@@ -13,12 +14,15 @@ Makefile
 Makefile.old
 MANIFEST
 META.yml
+MYMETA.yml
+MYMETA.json
 OpenGL.c
 OpenGL.xs-orig
 blib/
 gl_exclude.h
 pm_to_blib
 pogl_*.c
+utils/glversion
 utils/glversion.txt
 PDL-Graphics-OpenGL-Perl-OpenGL-*.tar.gz
 GIT_CHANGES
