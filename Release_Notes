@@ -18,6 +18,10 @@ Highlights:
 
   * Updated GL Version definitions in Makefile.PL.
 
+  * Fixed a c++ name-mangling issue that was breaking builds on Linux.
+
+  * Improved FREEGLUT searching/linking for Linux and Mac OS X.
+
   * Enhanced test.pl for OpenGL::Shader and VBOs
 
   * suppress osx 10.9 deprecation warnings
