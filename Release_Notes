@@ -16,6 +16,8 @@ Highlights:
 
   * Fixed missing OUTPUT for several pogl_glut methods.
 
+  * Updated GL Version definitions in Makefile.PL.
+
   * Enhanced test.pl for OpenGL::Shader and VBOs
 
   * suppress osx 10.9 deprecation warnings
