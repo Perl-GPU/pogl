@@ -717,67 +717,6 @@ void
 glIndexMask(mask)
 	GLuint	mask
 
-#ifdef GL_VERSION_1_1
-
-#// 1.1
-#//# glIndexPointer_c($type, $stride, (CPTR)pointer);
-void
-glIndexPointer_c(type, stride, pointer)
-	GLenum	type
-	GLsizei	stride
-	void *	pointer
-	CODE:
-		glIndexPointer(type, stride, pointer);
-
-#//# glIndexPointer_s($type, $stride, (PACKED)pointer);
-void
-glIndexPointer_s(type, stride, pointer)
-	GLenum	type
-	GLsizei	stride
-	SV *	pointer
-	CODE:
-	{
-		int width = stride ? stride : gl_type_size(type);
-		void * pointer_s = NULL;
-		if ( pointer ) {
-			pointer_s = EL(pointer, width);
-		}
-		glIndexPointer(type, stride, pointer_s);
-	}
-
-#endif // GL_VERSION_1_1
-
-#if defined(GL_VERSION_1_1) || defined(GL_EXT_vertex_array)
-
-#//# glIndexPointer_p((OGA)pointer);
-void
-glIndexPointer_p(oga)
-	OpenGL::Array oga
-	INIT:
-#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
-		loadProc(glIndexPointerEXT,"glIndexPointerEXT");
-#endif
-	CODE:
-	{
-		GLvoid * data = oga->data;
-#ifdef GL_VERSION_2_0
-		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
-		data = NULL;
-#elif defined(GL_ARB_vertex_buffer_object)
-		if (testProc(glBindBufferARB,"glBindBufferARB"))
-		{
-			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
-			data = NULL;
-		}
-#endif
-#ifdef GL_VERSION_1_1
-		glIndexPointer(oga->types[0], 0, data);
-#else // GL_EXT_vertex_array
-		glIndexPointerEXT(oga->types[0], 0, oga->item_count, data);
-#endif
-	}
-
-#endif
 
 #// 1.0
 #//# glInitNames();
@@ -1514,67 +1453,6 @@ glNewList(list, mode)
 void
 glEndList()
 
-#ifdef GL_VERSION_1_1
-
-#// 1.1
-#//# glNormalPointer_c($type, $stride, (CPTR)pointer);
-void
-glNormalPointer_c(type, stride, pointer)
-	GLenum	type
-	GLsizei	stride
-	void *	pointer
-	CODE:
-		glNormalPointer(type, stride, pointer);
-
-#//# glNormalPointer_s($type, $stride, (PACKED)pointer);
-void
-glNormalPointer_s(type, stride, pointer)
-	GLenum	type
-	GLsizei	stride
-	SV *	pointer
-	CODE:
-	{
-		int width = stride ? stride : (gl_type_size(type)*3);
-		void * pointer_s = NULL;
-		if ( pointer ) {
-			pointer_s = EL(pointer, width);
-		}
-		glNormalPointer(type, stride, pointer_s);
-	}
-
-#endif // GL_VERSION_1_1
-
-#if defined(GL_VERSION_1_1) || defined(GL_EXT_vertex_array)
-
-#//# glNormalPointer_p((OGA)pointer);
-void
-glNormalPointer_p(oga)
-	OpenGL::Array oga
-	INIT:
-#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
-		loadProc(glNormalPointerEXT,"glNormalPointerEXT");
-#endif
-	CODE:
-	{
-		GLvoid * data = oga->data;
-#ifdef GL_VERSION_2_0
-		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
-		data = NULL;
-#elif defined(GL_ARB_vertex_buffer_object)
-		if (testProc(glBindBufferARB,"glBindBufferARB"))
-		{
-			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
-			data = NULL;
-		}
-#endif
-#ifdef GL_VERSION_1_1
-		glNormalPointer(oga->types[0], 0, data);
-#else // GL_EXT_vertex_array
-		glNormalPointerEXT(oga->types[0], 0, oga->item_count/3, data);
-#endif
-	}
-
-#endif
 
 #// 1.0
 #//# glOrtho($left, $right, $bottom, $top, $zNear, $zFar);
