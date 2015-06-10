@@ -1,4 +1,6 @@
 - OpenGL::Shader improved error reporting for shader compiles - thanks Ivan Baidakou
+- from unreleased OpenGL::Shader 1.02: add SetArray for setting integer uniforms
+- from unreleased OpenGL::Shader 1.02: update SetMatrix to handle both 3x3 and 4x4 matrices
 
 0.7004 2025-03-19
 - re-release with higher version number for OpenGL::Array

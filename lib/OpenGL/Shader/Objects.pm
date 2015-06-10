@@ -16,7 +16,7 @@ use strict;
 use warnings;
 use Carp;
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 
 use OpenGL::Shader::Common;
 our @ISA = qw(OpenGL::Shader::Common);
@@ -51,14 +51,14 @@ modify it under the same terms as Perl itself.
 sub new {
   my $this = shift;
   my $class = ref($this) || $this;
-  my $self = OpenGL::Shader::Common->new(@_);
+  my($type) = @_;
+  my $self = OpenGL::Shader::Common->new($type);
   return undef if (!$self);
   bless($self,$class);
   # Check for required OpenGL extensions
   return undef if (OpenGL::glpCheckExtension('GL_ARB_shader_objects'));
   return undef if (OpenGL::glpCheckExtension('GL_ARB_fragment_shader'));
   return undef if (OpenGL::glpCheckExtension('GL_ARB_vertex_shader'));
-  $self->{type} = '';
   $self->{version} = '';
   $self->{description} = '';
   $self->{fragment_const} = '';
@@ -154,7 +154,17 @@ sub Map {
   return $id;
 }
 
-# Set shader vector
+# Set shader Uniform integer array
+sub SetArray {
+  my($self,$var,@values) = @_;
+  my $id = $self->Map($var);
+  return 'Unable to map $var' if (!defined($id));
+  my $count = scalar(@values);
+  eval('glUniform'.$count.'iARB($id,@values)');
+  return '';
+}
+
+# Set shader Uniform float array
 sub SetVector {
   my($self,$var,@values) = @_;
   my $id = $self->Map($var);
@@ -164,13 +174,18 @@ sub SetVector {
   return '';
 }
 
-
-# Set shader 4x4 matrix
+# Set shader matrix
 sub SetMatrix {
   my($self,$var,$oga) = @_;
   my $id = $self->Map($var);
   return 'Unable to map $var' if (!defined($id));
-  glUniformMatrix4fvARB_c($id,1,0,$oga->ptr());
+  if ($oga->elements == 16) {
+    glUniformMatrix4fvARB_c($id,1,0,$oga->ptr());
+  } elsif ($oga->elements == 9) {
+    glUniformMatrix3fvARB_c($id,1,0,$oga->ptr());
+  } else {
+    return 'Only supports 3x3 and 4x4 matrices';
+  }
   return '';
 }
 
