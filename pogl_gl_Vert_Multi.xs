@@ -14,6 +14,7 @@
 
 #include "pgopogl.h"
 
+
 #ifdef HAVE_GL
 #include "gl_util.h"
 
@@ -54,9 +55,9 @@ MODULE = OpenGL::GL::VertMulti	PACKAGE = OpenGL
 
 
 #ifdef HAVE_GL
- 
+
 #ifdef GL_EXT_vertex_array
- 
+
 #//# glVertexPointerEXT_c($size, $type, $stride, $count, (CPTR)pointer);
 void
 glVertexPointerEXT_c(size, type, stride, count, pointer)
@@ -356,7 +357,7 @@ glEdgeFlagPointerEXT_oga(oga)
 #endif
 	}
 
-#endif
+#endif // GL_EXT_vertex_array
 
 
 #ifdef GL_MESA_window_pos
@@ -403,7 +404,8 @@ glWindowPos4dMESA(x, y, z, w)
 	GLdouble	z
 	GLdouble	w
 
-#endif
+#endif // GL_MESA_window_pos
+
 
 #ifdef GL_MESA_resize_buffers
 
@@ -411,7 +413,8 @@ glWindowPos4dMESA(x, y, z, w)
 void
 glResizeBuffersMESA()
 
-#endif
+#endif // GL_MESA_resize_buffers
+
 
 #ifdef GL_ARB_draw_buffers
 
@@ -458,7 +461,9 @@ glDrawBuffersARB_p(...)
 		}
 	}
 
-#endif
+#endif // GL_ARB_draw_buffers
+
+
 #ifdef GL_VERSION_2_0
 
 #//# glDrawBuffers_c($n,(CPTR)buffers);
@@ -499,7 +504,8 @@ glDrawBuffers_p(...)
 		}
 	}
 
-#endif
+#endif // GL_VERSION_2_0
+
 
 #ifdef GL_EXT_framebuffer_object
 
@@ -887,7 +893,7 @@ glGenerateMipmapEXT(target)
 		glGenerateMipmapEXT(target);
         }
 
-#endif
+#endif // GL_EXT_framebuffer_object
 
 
 #ifdef GL_ARB_vertex_buffer_object
@@ -1393,7 +1399,7 @@ glGetBufferPointervARB_p(target,pname,...)
 		RETVAL
 
 
-#endif
+#endif // GL_ARB_vertex_buffer_object
 
 
 #ifdef GL_ARB_multitexture
@@ -1803,8 +1809,8 @@ glMultiTexCoord2svARB_p(target,s,t)
 		param[1] = t;
 		glMultiTexCoord2svARB(target,param);
 	}
- 
-#endif 
- 
-#endif /* HAVE_GL */
+
+#endif // GL_ARB_multitexture
+
+#endif // HAVE_GL
 

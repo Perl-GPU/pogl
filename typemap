@@ -2,7 +2,7 @@ TYPEMAP
 
 const unsigned char *	T_PV
 
-Display *	T_PTR
+Display *		T_PTR
 GLsizei			T_INT
 GLfloat			T_FLOAT
 GLdouble		T_DOUBLE
@@ -21,10 +21,9 @@ GLbitfield		T_INT
 GLcharARB		T_CHAR
 GLhandleARB		T_U_INT
 
-GLUnurbsObj *	T_PTROBJ
-GLUquadricObj *	T_PTROBJ
-
-PGLUtess *	T_PTROBJ
+GLUnurbsObj *		T_PTROBJ
+GLUquadricObj *		T_PTROBJ
+PGLUtess *		T_PTROBJ
 
 OpenGL::Array		T_PTROBJ
 

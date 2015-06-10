@@ -3,6 +3,7 @@
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
  *  Copyright (c) 2009 Chris Marshall. All rights reserved.
+ *  Copyright (c) 2015 Bob Free. All rights reserved.
  *  This program is free software; you can redistribute it and/or
  *  modify it under the same terms as Perl itself.
  */
@@ -239,7 +240,7 @@ enum {
 	HANDLE_GLUT_Keyboard,
 	HANDLE_GLUT_KeyboardUp,
 	HANDLE_GLUT_Mouse,
-        HANDLE_GLUT_MouseWheel,             /* Open/FreeGLUT -chm */
+    HANDLE_GLUT_MouseWheel,             /* Open/FreeGLUT -chm */
 	HANDLE_GLUT_Motion,
 	HANDLE_GLUT_PassiveMotion,
 	HANDLE_GLUT_Entry,
@@ -247,7 +248,7 @@ enum {
 	HANDLE_GLUT_WindowStatus,
 	HANDLE_GLUT_Special,
 	HANDLE_GLUT_SpecialUp,
-        HANDLE_GLUT_Joystick,               /* Open/FreeGLUT -chm */
+    HANDLE_GLUT_Joystick,               /* Open/FreeGLUT -chm */
 	HANDLE_GLUT_SpaceballMotion,
 	HANDLE_GLUT_SpaceballRotate,
 	HANDLE_GLUT_SpaceballButton,
@@ -255,7 +256,7 @@ enum {
 	HANDLE_GLUT_Dials,
 	HANDLE_GLUT_TabletMotion,
 	HANDLE_GLUT_TabletButton,
-        HANDLE_GLUT_MenuDestroy,            /* Open/FreeGLUT -chm */
+    HANDLE_GLUT_MenuDestroy,            /* Open/FreeGLUT -chm */
 	HANDLE_GLUT_Close,                  /* Open/FreeGLUT -chm */
 	HANDLE_GLUT_WMClose,                /* AGL GLUT      -chm */
 };
@@ -1300,17 +1301,17 @@ glutBitmapString(font, string)
 	void * font
 	const unsigned char * string
 	CODE:
-{
+    {
 #if defined HAVE_FREEGLUT
-	glutBitmapString(font, string);
+	    glutBitmapString(font, string);
 #else
-	int len, i;
-	len = (int) strlen(string);
-	for (i = 0; i < len; i++) {
-		glutBitmapCharacter(font, string[i]);
-	}
+    	int len, i;
+    	len = (int) strlen(string);
+    	for (i = 0; i < len; i++) {
+    		glutBitmapCharacter(font, string[i]);
+    	}
 #endif
-}
+    }
 
 #//# FreeGLUT/OpenGLUT feature
 #//# void *  glutGetProcAddress (const char *procName)
@@ -1419,7 +1420,6 @@ glutWireCylinder(radius, height, slices, stacks)
 #endif
 	}
 
-
 #//# void  glutWireRhombicDodecahedron (void)
 void
 glutWireRhombicDodecahedron()
@@ -1465,7 +1465,7 @@ void
 glutMenuDestroyFunc(handler=0, ...)
 	SV *	handler
 	CODE:
-        {
+    {
 #if defined HAVE_FREEGLUT
 		decl_gwh_xs(MenuDestroy)
 #endif

@@ -11,11 +11,11 @@ use Config;
 # Supported windowing interfaces
 our $is_valid_interface =
 {
-  'AGL'		=> 'GLUT framework on Mac OS X',
+  'AGL'			=> 'GLUT framework on Mac OS X',
   'FREEGLUT'	=> 'FreeGLUT, preferred over GLUT',
-  'GLUT'	=> 'GLUT; often really FreeGLUT on Linux',
-  'GLX'		=> 'GLX+X11 not supported; use GLUT or FreeGLUT',
-  'W32API'	=> 'Uses WGL+FreeGLUT on CYGWIN, instead of GLX+FreeGLUT',
+  'GLUT'		=> 'GLUT; often really FreeGLUT on Linux',
+  'GLX'			=> 'GLX+X11 not supported; use GLUT or FreeGLUT',
+  'W32API'		=> 'Uses WGL+FreeGLUT on CYGWIN, instead of GLX+FreeGLUT',
   'WGL'         => 'Same as W32API',
 };
 
@@ -659,7 +659,6 @@ sub get_libs
   # Mac OS X
   if ($^O eq 'darwin' && -d '/System/Library/Frameworks/OpenGL.framework')
   {
-
     $found->{GL} = 'OpenGL.framework';
     $found->{GLU} = 'AGL.framework';
     $found->{GLUT} = 'GLUT.framework';

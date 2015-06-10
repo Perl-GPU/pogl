@@ -390,5 +390,4 @@ struct oga_struct {
 
 typedef struct oga_struct oga_struct;
 
-
 typedef oga_struct * OpenGL__Array;

@@ -4,7 +4,11 @@
 
 General Notes:
 
+  * fixed some formatting/documentation issues
+
 Highlights:
+
+  * Fixed multi-texture constants/APIs/exports
 
   * Enhanced test.pl for OpenGL::Shader and VBOs
 
