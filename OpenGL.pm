@@ -33,7 +33,7 @@ our $glext_dependencies =
    GL_ARB_fragment_shader=>'1.4;ARB_shader_objects', #32
    GL_ARB_half_float_pixel=>'1.5', #40
    GL_ARB_multisample=>'1.0', #5
-   GL_ARB_multitexture=>'1.1',
+   GL_ARB_multitexture=>'1.1', # Moved to 1.2.1
    GL_ARB_pixel_buffer_object=>'1.5', #42
    GL_ARB_point_parameters=>'1.0', #14
    GL_ARB_point_sprite=>'1.4', #35
@@ -726,6 +726,74 @@ our $glext_dependencies =
    glRasterPos4sv_p
    glRasterPos4sv_s
    glRasterPos4sv_c
+
+   glActiveTexture
+   glClientActiveTexture
+   glMultiTexCoord1d
+   glMultiTexCoord1dv_c
+   glMultiTexCoord1dv_s
+   glMultiTexCoord1dv_p
+   glMultiTexCoord1f
+   glMultiTexCoord1fv_c
+   glMultiTexCoord1fv_s
+   glMultiTexCoord1fv_p
+   glMultiTexCoord1i
+   glMultiTexCoord1iv_c
+   glMultiTexCoord1iv_s
+   glMultiTexCoord1iv_p
+   glMultiTexCoord1s
+   glMultiTexCoord1sv_c
+   glMultiTexCoord1sv_s
+   glMultiTexCoord1sv_p
+   glMultiTexCoord2d
+   glMultiTexCoord2dv_c
+   glMultiTexCoord2dv_s
+   glMultiTexCoord2dv_p
+   glMultiTexCoord2f
+   glMultiTexCoord2fv_c
+   glMultiTexCoord2fv_s
+   glMultiTexCoord2fv_p
+   glMultiTexCoord2i
+   glMultiTexCoord2iv_c
+   glMultiTexCoord2iv_s
+   glMultiTexCoord2iv_p
+   glMultiTexCoord2s
+   glMultiTexCoord2sv_c
+   glMultiTexCoord2sv_s
+   glMultiTexCoord2sv_p
+   glMultiTexCoord3d
+   glMultiTexCoord3dv_c
+   glMultiTexCoord3dv_s
+   glMultiTexCoord3dv_p
+   glMultiTexCoord3f
+   glMultiTexCoord3fv_c
+   glMultiTexCoord3fv_s
+   glMultiTexCoord3fv_p
+   glMultiTexCoord3i
+   glMultiTexCoord3iv_c
+   glMultiTexCoord3iv_s
+   glMultiTexCoord3iv_p
+   glMultiTexCoord3s
+   glMultiTexCoord3sv_c
+   glMultiTexCoord3sv_s
+   glMultiTexCoord3sv_p
+   glMultiTexCoord4d
+   glMultiTexCoord4dv_c
+   glMultiTexCoord4dv_s
+   glMultiTexCoord4dv_p
+   glMultiTexCoord4f
+   glMultiTexCoord4fv_c
+   glMultiTexCoord4fv_s
+   glMultiTexCoord4fv_p
+   glMultiTexCoord4i
+   glMultiTexCoord4iv_c
+   glMultiTexCoord4iv_s
+   glMultiTexCoord4iv_p
+   glMultiTexCoord4s
+   glMultiTexCoord4sv_c
+   glMultiTexCoord4sv_s
+   glMultiTexCoord4sv_p
+   
    glPolygonOffsetEXT
    glIsTextureEXT
    glPrioritizeTexturesEXT_p
