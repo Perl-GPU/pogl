@@ -189,9 +189,9 @@ glColorPointerEXT_s(size, type, stride, count, pointer)
 		glColorPointerEXT(size, type, stride, count, pointer_s);
 	}
 
-#//# glColorPointerEXT_oga($size, (OGA)pointer);
+#//# glColorPointerEXT_p($size, (OGA)pointer);
 void
-glColorPointerEXT_oga(size, oga)
+glColorPointerEXT_p(size, oga)
 	GLint	size
 	OpenGL::Array oga
 	INIT:
@@ -338,9 +338,9 @@ glEdgeFlagPointerEXT_s(stride, count, pointer)
 		glEdgeFlagPointerEXT(stride, count, pointer_s);
 	}
 
-#//# glEdgeFlagPointerEXT_oga((OGA)pointer);
+#//# glEdgeFlagPointerEXT_p((OGA)pointer);
 void
-glEdgeFlagPointerEXT_oga(oga)
+glEdgeFlagPointerEXT_p(oga)
 	OpenGL::Array oga
 	INIT:
 		loadProc(glEdgeFlagPointerEXT,"glEdgeFlagPointerEXT");
