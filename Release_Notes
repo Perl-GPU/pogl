@@ -12,6 +12,8 @@ Highlights:
 
   * fix OpenGL::Array RPN calculation issues on osx
 
+  * Added missing glutStrokeLength implementation.
+
   * Enhanced test.pl for OpenGL::Shader and VBOs
 
   * suppress osx 10.9 deprecation warnings
