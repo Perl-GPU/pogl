@@ -1280,6 +1280,8 @@ glutBitmapHeight(font)
 		RETVAL = glutBitmapHeight(font);
 #endif
 	}
+	OUTPUT:
+		RETVAL
 
 #//# FreeGLUT/OpenGLUT feature
 #//# int  glutBitmapLength (void *font, const unsigned char *string)
@@ -1293,6 +1295,8 @@ glutBitmapLength(font, string)
 		RETVAL = glutBitmapLength(font, string);
 #endif
 	}
+	OUTPUT:
+		RETVAL
 
 #//# FreeGLUT/OpenGLUT feature
 #//# void  glutBitmapString (void *font, const unsigned char *string)
@@ -1380,6 +1384,8 @@ glutStrokeHeight(font)
 		RETVAL = glutStrokeHeight(font);
 #endif
 	}
+	OUTPUT:
+		RETVAL
 
 
 #//# float  glutStrokeLength (void *font, const unsigned char *string)

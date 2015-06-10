@@ -14,6 +14,8 @@ Highlights:
 
   * Added missing glutStrokeLength implementation.
 
+  * Fixed missing OUTPUT for several pogl_glut methods.
+
   * Enhanced test.pl for OpenGL::Shader and VBOs
 
   * suppress osx 10.9 deprecation warnings
