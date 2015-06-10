@@ -11,6 +11,9 @@
 /* OpenGL::Array */
 #define IN_POGL_ARRAY_XS
 
+/* OpenGL::Matrix */
+#define IN_POGL_MATRIX_XS
+
 /* OpenGL RPN code */
 #define IN_POGL_RPN_XS
 
@@ -1167,6 +1170,9 @@ new(Class, count, type, ...)
 		int i,j;
 
 		memset(oga,0,oga_len);
+
+		oga->dimension_count = 1;
+		oga->dimensions[0] = count;
 		
 		oga->type_count = items - 2;
 		oga->item_count = count * (items - 2);
@@ -1205,11 +1211,15 @@ new_list(Class, type, ...)
 	{
 		int oga_len = sizeof(oga_struct);
 		oga_struct * oga = malloc(oga_len);
+		int count = items - 2;
 
 		memset(oga,0,oga_len);
 
+		oga->dimension_count = 1;
+		oga->dimensions[0] = count;
+
 		oga->type_count = 1;
-		oga->item_count = items - 2;
+		oga->item_count = count;
 		oga->total_types_width = gl_type_size(type);
 		oga->data_length = oga->total_types_width * oga->item_count;
 		
@@ -1241,11 +1251,15 @@ new_scalar(Class, type, data, length)
 		void * data_s = EL(data, width*length);
 		int oga_len = sizeof(oga_struct);
 		oga_struct * oga = malloc(oga_len);
+		int count = length / width;
 
 		memset(oga,0,oga_len);
 
+		oga->dimension_count = 1;
+		oga->dimensions[0] = count;
+
 		oga->type_count = 1;
-		oga->item_count = length / width;
+		oga->item_count = count;
 		oga->total_types_width = width;
 		oga->data_length = length;
 		
@@ -1278,6 +1292,9 @@ new_pointer(Class, type, ptr, elements)
 		oga_struct * oga = malloc(sizeof(oga_struct));
 
 		memset(oga,0,oga_len);
+
+		oga->dimension_count = 1;
+		oga->dimensions[0] = elements;
 		
 		oga->type_count = 1;
 		oga->item_count = elements;
@@ -1310,6 +1327,9 @@ new_from_pointer(Class, ptr, length)
 		oga_struct * oga = malloc(sizeof(oga_struct));
 
 		memset(oga,0,oga_len);
+
+		oga->dimension_count = 1;
+		oga->dimensions[0] = length;
 		
 		oga->type_count = 1;
 		oga->item_count = length;
@@ -1871,6 +1891,25 @@ affine(oga, ...)
 
 		if (free_mat) free(mat);
 	}
+
+
+#//# @dimensions = $oga->get_dimensions();
+#//- Get OGA data array, by offset and length
+void
+get_dimensions(oga)
+	OpenGL::Array	oga
+	PPCODE:
+	{
+		int end = oga->dimension_count;
+		int i = 0;
+
+		EXTEND(sp, end);
+
+		for (;i<end;i++) {
+		    PUSHs(sv_2mortal(newSViv( oga->dimensions[i] )));
+		}
+	}
+
 
 #// OGA Destructor
 void
