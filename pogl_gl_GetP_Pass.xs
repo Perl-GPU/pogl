@@ -727,7 +727,7 @@ glIndexPointer_c(type, stride, pointer)
 	GLsizei	stride
 	void *	pointer
 	CODE:
-	glIndexPointer(type, stride, pointer);
+		glIndexPointer(type, stride, pointer);
 
 #//# glIndexPointer_s($type, $stride, (PACKED)pointer);
 void
@@ -737,26 +737,32 @@ glIndexPointer_s(type, stride, pointer)
 	SV *	pointer
 	CODE:
 	{
-		int width = stride ? stride : sizeof(type);
-		void * pointer_s = EL(pointer, width);
+		int width = stride ? stride : gl_type_size(type);
+		void * pointer_s = NULL;
+		if ( pointer ) {
+			pointer_s = EL(pointer, width);
+		}
 		glIndexPointer(type, stride, pointer_s);
 	}
 
-#//# glIndexPointer_p($type, $stride, (OGA)pointer);
+#//# glIndexPointer_p((OGA)pointer);
 void
 glIndexPointer_p(oga)
 	OpenGL::Array oga
 	CODE:
 	{
-#ifdef GL_ARB_vertex_buffer_object
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))
 		{
 			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
 		}
-		glIndexPointer(oga->types[0], 0, oga->bind ? 0 : oga->data);
-#else
-		glIndexPointer(oga->types[0], 0, oga->data);
 #endif
+		glIndexPointer(oga->types[0], 0, data);
 	}
 
 #endif
@@ -1506,8 +1512,7 @@ glNormalPointer_c(type, stride, pointer)
 	GLsizei	stride
 	void *	pointer
 	CODE:
-	glNormalPointer(type, stride, pointer);
-
+		glNormalPointer(type, stride, pointer);
 
 #//# glNormalPointer_s($type, $stride, (PACKED)pointer);
 void
@@ -1517,26 +1522,32 @@ glNormalPointer_s(type, stride, pointer)
 	SV *	pointer
 	CODE:
 	{
-		int width = stride ? stride : (sizeof(type)*3);
-		void * pointer_s = EL(pointer, width);
+		int width = stride ? stride : (gl_type_size(type)*3);
+		void * pointer_s = NULL;
+		if ( pointer ) {
+			pointer_s = EL(pointer, width);
+		}
 		glNormalPointer(type, stride, pointer_s);
 	}
 
-#//# glNormalPointer_s($type, $stride, (OGA)pointer);
+#//# glNormalPointer_p((OGA)pointer);
 void
 glNormalPointer_p(oga)
 	OpenGL::Array oga
 	CODE:
 	{
-#ifdef GL_ARB_vertex_buffer_object
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))
 		{
 			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
 		}
-		glNormalPointer(oga->types[0], 0, oga->bind ? 0 : oga->data);
-#else
-		glNormalPointer(oga->types[0], 0, oga->data);
 #endif
+		glNormalPointer(oga->types[0], 0, data);
 	}
 
 #endif

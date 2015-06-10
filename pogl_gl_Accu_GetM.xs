@@ -366,7 +366,7 @@ glColorPointer_c(size, type, stride, pointer)
 	GLsizei	stride
 	void *	pointer
 	CODE:
-	glColorPointer(size, type, stride, pointer);
+		glColorPointer(size, type, stride, pointer);
 
 
 #//# glColorPointer_s($size, $type, $stride, (PACKED)pointer);
@@ -379,26 +379,32 @@ glColorPointer_s(size, type, stride, pointer)
 	CODE:
 	{
 		int width = stride ? stride : (sizeof(type)*size);
-		void * pointer_s = EL(pointer, width);
+		void * pointer_s = NULL;
+		if ( pointer ) {
+			pointer_s = EL(pointer, width);
+		}
 		glColorPointer(size, type, stride, pointer_s);
 	}
 
-#//# glColorPointer_p($size, $type, $stride, (OGA)pointer);
+#//# glColorPointer_p($size, (OGA)pointer);
 void
 glColorPointer_p(size, oga)
 	GLint	size
 	OpenGL::Array oga
 	CODE:
 	{
-#ifdef GL_ARB_vertex_buffer_object
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))
 		{
 			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
 		}
-		glColorPointer(size, oga->types[0], 0, oga->bind ? 0 : oga->data);
-#else
-		glColorPointer(size, oga->types[0], 0, oga->data);
 #endif
+		glColorPointer(size, oga->types[0], 0, data);
 	}
 
 #endif
@@ -764,10 +770,10 @@ glEdgeFlag(flag)
 #//# glEdgeFlagPointer_c($stride, (CPTR)pointer);
 void
 glEdgeFlagPointer_c(stride, pointer)
-	GLint	stride
+	GLsizei	stride
 	void *	pointer
 	CODE:
-	glEdgeFlagPointer(stride, pointer);
+		glEdgeFlagPointer(stride, pointer);
 
 #//# glEdgeFlagPointer_s($stride, (PACKED)pointer);
 void
@@ -777,25 +783,31 @@ glEdgeFlagPointer_s(stride, pointer)
 	CODE:
 	{
 		int width = stride ? stride : sizeof(GLboolean);
-		void * pointer_s = EL(pointer, width);
+		void * pointer_s = NULL;
+		if ( pointer ) {
+			pointer_s = EL(pointer, width);
+		}
 		glEdgeFlagPointer(stride, pointer_s);
 	}
 
-#//# glEdgeFlagPointer_p($stride, (OGA)pointer);
+#//# glEdgeFlagPointer_p((OGA)pointer);
 void
 glEdgeFlagPointer_p(oga)
 	OpenGL::Array oga
 	CODE:
 	{
-#ifdef GL_ARB_vertex_buffer_object
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))
 		{
 			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
 		}
-		glEdgeFlagPointer(0, oga->bind ? 0 : oga->data);
-#else
-		glEdgeFlagPointer(0, oga->data);
 #endif
+		glEdgeFlagPointer(0, data);
 	}
 
 #endif
