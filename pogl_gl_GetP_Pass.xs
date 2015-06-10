@@ -751,15 +751,18 @@ glIndexPointer_p(oga)
 	OpenGL::Array oga
 	CODE:
 	{
-#ifdef GL_ARB_vertex_buffer_object
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))
 		{
 			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
 		}
-		glIndexPointer(oga->types[0], 0, oga->bind ? 0 : oga->data);
-#else
-		glIndexPointer(oga->types[0], 0, oga->data);
 #endif
+		glIndexPointer(oga->types[0], 0, data);
 	}
 
 #endif
@@ -1533,15 +1536,18 @@ glNormalPointer_p(oga)
 	OpenGL::Array oga
 	CODE:
 	{
-#ifdef GL_ARB_vertex_buffer_object
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))
 		{
 			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
 		}
-		glNormalPointer(oga->types[0], 0, oga->bind ? 0 : oga->data);
-#else
-		glNormalPointer(oga->types[0], 0, oga->data);
 #endif
+		glNormalPointer(oga->types[0], 0, data);
 	}
 
 #endif
