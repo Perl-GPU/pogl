@@ -738,7 +738,10 @@ glIndexPointer_s(type, stride, pointer)
 	CODE:
 	{
 		int width = stride ? stride : gl_type_size(type);
-		void * pointer_s = EL(pointer, width);
+		void * pointer_s = NULL;
+		if ( pointer ) {
+			pointer_s = EL(pointer, width);
+		}
 		glIndexPointer(type, stride, pointer_s);
 	}
 
@@ -1517,7 +1520,10 @@ glNormalPointer_s(type, stride, pointer)
 	CODE:
 	{
 		int width = stride ? stride : (gl_type_size(type)*3);
-		void * pointer_s = EL(pointer, width);
+		void * pointer_s = NULL;
+		if ( pointer ) {
+			pointer_s = EL(pointer, width);
+		}
 		glNormalPointer(type, stride, pointer_s);
 	}
 
