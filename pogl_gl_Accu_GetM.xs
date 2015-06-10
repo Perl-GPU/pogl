@@ -386,11 +386,19 @@ glColorPointer_s(size, type, stride, pointer)
 		glColorPointer(size, type, stride, pointer_s);
 	}
 
+#endif // GL_VERSION_1_1
+
+#if defined(GL_VERSION_1_1) || defined(GL_EXT_vertex_array)
+
 #//# glColorPointer_p($size, (OGA)pointer);
 void
 glColorPointer_p(size, oga)
 	GLint	size
 	OpenGL::Array oga
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glColorPointerEXT,"glColorPointerEXT");
+#endif
 	CODE:
 	{
 		GLvoid * data = oga->data;
@@ -404,7 +412,11 @@ glColorPointer_p(size, oga)
 			data = NULL;
 		}
 #endif
+#ifdef GL_VERSION_1_1
 		glColorPointer(size, oga->types[0], 0, data);
+#else // GL_EXT_vertex_array
+		glColorPointerEXT(size, oga->types[0], 0, oga->item_count/size, data);
+#endif
 	}
 
 #endif
@@ -790,10 +802,18 @@ glEdgeFlagPointer_s(stride, pointer)
 		glEdgeFlagPointer(stride, pointer_s);
 	}
 
+#endif // GL_VERSION_1_1
+
+#if defined(GL_VERSION_1_1) || defined(GL_EXT_vertex_array)
+
 #//# glEdgeFlagPointer_p((OGA)pointer);
 void
 glEdgeFlagPointer_p(oga)
 	OpenGL::Array oga
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glTexCoordPointerEXT,"glEdgeFlagPointerEXT");
+#endif
 	CODE:
 	{
 		GLvoid * data = oga->data;
@@ -807,7 +827,11 @@ glEdgeFlagPointer_p(oga)
 			data = NULL;
 		}
 #endif
+#ifdef GL_VERSION_1_1
 		glEdgeFlagPointer(0, data);
+#else // GL_EXT_vertex_array
+		glEdgeFlagPointerEXT(0, oga->item_count, data);
+#endif
 	}
 
 #endif

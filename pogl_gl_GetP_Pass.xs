@@ -745,10 +745,18 @@ glIndexPointer_s(type, stride, pointer)
 		glIndexPointer(type, stride, pointer_s);
 	}
 
+#endif // GL_VERSION_1_1
+
+#if defined(GL_VERSION_1_1) || defined(GL_EXT_vertex_array)
+
 #//# glIndexPointer_p((OGA)pointer);
 void
 glIndexPointer_p(oga)
 	OpenGL::Array oga
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glIndexPointerEXT,"glIndexPointerEXT");
+#endif
 	CODE:
 	{
 		GLvoid * data = oga->data;
@@ -762,7 +770,11 @@ glIndexPointer_p(oga)
 			data = NULL;
 		}
 #endif
+#ifdef GL_VERSION_1_1
 		glIndexPointer(oga->types[0], 0, data);
+#else // GL_EXT_vertex_array
+		glIndexPointerEXT(oga->types[0], 0, oga->item_count, data);
+#endif
 	}
 
 #endif
@@ -1530,10 +1542,18 @@ glNormalPointer_s(type, stride, pointer)
 		glNormalPointer(type, stride, pointer_s);
 	}
 
+#endif // GL_VERSION_1_1
+
+#if defined(GL_VERSION_1_1) || defined(GL_EXT_vertex_array)
+
 #//# glNormalPointer_p((OGA)pointer);
 void
 glNormalPointer_p(oga)
 	OpenGL::Array oga
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glNormalPointerEXT,"glNormalPointerEXT");
+#endif
 	CODE:
 	{
 		GLvoid * data = oga->data;
@@ -1547,7 +1567,11 @@ glNormalPointer_p(oga)
 			data = NULL;
 		}
 #endif
+#ifdef GL_VERSION_1_1
 		glNormalPointer(oga->types[0], 0, data);
+#else // GL_EXT_vertex_array
+		glNormalPointerEXT(oga->types[0], 0, oga->item_count/3, data);
+#endif
 	}
 
 #endif
