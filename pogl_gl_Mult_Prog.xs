@@ -55,10 +55,10 @@ MODULE = OpenGL::GL::MultProg	PACKAGE = OpenGL
 
 #ifdef HAVE_GL
 
- 
+
 #ifdef GL_ARB_multitexture
- 
- 
+
+
 #//# glMultiTexCoord3dARB($target,$s,$t,$r);
 void
 glMultiTexCoord3dARB(target,s,t,r)
@@ -1705,7 +1705,7 @@ glGetShaderSourceARB_p(obj)
 		}
 	}
 
-#endif
+#endif // GL_ARB_shader_objects
 
 
 #ifdef GL_ARB_vertex_program
@@ -1967,7 +1967,7 @@ glProgramEnvParameter4fvARB_p(target,index,x,y,z,w)
 		glProgramEnvParameter4fvARB(target,index,param);
 	}
 
-#endif
+#endif // GL_ARB_vertex_program
  
  
 #endif /* HAVE_GL */

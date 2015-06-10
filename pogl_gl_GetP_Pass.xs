@@ -727,7 +727,7 @@ glIndexPointer_c(type, stride, pointer)
 	GLsizei	stride
 	void *	pointer
 	CODE:
-	glIndexPointer(type, stride, pointer);
+		glIndexPointer(type, stride, pointer);
 
 #//# glIndexPointer_s($type, $stride, (PACKED)pointer);
 void
@@ -742,7 +742,7 @@ glIndexPointer_s(type, stride, pointer)
 		glIndexPointer(type, stride, pointer_s);
 	}
 
-#//# glIndexPointer_p($type, $stride, (OGA)pointer);
+#//# glIndexPointer_p((OGA)pointer);
 void
 glIndexPointer_p(oga)
 	OpenGL::Array oga
@@ -1506,8 +1506,7 @@ glNormalPointer_c(type, stride, pointer)
 	GLsizei	stride
 	void *	pointer
 	CODE:
-	glNormalPointer(type, stride, pointer);
-
+		glNormalPointer(type, stride, pointer);
 
 #//# glNormalPointer_s($type, $stride, (PACKED)pointer);
 void
@@ -1522,7 +1521,7 @@ glNormalPointer_s(type, stride, pointer)
 		glNormalPointer(type, stride, pointer_s);
 	}
 
-#//# glNormalPointer_s($type, $stride, (OGA)pointer);
+#//# glNormalPointer_p((OGA)pointer);
 void
 glNormalPointer_p(oga)
 	OpenGL::Array oga

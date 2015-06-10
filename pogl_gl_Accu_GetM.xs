@@ -366,7 +366,7 @@ glColorPointer_c(size, type, stride, pointer)
 	GLsizei	stride
 	void *	pointer
 	CODE:
-	glColorPointer(size, type, stride, pointer);
+		glColorPointer(size, type, stride, pointer);
 
 
 #//# glColorPointer_s($size, $type, $stride, (PACKED)pointer);
@@ -383,7 +383,7 @@ glColorPointer_s(size, type, stride, pointer)
 		glColorPointer(size, type, stride, pointer_s);
 	}
 
-#//# glColorPointer_p($size, $type, $stride, (OGA)pointer);
+#//# glColorPointer_p($size, (OGA)pointer);
 void
 glColorPointer_p(size, oga)
 	GLint	size
@@ -767,7 +767,7 @@ glEdgeFlagPointer_c(stride, pointer)
 	GLint	stride
 	void *	pointer
 	CODE:
-	glEdgeFlagPointer(stride, pointer);
+		glEdgeFlagPointer(stride, pointer);
 
 #//# glEdgeFlagPointer_s($stride, (PACKED)pointer);
 void
@@ -781,7 +781,7 @@ glEdgeFlagPointer_s(stride, pointer)
 		glEdgeFlagPointer(stride, pointer_s);
 	}
 
-#//# glEdgeFlagPointer_p($stride, (OGA)pointer);
+#//# glEdgeFlagPointer_p((OGA)pointer);
 void
 glEdgeFlagPointer_p(oga)
 	OpenGL::Array oga
