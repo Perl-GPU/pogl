@@ -93,6 +93,8 @@
     the module to be installed (e.g. binary executables in /BASEPATH/bin,
     manual pages in /BASEPATH/man, library files in /BASEPATH/lib/perl5).
 
+    Note: on Linux, BASEPATH should generally be set to /usr.
+
     Then either set the PERL5LIB environment variable before you run
     scripts that use the modules/libraries (see perlrun) or in your
     programs say:
