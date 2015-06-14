@@ -26,6 +26,8 @@ Highlights:
 
   * suppress osx 10.9 deprecation warnings
 
+  * Added GLUT_VERSION to exported constant values
+
   * fix OSX warnings about data types
 
 
