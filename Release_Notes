@@ -29,6 +29,8 @@ Highlights:
   * Fixed glutCloseFunc for Mac OS X. 
 
   * Added missing glutStrokeLength implementation.
+
+  * Added GLUT_VERSION to exported constant values
   
   * Fixed ambiguous warning messages in some OpenGL::Array methods.
   
