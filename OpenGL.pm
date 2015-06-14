@@ -4378,6 +4378,7 @@ our $glext_dependencies =
    GLUT_RGBA
    GLUT_INDEX
    GLUT_INIT_STATE
+   GLUT_VERSION
    GLUT_SINGLE
    GLUT_DOUBLE
    GLUT_ACCUM
