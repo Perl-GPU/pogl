@@ -24,6 +24,8 @@ Highlights:
 
   * Added missing glutStrokeLength implementation.
 
+  * Added GLUT_VERSION to exported constant values
+
   * Fixed ambiguous warning messages in some OpenGL::Array methods.
 
   * Fixed multi-texture constants/APIs/exports
