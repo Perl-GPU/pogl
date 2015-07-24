@@ -4,11 +4,17 @@
 
 General Notes:
 
-  * TBD
+  * Fixes a number of bugs since the last release.  Thanks to
+    Christian Walde, Olaf Dabrunz, and Alessandro Ranellucci for
+    their contributions.
 
 Highlights:
 
-  * TBD
+  * Fix item_count error in OpenGL::Array implementation
+
+  * Fix POGL bug #12 re thread safety
+
+  * Fix POGL bug #16 "Free to wrong pool" caused by calloc()
 
 
 
