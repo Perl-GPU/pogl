@@ -43,6 +43,8 @@ Highlights:
     report of the problem in bug #21 but it motivated this
     release.  Thanks for the report, Richard.
 
+  * Fixed sf.net #20 "Prefer system GL/#gl.h on non-Win32"
+
 
 
 +------------------------------------------------------------------------+
