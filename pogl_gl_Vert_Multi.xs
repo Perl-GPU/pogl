@@ -1140,53 +1140,6 @@ glEdgeFlagPointer_p(oga)
 #endif // GL_EXT_vertex_array
 
 
-#ifdef GL_MESA_window_pos
-
-#// glWindowPos2iMESA($x, $y);
-void
-glWindowPos2iMESA(x, y)
-	GLint	x
-	GLint	y
-
-#// glWindowPos2dMESA($x, $y);
-void
-glWindowPos2dMESA(x, y)
-	GLdouble	x
-	GLdouble	y
-
-#// glWindowPos3iMESA($x, $y, $z);
-void
-glWindowPos3iMESA(x, y, z)
-	GLint	x
-	GLint	y
-	GLint	z
-
-#// glWindowPos3dMESA($x, $y, $z);
-void
-glWindowPos3dMESA(x, y, z)
-	GLdouble	x
-	GLdouble	y
-	GLdouble	z
-
-#// glWindowPos4iMESA($x, $y, $z, $w);
-void
-glWindowPos4iMESA(x, y, z, w)
-	GLint	x
-	GLint	y
-	GLint	z
-	GLint	w
-
-#// glWindowPos4dMESA($x, $y, $z, $w);
-void
-glWindowPos4dMESA(x, y, z, w)
-	GLdouble	x
-	GLdouble	y
-	GLdouble	z
-	GLdouble	w
-
-#endif // GL_MESA_window_pos
-
-
 #ifdef GL_MESA_resize_buffers
 
 #// glResizeBuffersMESA();
