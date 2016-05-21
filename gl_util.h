@@ -13,7 +13,7 @@
 #endif
 
 /* Provide GL header files for Windows */
-#define INCLUDE_LOCAL_HEADER !defined(HAVE_W32API)
+#define INCLUDE_LOCAL_HEADER defined(HAVE_W32API)
 #if INCLUDE_LOCAL_HEADER
 #include "./include/GL/gl.h"
 #else
