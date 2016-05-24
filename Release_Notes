@@ -8,6 +8,8 @@ General Notes:
 
   * Fixed some outstanding bugs from sf.net
 
+  * on win32, clean up mingw recognition and allow gmake
+
 Highlights:
 
   * Fixed multi-texture constants/APIs/exports
