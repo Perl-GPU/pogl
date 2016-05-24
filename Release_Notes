@@ -1,4 +1,29 @@
 +------------------------------------------------------------------------+
+|                  OpenGL-0.6704_03
++------------------------------------------------------------------------+
+
+General Notes:
+
+  * Fixed some outstanding bugs from sf.net
+
+  * Merge master and bfree
+
+  * Fix build problems for win32 platforms
+
+Highlights:
+
+  * Fixed sf.net #20 "Prefer system GL/#gl.h on non-Win32"
+
+  * Fixed sf.net #21 "delete functions removed from Mesa 10.6"
+
+  * Fixed sf.net #22 "Perl::OpenGL make test fails (undefined
+    symbol: glWindowPos4iMESA)".  NOTE: This is a duplicate
+    report of the problem in bug #21 but it motivated this
+    release.  Thanks for the report, Richard.
+
+
+
++------------------------------------------------------------------------+
 |                  OpenGL-0.6704_02
 +------------------------------------------------------------------------+
 
