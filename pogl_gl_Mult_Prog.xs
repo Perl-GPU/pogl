@@ -55,9 +55,459 @@ MODULE = OpenGL::GL::MultProg	PACKAGE = OpenGL
 
 #ifdef HAVE_GL
 
+ 
+#ifdef GL_ARB_multitexture
+ 
+ 
+#//# glMultiTexCoord3dARB($target,$s,$t,$r);
+void
+glMultiTexCoord3dARB(target,s,t,r)
+	GLenum target
+	GLdouble s
+	GLdouble t
+	GLdouble r
+	INIT:
+		loadProc(glMultiTexCoord3dARB,"glMultiTexCoord3dARB");
+	CODE:
+		glMultiTexCoord3dARB(target,s,t,r);
+
+#//# glMultiTexCoord3dvARB_c(target,(CPTR)v);
+void
+glMultiTexCoord3dvARB_c(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord3dvARB,"glMultiTexCoord3dvARB");
+	CODE:
+		glMultiTexCoord3dvARB(target,v);
+
+#//# glMultiTexCoord3dvARB_s(target,(PACKED)v);
+void
+glMultiTexCoord3dvARB_s(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord3dvARB,"glMultiTexCoord3dvARB");
+	CODE:
+	{
+		GLdouble * v_s = EL(v, sizeof(GLdouble));
+		glMultiTexCoord3dvARB(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord3dARB
+#//# glMultiTexCoord3dvARB_p($target,$s,$t,$r);
+void
+glMultiTexCoord3dvARB_p(target,s,t,r)
+	GLenum target
+	GLdouble s
+	GLdouble t
+	GLdouble r
+	INIT:
+		loadProc(glMultiTexCoord3dvARB,"glMultiTexCoord3dvARB");
+	CODE:
+	{
+		GLdouble param[3];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		glMultiTexCoord3dvARB(target,param);
+	}
+
+#//# glMultiTexCoord3fARB($target,$s,$t,$r);
+void
+glMultiTexCoord3fARB(target,s,t,r)
+	GLenum target
+	GLfloat s
+	GLfloat t
+	GLfloat r
+	INIT:
+		loadProc(glMultiTexCoord3fARB,"glMultiTexCoord3fARB");
+	CODE:
+		glMultiTexCoord3fARB(target,s,t,r);
+
+#//# glMultiTexCoord3fvARB_c($target,(CPTR)v);
+void
+glMultiTexCoord3fvARB_c(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord3fvARB,"glMultiTexCoord3fvARB");
+	CODE:
+		glMultiTexCoord3fvARB(target,v);
+
+#//# glMultiTexCoord3fvARB_s($target,(PACKED)v);
+void
+glMultiTexCoord3fvARB_s(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord3fvARB,"glMultiTexCoord3fvARB");
+	CODE:
+	{
+		GLfloat * v_s = EL(v, sizeof(GLfloat));
+		glMultiTexCoord3fvARB(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord3fARB
+#//# glMultiTexCoord3fvARB_p($target,$s,$t,$r);
+void
+glMultiTexCoord3fvARB_p(target,s,t,r)
+	GLenum target
+	GLfloat s
+	GLfloat t
+	GLfloat r
+	INIT:
+		loadProc(glMultiTexCoord3fvARB,"glMultiTexCoord3fvARB");
+	CODE:
+	{
+		GLfloat param[3];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		glMultiTexCoord3fvARB(target,param);
+	}
+
+#//# glMultiTexCoord3iARB($target,$s,$t,$r);
+void
+glMultiTexCoord3iARB(target,s,t,r)
+	GLenum target
+	GLint s
+	GLint t
+	GLint r
+	INIT:
+		loadProc(glMultiTexCoord3iARB,"glMultiTexCoord3iARB");
+	CODE:
+		glMultiTexCoord3iARB(target,s,t,r);
+
+#//# glMultiTexCoord3ivARB_c($target,(CPTR)v);
+void
+glMultiTexCoord3ivARB_c(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord3ivARB,"glMultiTexCoord3ivARB");
+	CODE:
+		glMultiTexCoord3ivARB(target,v);
+
+#//# glMultiTexCoord3ivARB_s($target,(PACKED)v);
+void
+glMultiTexCoord3ivARB_s(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord3ivARB,"glMultiTexCoord3ivARB");
+	CODE:
+	{
+		GLint * v_s = EL(v, sizeof(GLint));
+		glMultiTexCoord3ivARB(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord3iARB
+#//# glMultiTexCoord3ivARB_p($target,$s,$t,$r);
+void
+glMultiTexCoord3ivARB_p(target,s,t,r)
+	GLenum target
+	GLint s
+	GLint t
+	GLint r
+	INIT:
+		loadProc(glMultiTexCoord3ivARB,"glMultiTexCoord3ivARB");
+	CODE:
+	{
+		GLint param[3];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		glMultiTexCoord3ivARB(target,param);
+	}
+
+#//# glMultiTexCoord3sARB($target,$s,$t,$r);
+void
+glMultiTexCoord3sARB(target,s,t,r)
+	GLenum target
+	GLshort s
+	GLshort t
+	GLshort r
+	INIT:
+		loadProc(glMultiTexCoord3sARB,"glMultiTexCoord3sARB");
+	CODE:
+		glMultiTexCoord3sARB(target,s,t,r);
+
+#//# glMultiTexCoord3svARB_c($target,(CPTR)v);
+void
+glMultiTexCoord3svARB_c(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord3svARB,"glMultiTexCoord3svARB");
+	CODE:
+		glMultiTexCoord3svARB(target,v);
+
+#//# glMultiTexCoord3svARB_s($target,(PACKED)v);
+void
+glMultiTexCoord3svARB_s(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord3svARB,"glMultiTexCoord3svARB");
+	CODE:
+	{
+		GLshort * v_s = EL(v, sizeof(GLshort));
+		glMultiTexCoord3svARB(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord3sARB
+#//# glMultiTexCoord3svARB_p($target,$s,$t,$r);
+void
+glMultiTexCoord3svARB_p(target,s,t,r)
+	GLenum target
+	GLshort s
+	GLshort t
+	GLshort r
+	INIT:
+		loadProc(glMultiTexCoord3svARB,"glMultiTexCoord3svARB");
+	CODE:
+	{
+		GLshort param[3];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		glMultiTexCoord3svARB(target,param);
+	}
+
+#//# glMultiTexCoord4dARB($target,$s,$t,$r,$q);
+void
+glMultiTexCoord4dARB(target,s,t,r,q)
+	GLenum target
+	GLdouble s
+	GLdouble t
+	GLdouble r
+	GLdouble q
+	INIT:
+		loadProc(glMultiTexCoord4dARB,"glMultiTexCoord4dARB");
+	CODE:
+		glMultiTexCoord4dARB(target,s,t,r,q);
+
+#//# glMultiTexCoord4dvARB_c($target,(CPTR)v);
+void
+glMultiTexCoord4dvARB_c(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord4dvARB,"glMultiTexCoord4dvARB");
+	CODE:
+		glMultiTexCoord4dvARB(target,v);
+
+#//# glMultiTexCoord4dvARB_s($target,(PACKED)v);
+void
+glMultiTexCoord4dvARB_s(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord4dvARB,"glMultiTexCoord4dvARB");
+	CODE:
+	{
+		GLdouble * v_s = EL(v, sizeof(GLdouble));
+		glMultiTexCoord4dvARB(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord4dARB
+#//# glMultiTexCoord4dvARB_p($target,$s,$t,$r,$q);
+void
+glMultiTexCoord4dvARB_p(target,s,t,r,q)
+	GLenum target
+	GLdouble s
+	GLdouble t
+	GLdouble r
+	GLdouble q
+	INIT:
+		loadProc(glMultiTexCoord4dvARB,"glMultiTexCoord4dvARB");
+	CODE:
+	{
+		GLdouble param[4];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		param[3] = q;
+		glMultiTexCoord4dvARB(target,param);
+	}
+
+#//# glMultiTexCoord4fARB($target,$s,$t,$r,$q);
+void
+glMultiTexCoord4fARB(target,s,t,r,q)
+	GLenum target
+	GLfloat s
+	GLfloat t
+	GLfloat r
+	GLfloat q
+	INIT:
+		loadProc(glMultiTexCoord4fARB,"glMultiTexCoord4fARB");
+	CODE:
+		glMultiTexCoord4fARB(target,s,t,r,q);
+
+#//# glMultiTexCoord4fvARB_c($target,(CPTR)v);
+void
+glMultiTexCoord4fvARB_c(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord4fvARB,"glMultiTexCoord4fvARB");
+	CODE:
+		glMultiTexCoord4fvARB(target,v);
+
+#//# glMultiTexCoord4fvARB_s($target,(PACKED)v);
+void
+glMultiTexCoord4fvARB_s(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord4fvARB,"glMultiTexCoord4fvARB");
+	CODE:
+	{
+		GLfloat * v_s = EL(v, sizeof(GLfloat));
+		glMultiTexCoord4fvARB(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord4fARB
+#//# glMultiTexCoord4fvARB_p($target,$s,$t,$r,$q);
+void
+glMultiTexCoord4fvARB_p(target,s,t,r,q)
+	GLenum target
+	GLfloat s
+	GLfloat t
+	GLfloat r
+	GLfloat q
+	INIT:
+		loadProc(glMultiTexCoord4fvARB,"glMultiTexCoord4fvARB");
+	CODE:
+	{
+		GLfloat param[4];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		param[3] = q;
+		glMultiTexCoord4fvARB(target,param);
+	}
+
+#//# glMultiTexCoord4iARB($target,$s,$t,$r,$q)
+void
+glMultiTexCoord4iARB(target,s,t,r,q)
+	GLenum target
+	GLint s
+	GLint t
+	GLint r
+	GLint q
+	INIT:
+		loadProc(glMultiTexCoord4iARB,"glMultiTexCoord4iARB");
+	CODE:
+		glMultiTexCoord4iARB(target,s,t,r,q);
+
+#//# glMultiTexCoord4ivARB_c($target,(CPTR)v);
+void
+glMultiTexCoord4ivARB_c(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord4ivARB,"glMultiTexCoord4ivARB");
+	CODE:
+		glMultiTexCoord4ivARB(target,v);
+
+#//# glMultiTexCoord4ivARB_s($target,(PACKED)v);
+void
+glMultiTexCoord4ivARB_s(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord4ivARB,"glMultiTexCoord4ivARB");
+	CODE:
+	{
+		GLint * v_s = EL(v, sizeof(GLint));
+		glMultiTexCoord4ivARB(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord4iARB
+#//# glMultiTexCoord4ivARB_p($target,$s,$t,$r,$q);
+void
+glMultiTexCoord4ivARB_p(target,s,t,r,q)
+	GLenum target
+	GLint s
+	GLint t
+	GLint r
+	GLint q
+	INIT:
+		loadProc(glMultiTexCoord4ivARB,"glMultiTexCoord4ivARB");
+	CODE:
+	{
+		GLint param[4];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		param[3] = q;
+		glMultiTexCoord4ivARB(target,param);
+	}
+
+#//# glMultiTexCoord4sARB($target,$s,$t,$r,$q);
+void
+glMultiTexCoord4sARB(target,s,t,r,q)
+	GLenum target
+	GLshort s
+	GLshort t
+	GLshort r
+	GLshort q
+	INIT:
+		loadProc(glMultiTexCoord4sARB,"glMultiTexCoord4sARB");
+	CODE:
+		glMultiTexCoord4sARB(target,s,t,r,q);
+
+#//# glMultiTexCoord4svARB_c($target,(CPTR)v);
+void
+glMultiTexCoord4svARB_c(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord4svARB,"glMultiTexCoord4svARB");
+	CODE:
+		glMultiTexCoord4svARB(target,v);
+
+#//# glMultiTexCoord4svARB_s($target,(PACKED)v);
+void
+glMultiTexCoord4svARB_s(target,v)
+	GLenum target
+	void *v
+	INIT:
+		loadProc(glMultiTexCoord4svARB,"glMultiTexCoord4svARB");
+	CODE:
+	{
+		GLshort * v_s = EL(v, sizeof(GLshort));
+		glMultiTexCoord4svARB(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord4sARB
+#//# glMultiTexCoord4svARB_p($target,$s,$t,$r,$q);
+void
+glMultiTexCoord4svARB_p(target,s,t,r,q)
+	GLenum target
+	GLshort s
+	GLshort t
+	GLshort r
+	GLshort q
+	INIT:
+		loadProc(glMultiTexCoord4svARB,"glMultiTexCoord4svARB");
+	CODE:
+	{
+		GLshort param[4];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		param[3] = q;
+		glMultiTexCoord4svARB(target,param);
+	}
+
+#endif
+
+
 
 #ifdef GL_ARB_shader_objects
-
 
 #//# glDeleteObjectARB($obj);
 void

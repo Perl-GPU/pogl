@@ -717,6 +717,49 @@ void
 glIndexMask(mask)
 	GLuint	mask
 
+#ifdef GL_VERSION_1_1
+
+#// 1.1
+#//# glIndexPointer_c($type, $stride, (CPTR)pointer);
+void
+glIndexPointer_c(type, stride, pointer)
+	GLenum	type
+	GLsizei	stride
+	void *	pointer
+	CODE:
+	glIndexPointer(type, stride, pointer);
+
+#//# glIndexPointer_s($type, $stride, (PACKED)pointer);
+void
+glIndexPointer_s(type, stride, pointer)
+	GLenum	type
+	GLsizei	stride
+	SV *	pointer
+	CODE:
+	{
+		int width = stride ? stride : sizeof(type);
+		void * pointer_s = EL(pointer, width);
+		glIndexPointer(type, stride, pointer_s);
+	}
+
+#//# glIndexPointer_p($type, $stride, (OGA)pointer);
+void
+glIndexPointer_p(oga)
+	OpenGL::Array oga
+	CODE:
+	{
+#ifdef GL_ARB_vertex_buffer_object
+		if (testProc(glBindBufferARB,"glBindBufferARB"))
+		{
+			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+		}
+		glIndexPointer(oga->types[0], 0, oga->bind ? 0 : oga->data);
+#else
+		glIndexPointer(oga->types[0], 0, oga->data);
+#endif
+	}
+
+#endif
 
 #// 1.0
 #//# glInitNames();
@@ -1453,6 +1496,50 @@ glNewList(list, mode)
 void
 glEndList()
 
+#ifdef GL_VERSION_1_1
+
+#// 1.1
+#//# glNormalPointer_c($type, $stride, (CPTR)pointer);
+void
+glNormalPointer_c(type, stride, pointer)
+	GLenum	type
+	GLsizei	stride
+	void *	pointer
+	CODE:
+	glNormalPointer(type, stride, pointer);
+
+
+#//# glNormalPointer_s($type, $stride, (PACKED)pointer);
+void
+glNormalPointer_s(type, stride, pointer)
+	GLenum	type
+	GLsizei	stride
+	SV *	pointer
+	CODE:
+	{
+		int width = stride ? stride : (sizeof(type)*3);
+		void * pointer_s = EL(pointer, width);
+		glNormalPointer(type, stride, pointer_s);
+	}
+
+#//# glNormalPointer_s($type, $stride, (OGA)pointer);
+void
+glNormalPointer_p(oga)
+	OpenGL::Array oga
+	CODE:
+	{
+#ifdef GL_ARB_vertex_buffer_object
+		if (testProc(glBindBufferARB,"glBindBufferARB"))
+		{
+			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+		}
+		glNormalPointer(oga->types[0], 0, oga->bind ? 0 : oga->data);
+#else
+		glNormalPointer(oga->types[0], 0, oga->data);
+#endif
+	}
+
+#endif
 
 #// 1.0
 #//# glOrtho($left, $right, $bottom, $top, $zNear, $zFar);
