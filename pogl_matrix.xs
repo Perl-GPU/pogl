@@ -116,27 +116,27 @@ static void set_data_identity(GLfloat * data, int size)
 }
 
 static void set_data_frustrum(GLfloat * data,
-    GLfloat left, GLfloat right, GLfloat top, GLfloat bottom, GLfloat near, GLfloat far)
+    GLfloat left, GLfloat right, GLfloat top, GLfloat bottom, GLfloat n, GLfloat f)
 {
     GLfloat width = right-left;
     GLfloat height = bottom-top;
-    GLfloat depth = far-near;
+    GLfloat depth = f-n;
 
-    data[0]     = near*2.0/width;
+    data[0]     = n*2.0/width;
     data[1]     = 0.0;
     data[2]     = 0.0;
     data[3]     = 0.0;
     data[4]     = 0.0;
-    data[5]     = near*2.0/height;
+    data[5]     = n*2.0/height;
     data[6]     = 0.0;
     data[7]     = 0.0;
     data[8]     = (right+left)/width;
     data[9]     = (bottom+top)/height;
-    data[10]    = -(far+near)/depth;
+    data[10]    = -(f+n)/depth;
     data[11]    = -1.0;
     data[12]    = 0.0;
     data[13]    = 0.0;
-    data[14]    = -(far*near*2.0)/depth;
+    data[14]    = -(f*n*2.0)/depth;
     data[15]    = 0.0;
 }
 
@@ -405,19 +405,19 @@ set_quaternion(mat, degrees, ...)
 #//# $status = $mat->set_frustrum($left, $right, $top, $bottom, $near, $far);
 #//- Set 4x4 Frustrum Matrix; returns 0 if successful
 GLint
-set_frustrum(mat, left, right, top, bottom, near, far)
+set_frustrum(mat, left, right, top, bottom, n, f)
 	OpenGL::Matrix	mat
 	GLfloat         left
 	GLfloat         right
 	GLfloat         top
 	GLfloat         bottom
-	GLfloat         near
-	GLfloat         far
+	GLfloat         n
+	GLfloat         f
 	CODE:
 	{
 	    needs_4x4(mat, "set_frustrum");
 
-        set_data_frustrum((GLfloat*)mat->data, left, right, top, bottom, near, far);
+        set_data_frustrum((GLfloat*)mat->data, left, right, top, bottom, n, f);
 
         RETVAL = 0;
 	}
@@ -427,21 +427,21 @@ set_frustrum(mat, left, right, top, bottom, near, far)
 #//# $status = $mat->set_perspective($width, $height, $near, $far, $fov);
 #//- Set 4x4 Perspective Matrix; returns 0 if successful
 GLint
-set_perspective(mat, width, height, near, far, fov)
+set_perspective(mat, width, height, n, f, fov)
 	OpenGL::Matrix	mat
 	GLfloat         width
 	GLfloat         height
-	GLfloat         near
-	GLfloat         far
+	GLfloat         n
+	GLfloat         f
 	GLfloat         fov
 	CODE:
 	{
 	    needs_4x4(mat, "set_perspective");
 
         double aspect = width/height;
-        double h_2 = near*tan(fov*PI/360);
+        double h_2 = n*tan(fov*PI/360);
         double w_2 = h_2*aspect;
-        set_data_frustrum((GLfloat*)mat->data, -w_2, w_2, -h_2, h_2, near, far);
+        set_data_frustrum((GLfloat*)mat->data, -w_2, w_2, -h_2, h_2, n, f);
 
         RETVAL = 0;
 	}
@@ -451,21 +451,21 @@ set_perspective(mat, width, height, near, far, fov)
 #//# $status = $mat->set_ortho($left, $right, $top, $bottom, $near, $far);
 #//- Set 4x4 Perspective Matrix; returns 0 if successful
 GLint
-set_ortho(mat, left, right, top, bottom, near, far)
+set_ortho(mat, left, right, top, bottom, n, f)
 	OpenGL::Matrix	mat
 	GLfloat         left
 	GLfloat         right
 	GLfloat         top
 	GLfloat         bottom
-	GLfloat         near
-	GLfloat         far
+	GLfloat         n
+	GLfloat         f
 	CODE:
 	{
 	    needs_4x4(mat, "set_ortho");
 
         GLfloat width = right-left;
         GLfloat height = bottom-top;
-        GLfloat depth = far-near;
+        GLfloat depth = f-n;
 
 		GLfloat * data = (GLfloat*)mat->data;
         data[0]     = 2/width;
@@ -482,7 +482,7 @@ set_ortho(mat, left, right, top, bottom, near, far)
         data[11]    = 0.0;
         data[12]    = (right+left)/width;
         data[13]    = (bottom+top)/height;
-        data[14]    = -(far+near)/depth;
+        data[14]    = -(f+n)/depth;
         data[15]    = 1.0;
 
         RETVAL = 0;

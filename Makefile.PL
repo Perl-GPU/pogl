@@ -98,10 +98,10 @@ print "Build platform \$IS_W32API==$IS_W32API\n" if $IS_W32API and $verbose;
 
 # Detect MINGW
 our $IS_MINGW = 0;
-if ($^O eq 'MSWin32' && !$IS_CYGWIN)
+if ($^O eq 'MSWin32' && $Config{cc} =~ /\bgcc/i)
 {
-  $IS_MINGW = (($Config{make} =~ /\bdmake/i) && ($Config{cc} =~ /\bgcc/i));
-  print "Build platform \$IS_MINGW==$IS_MINGW\n" if $IS_MINGW and $verbose;
+  $IS_MINGW = 1;
+  print "Build platform \$IS_MINGW==1" if  $verbose;
 }
 
 
