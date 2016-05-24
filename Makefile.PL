@@ -11,12 +11,12 @@ use Config;
 # Supported windowing interfaces
 our $is_valid_interface =
 {
-  'GLX'       => 'Default GLX+X11 on Linux; use XQuartz on Mac OS X',
+  'AGL'       => 'Default GLUT framework on Mac OS X',
   'FREEGLUT'  => 'FreeGLUT, preferred over GLUT',
   'GLUT'      => 'GLUT; often really FreeGLUT on Linux',
+  'GLX'       => 'Default GLX+X11 on Linux; use XQuartz on Mac OS X',
   'W32API'    => 'Uses WGL+FreeGLUT on CYGWIN, instead of GLX+FreeGLUT',
   'WGL'       => 'Same as W32API',
-  'AGL'       => 'Default GLUT framework on Mac OS X',
 };
 
 
@@ -940,7 +940,6 @@ sub get_extensions
     print GLEXC "\n";
     if ($GL_VERSION)
     {
-      print GLEXC "#define NO_GL_VERSION_4_5\n" if ($GL_VERSION < 4.5);
       print GLEXC "#define NO_GL_VERSION_4_5\n" if ($GL_VERSION < 4.5);
       print GLEXC "#define NO_GL_VERSION_4_4\n" if ($GL_VERSION < 4.4);
       print GLEXC "#define NO_GL_VERSION_4_3\n" if ($GL_VERSION < 4.3);
