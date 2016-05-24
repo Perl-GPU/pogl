@@ -10,6 +10,8 @@ General Notes:
 
   * Fixed some outstanding bugs from sf.net
 
+  * on win32, clean up mingw recognition and allow gmake
+
 Highlights:
 
   * Fixed a c++ name-mangling issue that was breaking builds on Linux.
