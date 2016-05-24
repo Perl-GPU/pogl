@@ -74,6 +74,23 @@ Highlights:
 
 
 
++------------------------------------------------------------------------+
+|                  OpenGL-0.6704
++------------------------------------------------------------------------+
+
+General Notes:
+
+  * Fixes a number of bugs since the last release.  Thanks to
+    Christian Walde, Olaf Dabrunz, and Alessandro Ranellucci for
+    their contributions.
+
+Highlights:
+
+  * Fix item_count error in OpenGL::Array implementation
+
+  * Fix POGL bug #12 re thread safety
+
+
 
 +------------------------------------------------------------------------+
 |                  OpenGL-0.6703
