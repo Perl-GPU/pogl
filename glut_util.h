@@ -5,6 +5,8 @@
 
 #elif defined(HAVE_FREEGLUT) && (defined(_WIN32) || defined(HAVE_W32API))
 
+#define GLUT_DISABLE_ATEXIT_HACK
+
 #include "./include/GL/freeglut.h"
 
 #elif defined(HAVE_FREEGLUT_H)
