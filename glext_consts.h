@@ -9,7 +9,7 @@ extern "C" {
 ** This file is derived from glext.h and is subject to the same license
 ** restrictions as that file.
 **
-** Copyright (c) 2013 The Khronos Group Inc.
+** Copyright (c) 2013-2016 The Khronos Group Inc.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a
 ** copy of this software and/or associated documentation files (the
@@ -34,12 +34,14 @@ extern "C" {
 ** This header is generated from the Khronos OpenGL / OpenGL ES XML
 ** API Registry. The current version of the Registry, generator scripts
 ** used to make the header, and the header can be found at
-**   http://www.khronos.org/registry/
+**   http://www.opengl.org/registry/
 **
-** Khronos $Revision$ on $Date$
+** Khronos $Revision: 32957 $ on $Date: 2016-06-09 23:03:08 +0200 (Do, 09 Jun 2016) $
 */
 
 #if defined(_WIN32) && !defined(APIENTRY) && !defined(__CYGWIN__) && !defined(__SCITECH_SNAP__)
+#ifndef WIN32_LEAN_AND_MEAN
+#endif
 #endif
 
 #ifndef APIENTRY
@@ -59,84 +61,6 @@ extern "C" {
  * Additional extensions included: _nomatch_^
  * Extensions removed: _nomatch_^
  */
-
-#ifndef NO_GL_ARB_imaging
-    i(GL_CONSTANT_COLOR)
-    i(GL_ONE_MINUS_CONSTANT_COLOR)
-    i(GL_CONSTANT_ALPHA)
-    i(GL_ONE_MINUS_CONSTANT_ALPHA)
-    i(GL_BLEND_COLOR)
-    i(GL_FUNC_ADD)
-    i(GL_MIN)
-    i(GL_MAX)
-    i(GL_BLEND_EQUATION)
-    i(GL_FUNC_SUBTRACT)
-    i(GL_FUNC_REVERSE_SUBTRACT)
-    i(GL_CONVOLUTION_1D)
-    i(GL_CONVOLUTION_2D)
-    i(GL_SEPARABLE_2D)
-    i(GL_CONVOLUTION_BORDER_MODE)
-    i(GL_CONVOLUTION_FILTER_SCALE)
-    i(GL_CONVOLUTION_FILTER_BIAS)
-    i(GL_REDUCE)
-    i(GL_CONVOLUTION_FORMAT)
-    i(GL_CONVOLUTION_WIDTH)
-    i(GL_CONVOLUTION_HEIGHT)
-    i(GL_MAX_CONVOLUTION_WIDTH)
-    i(GL_MAX_CONVOLUTION_HEIGHT)
-    i(GL_POST_CONVOLUTION_RED_SCALE)
-    i(GL_POST_CONVOLUTION_GREEN_SCALE)
-    i(GL_POST_CONVOLUTION_BLUE_SCALE)
-    i(GL_POST_CONVOLUTION_ALPHA_SCALE)
-    i(GL_POST_CONVOLUTION_RED_BIAS)
-    i(GL_POST_CONVOLUTION_GREEN_BIAS)
-    i(GL_POST_CONVOLUTION_BLUE_BIAS)
-    i(GL_POST_CONVOLUTION_ALPHA_BIAS)
-    i(GL_HISTOGRAM)
-    i(GL_PROXY_HISTOGRAM)
-    i(GL_HISTOGRAM_WIDTH)
-    i(GL_HISTOGRAM_FORMAT)
-    i(GL_HISTOGRAM_RED_SIZE)
-    i(GL_HISTOGRAM_GREEN_SIZE)
-    i(GL_HISTOGRAM_BLUE_SIZE)
-    i(GL_HISTOGRAM_ALPHA_SIZE)
-    i(GL_HISTOGRAM_LUMINANCE_SIZE)
-    i(GL_HISTOGRAM_SINK)
-    i(GL_MINMAX)
-    i(GL_MINMAX_FORMAT)
-    i(GL_MINMAX_SINK)
-    i(GL_TABLE_TOO_LARGE)
-    i(GL_COLOR_MATRIX)
-    i(GL_COLOR_MATRIX_STACK_DEPTH)
-    i(GL_MAX_COLOR_MATRIX_STACK_DEPTH)
-    i(GL_POST_COLOR_MATRIX_RED_SCALE)
-    i(GL_POST_COLOR_MATRIX_GREEN_SCALE)
-    i(GL_POST_COLOR_MATRIX_BLUE_SCALE)
-    i(GL_POST_COLOR_MATRIX_ALPHA_SCALE)
-    i(GL_POST_COLOR_MATRIX_RED_BIAS)
-    i(GL_POST_COLOR_MATRIX_GREEN_BIAS)
-    i(GL_POST_COLOR_MATRIX_BLUE_BIAS)
-    i(GL_POST_COLOR_MATRIX_ALPHA_BIAS)
-    i(GL_COLOR_TABLE)
-    i(GL_POST_CONVOLUTION_COLOR_TABLE)
-    i(GL_POST_COLOR_MATRIX_COLOR_TABLE)
-    i(GL_PROXY_COLOR_TABLE)
-    i(GL_PROXY_POST_CONVOLUTION_COLOR_TABLE)
-    i(GL_PROXY_POST_COLOR_MATRIX_COLOR_TABLE)
-    i(GL_COLOR_TABLE_SCALE)
-    i(GL_COLOR_TABLE_BIAS)
-    i(GL_COLOR_TABLE_FORMAT)
-    i(GL_COLOR_TABLE_WIDTH)
-    i(GL_COLOR_TABLE_RED_SIZE)
-    i(GL_COLOR_TABLE_GREEN_SIZE)
-    i(GL_COLOR_TABLE_BLUE_SIZE)
-    i(GL_COLOR_TABLE_ALPHA_SIZE)
-    i(GL_COLOR_TABLE_LUMINANCE_SIZE)
-    i(GL_COLOR_TABLE_INTENSITY_SIZE)
-    i(GL_CONSTANT_BORDER)
-    i(GL_REPLICATE_BORDER)
-    i(GL_CONVOLUTION_BORDER_COLOR)
-#endif /* GL_ARB_imaging */
 
 #ifndef NO_GL_VERSION_1_2
     i(GL_UNSIGNED_BYTE_3_3_2)
@@ -321,6 +245,15 @@ extern "C" {
     i(GL_TEXTURE_FILTER_CONTROL)
     i(GL_DEPTH_TEXTURE_MODE)
     i(GL_COMPARE_R_TO_TEXTURE)
+    i(GL_FUNC_ADD)
+    i(GL_FUNC_SUBTRACT)
+    i(GL_FUNC_REVERSE_SUBTRACT)
+    i(GL_MIN)
+    i(GL_MAX)
+    i(GL_CONSTANT_COLOR)
+    i(GL_ONE_MINUS_CONSTANT_COLOR)
+    i(GL_CONSTANT_ALPHA)
+    i(GL_ONE_MINUS_CONSTANT_ALPHA)
 #endif /* GL_VERSION_1_4 */
 
 #ifndef NO_GL_VERSION_1_5
@@ -651,6 +584,22 @@ extern "C" {
     i(GL_COLOR_ATTACHMENT13)
     i(GL_COLOR_ATTACHMENT14)
     i(GL_COLOR_ATTACHMENT15)
+    i(GL_COLOR_ATTACHMENT16)
+    i(GL_COLOR_ATTACHMENT17)
+    i(GL_COLOR_ATTACHMENT18)
+    i(GL_COLOR_ATTACHMENT19)
+    i(GL_COLOR_ATTACHMENT20)
+    i(GL_COLOR_ATTACHMENT21)
+    i(GL_COLOR_ATTACHMENT22)
+    i(GL_COLOR_ATTACHMENT23)
+    i(GL_COLOR_ATTACHMENT24)
+    i(GL_COLOR_ATTACHMENT25)
+    i(GL_COLOR_ATTACHMENT26)
+    i(GL_COLOR_ATTACHMENT27)
+    i(GL_COLOR_ATTACHMENT28)
+    i(GL_COLOR_ATTACHMENT29)
+    i(GL_COLOR_ATTACHMENT30)
+    i(GL_COLOR_ATTACHMENT31)
     i(GL_DEPTH_ATTACHMENT)
     i(GL_STENCIL_ATTACHMENT)
     i(GL_FRAMEBUFFER)
@@ -670,6 +619,9 @@ extern "C" {
     i(GL_RENDERBUFFER_STENCIL_SIZE)
     i(GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE)
     i(GL_MAX_SAMPLES)
+    i(GL_INDEX)
+    i(GL_TEXTURE_LUMINANCE_TYPE)
+    i(GL_TEXTURE_INTENSITY_TYPE)
     i(GL_FRAMEBUFFER_SRGB)
     i(GL_HALF_FLOAT)
     i(GL_MAP_READ_BIT)
@@ -708,9 +660,6 @@ extern "C" {
     i(GL_CLAMP_VERTEX_COLOR)
     i(GL_CLAMP_FRAGMENT_COLOR)
     i(GL_ALPHA_INTEGER)
-    i(GL_INDEX)
-    i(GL_TEXTURE_LUMINANCE_TYPE)
-    i(GL_TEXTURE_INTENSITY_TYPE)
 #endif /* GL_VERSION_3_0 */
 
 #ifndef NO_GL_VERSION_3_1
@@ -729,10 +678,6 @@ extern "C" {
     i(GL_TEXTURE_BINDING_RECTANGLE)
     i(GL_PROXY_TEXTURE_RECTANGLE)
     i(GL_MAX_RECTANGLE_TEXTURE_SIZE)
-    i(GL_RED_SNORM)
-    i(GL_RG_SNORM)
-    i(GL_RGB_SNORM)
-    i(GL_RGBA_SNORM)
     i(GL_R8_SNORM)
     i(GL_RG8_SNORM)
     i(GL_RGB8_SNORM)
@@ -751,11 +696,13 @@ extern "C" {
     i(GL_UNIFORM_BUFFER_START)
     i(GL_UNIFORM_BUFFER_SIZE)
     i(GL_MAX_VERTEX_UNIFORM_BLOCKS)
+    i(GL_MAX_GEOMETRY_UNIFORM_BLOCKS)
     i(GL_MAX_FRAGMENT_UNIFORM_BLOCKS)
     i(GL_MAX_COMBINED_UNIFORM_BLOCKS)
     i(GL_MAX_UNIFORM_BUFFER_BINDINGS)
     i(GL_MAX_UNIFORM_BLOCK_SIZE)
     i(GL_MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS)
+    i(GL_MAX_COMBINED_GEOMETRY_UNIFORM_COMPONENTS)
     i(GL_MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS)
     i(GL_UNIFORM_BUFFER_OFFSET_ALIGNMENT)
     i(GL_ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH)
@@ -774,6 +721,7 @@ extern "C" {
     i(GL_UNIFORM_BLOCK_ACTIVE_UNIFORMS)
     i(GL_UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES)
     i(GL_UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER)
+    i(GL_UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER)
     i(GL_UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER)
     i(GL_INVALID_INDEX)
 #endif /* GL_VERSION_3_1 */
@@ -1003,6 +951,10 @@ extern "C" {
 #endif /* GL_VERSION_4_1 */
 
 #ifndef NO_GL_VERSION_4_2
+    i(GL_COPY_READ_BUFFER_BINDING)
+    i(GL_COPY_WRITE_BUFFER_BINDING)
+    i(GL_TRANSFORM_FEEDBACK_ACTIVE)
+    i(GL_TRANSFORM_FEEDBACK_PAUSED)
     i(GL_UNPACK_COMPRESSED_BLOCK_WIDTH)
     i(GL_UNPACK_COMPRESSED_BLOCK_HEIGHT)
     i(GL_UNPACK_COMPRESSED_BLOCK_DEPTH)
@@ -1106,6 +1058,10 @@ extern "C" {
     i(GL_MAX_GEOMETRY_IMAGE_UNIFORMS)
     i(GL_MAX_FRAGMENT_IMAGE_UNIFORMS)
     i(GL_MAX_COMBINED_IMAGE_UNIFORMS)
+    i(GL_COMPRESSED_RGBA_BPTC_UNORM)
+    i(GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM)
+    i(GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT)
+    i(GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT)
     i(GL_TEXTURE_IMMUTABLE_FORMAT)
 #endif /* GL_VERSION_4_2 */
 
@@ -1134,14 +1090,15 @@ extern "C" {
     i(GL_MAX_COMPUTE_ATOMIC_COUNTER_BUFFERS)
     i(GL_MAX_COMPUTE_ATOMIC_COUNTERS)
     i(GL_MAX_COMBINED_COMPUTE_UNIFORM_COMPONENTS)
-    i(GL_MAX_COMPUTE_LOCAL_INVOCATIONS)
+    i(GL_MAX_COMPUTE_WORK_GROUP_INVOCATIONS)
     i(GL_MAX_COMPUTE_WORK_GROUP_COUNT)
     i(GL_MAX_COMPUTE_WORK_GROUP_SIZE)
-    i(GL_COMPUTE_LOCAL_WORK_SIZE)
+    i(GL_COMPUTE_WORK_GROUP_SIZE)
     i(GL_UNIFORM_BLOCK_REFERENCED_BY_COMPUTE_SHADER)
     i(GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_COMPUTE_SHADER)
     i(GL_DISPATCH_INDIRECT_BUFFER)
     i(GL_DISPATCH_INDIRECT_BUFFER_BINDING)
+    i(GL_COMPUTE_SHADER_BIT)
     i(GL_DEBUG_OUTPUT_SYNCHRONOUS)
     i(GL_DEBUG_NEXT_LOGGED_MESSAGE_LENGTH)
     i(GL_DEBUG_CALLBACK_FUNCTION)
@@ -1366,11 +1323,68 @@ extern "C" {
     i(GL_VERTEX_BINDING_STRIDE)
     i(GL_MAX_VERTEX_ATTRIB_RELATIVE_OFFSET)
     i(GL_MAX_VERTEX_ATTRIB_BINDINGS)
+    i(GL_VERTEX_BINDING_BUFFER)
     i(GL_DISPLAY_LIST)
 #endif /* GL_VERSION_4_3 */
 
+#ifndef NO_GL_VERSION_4_4
+    i(GL_MAX_VERTEX_ATTRIB_STRIDE)
+    i(GL_PRIMITIVE_RESTART_FOR_PATCHES_SUPPORTED)
+    i(GL_TEXTURE_BUFFER_BINDING)
+    i(GL_MAP_PERSISTENT_BIT)
+    i(GL_MAP_COHERENT_BIT)
+    i(GL_DYNAMIC_STORAGE_BIT)
+    i(GL_CLIENT_STORAGE_BIT)
+    i(GL_CLIENT_MAPPED_BUFFER_BARRIER_BIT)
+    i(GL_BUFFER_IMMUTABLE_STORAGE)
+    i(GL_BUFFER_STORAGE_FLAGS)
+    i(GL_CLEAR_TEXTURE)
+    i(GL_LOCATION_COMPONENT)
+    i(GL_TRANSFORM_FEEDBACK_BUFFER_INDEX)
+    i(GL_TRANSFORM_FEEDBACK_BUFFER_STRIDE)
+    i(GL_QUERY_BUFFER)
+    i(GL_QUERY_BUFFER_BARRIER_BIT)
+    i(GL_QUERY_BUFFER_BINDING)
+    i(GL_QUERY_RESULT_NO_WAIT)
+    i(GL_MIRROR_CLAMP_TO_EDGE)
+#endif /* GL_VERSION_4_4 */
+
+#ifndef NO_GL_VERSION_4_5
+    i(GL_CONTEXT_LOST)
+    i(GL_NEGATIVE_ONE_TO_ONE)
+    i(GL_ZERO_TO_ONE)
+    i(GL_CLIP_ORIGIN)
+    i(GL_CLIP_DEPTH_MODE)
+    i(GL_QUERY_WAIT_INVERTED)
+    i(GL_QUERY_NO_WAIT_INVERTED)
+    i(GL_QUERY_BY_REGION_WAIT_INVERTED)
+    i(GL_QUERY_BY_REGION_NO_WAIT_INVERTED)
+    i(GL_MAX_CULL_DISTANCES)
+    i(GL_MAX_COMBINED_CLIP_AND_CULL_DISTANCES)
+    i(GL_TEXTURE_TARGET)
+    i(GL_QUERY_TARGET)
+    i(GL_GUILTY_CONTEXT_RESET)
+    i(GL_INNOCENT_CONTEXT_RESET)
+    i(GL_UNKNOWN_CONTEXT_RESET)
+    i(GL_RESET_NOTIFICATION_STRATEGY)
+    i(GL_LOSE_CONTEXT_ON_RESET)
+    i(GL_NO_RESET_NOTIFICATION)
+    i(GL_CONTEXT_FLAG_ROBUST_ACCESS_BIT)
+    i(GL_CONTEXT_RELEASE_BEHAVIOR)
+    i(GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH)
+#endif /* GL_VERSION_4_5 */
+
 #ifndef NO_GL_ARB_ES2_compatibility
 #endif /* GL_ARB_ES2_compatibility */
+
+#ifndef NO_GL_ARB_ES3_1_compatibility
+#endif /* GL_ARB_ES3_1_compatibility */
+
+#ifndef NO_GL_ARB_ES3_2_compatibility
+    i(GL_PRIMITIVE_BOUNDING_BOX_ARB)
+    i(GL_MULTISAMPLE_LINE_WIDTH_RANGE_ARB)
+    i(GL_MULTISAMPLE_LINE_WIDTH_GRANULARITY_ARB)
+#endif /* GL_ARB_ES3_2_compatibility */
 
 #ifndef NO_GL_ARB_ES3_compatibility
 #endif /* GL_ARB_ES3_compatibility */
@@ -1381,8 +1395,15 @@ extern "C" {
 #ifndef NO_GL_ARB_base_instance
 #endif /* GL_ARB_base_instance */
 
+#ifndef NO_GL_ARB_bindless_texture
+    i(GL_UNSIGNED_INT64_ARB)
+#endif /* GL_ARB_bindless_texture */
+
 #ifndef NO_GL_ARB_blend_func_extended
 #endif /* GL_ARB_blend_func_extended */
+
+#ifndef NO_GL_ARB_buffer_storage
+#endif /* GL_ARB_buffer_storage */
 
 #ifndef NO_GL_ARB_cl_event
     i(GL_SYNC_CL_EVENT_ARB)
@@ -1391,6 +1412,12 @@ extern "C" {
 
 #ifndef NO_GL_ARB_clear_buffer_object
 #endif /* GL_ARB_clear_buffer_object */
+
+#ifndef NO_GL_ARB_clear_texture
+#endif /* GL_ARB_clear_texture */
+
+#ifndef NO_GL_ARB_clip_control
+#endif /* GL_ARB_clip_control */
 
 #ifndef NO_GL_ARB_color_buffer_float
     i(GL_RGBA_FLOAT_MODE_ARB)
@@ -1407,19 +1434,29 @@ extern "C" {
 #endif /* GL_ARB_compressed_texture_pixel_storage */
 
 #ifndef NO_GL_ARB_compute_shader
-    i(GL_COMPUTE_SHADER_BIT)
 #endif /* GL_ARB_compute_shader */
+
+#ifndef NO_GL_ARB_compute_variable_group_size
+    i(GL_MAX_COMPUTE_VARIABLE_GROUP_INVOCATIONS_ARB)
+    i(GL_MAX_COMPUTE_FIXED_GROUP_INVOCATIONS_ARB)
+    i(GL_MAX_COMPUTE_VARIABLE_GROUP_SIZE_ARB)
+    i(GL_MAX_COMPUTE_FIXED_GROUP_SIZE_ARB)
+#endif /* GL_ARB_compute_variable_group_size */
+
+#ifndef NO_GL_ARB_conditional_render_inverted
+#endif /* GL_ARB_conditional_render_inverted */
 
 #ifndef NO_GL_ARB_conservative_depth
 #endif /* GL_ARB_conservative_depth */
 
 #ifndef NO_GL_ARB_copy_buffer
-    i(GL_COPY_READ_BUFFER_BINDING)
-    i(GL_COPY_WRITE_BUFFER_BINDING)
 #endif /* GL_ARB_copy_buffer */
 
 #ifndef NO_GL_ARB_copy_image
 #endif /* GL_ARB_copy_image */
+
+#ifndef NO_GL_ARB_cull_distance
+#endif /* GL_ARB_cull_distance */
 
 #ifndef NO_GL_ARB_debug_output
     i(GL_DEBUG_OUTPUT_SYNCHRONOUS_ARB)
@@ -1460,6 +1497,12 @@ extern "C" {
     i(GL_DEPTH_TEXTURE_MODE_ARB)
 #endif /* GL_ARB_depth_texture */
 
+#ifndef NO_GL_ARB_derivative_control
+#endif /* GL_ARB_derivative_control */
+
+#ifndef NO_GL_ARB_direct_state_access
+#endif /* GL_ARB_direct_state_access */
+
 #ifndef NO_GL_ARB_draw_buffers
     i(GL_MAX_DRAW_BUFFERS_ARB)
     i(GL_DRAW_BUFFER0_ARB)
@@ -1492,6 +1535,9 @@ extern "C" {
 #ifndef NO_GL_ARB_draw_instanced
 #endif /* GL_ARB_draw_instanced */
 
+#ifndef NO_GL_ARB_enhanced_layouts
+#endif /* GL_ARB_enhanced_layouts */
+
 #ifndef NO_GL_ARB_explicit_attrib_location
 #endif /* GL_ARB_explicit_attrib_location */
 
@@ -1506,6 +1552,29 @@ extern "C" {
 
 #ifndef NO_GL_ARB_fragment_program
     i(GL_FRAGMENT_PROGRAM_ARB)
+    i(GL_PROGRAM_FORMAT_ASCII_ARB)
+    i(GL_PROGRAM_LENGTH_ARB)
+    i(GL_PROGRAM_FORMAT_ARB)
+    i(GL_PROGRAM_BINDING_ARB)
+    i(GL_PROGRAM_INSTRUCTIONS_ARB)
+    i(GL_MAX_PROGRAM_INSTRUCTIONS_ARB)
+    i(GL_PROGRAM_NATIVE_INSTRUCTIONS_ARB)
+    i(GL_MAX_PROGRAM_NATIVE_INSTRUCTIONS_ARB)
+    i(GL_PROGRAM_TEMPORARIES_ARB)
+    i(GL_MAX_PROGRAM_TEMPORARIES_ARB)
+    i(GL_PROGRAM_NATIVE_TEMPORARIES_ARB)
+    i(GL_MAX_PROGRAM_NATIVE_TEMPORARIES_ARB)
+    i(GL_PROGRAM_PARAMETERS_ARB)
+    i(GL_MAX_PROGRAM_PARAMETERS_ARB)
+    i(GL_PROGRAM_NATIVE_PARAMETERS_ARB)
+    i(GL_MAX_PROGRAM_NATIVE_PARAMETERS_ARB)
+    i(GL_PROGRAM_ATTRIBS_ARB)
+    i(GL_MAX_PROGRAM_ATTRIBS_ARB)
+    i(GL_PROGRAM_NATIVE_ATTRIBS_ARB)
+    i(GL_MAX_PROGRAM_NATIVE_ATTRIBS_ARB)
+    i(GL_MAX_PROGRAM_LOCAL_PARAMETERS_ARB)
+    i(GL_MAX_PROGRAM_ENV_PARAMETERS_ARB)
+    i(GL_PROGRAM_UNDER_NATIVE_LIMITS_ARB)
     i(GL_PROGRAM_ALU_INSTRUCTIONS_ARB)
     i(GL_PROGRAM_TEX_INSTRUCTIONS_ARB)
     i(GL_PROGRAM_TEX_INDIRECTIONS_ARB)
@@ -1518,8 +1587,48 @@ extern "C" {
     i(GL_MAX_PROGRAM_NATIVE_ALU_INSTRUCTIONS_ARB)
     i(GL_MAX_PROGRAM_NATIVE_TEX_INSTRUCTIONS_ARB)
     i(GL_MAX_PROGRAM_NATIVE_TEX_INDIRECTIONS_ARB)
+    i(GL_PROGRAM_STRING_ARB)
+    i(GL_PROGRAM_ERROR_POSITION_ARB)
+    i(GL_CURRENT_MATRIX_ARB)
+    i(GL_TRANSPOSE_CURRENT_MATRIX_ARB)
+    i(GL_CURRENT_MATRIX_STACK_DEPTH_ARB)
+    i(GL_MAX_PROGRAM_MATRICES_ARB)
+    i(GL_MAX_PROGRAM_MATRIX_STACK_DEPTH_ARB)
     i(GL_MAX_TEXTURE_COORDS_ARB)
     i(GL_MAX_TEXTURE_IMAGE_UNITS_ARB)
+    i(GL_PROGRAM_ERROR_STRING_ARB)
+    i(GL_MATRIX0_ARB)
+    i(GL_MATRIX1_ARB)
+    i(GL_MATRIX2_ARB)
+    i(GL_MATRIX3_ARB)
+    i(GL_MATRIX4_ARB)
+    i(GL_MATRIX5_ARB)
+    i(GL_MATRIX6_ARB)
+    i(GL_MATRIX7_ARB)
+    i(GL_MATRIX8_ARB)
+    i(GL_MATRIX9_ARB)
+    i(GL_MATRIX10_ARB)
+    i(GL_MATRIX11_ARB)
+    i(GL_MATRIX12_ARB)
+    i(GL_MATRIX13_ARB)
+    i(GL_MATRIX14_ARB)
+    i(GL_MATRIX15_ARB)
+    i(GL_MATRIX16_ARB)
+    i(GL_MATRIX17_ARB)
+    i(GL_MATRIX18_ARB)
+    i(GL_MATRIX19_ARB)
+    i(GL_MATRIX20_ARB)
+    i(GL_MATRIX21_ARB)
+    i(GL_MATRIX22_ARB)
+    i(GL_MATRIX23_ARB)
+    i(GL_MATRIX24_ARB)
+    i(GL_MATRIX25_ARB)
+    i(GL_MATRIX26_ARB)
+    i(GL_MATRIX27_ARB)
+    i(GL_MATRIX28_ARB)
+    i(GL_MATRIX29_ARB)
+    i(GL_MATRIX30_ARB)
+    i(GL_MATRIX31_ARB)
 #endif /* GL_ARB_fragment_program */
 
 #ifndef NO_GL_ARB_fragment_program_shadow
@@ -1530,6 +1639,9 @@ extern "C" {
     i(GL_MAX_FRAGMENT_UNIFORM_COMPONENTS_ARB)
     i(GL_FRAGMENT_SHADER_DERIVATIVE_HINT_ARB)
 #endif /* GL_ARB_fragment_shader */
+
+#ifndef NO_GL_ARB_fragment_shader_interlock
+#endif /* GL_ARB_fragment_shader_interlock */
 
 #ifndef NO_GL_ARB_framebuffer_no_attachments
 #endif /* GL_ARB_framebuffer_no_attachments */
@@ -1564,11 +1676,24 @@ extern "C" {
 #ifndef NO_GL_ARB_get_program_binary
 #endif /* GL_ARB_get_program_binary */
 
+#ifndef NO_GL_ARB_get_texture_sub_image
+#endif /* GL_ARB_get_texture_sub_image */
+
 #ifndef NO_GL_ARB_gpu_shader5
 #endif /* GL_ARB_gpu_shader5 */
 
 #ifndef NO_GL_ARB_gpu_shader_fp64
 #endif /* GL_ARB_gpu_shader_fp64 */
+
+#ifndef NO_GL_ARB_gpu_shader_int64
+    i(GL_INT64_ARB)
+    i(GL_INT64_VEC2_ARB)
+    i(GL_INT64_VEC3_ARB)
+    i(GL_INT64_VEC4_ARB)
+    i(GL_UNSIGNED_INT64_VEC2_ARB)
+    i(GL_UNSIGNED_INT64_VEC3_ARB)
+    i(GL_UNSIGNED_INT64_VEC4_ARB)
+#endif /* GL_ARB_gpu_shader_int64 */
 
 #ifndef NO_GL_ARB_half_float_pixel
     i(GL_HALF_FLOAT_ARB)
@@ -1576,6 +1701,80 @@ extern "C" {
 
 #ifndef NO_GL_ARB_half_float_vertex
 #endif /* GL_ARB_half_float_vertex */
+
+#ifndef NO_GL_ARB_imaging
+    i(GL_BLEND_COLOR)
+    i(GL_BLEND_EQUATION)
+    i(GL_CONVOLUTION_1D)
+    i(GL_CONVOLUTION_2D)
+    i(GL_SEPARABLE_2D)
+    i(GL_CONVOLUTION_BORDER_MODE)
+    i(GL_CONVOLUTION_FILTER_SCALE)
+    i(GL_CONVOLUTION_FILTER_BIAS)
+    i(GL_REDUCE)
+    i(GL_CONVOLUTION_FORMAT)
+    i(GL_CONVOLUTION_WIDTH)
+    i(GL_CONVOLUTION_HEIGHT)
+    i(GL_MAX_CONVOLUTION_WIDTH)
+    i(GL_MAX_CONVOLUTION_HEIGHT)
+    i(GL_POST_CONVOLUTION_RED_SCALE)
+    i(GL_POST_CONVOLUTION_GREEN_SCALE)
+    i(GL_POST_CONVOLUTION_BLUE_SCALE)
+    i(GL_POST_CONVOLUTION_ALPHA_SCALE)
+    i(GL_POST_CONVOLUTION_RED_BIAS)
+    i(GL_POST_CONVOLUTION_GREEN_BIAS)
+    i(GL_POST_CONVOLUTION_BLUE_BIAS)
+    i(GL_POST_CONVOLUTION_ALPHA_BIAS)
+    i(GL_HISTOGRAM)
+    i(GL_PROXY_HISTOGRAM)
+    i(GL_HISTOGRAM_WIDTH)
+    i(GL_HISTOGRAM_FORMAT)
+    i(GL_HISTOGRAM_RED_SIZE)
+    i(GL_HISTOGRAM_GREEN_SIZE)
+    i(GL_HISTOGRAM_BLUE_SIZE)
+    i(GL_HISTOGRAM_ALPHA_SIZE)
+    i(GL_HISTOGRAM_LUMINANCE_SIZE)
+    i(GL_HISTOGRAM_SINK)
+    i(GL_MINMAX)
+    i(GL_MINMAX_FORMAT)
+    i(GL_MINMAX_SINK)
+    i(GL_TABLE_TOO_LARGE)
+    i(GL_COLOR_MATRIX)
+    i(GL_COLOR_MATRIX_STACK_DEPTH)
+    i(GL_MAX_COLOR_MATRIX_STACK_DEPTH)
+    i(GL_POST_COLOR_MATRIX_RED_SCALE)
+    i(GL_POST_COLOR_MATRIX_GREEN_SCALE)
+    i(GL_POST_COLOR_MATRIX_BLUE_SCALE)
+    i(GL_POST_COLOR_MATRIX_ALPHA_SCALE)
+    i(GL_POST_COLOR_MATRIX_RED_BIAS)
+    i(GL_POST_COLOR_MATRIX_GREEN_BIAS)
+    i(GL_POST_COLOR_MATRIX_BLUE_BIAS)
+    i(GL_POST_COLOR_MATRIX_ALPHA_BIAS)
+    i(GL_COLOR_TABLE)
+    i(GL_POST_CONVOLUTION_COLOR_TABLE)
+    i(GL_POST_COLOR_MATRIX_COLOR_TABLE)
+    i(GL_PROXY_COLOR_TABLE)
+    i(GL_PROXY_POST_CONVOLUTION_COLOR_TABLE)
+    i(GL_PROXY_POST_COLOR_MATRIX_COLOR_TABLE)
+    i(GL_COLOR_TABLE_SCALE)
+    i(GL_COLOR_TABLE_BIAS)
+    i(GL_COLOR_TABLE_FORMAT)
+    i(GL_COLOR_TABLE_WIDTH)
+    i(GL_COLOR_TABLE_RED_SIZE)
+    i(GL_COLOR_TABLE_GREEN_SIZE)
+    i(GL_COLOR_TABLE_BLUE_SIZE)
+    i(GL_COLOR_TABLE_ALPHA_SIZE)
+    i(GL_COLOR_TABLE_LUMINANCE_SIZE)
+    i(GL_COLOR_TABLE_INTENSITY_SIZE)
+    i(GL_CONSTANT_BORDER)
+    i(GL_REPLICATE_BORDER)
+    i(GL_CONVOLUTION_BORDER_COLOR)
+#endif /* GL_ARB_imaging */
+
+#ifndef NO_GL_ARB_indirect_parameters
+    i(GL_PARAMETER_BUFFER_ARB)
+    i(GL_PARAMETER_BUFFER_BINDING_ARB)
+#endif /* GL_ARB_indirect_parameters */
 
 #ifndef NO_GL_ARB_instanced_arrays
     i(GL_VERTEX_ATTRIB_ARRAY_DIVISOR_ARB)
@@ -1609,6 +1808,9 @@ extern "C" {
     i(GL_MATRIX_INDEX_ARRAY_STRIDE_ARB)
     i(GL_MATRIX_INDEX_ARRAY_POINTER_ARB)
 #endif /* GL_ARB_matrix_palette */
+
+#ifndef NO_GL_ARB_multi_bind
+#endif /* GL_ARB_multi_bind */
 
 #ifndef NO_GL_ARB_multi_draw_indirect
 #endif /* GL_ARB_multi_draw_indirect */
@@ -1674,6 +1876,24 @@ extern "C" {
 #ifndef NO_GL_ARB_occlusion_query2
 #endif /* GL_ARB_occlusion_query2 */
 
+#ifndef NO_GL_ARB_parallel_shader_compile
+    i(GL_MAX_SHADER_COMPILER_THREADS_ARB)
+    i(GL_COMPLETION_STATUS_ARB)
+#endif /* GL_ARB_parallel_shader_compile */
+
+#ifndef NO_GL_ARB_pipeline_statistics_query
+    i(GL_VERTICES_SUBMITTED_ARB)
+    i(GL_PRIMITIVES_SUBMITTED_ARB)
+    i(GL_VERTEX_SHADER_INVOCATIONS_ARB)
+    i(GL_TESS_CONTROL_SHADER_PATCHES_ARB)
+    i(GL_TESS_EVALUATION_SHADER_INVOCATIONS_ARB)
+    i(GL_GEOMETRY_SHADER_PRIMITIVES_EMITTED_ARB)
+    i(GL_FRAGMENT_SHADER_INVOCATIONS_ARB)
+    i(GL_COMPUTE_SHADER_INVOCATIONS_ARB)
+    i(GL_CLIPPING_INPUT_PRIMITIVES_ARB)
+    i(GL_CLIPPING_OUTPUT_PRIMITIVES_ARB)
+#endif /* GL_ARB_pipeline_statistics_query */
+
 #ifndef NO_GL_ARB_pixel_buffer_object
     i(GL_PIXEL_PACK_BUFFER_ARB)
     i(GL_PIXEL_UNPACK_BUFFER_ARB)
@@ -1693,11 +1913,17 @@ extern "C" {
     i(GL_COORD_REPLACE_ARB)
 #endif /* GL_ARB_point_sprite */
 
+#ifndef NO_GL_ARB_post_depth_coverage
+#endif /* GL_ARB_post_depth_coverage */
+
 #ifndef NO_GL_ARB_program_interface_query
 #endif /* GL_ARB_program_interface_query */
 
 #ifndef NO_GL_ARB_provoking_vertex
 #endif /* GL_ARB_provoking_vertex */
+
+#ifndef NO_GL_ARB_query_buffer_object
+#endif /* GL_ARB_query_buffer_object */
 
 #ifndef NO_GL_ARB_robust_buffer_access_behavior
 #endif /* GL_ARB_robust_buffer_access_behavior */
@@ -1715,6 +1941,17 @@ extern "C" {
 #ifndef NO_GL_ARB_robustness_isolation
 #endif /* GL_ARB_robustness_isolation */
 
+#ifndef NO_GL_ARB_sample_locations
+    i(GL_SAMPLE_LOCATION_SUBPIXEL_BITS_ARB)
+    i(GL_SAMPLE_LOCATION_PIXEL_GRID_WIDTH_ARB)
+    i(GL_SAMPLE_LOCATION_PIXEL_GRID_HEIGHT_ARB)
+    i(GL_PROGRAMMABLE_SAMPLE_LOCATION_TABLE_SIZE_ARB)
+    i(GL_SAMPLE_LOCATION_ARB)
+    i(GL_PROGRAMMABLE_SAMPLE_LOCATION_ARB)
+    i(GL_FRAMEBUFFER_PROGRAMMABLE_SAMPLE_LOCATIONS_ARB)
+    i(GL_FRAMEBUFFER_SAMPLE_LOCATION_PIXEL_GRID_ARB)
+#endif /* GL_ARB_sample_locations */
+
 #ifndef NO_GL_ARB_sample_shading
     i(GL_SAMPLE_SHADING_ARB)
     i(GL_MIN_SAMPLE_SHADING_VALUE_ARB)
@@ -1726,14 +1963,32 @@ extern "C" {
 #ifndef NO_GL_ARB_seamless_cube_map
 #endif /* GL_ARB_seamless_cube_map */
 
+#ifndef NO_GL_ARB_seamless_cubemap_per_texture
+#endif /* GL_ARB_seamless_cubemap_per_texture */
+
 #ifndef NO_GL_ARB_separate_shader_objects
 #endif /* GL_ARB_separate_shader_objects */
+
+#ifndef NO_GL_ARB_shader_atomic_counter_ops
+#endif /* GL_ARB_shader_atomic_counter_ops */
 
 #ifndef NO_GL_ARB_shader_atomic_counters
 #endif /* GL_ARB_shader_atomic_counters */
 
+#ifndef NO_GL_ARB_shader_ballot
+#endif /* GL_ARB_shader_ballot */
+
 #ifndef NO_GL_ARB_shader_bit_encoding
 #endif /* GL_ARB_shader_bit_encoding */
+
+#ifndef NO_GL_ARB_shader_clock
+#endif /* GL_ARB_shader_clock */
+
+#ifndef NO_GL_ARB_shader_draw_parameters
+#endif /* GL_ARB_shader_draw_parameters */
+
+#ifndef NO_GL_ARB_shader_group_vote
+#endif /* GL_ARB_shader_group_vote */
 
 #ifndef NO_GL_ARB_shader_image_load_store
 #endif /* GL_ARB_shader_image_load_store */
@@ -1742,6 +1997,9 @@ extern "C" {
 #endif /* GL_ARB_shader_image_size */
 
 #ifndef NO_GL_ARB_shader_objects
+#ifdef __APPLE__
+#else
+#endif
     i(GL_PROGRAM_OBJECT_ARB)
     i(GL_SHADER_OBJECT_ARB)
     i(GL_OBJECT_TYPE_ARB)
@@ -1790,8 +2048,14 @@ extern "C" {
 #ifndef NO_GL_ARB_shader_subroutine
 #endif /* GL_ARB_shader_subroutine */
 
+#ifndef NO_GL_ARB_shader_texture_image_samples
+#endif /* GL_ARB_shader_texture_image_samples */
+
 #ifndef NO_GL_ARB_shader_texture_lod
 #endif /* GL_ARB_shader_texture_lod */
+
+#ifndef NO_GL_ARB_shader_viewport_layer_array
+#endif /* GL_ARB_shader_viewport_layer_array */
 
 #ifndef NO_GL_ARB_shading_language_100
     i(GL_SHADING_LANGUAGE_VERSION_ARB)
@@ -1819,6 +2083,31 @@ extern "C" {
     i(GL_TEXTURE_COMPARE_FAIL_VALUE_ARB)
 #endif /* GL_ARB_shadow_ambient */
 
+#ifndef NO_GL_ARB_sparse_buffer
+    i(GL_SPARSE_STORAGE_BIT_ARB)
+    i(GL_SPARSE_BUFFER_PAGE_SIZE_ARB)
+#endif /* GL_ARB_sparse_buffer */
+
+#ifndef NO_GL_ARB_sparse_texture
+    i(GL_TEXTURE_SPARSE_ARB)
+    i(GL_VIRTUAL_PAGE_SIZE_INDEX_ARB)
+    i(GL_NUM_SPARSE_LEVELS_ARB)
+    i(GL_NUM_VIRTUAL_PAGE_SIZES_ARB)
+    i(GL_VIRTUAL_PAGE_SIZE_X_ARB)
+    i(GL_VIRTUAL_PAGE_SIZE_Y_ARB)
+    i(GL_VIRTUAL_PAGE_SIZE_Z_ARB)
+    i(GL_MAX_SPARSE_TEXTURE_SIZE_ARB)
+    i(GL_MAX_SPARSE_3D_TEXTURE_SIZE_ARB)
+    i(GL_MAX_SPARSE_ARRAY_TEXTURE_LAYERS_ARB)
+    i(GL_SPARSE_TEXTURE_FULL_ARRAY_CUBE_MIPMAPS_ARB)
+#endif /* GL_ARB_sparse_texture */
+
+#ifndef NO_GL_ARB_sparse_texture2
+#endif /* GL_ARB_sparse_texture2 */
+
+#ifndef NO_GL_ARB_sparse_texture_clamp
+#endif /* GL_ARB_sparse_texture_clamp */
+
 #ifndef NO_GL_ARB_stencil_texturing
 #endif /* GL_ARB_stencil_texturing */
 
@@ -1827,6 +2116,9 @@ extern "C" {
 
 #ifndef NO_GL_ARB_tessellation_shader
 #endif /* GL_ARB_tessellation_shader */
+
+#ifndef NO_GL_ARB_texture_barrier
+#endif /* GL_ARB_texture_barrier */
 
 #ifndef NO_GL_ARB_texture_border_clamp
     i(GL_CLAMP_TO_BORDER_ARB)
@@ -1931,6 +2223,11 @@ extern "C" {
     i(GL_DOT3_RGBA_ARB)
 #endif /* GL_ARB_texture_env_dot3 */
 
+#ifndef NO_GL_ARB_texture_filter_minmax
+    i(GL_TEXTURE_REDUCTION_MODE_ARB)
+    i(GL_WEIGHTED_AVERAGE_ARB)
+#endif /* GL_ARB_texture_filter_minmax */
+
 #ifndef NO_GL_ARB_texture_float
     i(GL_TEXTURE_RED_TYPE_ARB)
     i(GL_TEXTURE_GREEN_TYPE_ARB)
@@ -1959,6 +2256,9 @@ extern "C" {
     i(GL_MAX_PROGRAM_TEXTURE_GATHER_OFFSET_ARB)
     i(GL_MAX_PROGRAM_TEXTURE_GATHER_COMPONENTS_ARB)
 #endif /* GL_ARB_texture_gather */
+
+#ifndef NO_GL_ARB_texture_mirror_clamp_to_edge
+#endif /* GL_ARB_texture_mirror_clamp_to_edge */
 
 #ifndef NO_GL_ARB_texture_mirrored_repeat
     i(GL_MIRRORED_REPEAT_ARB)
@@ -1989,6 +2289,9 @@ extern "C" {
 #ifndef NO_GL_ARB_texture_rgb10_a2ui
 #endif /* GL_ARB_texture_rgb10_a2ui */
 
+#ifndef NO_GL_ARB_texture_stencil8
+#endif /* GL_ARB_texture_stencil8 */
+
 #ifndef NO_GL_ARB_texture_storage
 #endif /* GL_ARB_texture_storage */
 
@@ -2005,8 +2308,6 @@ extern "C" {
 #endif /* GL_ARB_timer_query */
 
 #ifndef NO_GL_ARB_transform_feedback2
-    i(GL_TRANSFORM_FEEDBACK_PAUSED)
-    i(GL_TRANSFORM_FEEDBACK_ACTIVE)
 #endif /* GL_ARB_transform_feedback2 */
 
 #ifndef NO_GL_ARB_transform_feedback3
@@ -2014,6 +2315,11 @@ extern "C" {
 
 #ifndef NO_GL_ARB_transform_feedback_instanced
 #endif /* GL_ARB_transform_feedback_instanced */
+
+#ifndef NO_GL_ARB_transform_feedback_overflow_query
+    i(GL_TRANSFORM_FEEDBACK_OVERFLOW_ARB)
+    i(GL_TRANSFORM_FEEDBACK_STREAM_OVERFLOW_ARB)
+#endif /* GL_ARB_transform_feedback_overflow_query */
 
 #ifndef NO_GL_ARB_transpose_matrix
     i(GL_TRANSPOSE_MODELVIEW_MATRIX_ARB)
@@ -2023,9 +2329,6 @@ extern "C" {
 #endif /* GL_ARB_transpose_matrix */
 
 #ifndef NO_GL_ARB_uniform_buffer_object
-    i(GL_MAX_GEOMETRY_UNIFORM_BLOCKS)
-    i(GL_MAX_COMBINED_GEOMETRY_UNIFORM_COMPONENTS)
-    i(GL_UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER)
 #endif /* GL_ARB_uniform_buffer_object */
 
 #ifndef NO_GL_ARB_vertex_array_bgra
@@ -2127,78 +2430,15 @@ extern "C" {
     i(GL_VERTEX_ATTRIB_ARRAY_STRIDE_ARB)
     i(GL_VERTEX_ATTRIB_ARRAY_TYPE_ARB)
     i(GL_CURRENT_VERTEX_ATTRIB_ARB)
-    i(GL_PROGRAM_LENGTH_ARB)
-    i(GL_PROGRAM_STRING_ARB)
-    i(GL_MAX_PROGRAM_MATRIX_STACK_DEPTH_ARB)
-    i(GL_MAX_PROGRAM_MATRICES_ARB)
-    i(GL_CURRENT_MATRIX_STACK_DEPTH_ARB)
-    i(GL_CURRENT_MATRIX_ARB)
     i(GL_VERTEX_PROGRAM_POINT_SIZE_ARB)
     i(GL_VERTEX_PROGRAM_TWO_SIDE_ARB)
     i(GL_VERTEX_ATTRIB_ARRAY_POINTER_ARB)
-    i(GL_PROGRAM_ERROR_POSITION_ARB)
-    i(GL_PROGRAM_BINDING_ARB)
     i(GL_MAX_VERTEX_ATTRIBS_ARB)
     i(GL_VERTEX_ATTRIB_ARRAY_NORMALIZED_ARB)
-    i(GL_PROGRAM_ERROR_STRING_ARB)
-    i(GL_PROGRAM_FORMAT_ASCII_ARB)
-    i(GL_PROGRAM_FORMAT_ARB)
-    i(GL_PROGRAM_INSTRUCTIONS_ARB)
-    i(GL_MAX_PROGRAM_INSTRUCTIONS_ARB)
-    i(GL_PROGRAM_NATIVE_INSTRUCTIONS_ARB)
-    i(GL_MAX_PROGRAM_NATIVE_INSTRUCTIONS_ARB)
-    i(GL_PROGRAM_TEMPORARIES_ARB)
-    i(GL_MAX_PROGRAM_TEMPORARIES_ARB)
-    i(GL_PROGRAM_NATIVE_TEMPORARIES_ARB)
-    i(GL_MAX_PROGRAM_NATIVE_TEMPORARIES_ARB)
-    i(GL_PROGRAM_PARAMETERS_ARB)
-    i(GL_MAX_PROGRAM_PARAMETERS_ARB)
-    i(GL_PROGRAM_NATIVE_PARAMETERS_ARB)
-    i(GL_MAX_PROGRAM_NATIVE_PARAMETERS_ARB)
-    i(GL_PROGRAM_ATTRIBS_ARB)
-    i(GL_MAX_PROGRAM_ATTRIBS_ARB)
-    i(GL_PROGRAM_NATIVE_ATTRIBS_ARB)
-    i(GL_MAX_PROGRAM_NATIVE_ATTRIBS_ARB)
     i(GL_PROGRAM_ADDRESS_REGISTERS_ARB)
     i(GL_MAX_PROGRAM_ADDRESS_REGISTERS_ARB)
     i(GL_PROGRAM_NATIVE_ADDRESS_REGISTERS_ARB)
     i(GL_MAX_PROGRAM_NATIVE_ADDRESS_REGISTERS_ARB)
-    i(GL_MAX_PROGRAM_LOCAL_PARAMETERS_ARB)
-    i(GL_MAX_PROGRAM_ENV_PARAMETERS_ARB)
-    i(GL_PROGRAM_UNDER_NATIVE_LIMITS_ARB)
-    i(GL_TRANSPOSE_CURRENT_MATRIX_ARB)
-    i(GL_MATRIX0_ARB)
-    i(GL_MATRIX1_ARB)
-    i(GL_MATRIX2_ARB)
-    i(GL_MATRIX3_ARB)
-    i(GL_MATRIX4_ARB)
-    i(GL_MATRIX5_ARB)
-    i(GL_MATRIX6_ARB)
-    i(GL_MATRIX7_ARB)
-    i(GL_MATRIX8_ARB)
-    i(GL_MATRIX9_ARB)
-    i(GL_MATRIX10_ARB)
-    i(GL_MATRIX11_ARB)
-    i(GL_MATRIX12_ARB)
-    i(GL_MATRIX13_ARB)
-    i(GL_MATRIX14_ARB)
-    i(GL_MATRIX15_ARB)
-    i(GL_MATRIX16_ARB)
-    i(GL_MATRIX17_ARB)
-    i(GL_MATRIX18_ARB)
-    i(GL_MATRIX19_ARB)
-    i(GL_MATRIX20_ARB)
-    i(GL_MATRIX21_ARB)
-    i(GL_MATRIX22_ARB)
-    i(GL_MATRIX23_ARB)
-    i(GL_MATRIX24_ARB)
-    i(GL_MATRIX25_ARB)
-    i(GL_MATRIX26_ARB)
-    i(GL_MATRIX27_ARB)
-    i(GL_MATRIX28_ARB)
-    i(GL_MATRIX29_ARB)
-    i(GL_MATRIX30_ARB)
-    i(GL_MATRIX31_ARB)
 #endif /* GL_ARB_vertex_program */
 
 #ifndef NO_GL_ARB_vertex_shader
@@ -2211,6 +2451,9 @@ extern "C" {
     i(GL_OBJECT_ACTIVE_ATTRIBUTE_MAX_LENGTH_ARB)
 #endif /* GL_ARB_vertex_shader */
 
+#ifndef NO_GL_ARB_vertex_type_10f_11f_11f_rev
+#endif /* GL_ARB_vertex_type_10f_11f_11f_rev */
+
 #ifndef NO_GL_ARB_vertex_type_2_10_10_10_rev
 #endif /* GL_ARB_vertex_type_2_10_10_10_rev */
 
@@ -2220,10 +2463,46 @@ extern "C" {
 #ifndef NO_GL_ARB_window_pos
 #endif /* GL_ARB_window_pos */
 
+#ifndef NO_GL_KHR_blend_equation_advanced
+    i(GL_MULTIPLY_KHR)
+    i(GL_SCREEN_KHR)
+    i(GL_OVERLAY_KHR)
+    i(GL_DARKEN_KHR)
+    i(GL_LIGHTEN_KHR)
+    i(GL_COLORDODGE_KHR)
+    i(GL_COLORBURN_KHR)
+    i(GL_HARDLIGHT_KHR)
+    i(GL_SOFTLIGHT_KHR)
+    i(GL_DIFFERENCE_KHR)
+    i(GL_EXCLUSION_KHR)
+    i(GL_HSL_HUE_KHR)
+    i(GL_HSL_SATURATION_KHR)
+    i(GL_HSL_COLOR_KHR)
+    i(GL_HSL_LUMINOSITY_KHR)
+#endif /* GL_KHR_blend_equation_advanced */
+
+#ifndef NO_GL_KHR_blend_equation_advanced_coherent
+    i(GL_BLEND_ADVANCED_COHERENT_KHR)
+#endif /* GL_KHR_blend_equation_advanced_coherent */
+
+#ifndef NO_GL_KHR_context_flush_control
+#endif /* GL_KHR_context_flush_control */
+
 #ifndef NO_GL_KHR_debug
 #endif /* GL_KHR_debug */
 
-#ifndef NO_GL_KHR_texture_compression_astc_ldr
+#ifndef NO_GL_KHR_no_error
+    i(GL_CONTEXT_FLAG_NO_ERROR_BIT_KHR)
+#endif /* GL_KHR_no_error */
+
+#ifndef NO_GL_KHR_robust_buffer_access_behavior
+#endif /* GL_KHR_robust_buffer_access_behavior */
+
+#ifndef NO_GL_KHR_robustness
+    i(GL_CONTEXT_ROBUST_ACCESS)
+#endif /* GL_KHR_robustness */
+
+#ifndef NO_GL_KHR_texture_compression_astc_hdr
     i(GL_COMPRESSED_RGBA_ASTC_4x4_KHR)
     i(GL_COMPRESSED_RGBA_ASTC_5x4_KHR)
     i(GL_COMPRESSED_RGBA_ASTC_5x5_KHR)
@@ -2252,7 +2531,13 @@ extern "C" {
     i(GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x10_KHR)
     i(GL_COMPRESSED_SRGB8_ALPHA8_ASTC_12x10_KHR)
     i(GL_COMPRESSED_SRGB8_ALPHA8_ASTC_12x12_KHR)
+#endif /* GL_KHR_texture_compression_astc_hdr */
+
+#ifndef NO_GL_KHR_texture_compression_astc_ldr
 #endif /* GL_KHR_texture_compression_astc_ldr */
+
+#ifndef NO_GL_KHR_texture_compression_astc_sliced_3d
+#endif /* GL_KHR_texture_compression_astc_sliced_3d */
 
 #ifndef NO_GL_OES_byte_coordinates
 #endif /* GL_OES_byte_coordinates */
@@ -2333,6 +2618,40 @@ extern "C" {
 #ifndef NO_GL_AMD_draw_buffers_blend
 #endif /* GL_AMD_draw_buffers_blend */
 
+#ifndef NO_GL_AMD_gcn_shader
+#endif /* GL_AMD_gcn_shader */
+
+#ifndef NO_GL_AMD_gpu_shader_int64
+    i(GL_INT64_NV)
+    i(GL_UNSIGNED_INT64_NV)
+    i(GL_INT8_NV)
+    i(GL_INT8_VEC2_NV)
+    i(GL_INT8_VEC3_NV)
+    i(GL_INT8_VEC4_NV)
+    i(GL_INT16_NV)
+    i(GL_INT16_VEC2_NV)
+    i(GL_INT16_VEC3_NV)
+    i(GL_INT16_VEC4_NV)
+    i(GL_INT64_VEC2_NV)
+    i(GL_INT64_VEC3_NV)
+    i(GL_INT64_VEC4_NV)
+    i(GL_UNSIGNED_INT8_NV)
+    i(GL_UNSIGNED_INT8_VEC2_NV)
+    i(GL_UNSIGNED_INT8_VEC3_NV)
+    i(GL_UNSIGNED_INT8_VEC4_NV)
+    i(GL_UNSIGNED_INT16_NV)
+    i(GL_UNSIGNED_INT16_VEC2_NV)
+    i(GL_UNSIGNED_INT16_VEC3_NV)
+    i(GL_UNSIGNED_INT16_VEC4_NV)
+    i(GL_UNSIGNED_INT64_VEC2_NV)
+    i(GL_UNSIGNED_INT64_VEC3_NV)
+    i(GL_UNSIGNED_INT64_VEC4_NV)
+    i(GL_FLOAT16_NV)
+    i(GL_FLOAT16_VEC2_NV)
+    i(GL_FLOAT16_VEC3_NV)
+    i(GL_FLOAT16_VEC4_NV)
+#endif /* GL_AMD_gpu_shader_int64 */
+
 #ifndef NO_GL_AMD_interleaved_elements
     i(GL_VERTEX_ELEMENT_SWIZZLE_AMD)
     i(GL_VERTEX_ID_SWIZZLE_AMD)
@@ -2348,6 +2667,15 @@ extern "C" {
     i(GL_VERTEX_ARRAY_OBJECT_AMD)
     i(GL_SAMPLER_OBJECT_AMD)
 #endif /* GL_AMD_name_gen_delete */
+
+#ifndef NO_GL_AMD_occlusion_query_event
+    i(GL_OCCLUSION_QUERY_EVENT_MASK_AMD)
+    i(GL_QUERY_DEPTH_PASS_EVENT_BIT_AMD)
+    i(GL_QUERY_DEPTH_FAIL_EVENT_BIT_AMD)
+    i(GL_QUERY_STENCIL_FAIL_EVENT_BIT_AMD)
+    i(GL_QUERY_DEPTH_BOUNDS_FAIL_EVENT_BIT_AMD)
+    i(GL_QUERY_ALL_EVENT_BITS_AMD)
+#endif /* GL_AMD_occlusion_query_event */
 
 #ifndef NO_GL_AMD_performance_monitor
     i(GL_COUNTER_TYPE_AMD)
@@ -2375,6 +2703,12 @@ extern "C" {
 
 #ifndef NO_GL_AMD_seamless_cubemap_per_texture
 #endif /* GL_AMD_seamless_cubemap_per_texture */
+
+#ifndef NO_GL_AMD_shader_atomic_counter_ops
+#endif /* GL_AMD_shader_atomic_counter_ops */
+
+#ifndef NO_GL_AMD_shader_explicit_vertex_parameter
+#endif /* GL_AMD_shader_explicit_vertex_parameter */
 
 #ifndef NO_GL_AMD_shader_stencil_export
 #endif /* GL_AMD_shader_stencil_export */
@@ -2406,6 +2740,10 @@ extern "C" {
 
 #ifndef NO_GL_AMD_transform_feedback3_lines_triangles
 #endif /* GL_AMD_transform_feedback3_lines_triangles */
+
+#ifndef NO_GL_AMD_transform_feedback4
+    i(GL_STREAM_RASTERIZATION_AMD)
+#endif /* GL_AMD_transform_feedback4 */
 
 #ifndef NO_GL_AMD_vertex_shader_layer
 #endif /* GL_AMD_vertex_shader_layer */
@@ -2477,6 +2815,7 @@ extern "C" {
     i(GL_RGB_422_APPLE)
     i(GL_UNSIGNED_SHORT_8_8_APPLE)
     i(GL_UNSIGNED_SHORT_8_8_REV_APPLE)
+    i(GL_RGB_RAW_422_APPLE)
 #endif /* GL_APPLE_rgb_422 */
 
 #ifndef NO_GL_APPLE_row_bytes
@@ -2892,6 +3231,18 @@ extern "C" {
     i(GL_CULL_VERTEX_OBJECT_POSITION_EXT)
 #endif /* GL_EXT_cull_vertex */
 
+#ifndef NO_GL_EXT_debug_label
+    i(GL_PROGRAM_PIPELINE_OBJECT_EXT)
+    i(GL_PROGRAM_OBJECT_EXT)
+    i(GL_SHADER_OBJECT_EXT)
+    i(GL_BUFFER_OBJECT_EXT)
+    i(GL_QUERY_OBJECT_EXT)
+    i(GL_VERTEX_ARRAY_OBJECT_EXT)
+#endif /* GL_EXT_debug_label */
+
+#ifndef NO_GL_EXT_debug_marker
+#endif /* GL_EXT_debug_marker */
+
 #ifndef NO_GL_EXT_depth_bounds_test
     i(GL_DEPTH_BOUNDS_TEST_EXT)
     i(GL_DEPTH_BOUNDS_EXT)
@@ -3029,6 +3380,7 @@ extern "C" {
 #endif /* GL_EXT_gpu_program_parameters */
 
 #ifndef NO_GL_EXT_gpu_shader4
+    i(GL_VERTEX_ATTRIB_ARRAY_INTEGER_EXT)
     i(GL_SAMPLER_1D_ARRAY_EXT)
     i(GL_SAMPLER_2D_ARRAY_EXT)
     i(GL_SAMPLER_BUFFER_EXT)
@@ -3054,6 +3406,8 @@ extern "C" {
     i(GL_UNSIGNED_INT_SAMPLER_1D_ARRAY_EXT)
     i(GL_UNSIGNED_INT_SAMPLER_2D_ARRAY_EXT)
     i(GL_UNSIGNED_INT_SAMPLER_BUFFER_EXT)
+    i(GL_MIN_PROGRAM_TEXEL_OFFSET_EXT)
+    i(GL_MAX_PROGRAM_TEXEL_OFFSET_EXT)
 #endif /* GL_EXT_gpu_shader4 */
 
 #ifndef NO_GL_EXT_histogram
@@ -3203,12 +3557,28 @@ extern "C" {
     i(GL_POLYGON_OFFSET_BIAS_EXT)
 #endif /* GL_EXT_polygon_offset */
 
+#ifndef NO_GL_EXT_polygon_offset_clamp
+    i(GL_POLYGON_OFFSET_CLAMP_EXT)
+#endif /* GL_EXT_polygon_offset_clamp */
+
+#ifndef NO_GL_EXT_post_depth_coverage
+#endif /* GL_EXT_post_depth_coverage */
+
 #ifndef NO_GL_EXT_provoking_vertex
     i(GL_QUADS_FOLLOW_PROVOKING_VERTEX_CONVENTION_EXT)
     i(GL_FIRST_VERTEX_CONVENTION_EXT)
     i(GL_LAST_VERTEX_CONVENTION_EXT)
     i(GL_PROVOKING_VERTEX_EXT)
 #endif /* GL_EXT_provoking_vertex */
+
+#ifndef NO_GL_EXT_raster_multisample
+    i(GL_RASTER_MULTISAMPLE_EXT)
+    i(GL_RASTER_SAMPLES_EXT)
+    i(GL_MAX_RASTER_SAMPLES_EXT)
+    i(GL_RASTER_FIXED_SAMPLE_LOCATIONS_EXT)
+    i(GL_MULTISAMPLE_RASTERIZATION_ALLOWED_EXT)
+    i(GL_EFFECTIVE_RASTER_SAMPLES_EXT)
+#endif /* GL_EXT_raster_multisample */
 
 #ifndef NO_GL_EXT_rescale_normal
     i(GL_RESCALE_NORMAL_EXT)
@@ -3233,6 +3603,9 @@ extern "C" {
     i(GL_SINGLE_COLOR_EXT)
     i(GL_SEPARATE_SPECULAR_COLOR_EXT)
 #endif /* GL_EXT_separate_specular_color */
+
+#ifndef NO_GL_EXT_shader_image_load_formatted
+#endif /* GL_EXT_shader_image_load_formatted */
 
 #ifndef NO_GL_EXT_shader_image_load_store
     i(GL_MAX_IMAGE_UNITS_EXT)
@@ -3292,12 +3665,18 @@ extern "C" {
     i(GL_ALL_BARRIER_BITS_EXT)
 #endif /* GL_EXT_shader_image_load_store */
 
+#ifndef NO_GL_EXT_shader_integer_mix
+#endif /* GL_EXT_shader_integer_mix */
+
 #ifndef NO_GL_EXT_shadow_funcs
 #endif /* GL_EXT_shadow_funcs */
 
 #ifndef NO_GL_EXT_shared_texture_palette
     i(GL_SHARED_TEXTURE_PALETTE_EXT)
 #endif /* GL_EXT_shared_texture_palette */
+
+#ifndef NO_GL_EXT_sparse_texture2
+#endif /* GL_EXT_sparse_texture2 */
 
 #ifndef NO_GL_EXT_stencil_clear_tag
     i(GL_STENCIL_TAG_BITS_EXT)
@@ -3467,6 +3846,9 @@ extern "C" {
     i(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT)
 #endif /* GL_EXT_texture_filter_anisotropic */
 
+#ifndef NO_GL_EXT_texture_filter_minmax
+#endif /* GL_EXT_texture_filter_minmax */
+
 #ifndef NO_GL_EXT_texture_integer
     i(GL_RGBA32UI_EXT)
     i(GL_RGB32UI_EXT)
@@ -3586,6 +3968,10 @@ extern "C" {
     i(GL_LUMINANCE16_SNORM)
     i(GL_LUMINANCE16_ALPHA16_SNORM)
     i(GL_INTENSITY16_SNORM)
+    i(GL_RED_SNORM)
+    i(GL_RG_SNORM)
+    i(GL_RGB_SNORM)
+    i(GL_RGBA_SNORM)
 #endif /* GL_EXT_texture_snorm */
 
 #ifndef NO_GL_EXT_texture_swizzle
@@ -3800,6 +4186,15 @@ extern "C" {
     i(GL_VERTEX_WEIGHT_ARRAY_POINTER_EXT)
 #endif /* GL_EXT_vertex_weighting */
 
+#ifndef NO_GL_EXT_window_rectangles
+    i(GL_INCLUSIVE_EXT)
+    i(GL_EXCLUSIVE_EXT)
+    i(GL_WINDOW_RECTANGLE_EXT)
+    i(GL_WINDOW_RECTANGLE_MODE_EXT)
+    i(GL_MAX_WINDOW_RECTANGLES_EXT)
+    i(GL_NUM_WINDOW_RECTANGLES_EXT)
+#endif /* GL_EXT_window_rectangles */
+
 #ifndef NO_GL_EXT_x11_sync_object
     i(GL_SYNC_X11_FENCE_EXT)
 #endif /* GL_EXT_x11_sync_object */
@@ -3903,6 +4298,12 @@ extern "C" {
     i(GL_INTERLACE_READ_INGR)
 #endif /* GL_INGR_interlace_read */
 
+#ifndef NO_GL_INTEL_fragment_shader_ordering
+#endif /* GL_INTEL_fragment_shader_ordering */
+
+#ifndef NO_GL_INTEL_framebuffer_CMAA
+#endif /* GL_INTEL_framebuffer_CMAA */
+
 #ifndef NO_GL_INTEL_map_texture
     i(GL_TEXTURE_MEMORY_LAYOUT_INTEL)
     i(GL_LAYOUT_DEFAULT_INTEL)
@@ -3917,6 +4318,29 @@ extern "C" {
     i(GL_COLOR_ARRAY_PARALLEL_POINTERS_INTEL)
     i(GL_TEXTURE_COORD_ARRAY_PARALLEL_POINTERS_INTEL)
 #endif /* GL_INTEL_parallel_arrays */
+
+#ifndef NO_GL_INTEL_performance_query
+    i(GL_PERFQUERY_SINGLE_CONTEXT_INTEL)
+    i(GL_PERFQUERY_GLOBAL_CONTEXT_INTEL)
+    i(GL_PERFQUERY_WAIT_INTEL)
+    i(GL_PERFQUERY_FLUSH_INTEL)
+    i(GL_PERFQUERY_DONOT_FLUSH_INTEL)
+    i(GL_PERFQUERY_COUNTER_EVENT_INTEL)
+    i(GL_PERFQUERY_COUNTER_DURATION_NORM_INTEL)
+    i(GL_PERFQUERY_COUNTER_DURATION_RAW_INTEL)
+    i(GL_PERFQUERY_COUNTER_THROUGHPUT_INTEL)
+    i(GL_PERFQUERY_COUNTER_RAW_INTEL)
+    i(GL_PERFQUERY_COUNTER_TIMESTAMP_INTEL)
+    i(GL_PERFQUERY_COUNTER_DATA_UINT32_INTEL)
+    i(GL_PERFQUERY_COUNTER_DATA_UINT64_INTEL)
+    i(GL_PERFQUERY_COUNTER_DATA_FLOAT_INTEL)
+    i(GL_PERFQUERY_COUNTER_DATA_DOUBLE_INTEL)
+    i(GL_PERFQUERY_COUNTER_DATA_BOOL32_INTEL)
+    i(GL_PERFQUERY_QUERY_NAME_LENGTH_MAX_INTEL)
+    i(GL_PERFQUERY_COUNTER_NAME_LENGTH_MAX_INTEL)
+    i(GL_PERFQUERY_COUNTER_DESC_LENGTH_MAX_INTEL)
+    i(GL_PERFQUERY_GPA_EXTENDED_COUNTERS_INTEL)
+#endif /* GL_INTEL_performance_query */
 
 #ifndef NO_GL_MESAX_texture_stack
     i(GL_TEXTURE_1D_STACK_MESAX)
@@ -3946,11 +4370,109 @@ extern "C" {
 #ifndef NO_GL_NVX_conditional_render
 #endif /* GL_NVX_conditional_render */
 
+#ifndef NO_GL_NVX_gpu_memory_info
+    i(GL_GPU_MEMORY_INFO_DEDICATED_VIDMEM_NVX)
+    i(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX)
+    i(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX)
+    i(GL_GPU_MEMORY_INFO_EVICTION_COUNT_NVX)
+    i(GL_GPU_MEMORY_INFO_EVICTED_MEMORY_NVX)
+#endif /* GL_NVX_gpu_memory_info */
+
+#ifndef NO_GL_NV_bindless_multi_draw_indirect
+#endif /* GL_NV_bindless_multi_draw_indirect */
+
+#ifndef NO_GL_NV_bindless_multi_draw_indirect_count
+#endif /* GL_NV_bindless_multi_draw_indirect_count */
+
 #ifndef NO_GL_NV_bindless_texture
 #endif /* GL_NV_bindless_texture */
 
+#ifndef NO_GL_NV_blend_equation_advanced
+    i(GL_BLEND_OVERLAP_NV)
+    i(GL_BLEND_PREMULTIPLIED_SRC_NV)
+    i(GL_BLUE_NV)
+    i(GL_COLORBURN_NV)
+    i(GL_COLORDODGE_NV)
+    i(GL_CONJOINT_NV)
+    i(GL_CONTRAST_NV)
+    i(GL_DARKEN_NV)
+    i(GL_DIFFERENCE_NV)
+    i(GL_DISJOINT_NV)
+    i(GL_DST_ATOP_NV)
+    i(GL_DST_IN_NV)
+    i(GL_DST_NV)
+    i(GL_DST_OUT_NV)
+    i(GL_DST_OVER_NV)
+    i(GL_EXCLUSION_NV)
+    i(GL_GREEN_NV)
+    i(GL_HARDLIGHT_NV)
+    i(GL_HARDMIX_NV)
+    i(GL_HSL_COLOR_NV)
+    i(GL_HSL_HUE_NV)
+    i(GL_HSL_LUMINOSITY_NV)
+    i(GL_HSL_SATURATION_NV)
+    i(GL_INVERT_OVG_NV)
+    i(GL_INVERT_RGB_NV)
+    i(GL_LIGHTEN_NV)
+    i(GL_LINEARBURN_NV)
+    i(GL_LINEARDODGE_NV)
+    i(GL_LINEARLIGHT_NV)
+    i(GL_MINUS_CLAMPED_NV)
+    i(GL_MINUS_NV)
+    i(GL_MULTIPLY_NV)
+    i(GL_OVERLAY_NV)
+    i(GL_PINLIGHT_NV)
+    i(GL_PLUS_CLAMPED_ALPHA_NV)
+    i(GL_PLUS_CLAMPED_NV)
+    i(GL_PLUS_DARKER_NV)
+    i(GL_PLUS_NV)
+    i(GL_RED_NV)
+    i(GL_SCREEN_NV)
+    i(GL_SOFTLIGHT_NV)
+    i(GL_SRC_ATOP_NV)
+    i(GL_SRC_IN_NV)
+    i(GL_SRC_NV)
+    i(GL_SRC_OUT_NV)
+    i(GL_SRC_OVER_NV)
+    i(GL_UNCORRELATED_NV)
+    i(GL_VIVIDLIGHT_NV)
+    i(GL_XOR_NV)
+#endif /* GL_NV_blend_equation_advanced */
+
+#ifndef NO_GL_NV_blend_equation_advanced_coherent
+    i(GL_BLEND_ADVANCED_COHERENT_NV)
+#endif /* GL_NV_blend_equation_advanced_coherent */
+
 #ifndef NO_GL_NV_blend_square
 #endif /* GL_NV_blend_square */
+
+#ifndef NO_GL_NV_clip_space_w_scaling
+    i(GL_VIEWPORT_POSITION_W_SCALE_NV)
+    i(GL_VIEWPORT_POSITION_W_SCALE_X_COEFF_NV)
+    i(GL_VIEWPORT_POSITION_W_SCALE_Y_COEFF_NV)
+#endif /* GL_NV_clip_space_w_scaling */
+
+#ifndef NO_GL_NV_command_list
+    i(GL_TERMINATE_SEQUENCE_COMMAND_NV)
+    i(GL_NOP_COMMAND_NV)
+    i(GL_DRAW_ELEMENTS_COMMAND_NV)
+    i(GL_DRAW_ARRAYS_COMMAND_NV)
+    i(GL_DRAW_ELEMENTS_STRIP_COMMAND_NV)
+    i(GL_DRAW_ARRAYS_STRIP_COMMAND_NV)
+    i(GL_DRAW_ELEMENTS_INSTANCED_COMMAND_NV)
+    i(GL_DRAW_ARRAYS_INSTANCED_COMMAND_NV)
+    i(GL_ELEMENT_ADDRESS_COMMAND_NV)
+    i(GL_ATTRIBUTE_ADDRESS_COMMAND_NV)
+    i(GL_UNIFORM_ADDRESS_COMMAND_NV)
+    i(GL_BLEND_COLOR_COMMAND_NV)
+    i(GL_STENCIL_REF_COMMAND_NV)
+    i(GL_LINE_WIDTH_COMMAND_NV)
+    i(GL_POLYGON_OFFSET_COMMAND_NV)
+    i(GL_ALPHA_REF_COMMAND_NV)
+    i(GL_VIEWPORT_COMMAND_NV)
+    i(GL_SCISSOR_COMMAND_NV)
+    i(GL_FRONT_FACE_COMMAND_NV)
+#endif /* GL_NV_command_list */
 
 #ifndef NO_GL_NV_compute_program5
     i(GL_COMPUTE_PROGRAM_NV)
@@ -3963,6 +4485,25 @@ extern "C" {
     i(GL_QUERY_BY_REGION_WAIT_NV)
     i(GL_QUERY_BY_REGION_NO_WAIT_NV)
 #endif /* GL_NV_conditional_render */
+
+#ifndef NO_GL_NV_conservative_raster
+    i(GL_CONSERVATIVE_RASTERIZATION_NV)
+    i(GL_SUBPIXEL_PRECISION_BIAS_X_BITS_NV)
+    i(GL_SUBPIXEL_PRECISION_BIAS_Y_BITS_NV)
+    i(GL_MAX_SUBPIXEL_PRECISION_BIAS_BITS_NV)
+#endif /* GL_NV_conservative_raster */
+
+#ifndef NO_GL_NV_conservative_raster_dilate
+    i(GL_CONSERVATIVE_RASTER_DILATE_NV)
+    i(GL_CONSERVATIVE_RASTER_DILATE_RANGE_NV)
+    i(GL_CONSERVATIVE_RASTER_DILATE_GRANULARITY_NV)
+#endif /* GL_NV_conservative_raster_dilate */
+
+#ifndef NO_GL_NV_conservative_raster_pre_snap_triangles
+    i(GL_CONSERVATIVE_RASTER_MODE_NV)
+    i(GL_CONSERVATIVE_RASTER_MODE_POST_SNAP_NV)
+    i(GL_CONSERVATIVE_RASTER_MODE_PRE_SNAP_TRIANGLES_NV)
+#endif /* GL_NV_conservative_raster_pre_snap_triangles */
 
 #ifndef NO_GL_NV_copy_depth_to_color
     i(GL_DEPTH_STENCIL_TO_RGBA_NV)
@@ -4037,6 +4578,10 @@ extern "C" {
     i(GL_FENCE_CONDITION_NV)
 #endif /* GL_NV_fence */
 
+#ifndef NO_GL_NV_fill_rectangle
+    i(GL_FILL_RECTANGLE_NV)
+#endif /* GL_NV_fill_rectangle */
+
 #ifndef NO_GL_NV_float_buffer
     i(GL_FLOAT_R_NV)
     i(GL_FLOAT_RG_NV)
@@ -4061,6 +4606,11 @@ extern "C" {
     i(GL_EYE_PLANE_ABSOLUTE_NV)
 #endif /* GL_NV_fog_distance */
 
+#ifndef NO_GL_NV_fragment_coverage_to_color
+    i(GL_FRAGMENT_COVERAGE_TO_COLOR_NV)
+    i(GL_FRAGMENT_COVERAGE_COLOR_NV)
+#endif /* GL_NV_fragment_coverage_to_color */
+
 #ifndef NO_GL_NV_fragment_program
     i(GL_MAX_FRAGMENT_PROGRAM_LOCAL_PARAMETERS_NV)
     i(GL_FRAGMENT_PROGRAM_NV)
@@ -4084,6 +4634,20 @@ extern "C" {
 #ifndef NO_GL_NV_fragment_program_option
 #endif /* GL_NV_fragment_program_option */
 
+#ifndef NO_GL_NV_fragment_shader_interlock
+#endif /* GL_NV_fragment_shader_interlock */
+
+#ifndef NO_GL_NV_framebuffer_mixed_samples
+    i(GL_COVERAGE_MODULATION_TABLE_NV)
+    i(GL_COLOR_SAMPLES_NV)
+    i(GL_DEPTH_SAMPLES_NV)
+    i(GL_STENCIL_SAMPLES_NV)
+    i(GL_MIXED_DEPTH_SAMPLES_SUPPORTED_NV)
+    i(GL_MIXED_STENCIL_SAMPLES_SUPPORTED_NV)
+    i(GL_COVERAGE_MODULATION_NV)
+    i(GL_COVERAGE_MODULATION_TABLE_SIZE_NV)
+#endif /* GL_NV_framebuffer_mixed_samples */
+
 #ifndef NO_GL_NV_framebuffer_multisample_coverage
     i(GL_RENDERBUFFER_COVERAGE_SAMPLES_NV)
     i(GL_RENDERBUFFER_COLOR_SAMPLES_NV)
@@ -4099,6 +4663,9 @@ extern "C" {
 
 #ifndef NO_GL_NV_geometry_shader4
 #endif /* GL_NV_geometry_shader4 */
+
+#ifndef NO_GL_NV_geometry_shader_passthrough
+#endif /* GL_NV_geometry_shader_passthrough */
 
 #ifndef NO_GL_NV_gpu_program4
     i(GL_MIN_PROGRAM_TEXEL_OFFSET_NV)
@@ -4122,40 +4689,22 @@ extern "C" {
     i(GL_MAX_PROGRAM_SUBROUTINE_NUM_NV)
 #endif /* GL_NV_gpu_program5 */
 
+#ifndef NO_GL_NV_gpu_program5_mem_extended
+#endif /* GL_NV_gpu_program5_mem_extended */
+
 #ifndef NO_GL_NV_gpu_shader5
-    i(GL_INT64_NV)
-    i(GL_UNSIGNED_INT64_NV)
-    i(GL_INT8_NV)
-    i(GL_INT8_VEC2_NV)
-    i(GL_INT8_VEC3_NV)
-    i(GL_INT8_VEC4_NV)
-    i(GL_INT16_NV)
-    i(GL_INT16_VEC2_NV)
-    i(GL_INT16_VEC3_NV)
-    i(GL_INT16_VEC4_NV)
-    i(GL_INT64_VEC2_NV)
-    i(GL_INT64_VEC3_NV)
-    i(GL_INT64_VEC4_NV)
-    i(GL_UNSIGNED_INT8_NV)
-    i(GL_UNSIGNED_INT8_VEC2_NV)
-    i(GL_UNSIGNED_INT8_VEC3_NV)
-    i(GL_UNSIGNED_INT8_VEC4_NV)
-    i(GL_UNSIGNED_INT16_NV)
-    i(GL_UNSIGNED_INT16_VEC2_NV)
-    i(GL_UNSIGNED_INT16_VEC3_NV)
-    i(GL_UNSIGNED_INT16_VEC4_NV)
-    i(GL_UNSIGNED_INT64_VEC2_NV)
-    i(GL_UNSIGNED_INT64_VEC3_NV)
-    i(GL_UNSIGNED_INT64_VEC4_NV)
-    i(GL_FLOAT16_NV)
-    i(GL_FLOAT16_VEC2_NV)
-    i(GL_FLOAT16_VEC3_NV)
-    i(GL_FLOAT16_VEC4_NV)
 #endif /* GL_NV_gpu_shader5 */
 
 #ifndef NO_GL_NV_half_float
     i(GL_HALF_FLOAT_NV)
 #endif /* GL_NV_half_float */
+
+#ifndef NO_GL_NV_internalformat_sample_query
+    i(GL_MULTISAMPLES_NV)
+    i(GL_SUPERSAMPLE_SCALE_X_NV)
+    i(GL_SUPERSAMPLE_SCALE_Y_NV)
+    i(GL_CONFORMANT_NV)
+#endif /* GL_NV_internalformat_sample_query */
 
 #ifndef NO_GL_NV_light_max_exponent
     i(GL_MAX_SHININESS_NV)
@@ -4163,7 +4712,6 @@ extern "C" {
 #endif /* GL_NV_light_max_exponent */
 
 #ifndef NO_GL_NV_multisample_coverage
-    i(GL_COLOR_SAMPLES_NV)
 #endif /* GL_NV_multisample_coverage */
 
 #ifndef NO_GL_NV_multisample_filter_hint
@@ -4246,13 +4794,11 @@ extern "C" {
     i(GL_SKIP_MISSING_GLYPH_NV)
     i(GL_USE_MISSING_GLYPH_NV)
     i(GL_PATH_ERROR_POSITION_NV)
-    i(GL_PATH_FOG_GEN_MODE_NV)
     i(GL_ACCUM_ADJACENT_PAIRS_NV)
     i(GL_ADJACENT_PAIRS_NV)
     i(GL_FIRST_TO_REST_NV)
     i(GL_PATH_GEN_MODE_NV)
     i(GL_PATH_GEN_COEFF_NV)
-    i(GL_PATH_GEN_COLOR_FORMAT_NV)
     i(GL_PATH_GEN_COMPONENTS_NV)
     i(GL_PATH_STENCIL_FUNC_NV)
     i(GL_PATH_STENCIL_REF_NV)
@@ -4321,9 +4867,49 @@ extern "C" {
     i(GL_FONT_UNDERLINE_POSITION_BIT_NV)
     i(GL_FONT_UNDERLINE_THICKNESS_BIT_NV)
     i(GL_FONT_HAS_KERNING_BIT_NV)
+    i(GL_ROUNDED_RECT_NV)
+    i(GL_RELATIVE_ROUNDED_RECT_NV)
+    i(GL_ROUNDED_RECT2_NV)
+    i(GL_RELATIVE_ROUNDED_RECT2_NV)
+    i(GL_ROUNDED_RECT4_NV)
+    i(GL_RELATIVE_ROUNDED_RECT4_NV)
+    i(GL_ROUNDED_RECT8_NV)
+    i(GL_RELATIVE_ROUNDED_RECT8_NV)
+    i(GL_RELATIVE_RECT_NV)
+    i(GL_FONT_GLYPHS_AVAILABLE_NV)
+    i(GL_FONT_TARGET_UNAVAILABLE_NV)
+    i(GL_FONT_UNAVAILABLE_NV)
+    i(GL_FONT_UNINTELLIGIBLE_NV)
+    i(GL_CONIC_CURVE_TO_NV)
+    i(GL_RELATIVE_CONIC_CURVE_TO_NV)
+    i(GL_FONT_NUM_GLYPH_INDICES_BIT_NV)
+    i(GL_STANDARD_FONT_FORMAT_NV)
+    i(GL_2_BYTES_NV)
+    i(GL_3_BYTES_NV)
+    i(GL_4_BYTES_NV)
+    i(GL_EYE_LINEAR_NV)
+    i(GL_OBJECT_LINEAR_NV)
+    i(GL_CONSTANT_NV)
+    i(GL_PATH_FOG_GEN_MODE_NV)
     i(GL_PRIMARY_COLOR_NV)
     i(GL_SECONDARY_COLOR_NV)
+    i(GL_PATH_GEN_COLOR_FORMAT_NV)
+    i(GL_PATH_PROJECTION_NV)
+    i(GL_PATH_MODELVIEW_NV)
+    i(GL_PATH_MODELVIEW_STACK_DEPTH_NV)
+    i(GL_PATH_MODELVIEW_MATRIX_NV)
+    i(GL_PATH_MAX_MODELVIEW_STACK_DEPTH_NV)
+    i(GL_PATH_TRANSPOSE_MODELVIEW_MATRIX_NV)
+    i(GL_PATH_PROJECTION_STACK_DEPTH_NV)
+    i(GL_PATH_PROJECTION_MATRIX_NV)
+    i(GL_PATH_MAX_PROJECTION_STACK_DEPTH_NV)
+    i(GL_PATH_TRANSPOSE_PROJECTION_MATRIX_NV)
+    i(GL_FRAGMENT_INPUT_NV)
 #endif /* GL_NV_path_rendering */
+
+#ifndef NO_GL_NV_path_rendering_shared_edge
+    i(GL_SHARED_EDGE_NV)
+#endif /* GL_NV_path_rendering_shared_edge */
 
 #ifndef NO_GL_NV_pixel_data_range
     i(GL_WRITE_PIXEL_DATA_RANGE_NV)
@@ -4410,11 +4996,38 @@ extern "C" {
     i(GL_PER_STAGE_CONSTANTS_NV)
 #endif /* GL_NV_register_combiners2 */
 
+#ifndef NO_GL_NV_robustness_video_memory_purge
+    i(GL_PURGED_CONTEXT_RESET_NV)
+#endif /* GL_NV_robustness_video_memory_purge */
+
+#ifndef NO_GL_NV_sample_locations
+    i(GL_SAMPLE_LOCATION_SUBPIXEL_BITS_NV)
+    i(GL_SAMPLE_LOCATION_PIXEL_GRID_WIDTH_NV)
+    i(GL_SAMPLE_LOCATION_PIXEL_GRID_HEIGHT_NV)
+    i(GL_PROGRAMMABLE_SAMPLE_LOCATION_TABLE_SIZE_NV)
+    i(GL_SAMPLE_LOCATION_NV)
+    i(GL_PROGRAMMABLE_SAMPLE_LOCATION_NV)
+    i(GL_FRAMEBUFFER_PROGRAMMABLE_SAMPLE_LOCATIONS_NV)
+    i(GL_FRAMEBUFFER_SAMPLE_LOCATION_PIXEL_GRID_NV)
+#endif /* GL_NV_sample_locations */
+
+#ifndef NO_GL_NV_sample_mask_override_coverage
+#endif /* GL_NV_sample_mask_override_coverage */
+
 #ifndef NO_GL_NV_shader_atomic_counters
 #endif /* GL_NV_shader_atomic_counters */
 
 #ifndef NO_GL_NV_shader_atomic_float
 #endif /* GL_NV_shader_atomic_float */
+
+#ifndef NO_GL_NV_shader_atomic_float64
+#endif /* GL_NV_shader_atomic_float64 */
+
+#ifndef NO_GL_NV_shader_atomic_fp16_vector
+#endif /* GL_NV_shader_atomic_fp16_vector */
+
+#ifndef NO_GL_NV_shader_atomic_int64
+#endif /* GL_NV_shader_atomic_int64 */
 
 #ifndef NO_GL_NV_shader_buffer_load
     i(GL_BUFFER_GPU_ADDRESS_NV)
@@ -4428,6 +5041,18 @@ extern "C" {
 
 #ifndef NO_GL_NV_shader_storage_buffer_object
 #endif /* GL_NV_shader_storage_buffer_object */
+
+#ifndef NO_GL_NV_shader_thread_group
+    i(GL_WARP_SIZE_NV)
+    i(GL_WARPS_PER_SM_NV)
+    i(GL_SM_COUNT_NV)
+#endif /* GL_NV_shader_thread_group */
+
+#ifndef NO_GL_NV_shader_thread_shuffle
+#endif /* GL_NV_shader_thread_shuffle */
+
+#ifndef NO_GL_NV_stereo_view_rendering
+#endif /* GL_NV_stereo_view_rendering */
 
 #ifndef NO_GL_NV_tessellation_program5
     i(GL_MAX_PROGRAM_PATCH_ATTRIBS_NV)
@@ -4619,6 +5244,12 @@ extern "C" {
     i(GL_TRANSFORM_FEEDBACK_BINDING_NV)
 #endif /* GL_NV_transform_feedback2 */
 
+#ifndef NO_GL_NV_uniform_buffer_unified_memory
+    i(GL_UNIFORM_BUFFER_UNIFIED_NV)
+    i(GL_UNIFORM_BUFFER_ADDRESS_NV)
+    i(GL_UNIFORM_BUFFER_LENGTH_NV)
+#endif /* GL_NV_uniform_buffer_unified_memory */
+
 #ifndef NO_GL_NV_vdpau_interop
     i(GL_SURFACE_STATE_NV)
     i(GL_SURFACE_REGISTERED_NV)
@@ -4803,6 +5434,24 @@ extern "C" {
     i(GL_VIDEO_CAPTURE_SURFACE_ORIGIN_NV)
 #endif /* GL_NV_video_capture */
 
+#ifndef NO_GL_NV_viewport_array2
+#endif /* GL_NV_viewport_array2 */
+
+#ifndef NO_GL_NV_viewport_swizzle
+    i(GL_VIEWPORT_SWIZZLE_POSITIVE_X_NV)
+    i(GL_VIEWPORT_SWIZZLE_NEGATIVE_X_NV)
+    i(GL_VIEWPORT_SWIZZLE_POSITIVE_Y_NV)
+    i(GL_VIEWPORT_SWIZZLE_NEGATIVE_Y_NV)
+    i(GL_VIEWPORT_SWIZZLE_POSITIVE_Z_NV)
+    i(GL_VIEWPORT_SWIZZLE_NEGATIVE_Z_NV)
+    i(GL_VIEWPORT_SWIZZLE_POSITIVE_W_NV)
+    i(GL_VIEWPORT_SWIZZLE_NEGATIVE_W_NV)
+    i(GL_VIEWPORT_SWIZZLE_X_NV)
+    i(GL_VIEWPORT_SWIZZLE_Y_NV)
+    i(GL_VIEWPORT_SWIZZLE_Z_NV)
+    i(GL_VIEWPORT_SWIZZLE_W_NV)
+#endif /* GL_NV_viewport_swizzle */
+
 #ifndef NO_GL_OML_interlace
     i(GL_INTERLACE_OML)
     i(GL_INTERLACE_READ_OML)
@@ -4821,6 +5470,15 @@ extern "C" {
     i(GL_FORMAT_SUBSAMPLE_24_24_OML)
     i(GL_FORMAT_SUBSAMPLE_244_244_OML)
 #endif /* GL_OML_subsample */
+
+#ifndef NO_GL_OVR_multiview
+    i(GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_NUM_VIEWS_OVR)
+    i(GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_BASE_VIEW_INDEX_OVR)
+    i(GL_MAX_VIEWS_OVR)
+#endif /* GL_OVR_multiview */
+
+#ifndef NO_GL_OVR_multiview2
+#endif /* GL_OVR_multiview2 */
 
 #ifndef NO_GL_PGI_misc_hints
     i(GL_PREFER_DOUBLEBUFFER_HINT_PGI)
