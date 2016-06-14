@@ -1,3 +1,4 @@
+$|++;
 my $file = '../include/GL/glext.h';
 die "Unable to read '$file'" if (!open(FILE,$file));
 
@@ -8,6 +9,10 @@ binmode EXTS;
 my $exts = '../glext_consts.h';
 die "Unable to write to '$exts'" if (!open(CNST,">$exts"));
 binmode CNST;
+
+my $exts = '../glext_types.h';
+die "Unable to write to '$exts'" if (!open(TYPE,">$exts"));
+binmode TYPE;
 
 my $exps = 'exports.txt';
 die "Unable to read '$exps'" if (!open(EXPS,$exps));
@@ -37,6 +42,7 @@ extern "C" \{
 
 print EXTS sprintf $header, ("__glext_procs_h_") x 2;
 print CNST sprintf $header, ("__glext_consts_h_") x 2;
+print TYPE sprintf $header, ("__glext_types_h_") x 2;
 
 
 # License
@@ -58,6 +64,7 @@ while (<FILE>)
     print "Found end\n";
     print EXTS $line;
     print CNST $line;
+    print TYPE $line;
     next;
   }
   elsif ($line =~ m|^\#ifndef GL_[^\s]+|)
@@ -84,7 +91,9 @@ while (<FILE>)
 
     my @procs;
     my $in_PROTOTYPES;
+    my $in_TYPES;
     my $proto_level;
+    my $types_level;
     my $def_level = 1;
     while (<FILE>)
     {
@@ -98,7 +107,13 @@ while (<FILE>)
           $proto_level = $def_level;
           $in_PROTOTYPES = 1;
         }
+        if($line2 =~ /ifndef.*GLEXT_64_TYPES_DEFINED/)
+        {
+          $types_level = $def_level;
+          $in_TYPES = 2;
+        }
         print CNST $line2 if !$in_PROTOTYPES;
+        print TYPE $line2 if $in_TYPES;
         $def_level++;
         next;
       }
@@ -106,6 +121,10 @@ while (<FILE>)
       if ($line2 !~ m|^\#endif|)
       {
         print EXTS $line2;
+        $in_TYPES-- if $in_TYPES == 1 and $line2 !~ m|^typedef|;
+        print TYPE $line2 if $in_TYPES;
+        print TYPE $line2 if !$in_TYPES and $line2 =~ m|^typedef \w+ \w+;|;
+
         if ($line2 =~ m|APIENTRY (gl[^\s]+)|)
         {
           my $export = $1;
@@ -137,10 +156,13 @@ while (<FILE>)
       {
         print EXTS $line2;
         print CNST $line2 if !$in_PROTOTYPES;
+        print TYPE $line2 if $in_TYPES;
+
+        $in_PROTOTYPES = 0 if $in_PROTOTYPES and $proto_level == $def_level;
+        $in_TYPES-- if $in_TYPES and $types_level == $def_level;
+
         next;
       }
-
-      $in_PROTOTYPES = 0 if $in_PROTOTYPES and $proto_level == $def_level;
 
       if(@procs)
       {
@@ -162,6 +184,7 @@ while (<FILE>)
     print EXTS $line;
     next if $line =~ /^(#include|#define) /;
     print CNST $line;
+    print TYPE $line;
   }
 }
 
