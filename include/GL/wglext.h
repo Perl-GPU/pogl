@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 /*
-** Copyright (c) 2013 The Khronos Group Inc.
+** Copyright (c) 2013-2016 The Khronos Group Inc.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a
 ** copy of this software and/or associated documentation files (the
@@ -31,9 +31,9 @@ extern "C" {
 ** This header is generated from the Khronos OpenGL / OpenGL ES XML
 ** API Registry. The current version of the Registry, generator scripts
 ** used to make the header, and the header can be found at
-**   http://www.khronos.org/registry/
+**   http://www.opengl.org/registry/
 **
-** Khronos $Revision$ on $Date$
+** Khronos $Revision: 32686 $ on $Date: 2016-04-20 03:08:44 +0200 (Mi, 20 Apr 2016) $
 */
 
 #if defined(_WIN32) && !defined(APIENTRY) && !defined(__CYGWIN__) && !defined(__SCITECH_SNAP__)
@@ -41,7 +41,7 @@ extern "C" {
 #include <windows.h>
 #endif
 
-#define WGL_WGLEXT_VERSION 20130613
+#define WGL_WGLEXT_VERSION 20160419
 
 /* Generated C header for:
  * API: wgl
@@ -62,13 +62,20 @@ typedef HANDLE (WINAPI * PFNWGLCREATEBUFFERREGIONARBPROC) (HDC hDC, int iLayerPl
 typedef VOID (WINAPI * PFNWGLDELETEBUFFERREGIONARBPROC) (HANDLE hRegion);
 typedef BOOL (WINAPI * PFNWGLSAVEBUFFERREGIONARBPROC) (HANDLE hRegion, int x, int y, int width, int height);
 typedef BOOL (WINAPI * PFNWGLRESTOREBUFFERREGIONARBPROC) (HANDLE hRegion, int x, int y, int width, int height, int xSrc, int ySrc);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 HANDLE WINAPI wglCreateBufferRegionARB (HDC hDC, int iLayerPlane, UINT uType);
 VOID WINAPI wglDeleteBufferRegionARB (HANDLE hRegion);
 BOOL WINAPI wglSaveBufferRegionARB (HANDLE hRegion, int x, int y, int width, int height);
 BOOL WINAPI wglRestoreBufferRegionARB (HANDLE hRegion, int x, int y, int width, int height, int xSrc, int ySrc);
 #endif
 #endif /* WGL_ARB_buffer_region */
+
+#ifndef WGL_ARB_context_flush_control
+#define WGL_ARB_context_flush_control 1
+#define WGL_CONTEXT_RELEASE_BEHAVIOR_ARB  0x2097
+#define WGL_CONTEXT_RELEASE_BEHAVIOR_NONE_ARB 0
+#define WGL_CONTEXT_RELEASE_BEHAVIOR_FLUSH_ARB 0x2098
+#endif /* WGL_ARB_context_flush_control */
 
 #ifndef WGL_ARB_create_context
 #define WGL_ARB_create_context 1
@@ -80,7 +87,7 @@ BOOL WINAPI wglRestoreBufferRegionARB (HANDLE hRegion, int x, int y, int width, 
 #define WGL_CONTEXT_FLAGS_ARB             0x2094
 #define ERROR_INVALID_VERSION_ARB         0x2095
 typedef HGLRC (WINAPI * PFNWGLCREATECONTEXTATTRIBSARBPROC) (HDC hDC, HGLRC hShareContext, const int *attribList);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 HGLRC WINAPI wglCreateContextAttribsARB (HDC hDC, HGLRC hShareContext, const int *attribList);
 #endif
 #endif /* WGL_ARB_create_context */
@@ -104,7 +111,7 @@ HGLRC WINAPI wglCreateContextAttribsARB (HDC hDC, HGLRC hShareContext, const int
 #ifndef WGL_ARB_extensions_string
 #define WGL_ARB_extensions_string 1
 typedef const char *(WINAPI * PFNWGLGETEXTENSIONSSTRINGARBPROC) (HDC hdc);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 const char *WINAPI wglGetExtensionsStringARB (HDC hdc);
 #endif
 #endif /* WGL_ARB_extensions_string */
@@ -120,7 +127,7 @@ const char *WINAPI wglGetExtensionsStringARB (HDC hdc);
 #define ERROR_INCOMPATIBLE_DEVICE_CONTEXTS_ARB 0x2054
 typedef BOOL (WINAPI * PFNWGLMAKECONTEXTCURRENTARBPROC) (HDC hDrawDC, HDC hReadDC, HGLRC hglrc);
 typedef HDC (WINAPI * PFNWGLGETCURRENTREADDCARBPROC) (void);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 BOOL WINAPI wglMakeContextCurrentARB (HDC hDrawDC, HDC hReadDC, HGLRC hglrc);
 HDC WINAPI wglGetCurrentReadDCARB (void);
 #endif
@@ -148,7 +155,7 @@ typedef HDC (WINAPI * PFNWGLGETPBUFFERDCARBPROC) (HPBUFFERARB hPbuffer);
 typedef int (WINAPI * PFNWGLRELEASEPBUFFERDCARBPROC) (HPBUFFERARB hPbuffer, HDC hDC);
 typedef BOOL (WINAPI * PFNWGLDESTROYPBUFFERARBPROC) (HPBUFFERARB hPbuffer);
 typedef BOOL (WINAPI * PFNWGLQUERYPBUFFERARBPROC) (HPBUFFERARB hPbuffer, int iAttribute, int *piValue);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 HPBUFFERARB WINAPI wglCreatePbufferARB (HDC hDC, int iPixelFormat, int iWidth, int iHeight, const int *piAttribList);
 HDC WINAPI wglGetPbufferDCARB (HPBUFFERARB hPbuffer);
 int WINAPI wglReleasePbufferDCARB (HPBUFFERARB hPbuffer, HDC hDC);
@@ -211,7 +218,7 @@ BOOL WINAPI wglQueryPbufferARB (HPBUFFERARB hPbuffer, int iAttribute, int *piVal
 typedef BOOL (WINAPI * PFNWGLGETPIXELFORMATATTRIBIVARBPROC) (HDC hdc, int iPixelFormat, int iLayerPlane, UINT nAttributes, const int *piAttributes, int *piValues);
 typedef BOOL (WINAPI * PFNWGLGETPIXELFORMATATTRIBFVARBPROC) (HDC hdc, int iPixelFormat, int iLayerPlane, UINT nAttributes, const int *piAttributes, FLOAT *pfValues);
 typedef BOOL (WINAPI * PFNWGLCHOOSEPIXELFORMATARBPROC) (HDC hdc, const int *piAttribIList, const FLOAT *pfAttribFList, UINT nMaxFormats, int *piFormats, UINT *nNumFormats);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 BOOL WINAPI wglGetPixelFormatAttribivARB (HDC hdc, int iPixelFormat, int iLayerPlane, UINT nAttributes, const int *piAttributes, int *piValues);
 BOOL WINAPI wglGetPixelFormatAttribfvARB (HDC hdc, int iPixelFormat, int iLayerPlane, UINT nAttributes, const int *piAttributes, FLOAT *pfValues);
 BOOL WINAPI wglChoosePixelFormatARB (HDC hdc, const int *piAttribIList, const FLOAT *pfAttribFList, UINT nMaxFormats, int *piFormats, UINT *nNumFormats);
@@ -261,7 +268,7 @@ BOOL WINAPI wglChoosePixelFormatARB (HDC hdc, const int *piAttribIList, const FL
 typedef BOOL (WINAPI * PFNWGLBINDTEXIMAGEARBPROC) (HPBUFFERARB hPbuffer, int iBuffer);
 typedef BOOL (WINAPI * PFNWGLRELEASETEXIMAGEARBPROC) (HPBUFFERARB hPbuffer, int iBuffer);
 typedef BOOL (WINAPI * PFNWGLSETPBUFFERATTRIBARBPROC) (HPBUFFERARB hPbuffer, const int *piAttribList);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 BOOL WINAPI wglBindTexImageARB (HPBUFFERARB hPbuffer, int iBuffer);
 BOOL WINAPI wglReleaseTexImageARB (HPBUFFERARB hPbuffer, int iBuffer);
 BOOL WINAPI wglSetPbufferAttribARB (HPBUFFERARB hPbuffer, const int *piAttribList);
@@ -290,7 +297,7 @@ BOOL WINAPI wglSetPbufferAttribARB (HPBUFFERARB hPbuffer, const int *piAttribLis
 #define WGL_STEREO_POLARITY_NORMAL_3DL    0x2057
 #define WGL_STEREO_POLARITY_INVERT_3DL    0x2058
 typedef BOOL (WINAPI * PFNWGLSETSTEREOEMITTERSTATE3DLPROC) (HDC hDC, UINT uState);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 BOOL WINAPI wglSetStereoEmitterState3DL (HDC hDC, UINT uState);
 #endif
 #endif /* WGL_3DL_stereo_control */
@@ -316,7 +323,7 @@ typedef BOOL (WINAPI * PFNWGLDELETEASSOCIATEDCONTEXTAMDPROC) (HGLRC hglrc);
 typedef BOOL (WINAPI * PFNWGLMAKEASSOCIATEDCONTEXTCURRENTAMDPROC) (HGLRC hglrc);
 typedef HGLRC (WINAPI * PFNWGLGETCURRENTASSOCIATEDCONTEXTAMDPROC) (void);
 typedef VOID (WINAPI * PFNWGLBLITCONTEXTFRAMEBUFFERAMDPROC) (HGLRC dstCtx, GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 UINT WINAPI wglGetGPUIDsAMD (UINT maxCount, UINT *ids);
 INT WINAPI wglGetGPUInfoAMD (UINT id, int property, GLenum dataType, UINT size, void *data);
 UINT WINAPI wglGetContextGPUIDAMD (HGLRC hglrc);
@@ -355,7 +362,7 @@ typedef GLboolean (WINAPI * PFNWGLCREATEDISPLAYCOLORTABLEEXTPROC) (GLushort id);
 typedef GLboolean (WINAPI * PFNWGLLOADDISPLAYCOLORTABLEEXTPROC) (const GLushort *table, GLuint length);
 typedef GLboolean (WINAPI * PFNWGLBINDDISPLAYCOLORTABLEEXTPROC) (GLushort id);
 typedef VOID (WINAPI * PFNWGLDESTROYDISPLAYCOLORTABLEEXTPROC) (GLushort id);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 GLboolean WINAPI wglCreateDisplayColorTableEXT (GLushort id);
 GLboolean WINAPI wglLoadDisplayColorTableEXT (const GLushort *table, GLuint length);
 GLboolean WINAPI wglBindDisplayColorTableEXT (GLushort id);
@@ -366,7 +373,7 @@ VOID WINAPI wglDestroyDisplayColorTableEXT (GLushort id);
 #ifndef WGL_EXT_extensions_string
 #define WGL_EXT_extensions_string 1
 typedef const char *(WINAPI * PFNWGLGETEXTENSIONSSTRINGEXTPROC) (void);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 const char *WINAPI wglGetExtensionsStringEXT (void);
 #endif
 #endif /* WGL_EXT_extensions_string */
@@ -381,7 +388,7 @@ const char *WINAPI wglGetExtensionsStringEXT (void);
 #define ERROR_INVALID_PIXEL_TYPE_EXT      0x2043
 typedef BOOL (WINAPI * PFNWGLMAKECONTEXTCURRENTEXTPROC) (HDC hDrawDC, HDC hReadDC, HGLRC hglrc);
 typedef HDC (WINAPI * PFNWGLGETCURRENTREADDCEXTPROC) (void);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 BOOL WINAPI wglMakeContextCurrentEXT (HDC hDrawDC, HDC hReadDC, HGLRC hglrc);
 HDC WINAPI wglGetCurrentReadDCEXT (void);
 #endif
@@ -410,7 +417,7 @@ typedef HDC (WINAPI * PFNWGLGETPBUFFERDCEXTPROC) (HPBUFFEREXT hPbuffer);
 typedef int (WINAPI * PFNWGLRELEASEPBUFFERDCEXTPROC) (HPBUFFEREXT hPbuffer, HDC hDC);
 typedef BOOL (WINAPI * PFNWGLDESTROYPBUFFEREXTPROC) (HPBUFFEREXT hPbuffer);
 typedef BOOL (WINAPI * PFNWGLQUERYPBUFFEREXTPROC) (HPBUFFEREXT hPbuffer, int iAttribute, int *piValue);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 HPBUFFEREXT WINAPI wglCreatePbufferEXT (HDC hDC, int iPixelFormat, int iWidth, int iHeight, const int *piAttribList);
 HDC WINAPI wglGetPbufferDCEXT (HPBUFFEREXT hPbuffer);
 int WINAPI wglReleasePbufferDCEXT (HPBUFFEREXT hPbuffer, HDC hDC);
@@ -469,7 +476,7 @@ BOOL WINAPI wglQueryPbufferEXT (HPBUFFEREXT hPbuffer, int iAttribute, int *piVal
 typedef BOOL (WINAPI * PFNWGLGETPIXELFORMATATTRIBIVEXTPROC) (HDC hdc, int iPixelFormat, int iLayerPlane, UINT nAttributes, int *piAttributes, int *piValues);
 typedef BOOL (WINAPI * PFNWGLGETPIXELFORMATATTRIBFVEXTPROC) (HDC hdc, int iPixelFormat, int iLayerPlane, UINT nAttributes, int *piAttributes, FLOAT *pfValues);
 typedef BOOL (WINAPI * PFNWGLCHOOSEPIXELFORMATEXTPROC) (HDC hdc, const int *piAttribIList, const FLOAT *pfAttribFList, UINT nMaxFormats, int *piFormats, UINT *nNumFormats);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 BOOL WINAPI wglGetPixelFormatAttribivEXT (HDC hdc, int iPixelFormat, int iLayerPlane, UINT nAttributes, int *piAttributes, int *piValues);
 BOOL WINAPI wglGetPixelFormatAttribfvEXT (HDC hdc, int iPixelFormat, int iLayerPlane, UINT nAttributes, int *piAttributes, FLOAT *pfValues);
 BOOL WINAPI wglChoosePixelFormatEXT (HDC hdc, const int *piAttribIList, const FLOAT *pfAttribFList, UINT nMaxFormats, int *piFormats, UINT *nNumFormats);
@@ -485,7 +492,7 @@ BOOL WINAPI wglChoosePixelFormatEXT (HDC hdc, const int *piAttribIList, const FL
 #define WGL_EXT_swap_control 1
 typedef BOOL (WINAPI * PFNWGLSWAPINTERVALEXTPROC) (int interval);
 typedef int (WINAPI * PFNWGLGETSWAPINTERVALEXTPROC) (void);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 BOOL WINAPI wglSwapIntervalEXT (int interval);
 int WINAPI wglGetSwapIntervalEXT (void);
 #endif
@@ -503,7 +510,7 @@ int WINAPI wglGetSwapIntervalEXT (void);
 #define WGL_DIGITAL_VIDEO_GAMMA_CORRECTED_I3D 0x2053
 typedef BOOL (WINAPI * PFNWGLGETDIGITALVIDEOPARAMETERSI3DPROC) (HDC hDC, int iAttribute, int *piValue);
 typedef BOOL (WINAPI * PFNWGLSETDIGITALVIDEOPARAMETERSI3DPROC) (HDC hDC, int iAttribute, const int *piValue);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 BOOL WINAPI wglGetDigitalVideoParametersI3D (HDC hDC, int iAttribute, int *piValue);
 BOOL WINAPI wglSetDigitalVideoParametersI3D (HDC hDC, int iAttribute, const int *piValue);
 #endif
@@ -517,7 +524,7 @@ typedef BOOL (WINAPI * PFNWGLGETGAMMATABLEPARAMETERSI3DPROC) (HDC hDC, int iAttr
 typedef BOOL (WINAPI * PFNWGLSETGAMMATABLEPARAMETERSI3DPROC) (HDC hDC, int iAttribute, const int *piValue);
 typedef BOOL (WINAPI * PFNWGLGETGAMMATABLEI3DPROC) (HDC hDC, int iEntries, USHORT *puRed, USHORT *puGreen, USHORT *puBlue);
 typedef BOOL (WINAPI * PFNWGLSETGAMMATABLEI3DPROC) (HDC hDC, int iEntries, const USHORT *puRed, const USHORT *puGreen, const USHORT *puBlue);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 BOOL WINAPI wglGetGammaTableParametersI3D (HDC hDC, int iAttribute, int *piValue);
 BOOL WINAPI wglSetGammaTableParametersI3D (HDC hDC, int iAttribute, const int *piValue);
 BOOL WINAPI wglGetGammaTableI3D (HDC hDC, int iEntries, USHORT *puRed, USHORT *puGreen, USHORT *puBlue);
@@ -528,9 +535,9 @@ BOOL WINAPI wglSetGammaTableI3D (HDC hDC, int iEntries, const USHORT *puRed, con
 #ifndef WGL_I3D_genlock
 #define WGL_I3D_genlock 1
 #define WGL_GENLOCK_SOURCE_MULTIVIEW_I3D  0x2044
-#define WGL_GENLOCK_SOURCE_EXTENAL_SYNC_I3D 0x2045
-#define WGL_GENLOCK_SOURCE_EXTENAL_FIELD_I3D 0x2046
-#define WGL_GENLOCK_SOURCE_EXTENAL_TTL_I3D 0x2047
+#define WGL_GENLOCK_SOURCE_EXTERNAL_SYNC_I3D 0x2045
+#define WGL_GENLOCK_SOURCE_EXTERNAL_FIELD_I3D 0x2046
+#define WGL_GENLOCK_SOURCE_EXTERNAL_TTL_I3D 0x2047
 #define WGL_GENLOCK_SOURCE_DIGITAL_SYNC_I3D 0x2048
 #define WGL_GENLOCK_SOURCE_DIGITAL_FIELD_I3D 0x2049
 #define WGL_GENLOCK_SOURCE_EDGE_FALLING_I3D 0x204A
@@ -548,7 +555,7 @@ typedef BOOL (WINAPI * PFNWGLGETGENLOCKSAMPLERATEI3DPROC) (HDC hDC, UINT *uRate)
 typedef BOOL (WINAPI * PFNWGLGENLOCKSOURCEDELAYI3DPROC) (HDC hDC, UINT uDelay);
 typedef BOOL (WINAPI * PFNWGLGETGENLOCKSOURCEDELAYI3DPROC) (HDC hDC, UINT *uDelay);
 typedef BOOL (WINAPI * PFNWGLQUERYGENLOCKMAXSOURCEDELAYI3DPROC) (HDC hDC, UINT *uMaxLineDelay, UINT *uMaxPixelDelay);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 BOOL WINAPI wglEnableGenlockI3D (HDC hDC);
 BOOL WINAPI wglDisableGenlockI3D (HDC hDC);
 BOOL WINAPI wglIsEnabledGenlockI3D (HDC hDC, BOOL *pFlag);
@@ -572,7 +579,7 @@ typedef LPVOID (WINAPI * PFNWGLCREATEIMAGEBUFFERI3DPROC) (HDC hDC, DWORD dwSize,
 typedef BOOL (WINAPI * PFNWGLDESTROYIMAGEBUFFERI3DPROC) (HDC hDC, LPVOID pAddress);
 typedef BOOL (WINAPI * PFNWGLASSOCIATEIMAGEBUFFEREVENTSI3DPROC) (HDC hDC, const HANDLE *pEvent, const LPVOID *pAddress, const DWORD *pSize, UINT count);
 typedef BOOL (WINAPI * PFNWGLRELEASEIMAGEBUFFEREVENTSI3DPROC) (HDC hDC, const LPVOID *pAddress, UINT count);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 LPVOID WINAPI wglCreateImageBufferI3D (HDC hDC, DWORD dwSize, UINT uFlags);
 BOOL WINAPI wglDestroyImageBufferI3D (HDC hDC, LPVOID pAddress);
 BOOL WINAPI wglAssociateImageBufferEventsI3D (HDC hDC, const HANDLE *pEvent, const LPVOID *pAddress, const DWORD *pSize, UINT count);
@@ -586,7 +593,7 @@ typedef BOOL (WINAPI * PFNWGLENABLEFRAMELOCKI3DPROC) (void);
 typedef BOOL (WINAPI * PFNWGLDISABLEFRAMELOCKI3DPROC) (void);
 typedef BOOL (WINAPI * PFNWGLISENABLEDFRAMELOCKI3DPROC) (BOOL *pFlag);
 typedef BOOL (WINAPI * PFNWGLQUERYFRAMELOCKMASTERI3DPROC) (BOOL *pFlag);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 BOOL WINAPI wglEnableFrameLockI3D (void);
 BOOL WINAPI wglDisableFrameLockI3D (void);
 BOOL WINAPI wglIsEnabledFrameLockI3D (BOOL *pFlag);
@@ -600,7 +607,7 @@ typedef BOOL (WINAPI * PFNWGLGETFRAMEUSAGEI3DPROC) (float *pUsage);
 typedef BOOL (WINAPI * PFNWGLBEGINFRAMETRACKINGI3DPROC) (void);
 typedef BOOL (WINAPI * PFNWGLENDFRAMETRACKINGI3DPROC) (void);
 typedef BOOL (WINAPI * PFNWGLQUERYFRAMETRACKINGI3DPROC) (DWORD *pFrameCount, DWORD *pMissedFrames, float *pLastMissedUsage);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 BOOL WINAPI wglGetFrameUsageI3D (float *pUsage);
 BOOL WINAPI wglBeginFrameTrackingI3D (void);
 BOOL WINAPI wglEndFrameTrackingI3D (void);
@@ -621,7 +628,7 @@ typedef BOOL (WINAPI * PFNWGLDXUNREGISTEROBJECTNVPROC) (HANDLE hDevice, HANDLE h
 typedef BOOL (WINAPI * PFNWGLDXOBJECTACCESSNVPROC) (HANDLE hObject, GLenum access);
 typedef BOOL (WINAPI * PFNWGLDXLOCKOBJECTSNVPROC) (HANDLE hDevice, GLint count, HANDLE *hObjects);
 typedef BOOL (WINAPI * PFNWGLDXUNLOCKOBJECTSNVPROC) (HANDLE hDevice, GLint count, HANDLE *hObjects);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 BOOL WINAPI wglDXSetResourceShareHandleNV (void *dxObject, HANDLE shareHandle);
 HANDLE WINAPI wglDXOpenDeviceNV (void *dxDevice);
 BOOL WINAPI wglDXCloseDeviceNV (HANDLE hDevice);
@@ -640,10 +647,18 @@ BOOL WINAPI wglDXUnlockObjectsNV (HANDLE hDevice, GLint count, HANDLE *hObjects)
 #ifndef WGL_NV_copy_image
 #define WGL_NV_copy_image 1
 typedef BOOL (WINAPI * PFNWGLCOPYIMAGESUBDATANVPROC) (HGLRC hSrcRC, GLuint srcName, GLenum srcTarget, GLint srcLevel, GLint srcX, GLint srcY, GLint srcZ, HGLRC hDstRC, GLuint dstName, GLenum dstTarget, GLint dstLevel, GLint dstX, GLint dstY, GLint dstZ, GLsizei width, GLsizei height, GLsizei depth);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 BOOL WINAPI wglCopyImageSubDataNV (HGLRC hSrcRC, GLuint srcName, GLenum srcTarget, GLint srcLevel, GLint srcX, GLint srcY, GLint srcZ, HGLRC hDstRC, GLuint dstName, GLenum dstTarget, GLint dstLevel, GLint dstX, GLint dstY, GLint dstZ, GLsizei width, GLsizei height, GLsizei depth);
 #endif
 #endif /* WGL_NV_copy_image */
+
+#ifndef WGL_NV_delay_before_swap
+#define WGL_NV_delay_before_swap 1
+typedef BOOL (WINAPI * PFNWGLDELAYBEFORESWAPNVPROC) (HDC hDC, GLfloat seconds);
+#ifdef WGL_WGLEXT_PROTOTYPES
+BOOL WINAPI wglDelayBeforeSwapNV (HDC hDC, GLfloat seconds);
+#endif
+#endif /* WGL_NV_delay_before_swap */
 
 #ifndef WGL_NV_float_buffer
 #define WGL_NV_float_buffer 1
@@ -676,7 +691,7 @@ typedef BOOL (WINAPI * PFNWGLENUMGPUDEVICESNVPROC) (HGPUNV hGpu, UINT iDeviceInd
 typedef HDC (WINAPI * PFNWGLCREATEAFFINITYDCNVPROC) (const HGPUNV *phGpuList);
 typedef BOOL (WINAPI * PFNWGLENUMGPUSFROMAFFINITYDCNVPROC) (HDC hAffinityDC, UINT iGpuIndex, HGPUNV *hGpu);
 typedef BOOL (WINAPI * PFNWGLDELETEDCNVPROC) (HDC hdc);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 BOOL WINAPI wglEnumGpusNV (UINT iGpuIndex, HGPUNV *phGpu);
 BOOL WINAPI wglEnumGpuDevicesNV (HGPUNV hGpu, UINT iDeviceIndex, PGPU_DEVICE lpGpuDevice);
 HDC WINAPI wglCreateAffinityDCNV (const HGPUNV *phGpuList);
@@ -698,7 +713,7 @@ DECLARE_HANDLE(HVIDEOOUTPUTDEVICENV);
 typedef int (WINAPI * PFNWGLENUMERATEVIDEODEVICESNVPROC) (HDC hDC, HVIDEOOUTPUTDEVICENV *phDeviceList);
 typedef BOOL (WINAPI * PFNWGLBINDVIDEODEVICENVPROC) (HDC hDC, unsigned int uVideoSlot, HVIDEOOUTPUTDEVICENV hVideoDevice, const int *piAttribList);
 typedef BOOL (WINAPI * PFNWGLQUERYCURRENTCONTEXTNVPROC) (int iAttribute, int *piValue);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 int WINAPI wglEnumerateVideoDevicesNV (HDC hDC, HVIDEOOUTPUTDEVICENV *phDeviceList);
 BOOL WINAPI wglBindVideoDeviceNV (HDC hDC, unsigned int uVideoSlot, HVIDEOOUTPUTDEVICENV hVideoDevice, const int *piAttribList);
 BOOL WINAPI wglQueryCurrentContextNV (int iAttribute, int *piValue);
@@ -729,7 +744,7 @@ typedef BOOL (WINAPI * PFNWGLQUERYSWAPGROUPNVPROC) (HDC hDC, GLuint *group, GLui
 typedef BOOL (WINAPI * PFNWGLQUERYMAXSWAPGROUPSNVPROC) (HDC hDC, GLuint *maxGroups, GLuint *maxBarriers);
 typedef BOOL (WINAPI * PFNWGLQUERYFRAMECOUNTNVPROC) (HDC hDC, GLuint *count);
 typedef BOOL (WINAPI * PFNWGLRESETFRAMECOUNTNVPROC) (HDC hDC);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 BOOL WINAPI wglJoinSwapGroupNV (HDC hDC, GLuint group);
 BOOL WINAPI wglBindSwapBarrierNV (GLuint group, GLuint barrier);
 BOOL WINAPI wglQuerySwapGroupNV (HDC hDC, GLuint *group, GLuint *barrier);
@@ -743,7 +758,7 @@ BOOL WINAPI wglResetFrameCountNV (HDC hDC);
 #define WGL_NV_vertex_array_range 1
 typedef void *(WINAPI * PFNWGLALLOCATEMEMORYNVPROC) (GLsizei size, GLfloat readfreq, GLfloat writefreq, GLfloat priority);
 typedef void (WINAPI * PFNWGLFREEMEMORYNVPROC) (void *pointer);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 void *WINAPI wglAllocateMemoryNV (GLsizei size, GLfloat readfreq, GLfloat writefreq, GLfloat priority);
 void WINAPI wglFreeMemoryNV (void *pointer);
 #endif
@@ -759,7 +774,7 @@ typedef UINT (WINAPI * PFNWGLENUMERATEVIDEOCAPTUREDEVICESNVPROC) (HDC hDc, HVIDE
 typedef BOOL (WINAPI * PFNWGLLOCKVIDEOCAPTUREDEVICENVPROC) (HDC hDc, HVIDEOINPUTDEVICENV hDevice);
 typedef BOOL (WINAPI * PFNWGLQUERYVIDEOCAPTUREDEVICENVPROC) (HDC hDc, HVIDEOINPUTDEVICENV hDevice, int iAttribute, int *piValue);
 typedef BOOL (WINAPI * PFNWGLRELEASEVIDEOCAPTUREDEVICENVPROC) (HDC hDc, HVIDEOINPUTDEVICENV hDevice);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 BOOL WINAPI wglBindVideoCaptureDeviceNV (UINT uVideoSlot, HVIDEOINPUTDEVICENV hDevice);
 UINT WINAPI wglEnumerateVideoCaptureDevicesNV (HDC hDc, HVIDEOINPUTDEVICENV *phDeviceList);
 BOOL WINAPI wglLockVideoCaptureDeviceNV (HDC hDc, HVIDEOINPUTDEVICENV hDevice);
@@ -790,7 +805,7 @@ typedef BOOL (WINAPI * PFNWGLBINDVIDEOIMAGENVPROC) (HPVIDEODEV hVideoDevice, HPB
 typedef BOOL (WINAPI * PFNWGLRELEASEVIDEOIMAGENVPROC) (HPBUFFERARB hPbuffer, int iVideoBuffer);
 typedef BOOL (WINAPI * PFNWGLSENDPBUFFERTOVIDEONVPROC) (HPBUFFERARB hPbuffer, int iBufferType, unsigned long *pulCounterPbuffer, BOOL bBlock);
 typedef BOOL (WINAPI * PFNWGLGETVIDEOINFONVPROC) (HPVIDEODEV hpVideoDevice, unsigned long *pulCounterOutputPbuffer, unsigned long *pulCounterOutputVideo);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 BOOL WINAPI wglGetVideoDeviceNV (HDC hDC, int numDevices, HPVIDEODEV *hVideoDevice);
 BOOL WINAPI wglReleaseVideoDeviceNV (HPVIDEODEV hVideoDevice);
 BOOL WINAPI wglBindVideoImageNV (HPVIDEODEV hVideoDevice, HPBUFFERARB hPbuffer, int iVideoBuffer);
@@ -808,7 +823,7 @@ typedef INT64 (WINAPI * PFNWGLSWAPBUFFERSMSCOMLPROC) (HDC hdc, INT64 target_msc,
 typedef INT64 (WINAPI * PFNWGLSWAPLAYERBUFFERSMSCOMLPROC) (HDC hdc, int fuPlanes, INT64 target_msc, INT64 divisor, INT64 remainder);
 typedef BOOL (WINAPI * PFNWGLWAITFORMSCOMLPROC) (HDC hdc, INT64 target_msc, INT64 divisor, INT64 remainder, INT64 *ust, INT64 *msc, INT64 *sbc);
 typedef BOOL (WINAPI * PFNWGLWAITFORSBCOMLPROC) (HDC hdc, INT64 target_sbc, INT64 *ust, INT64 *msc, INT64 *sbc);
-#ifdef GL_GLEXT_PROTOTYPES
+#ifdef WGL_WGLEXT_PROTOTYPES
 BOOL WINAPI wglGetSyncValuesOML (HDC hdc, INT64 *ust, INT64 *msc, INT64 *sbc);
 BOOL WINAPI wglGetMscRateOML (HDC hdc, INT32 *numerator, INT32 *denominator);
 INT64 WINAPI wglSwapBuffersMscOML (HDC hdc, INT64 target_msc, INT64 divisor, INT64 remainder);
