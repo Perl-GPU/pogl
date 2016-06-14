@@ -36,7 +36,7 @@ extern "C" \{
 while (<FILE>)
 {
   my $line = $_;
-  next if ($line !~ m|^\*\* Copyright \(c\) 2007-2012 The Khronos Group Inc\.|);
+  next if ($line !~ m|^\*\* Copyright \(c\) 20\d\d The Khronos Group Inc\.|);
   print EXTS $line;
   last;
 }
