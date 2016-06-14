@@ -49,7 +49,7 @@ print TYPE sprintf $header, ("__glext_types_h_") x 2;
 while (<FILE>)
 {
   my $line = $_;
-  next if ($line !~ m|^\*\* Copyright \(c\) 20\d\d The Khronos Group Inc\.|);
+  next if ($line !~ m|^\*\* Copyright \(c\) 20\d\d-20\d\d The Khronos Group Inc\.|);
   print EXTS $line;
   print CNST $line;
   last;
