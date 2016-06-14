@@ -627,14 +627,7 @@ if (!strncmp(name, "GL_", 3)) {
 	i(GL_BLEND_COLOR)
 
 /* blend_minmax */
-	i(GL_FUNC_ADD)
-	i(GL_MIN)
-	i(GL_MAX)
 	i(GL_BLEND_EQUATION)
-
-/* blend_subtract */
-	i(GL_FUNC_SUBTRACT)
-	i(GL_FUNC_REVERSE_SUBTRACT)
 
 /* color_matrix */
 	i(GL_COLOR_MATRIX)

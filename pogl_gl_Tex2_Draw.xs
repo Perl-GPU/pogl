@@ -1325,7 +1325,7 @@ glTexSubImage2DEXT_p(target, level, xoffset, yoffset, width, height, format, typ
 
 ################## POST 1.1 VERSIONS ########################
 
-#ifdef GL_VERSION_1_2
+#ifdef GL_VERSION_1_4
 
 #//# glBlendColor($red, $green, $blue, $alpha);
 void
