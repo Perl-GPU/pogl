@@ -33,12 +33,14 @@ extern "C" {
 ** This header is generated from the Khronos OpenGL / OpenGL ES XML
 ** API Registry. The current version of the Registry, generator scripts
 ** used to make the header, and the header can be found at
-**   http://www.khronos.org/registry/
+**   http://www.opengl.org/registry/
 **
-** Khronos $Revision$ on $Date$
+** Khronos $Revision: 32957 $ on $Date: 2016-06-09 23:03:08 +0200 (Do, 09 Jun 2016) $
 */
 
 #if defined(_WIN32) && !defined(APIENTRY) && !defined(__CYGWIN__) && !defined(__SCITECH_SNAP__)
+#ifndef WIN32_LEAN_AND_MEAN
+#endif
 #endif
 
 #ifndef APIENTRY
@@ -58,11 +60,6 @@ extern "C" {
  * Additional extensions included: _nomatch_^
  * Extensions removed: _nomatch_^
  */
-
-typedef int GLsizei;
-typedef void GLvoid;
-typedef float GLfloat;
-typedef int GLint;
 
 
 
@@ -112,9 +109,40 @@ typedef unsigned __int64 uint64_t;
 #include <inttypes.h>
 #endif
 #endif
-typedef int64_t GLint64;
-typedef struct __GLsync *GLsync;
 typedef uint64_t GLuint64;
+typedef int64_t GLint64;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+typedef uint64_t GLuint64EXT;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -242,8 +270,28 @@ typedef char GLcharARB;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 typedef ptrdiff_t GLsizeiptrARB;
 typedef ptrdiff_t GLintptrARB;
+
+
+
+
+
+
+
+
+
 
 
 
@@ -258,140 +306,6 @@ typedef GLint GLfixed;
 
 
 
-typedef float GLclampf;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-typedef double GLclampd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -403,7 +317,185 @@ typedef double GLclampd;
 
 
 typedef int64_t GLint64EXT;
-typedef uint64_t GLuint64EXT;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -495,6 +587,10 @@ typedef uint64_t GLuint64EXT;
 
 
 typedef GLintptr GLvdpauSurfaceNV;
+
+
+
+
 
 
 
