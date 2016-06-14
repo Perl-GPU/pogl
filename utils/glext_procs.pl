@@ -73,14 +73,21 @@ while (<FILE>)
 
     my @procs;
     my $in_PROTOTYPES;
+    my $proto_level;
+    my $def_level = 1;
     while (<FILE>)
     {
       my $line2 = $_;
 
-      if ($line2 =~ m|ifdef.*GL_GLEXT_PROTOTYPES|)
+      if ($line2 =~ m|ifdef|)
       {
         print EXTS $line2;
-        $in_PROTOTYPES = 1;
+        if($line2 =~ /GL_GLEXT_PROTOTYPES/)
+        {
+          $proto_level = $def_level;
+          $in_PROTOTYPES = 1;
+        }
+        $def_level++;
         next;
       }
 
@@ -102,10 +109,12 @@ while (<FILE>)
         }
         next;
       }
+      $def_level--;
 
-      if($in_PROTOTYPES)
+      $in_PROTOTYPES = 0 if $in_PROTOTYPES and $proto_level == $def_level;
+
+      if($def_level>0)
       {
-        $in_PROTOTYPES = 0;
         print EXTS $line2;
         next;
       }
