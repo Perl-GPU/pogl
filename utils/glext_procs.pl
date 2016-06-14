@@ -41,14 +41,6 @@ while (<FILE>)
   last;
 }
 
-# Skip to procs
-while (<FILE>)
-{
-  my $line = $_;
-  print EXTS $line;
-  last if ($line =~ m|^\#include \<stddef.h\>|);
-}
-
 # Handle extensions
 while (<FILE>)
 {
