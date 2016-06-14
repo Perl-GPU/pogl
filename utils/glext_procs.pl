@@ -79,10 +79,10 @@ while (<FILE>)
     {
       my $line2 = $_;
 
-      if ($line2 =~ m|ifdef|)
+      if ($line2 =~ m/^#(if|ifdef|ifndef)/)
       {
         print EXTS $line2;
-        if($line2 =~ /GL_GLEXT_PROTOTYPES/)
+        if($line2 =~ /ifdef.*GL_GLEXT_PROTOTYPES/)
         {
           $proto_level = $def_level;
           $in_PROTOTYPES = 1;
