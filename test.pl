@@ -641,7 +641,7 @@ sub ourBuildTextures
     glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT,
       GL_TEXTURE_2D, $TextureID_FBO, 0);
     glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, $RenderBufferID);
-    glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24,
+    glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24_ARB,
       $Tex_Width, $Tex_Height);
     glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT,
       GL_RENDERBUFFER_EXT, $RenderBufferID);
