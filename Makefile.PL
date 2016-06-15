@@ -39,8 +39,6 @@ sub Usage
 
     dist=NO_EXCLUSIONS  Build with no OpenGL Extension exclusions
 
-    dist=EXCLUSIONS     Override NO_EXCLUSIONS default for Win32
-
     interface=XFACE     Build for a specific windowing interface
                         Currently supports:
   };
@@ -76,13 +74,6 @@ if ( grep { m/^dist=/i } @ARGV )
     $dist_flags->{uc($1)}++ if ($arg =~ m/^dist=(\w+)/i);
   }
 
-  # Setting both EXCLUSIONS and NO_EXCLUSIONS cancels each other out
-  if ($dist_flags->{NO_EXCLUSIONS} && $dist_flags->{EXCLUSIONS})
-  {
-    delete($dist_flags->{NO_EXCLUSIONS});
-    delete($dist_flags->{EXCLUSIONS});
-  }
-
   # Strip out interface args
   @ARGV = grep { !m/^dist=/i } @ARGV;
 }
@@ -111,13 +102,6 @@ if ($IS_MINGW)
 {
   $IS_STRAWBERRY = ($Config{cf_by} =~ m/strawberry-perl/i);
   print "Build platform \$IS_STRAWBERRY==$IS_STRAWBERRY\n" if $IS_STRAWBERRY and $verbose;
-}
-
-
-# Default to NO_EXCLUSIONS on Windows
-if ($^O eq 'MSWin32' || $IS_W32API)
-{
-  $dist_flags->{NO_EXCLUSIONS} = $dist_flags->{EXCLUSIONS} ? 0 : 1;
 }
 
 

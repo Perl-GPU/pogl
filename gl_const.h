@@ -930,7 +930,6 @@ if (!strncmp(name, "GL_", 3)) {
 #endif
 
 #if defined(GL_EXT_paletted_texture)
-	i(GL_TABLE_TOO_LARGE_EXT)
 	i(GL_COLOR_TABLE_FORMAT_EXT)
 	i(GL_COLOR_TABLE_WIDTH_EXT)
 	i(GL_COLOR_TABLE_RED_SIZE_EXT)
