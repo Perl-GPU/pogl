@@ -795,8 +795,7 @@ sub cbRenderScene
   {
     print "Idle timeout; completing test\n";
     ourCleanup();
-    print "Exiting in render callback using perl exit(0)\n";
-    exit(0);
+    return quit("render callback");
   }
 
   my $buf; # For our strings.
@@ -1243,8 +1242,7 @@ sub cbKeyPressed
   if ($key == 27 or $c eq 'Q')
   {
     ourCleanup();
-    print "Exiting in render callback using perl exit(0)\n";
-    exit(0);
+    return quit("key press callback");
   }
   elsif ($c eq 'B')
   {
@@ -1513,6 +1511,31 @@ sub cbClose
   my($wid) = @_;
   print "User has closed window: \#$wid\n";
   ReleaseResources();
+}
+
+# this is a little complicated
+# Using freeglut, doing a straight exit crashes on some systems, mostly observed
+# on windows, likely due to thread issues.
+# However on non-freeglut systems the proper way of using glutLeaveMainLoop is
+# not available.
+# So the proper one needs to be chosen.
+# However while exit exits the thread, glutLeaveMainLoop only sets a flag for
+# the event loop, thus we must take care to return when using it. Additionally
+# any use of quit() ALSO needs to return.
+#
+#   return quit();
+#
+sub quit {
+  my ($context) = @_;
+  $context ||= "<unknown context>";
+  print "Exiting in $context using ";
+  if (OpenGL::_have_freeglut()) {
+    print "glutLeaveMainLoop (freeglut)\n";
+    glutLeaveMainLoop();
+    return;
+  }
+  print "perl exit(0)\n";
+  exit(0);
 }
 
 # ------
