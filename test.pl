@@ -399,12 +399,14 @@ sub ourInitVertexBuffers
   }
   else
   {
+    print "Using classic Vertex Buffers\n";
     glVertexPointer_p(3, $verts);
     glNormalPointer_p($norms);
     $colors->assign($rainbow_offset,@rainbow);
     glColorPointer_p(4, $colors);
     glTexCoordPointer_p(2, $texcoords);
   }
+  print "-- done\n";
 }
 
 sub ourInit
