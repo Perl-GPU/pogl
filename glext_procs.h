@@ -4001,16 +4001,12 @@ static PFNGLSAMPLECOVERAGEARBPROC glSampleCoverageARB = NULL;
 #ifndef GL_ARB_texture_env_add
 #define GL_ARB_texture_env_add 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_ARB_texture_cube_map
 #ifndef GL_ARB_texture_cube_map
 #define GL_ARB_texture_cube_map 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_ARB_texture_compression
@@ -4048,8 +4044,6 @@ static PFNGLGETCOMPRESSEDTEXIMAGEARBPROC glGetCompressedTexImageARB = NULL;
 #ifndef GL_ARB_texture_border_clamp
 #define GL_ARB_texture_border_clamp 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_ARB_point_parameters
@@ -4137,56 +4131,42 @@ static PFNGLMATRIXINDEXPOINTERARBPROC glMatrixIndexPointerARB = NULL;
 #ifndef GL_ARB_texture_env_combine
 #define GL_ARB_texture_env_combine 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_ARB_texture_env_crossbar
 #ifndef GL_ARB_texture_env_crossbar
 #define GL_ARB_texture_env_crossbar 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_ARB_texture_env_dot3
 #ifndef GL_ARB_texture_env_dot3
 #define GL_ARB_texture_env_dot3 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_ARB_texture_mirrored_repeat
 #ifndef GL_ARB_texture_mirrored_repeat
 #define GL_ARB_texture_mirrored_repeat 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_ARB_depth_texture
 #ifndef GL_ARB_depth_texture
 #define GL_ARB_depth_texture 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_ARB_shadow
 #ifndef GL_ARB_shadow
 #define GL_ARB_shadow 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_ARB_shadow_ambient
 #ifndef GL_ARB_shadow_ambient
 #define GL_ARB_shadow_ambient 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_ARB_window_pos
@@ -4448,8 +4428,6 @@ static PFNGLISPROGRAMARBPROC glIsProgramARB = NULL;
 #define GL_ARB_fragment_program 1
 #endif
 /* All ARB_fragment_program entry points are shared with ARB_vertex_program. */
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_ARB_vertex_buffer_object
@@ -4679,40 +4657,30 @@ static PFNGLGETATTRIBLOCATIONARBPROC glGetAttribLocationARB = NULL;
 #ifndef GL_ARB_fragment_shader
 #define GL_ARB_fragment_shader 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_ARB_shading_language_100
 #ifndef GL_ARB_shading_language_100
 #define GL_ARB_shading_language_100 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_ARB_texture_non_power_of_two
 #ifndef GL_ARB_texture_non_power_of_two
 #define GL_ARB_texture_non_power_of_two 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_ARB_point_sprite
 #ifndef GL_ARB_point_sprite
 #define GL_ARB_point_sprite 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_ARB_fragment_program_shadow
 #ifndef GL_ARB_fragment_program_shadow
 #define GL_ARB_fragment_program_shadow 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_ARB_draw_buffers
@@ -4732,8 +4700,6 @@ static PFNGLDRAWBUFFERSARBPROC glDrawBuffersARB = NULL;
 #ifndef GL_ARB_texture_rectangle
 #define GL_ARB_texture_rectangle 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_ARB_color_buffer_float
@@ -4753,32 +4719,24 @@ static PFNGLCLAMPCOLORARBPROC glClampColorARB = NULL;
 #ifndef GL_ARB_half_float_pixel
 #define GL_ARB_half_float_pixel 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_ARB_texture_float
 #ifndef GL_ARB_texture_float
 #define GL_ARB_texture_float 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_ARB_pixel_buffer_object
 #ifndef GL_ARB_pixel_buffer_object
 #define GL_ARB_pixel_buffer_object 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_abgr
 #ifndef GL_EXT_abgr
 #define GL_EXT_abgr 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_blend_color
@@ -4811,8 +4769,6 @@ static PFNGLPOLYGONOFFSETEXTPROC glPolygonOffsetEXT = NULL;
 #ifndef GL_EXT_texture
 #define GL_EXT_texture 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_texture3D
@@ -4981,8 +4937,6 @@ static PFNGLSEPARABLEFILTER2DEXTPROC glSeparableFilter2DEXT = NULL;
 #ifndef GL_EXT_color_matrix
 #define GL_EXT_color_matrix 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGI_color_table
@@ -5077,16 +5031,12 @@ static PFNGLTEXSUBIMAGE4DSGISPROC glTexSubImage4DSGIS = NULL;
 #ifndef GL_SGI_texture_color_table
 #define GL_SGI_texture_color_table 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_cmyka
 #ifndef GL_EXT_cmyka
 #define GL_EXT_cmyka 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_texture_object
@@ -5153,16 +5103,12 @@ static PFNGLGETSHARPENTEXFUNCSGISPROC glGetSharpenTexFuncSGIS = NULL;
 #ifndef GL_EXT_packed_pixels
 #define GL_EXT_packed_pixels 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIS_texture_lod
 #ifndef GL_SGIS_texture_lod
 #define GL_SGIS_texture_lod 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIS_multisample
@@ -5185,8 +5131,6 @@ static PFNGLSAMPLEPATTERNSGISPROC glSamplePatternSGIS = NULL;
 #ifndef GL_EXT_rescale_normal
 #define GL_EXT_rescale_normal 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_vertex_array
@@ -5230,48 +5174,36 @@ static PFNGLVERTEXPOINTEREXTPROC glVertexPointerEXT = NULL;
 #ifndef GL_EXT_misc_attribute
 #define GL_EXT_misc_attribute 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIS_generate_mipmap
 #ifndef GL_SGIS_generate_mipmap
 #define GL_SGIS_generate_mipmap 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIX_clipmap
 #ifndef GL_SGIX_clipmap
 #define GL_SGIX_clipmap 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIX_shadow
 #ifndef GL_SGIX_shadow
 #define GL_SGIX_shadow 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIS_texture_edge_clamp
 #ifndef GL_SGIS_texture_edge_clamp
 #define GL_SGIS_texture_edge_clamp 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIS_texture_border_clamp
 #ifndef GL_SGIS_texture_border_clamp
 #define GL_SGIS_texture_border_clamp 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_blend_minmax
@@ -5291,40 +5223,30 @@ static PFNGLBLENDEQUATIONEXTPROC glBlendEquationEXT = NULL;
 #ifndef GL_EXT_blend_subtract
 #define GL_EXT_blend_subtract 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_blend_logic_op
 #ifndef GL_EXT_blend_logic_op
 #define GL_EXT_blend_logic_op 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIX_interlace
 #ifndef GL_SGIX_interlace
 #define GL_SGIX_interlace 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIX_pixel_tiles
 #ifndef GL_SGIX_pixel_tiles
 #define GL_SGIX_pixel_tiles 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIX_texture_select
 #ifndef GL_SGIX_texture_select
 #define GL_SGIX_texture_select 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIX_sprite
@@ -5353,8 +5275,6 @@ static PFNGLSPRITEPARAMETERIVSGIXPROC glSpriteParameterivSGIX = NULL;
 #ifndef GL_SGIX_texture_multi_buffer
 #define GL_SGIX_texture_multi_buffer 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_point_parameters
@@ -5421,8 +5341,6 @@ static PFNGLSTOPINSTRUMENTSSGIXPROC glStopInstrumentsSGIX = NULL;
 #ifndef GL_SGIX_texture_scale_bias
 #define GL_SGIX_texture_scale_bias 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIX_framezoom
@@ -5503,8 +5421,6 @@ static PFNGLFLUSHRASTERSGIXPROC glFlushRasterSGIX = NULL;
 #ifndef GL_SGIX_depth_texture
 #define GL_SGIX_depth_texture 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIS_fog_function
@@ -5527,8 +5443,6 @@ static PFNGLGETFOGFUNCSGISPROC glGetFogFuncSGIS = NULL;
 #ifndef GL_SGIX_fog_offset
 #define GL_SGIX_fog_offset 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_HP_image_transform
@@ -5563,16 +5477,12 @@ static PFNGLGETIMAGETRANSFORMPARAMETERFVHPPROC glGetImageTransformParameterfvHP 
 #ifndef GL_HP_convolution_border_modes
 #define GL_HP_convolution_border_modes 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIX_texture_add_env
 #ifndef GL_SGIX_texture_add_env
 #define GL_SGIX_texture_add_env 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_color_subtable
@@ -5595,8 +5505,6 @@ static PFNGLCOPYCOLORSUBTABLEEXTPROC glCopyColorSubTableEXT = NULL;
 #ifndef GL_PGI_vertex_hints
 #define GL_PGI_vertex_hints 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_PGI_misc_hints
@@ -5638,8 +5546,6 @@ static PFNGLGETCOLORTABLEPARAMETERFVEXTPROC glGetColorTableParameterfvEXT = NULL
 #ifndef GL_EXT_clip_volume_hint
 #define GL_EXT_clip_volume_hint 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIX_list_priority
@@ -5674,40 +5580,30 @@ static PFNGLLISTPARAMETERIVSGIXPROC glListParameterivSGIX = NULL;
 #ifndef GL_SGIX_ir_instrument1
 #define GL_SGIX_ir_instrument1 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIX_calligraphic_fragment
 #ifndef GL_SGIX_calligraphic_fragment
 #define GL_SGIX_calligraphic_fragment 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIX_texture_lod_bias
 #ifndef GL_SGIX_texture_lod_bias
 #define GL_SGIX_texture_lod_bias 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIX_shadow_ambient
 #ifndef GL_SGIX_shadow_ambient
 #define GL_SGIX_shadow_ambient 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_index_texture
 #ifndef GL_EXT_index_texture
 #define GL_EXT_index_texture 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_index_material
@@ -5740,8 +5636,6 @@ static PFNGLINDEXFUNCEXTPROC glIndexFuncEXT = NULL;
 #ifndef GL_EXT_index_array_formats
 #define GL_EXT_index_array_formats 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_compiled_vertex_array
@@ -5780,8 +5674,6 @@ static PFNGLCULLPARAMETERFVEXTPROC glCullParameterfvEXT = NULL;
 #ifndef GL_SGIX_ycrcb
 #define GL_SGIX_ycrcb 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIX_fragment_lighting
@@ -5852,16 +5744,12 @@ static PFNGLLIGHTENVISGIXPROC glLightEnviSGIX = NULL;
 #ifndef GL_IBM_rasterpos_clip
 #define GL_IBM_rasterpos_clip 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_HP_texture_lighting
 #ifndef GL_HP_texture_lighting
 #define GL_HP_texture_lighting 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_draw_range_elements
@@ -5881,16 +5769,12 @@ static PFNGLDRAWRANGEELEMENTSEXTPROC glDrawRangeElementsEXT = NULL;
 #ifndef GL_WIN_phong_shading
 #define GL_WIN_phong_shading 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_WIN_specular_fog
 #ifndef GL_WIN_specular_fog
 #define GL_WIN_specular_fog 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_light_texture
@@ -5916,16 +5800,12 @@ static PFNGLTEXTUREMATERIALEXTPROC glTextureMaterialEXT = NULL;
 #ifndef GL_SGIX_blend_alpha_minmax
 #define GL_SGIX_blend_alpha_minmax 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_bgra
 #ifndef GL_EXT_bgra
 #define GL_EXT_bgra 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIX_async
@@ -5960,16 +5840,12 @@ static PFNGLISASYNCMARKERSGIXPROC glIsAsyncMarkerSGIX = NULL;
 #ifndef GL_SGIX_async_pixel
 #define GL_SGIX_async_pixel 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIX_async_histogram
 #ifndef GL_SGIX_async_histogram
 #define GL_SGIX_async_histogram 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_INTEL_parallel_arrays
@@ -5998,8 +5874,6 @@ static PFNGLTEXCOORDPOINTERVINTELPROC glTexCoordPointervINTEL = NULL;
 #ifndef GL_HP_occlusion_test
 #define GL_HP_occlusion_test 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_pixel_transform
@@ -6028,24 +5902,18 @@ static PFNGLPIXELTRANSFORMPARAMETERFVEXTPROC glPixelTransformParameterfvEXT = NU
 #ifndef GL_EXT_pixel_transform_color_table
 #define GL_EXT_pixel_transform_color_table 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_shared_texture_palette
 #ifndef GL_EXT_shared_texture_palette
 #define GL_EXT_shared_texture_palette 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_separate_specular_color
 #ifndef GL_EXT_separate_specular_color
 #define GL_EXT_separate_specular_color 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_secondary_color
@@ -6167,8 +6035,6 @@ static PFNGLFOGCOORDPOINTEREXTPROC glFogCoordPointerEXT = NULL;
 #ifndef GL_REND_screen_coordinates
 #define GL_REND_screen_coordinates 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_coordinate_frame
@@ -6251,32 +6117,24 @@ static PFNGLBINORMALPOINTEREXTPROC glBinormalPointerEXT = NULL;
 #ifndef GL_EXT_texture_env_combine
 #define GL_EXT_texture_env_combine 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_APPLE_specular_vector
 #ifndef GL_APPLE_specular_vector
 #define GL_APPLE_specular_vector 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_APPLE_transform_hint
 #ifndef GL_APPLE_transform_hint
 #define GL_APPLE_transform_hint 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIX_fog_scale
 #ifndef GL_SGIX_fog_scale
 #define GL_SGIX_fog_scale 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SUNX_constant_data
@@ -6517,72 +6375,54 @@ static PFNGLBLENDFUNCSEPARATEINGRPROC glBlendFuncSeparateINGR = NULL;
 #ifndef GL_INGR_color_clamp
 #define GL_INGR_color_clamp 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_INGR_interlace_read
 #ifndef GL_INGR_interlace_read
 #define GL_INGR_interlace_read 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_stencil_wrap
 #ifndef GL_EXT_stencil_wrap
 #define GL_EXT_stencil_wrap 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_422_pixels
 #ifndef GL_EXT_422_pixels
 #define GL_EXT_422_pixels 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_NV_texgen_reflection
 #ifndef GL_NV_texgen_reflection
 #define GL_NV_texgen_reflection 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SUN_convolution_border_modes
 #ifndef GL_SUN_convolution_border_modes
 #define GL_SUN_convolution_border_modes 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_texture_env_add
 #ifndef GL_EXT_texture_env_add
 #define GL_EXT_texture_env_add 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_texture_lod_bias
 #ifndef GL_EXT_texture_lod_bias
 #define GL_EXT_texture_lod_bias 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_texture_filter_anisotropic
 #ifndef GL_EXT_texture_filter_anisotropic
 #define GL_EXT_texture_filter_anisotropic 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_vertex_weighting
@@ -6608,8 +6448,6 @@ static PFNGLVERTEXWEIGHTPOINTEREXTPROC glVertexWeightPointerEXT = NULL;
 #ifndef GL_NV_light_max_exponent
 #define GL_NV_light_max_exponent 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_NV_vertex_array_range
@@ -6681,32 +6519,24 @@ static PFNGLGETFINALCOMBINERINPUTPARAMETERIVNVPROC glGetFinalCombinerInputParame
 #ifndef GL_NV_fog_distance
 #define GL_NV_fog_distance 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_NV_texgen_emboss
 #ifndef GL_NV_texgen_emboss
 #define GL_NV_texgen_emboss 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_NV_blend_square
 #ifndef GL_NV_blend_square
 #define GL_NV_blend_square 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_NV_texture_env_combine4
 #ifndef GL_NV_texture_env_combine4
 #define GL_NV_texture_env_combine4 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_MESA_resize_buffers
@@ -6808,8 +6638,6 @@ static PFNGLWINDOWPOS4SVMESAPROC glWindowPos4svMESA = NULL;
 #ifndef GL_IBM_cull_vertex
 #define GL_IBM_cull_vertex 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_IBM_multimode_draw_arrays
@@ -6866,48 +6694,36 @@ static PFNGLVERTEXPOINTERLISTIBMPROC glVertexPointerListIBM = NULL;
 #ifndef GL_SGIX_subsample
 #define GL_SGIX_subsample 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIX_ycrcba
 #ifndef GL_SGIX_ycrcba
 #define GL_SGIX_ycrcba 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIX_ycrcb_subsample
 #ifndef GL_SGIX_ycrcb_subsample
 #define GL_SGIX_ycrcb_subsample 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIX_depth_pass_instrument
 #ifndef GL_SGIX_depth_pass_instrument
 #define GL_SGIX_depth_pass_instrument 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_3DFX_texture_compression_FXT1
 #ifndef GL_3DFX_texture_compression_FXT1
 #define GL_3DFX_texture_compression_FXT1 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_3DFX_multisample
 #ifndef GL_3DFX_multisample
 #define GL_3DFX_multisample 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_3DFX_tbuffer
@@ -6943,32 +6759,24 @@ static PFNGLSAMPLEPATTERNEXTPROC glSamplePatternEXT = NULL;
 #ifndef GL_SGIX_vertex_preclip
 #define GL_SGIX_vertex_preclip 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIX_convolution_accuracy
 #ifndef GL_SGIX_convolution_accuracy
 #define GL_SGIX_convolution_accuracy 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIX_resample
 #ifndef GL_SGIX_resample
 #define GL_SGIX_resample 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIS_point_line_texgen
 #ifndef GL_SGIS_point_line_texgen
 #define GL_SGIS_point_line_texgen 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIS_texture_color_mask
@@ -7001,16 +6809,12 @@ static PFNGLIGLOOINTERFACESGIXPROC glIglooInterfaceSGIX = NULL;
 #ifndef GL_EXT_texture_env_dot3
 #define GL_EXT_texture_env_dot3 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_ATI_texture_mirror_once
 #ifndef GL_ATI_texture_mirror_once
 #define GL_ATI_texture_mirror_once 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_NV_fence
@@ -7085,8 +6889,6 @@ static PFNGLEVALMAPSNVPROC glEvalMapsNV = NULL;
 #ifndef GL_NV_packed_depth_stencil
 #define GL_NV_packed_depth_stencil 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_NV_register_combiners2
@@ -7109,40 +6911,30 @@ static PFNGLGETCOMBINERSTAGEPARAMETERFVNVPROC glGetCombinerStageParameterfvNV = 
 #ifndef GL_NV_texture_compression_vtc
 #define GL_NV_texture_compression_vtc 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_NV_texture_rectangle
 #ifndef GL_NV_texture_rectangle
 #define GL_NV_texture_rectangle 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_NV_texture_shader
 #ifndef GL_NV_texture_shader
 #define GL_NV_texture_shader 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_NV_texture_shader2
 #ifndef GL_NV_texture_shader2
 #define GL_NV_texture_shader2 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_NV_vertex_array_range2
 #ifndef GL_NV_vertex_array_range2
 #define GL_NV_vertex_array_range2 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_NV_vertex_program
@@ -7351,48 +7143,36 @@ static PFNGLVERTEXATTRIBS4UBVNVPROC glVertexAttribs4ubvNV = NULL;
 #ifndef GL_SGIX_texture_coordinate_clamp
 #define GL_SGIX_texture_coordinate_clamp 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_SGIX_scalebias_hint
 #ifndef GL_SGIX_scalebias_hint
 #define GL_SGIX_scalebias_hint 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_OML_interlace
 #ifndef GL_OML_interlace
 #define GL_OML_interlace 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_OML_subsample
 #ifndef GL_OML_subsample
 #define GL_OML_subsample 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_OML_resample
 #ifndef GL_OML_resample
 #define GL_OML_resample 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_NV_copy_depth_to_color
 #ifndef GL_NV_copy_depth_to_color
 #define GL_NV_copy_depth_to_color 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_ATI_envmap_bumpmap
@@ -7848,24 +7628,18 @@ static PFNGLDRAWMESHARRAYSSUNPROC glDrawMeshArraysSUN = NULL;
 #ifndef GL_SUN_slice_accum
 #define GL_SUN_slice_accum 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_NV_multisample_filter_hint
 #ifndef GL_NV_multisample_filter_hint
 #define GL_NV_multisample_filter_hint 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_NV_depth_clamp
 #ifndef GL_NV_depth_clamp
 #define GL_NV_depth_clamp 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_NV_occlusion_query
@@ -7919,24 +7693,18 @@ static PFNGLPOINTPARAMETERIVNVPROC glPointParameterivNV = NULL;
 #ifndef GL_NV_texture_shader3
 #define GL_NV_texture_shader3 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_NV_vertex_program1_1
 #ifndef GL_NV_vertex_program1_1
 #define GL_NV_vertex_program1_1 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_shadow_funcs
 #ifndef GL_EXT_shadow_funcs
 #define GL_EXT_shadow_funcs 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_stencil_two_side
@@ -7956,16 +7724,12 @@ static PFNGLACTIVESTENCILFACEEXTPROC glActiveStencilFaceEXT = NULL;
 #ifndef GL_ATI_text_fragment_shader
 #define GL_ATI_text_fragment_shader 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_APPLE_client_storage
 #ifndef GL_APPLE_client_storage
 #define GL_APPLE_client_storage 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_APPLE_element_array
@@ -8072,16 +7836,12 @@ static PFNGLVERTEXARRAYPARAMETERIAPPLEPROC glVertexArrayParameteriAPPLE = NULL;
 #ifndef GL_APPLE_ycbcr_422
 #define GL_APPLE_ycbcr_422 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_S3_s3tc
 #ifndef GL_S3_s3tc
 #define GL_S3_s3tc 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_ATI_draw_buffers
@@ -8104,32 +7864,24 @@ static PFNGLDRAWBUFFERSATIPROC glDrawBuffersATI = NULL;
 /* This is really a WGL extension, but defines some associated GL enums.
  * ATI does not export "GL_ATI_pixel_format_float" in the GL_EXTENSIONS string.
  */
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_ATI_texture_env_combine3
 #ifndef GL_ATI_texture_env_combine3
 #define GL_ATI_texture_env_combine3 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_ATI_texture_float
 #ifndef GL_ATI_texture_float
 #define GL_ATI_texture_float 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_NV_float_buffer
 #ifndef GL_NV_float_buffer
 #define GL_NV_float_buffer 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_NV_fragment_program
@@ -8345,16 +8097,12 @@ static PFNGLPRIMITIVERESTARTINDEXNVPROC glPrimitiveRestartIndexNV = NULL;
 #ifndef GL_NV_texture_expand_normal
 #define GL_NV_texture_expand_normal 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_NV_vertex_program2
 #ifndef GL_NV_vertex_program2
 #define GL_NV_vertex_program2 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_ATI_map_object_buffer
@@ -8412,8 +8160,6 @@ static PFNGLGETVERTEXATTRIBARRAYOBJECTIVATIPROC glGetVertexAttribArrayObjectivAT
 #ifndef GL_OES_read_format
 #define GL_OES_read_format 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_depth_bounds_test
@@ -8433,8 +8179,6 @@ static PFNGLDEPTHBOUNDSEXTPROC glDepthBoundsEXT = NULL;
 #ifndef GL_EXT_texture_mirror_clamp
 #define GL_EXT_texture_mirror_clamp 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_blend_equation_separate
@@ -8454,56 +8198,42 @@ static PFNGLBLENDEQUATIONSEPARATEEXTPROC glBlendEquationSeparateEXT = NULL;
 #ifndef GL_MESA_pack_invert
 #define GL_MESA_pack_invert 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_MESA_ycbcr_texture
 #ifndef GL_MESA_ycbcr_texture
 #define GL_MESA_ycbcr_texture 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_pixel_buffer_object
 #ifndef GL_EXT_pixel_buffer_object
 #define GL_EXT_pixel_buffer_object 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_NV_fragment_program_option
 #ifndef GL_NV_fragment_program_option
 #define GL_NV_fragment_program_option 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_NV_fragment_program2
 #ifndef GL_NV_fragment_program2
 #define GL_NV_fragment_program2 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_NV_vertex_program2_option
 #ifndef GL_NV_vertex_program2_option
 #define GL_NV_vertex_program2_option 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_NV_vertex_program3
 #ifndef GL_NV_vertex_program3
 #define GL_NV_vertex_program3 1
 #endif
-#ifdef GL_GLEXT_PROCS
-#endif /* GL_GLEXT_PROCS */
 #endif
 
 #ifndef NO_GL_EXT_framebuffer_object
