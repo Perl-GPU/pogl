@@ -118,12 +118,16 @@ while (<FILE>)
         next;
       }
 
-      print EXTS "\#ifdef GL_GLEXT_PROCS\n";
-      foreach my $proc (@procs)
+      if(@procs)
       {
-        print EXTS $proc;
+        print EXTS "\#ifdef GL_GLEXT_PROCS\n";
+        foreach my $proc (@procs)
+        {
+          print EXTS $proc;
+        }
+        print EXTS "\#endif /* GL_GLEXT_PROCS */\n";
       }
-      print EXTS "\#endif /* GL_GLEXT_PROCS */\n";
+
       print EXTS $line2;
       last;
     }
