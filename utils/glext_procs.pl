@@ -80,17 +80,19 @@ while (<FILE>)
 };
 
     my @procs;
+    my $in_PROTOTYPES;
     while (<FILE>)
     {
       my $line2 = $_;
 
-      if ($line2 =~ m|GL_GLEXT_PROTOTYPES|)
+      if ($line2 =~ m|ifdef.*GL_GLEXT_PROTOTYPES|)
       {
         print EXTS $line2;
+        $in_PROTOTYPES = 1;
         next;
       }
 
-      if ($line2 !~ m|^\#endif[\r\n]*$|)
+      if ($line2 !~ m|^\#endif|)
       {
         print EXTS $line2;
 
@@ -106,6 +108,13 @@ while (<FILE>)
             push(@procs,'static PFN'.uc($1).'PROC '.$1." = NULL;\n");
           }
         }
+        next;
+      }
+
+      if($in_PROTOTYPES)
+      {
+        $in_PROTOTYPES = 0;
+        print EXTS $line2;
         next;
       }
 
