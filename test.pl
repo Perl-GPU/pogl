@@ -399,12 +399,14 @@ sub ourInitVertexBuffers
   }
   else
   {
+    print "Using classic Vertex Buffers\n";
     glVertexPointer_p(3, $verts);
     glNormalPointer_p($norms);
     $colors->assign($rainbow_offset,@rainbow);
     glColorPointer_p(4, $colors);
     glTexCoordPointer_p(2, $texcoords);
   }
+  print "-- done\n";
 }
 
 sub ourInit
@@ -472,6 +474,7 @@ sub ourBuildTextures
   if ($hasImage && -e $Tex_File)
   {
     my $img = new OpenGL::Image(source=>$Tex_File);
+    die $@ if $@;
     my($eng,$ver) = $img->Get('engine','version');
     print "Using OpenGL::Image - $eng v$ver\n";
 
@@ -792,6 +795,7 @@ sub cbRenderScene
   {
     print "Idle timeout; completing test\n";
     ourCleanup();
+    print "Exiting in render callback using perl exit(0)\n";
     exit(0);
   }
 
@@ -1107,6 +1111,7 @@ sub Inset
   {
     my $frame = new OpenGL::Image(engine=>'Magick',
       width=>$Inset_Width, height=>$Inset_Height);
+    die $@ if $@;
     my($fmt,$size) = $frame->Get('gl_format','gl_type');
 
     glReadPixels_c( $Capture_X, $Capture_Y, $Inset_Width, $Inset_Height,
@@ -1159,6 +1164,7 @@ sub Save
 # Cleanup routine
 sub ourCleanup
 {
+  print "Starting cleanup ...\n";
   # Disable app
   glutHideWindow();
   glutKeyboardUpFunc();
@@ -1173,13 +1179,16 @@ sub ourCleanup
   # Now you can destroy window
   if (defined($gameMode))
   {
+    print "Leaving game mode.\n";
     glutLeaveGameMode();
   }
   else
   {
+    print "Destroying window.\n";
     glutDestroyWindow($Window_ID);
   }
   undef($Window_ID);
+  print "Cleanup completed.\n";
 }
 
 sub ReleaseResources
@@ -1234,6 +1243,7 @@ sub cbKeyPressed
   if ($key == 27 or $c eq 'Q')
   {
     ourCleanup();
+    print "Exiting in render callback using perl exit(0)\n";
     exit(0);
   }
   elsif ($c eq 'B')
@@ -1633,11 +1643,14 @@ Press 'c' to capture/save a RGBA targa file.
 # Pass off control to OpenGL.
 # Above functions are called as appropriate.
 if (OpenGL::_have_freeglut()) {
+   print "Setting window close to trigger return from mainloop (freeglut).\n";
    glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE,GLUT_ACTION_GLUTMAINLOOP_RETURNS)
 }
 
+print "Entering glutMainLoop\n";
 glutMainLoop();
+print "Returned from glutMainLoop\n";
 
-print "FreeGLUT returned from MainLoop\n";
+print "Exiting in main thread\n";
 
 __END__
