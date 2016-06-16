@@ -5,6 +5,10 @@ my $exts = '../glext_procs.h';
 die "Unable to write to '$exts'" if (!open(EXTS,">$exts"));
 binmode EXTS;
 
+my $exts = '../glext_consts.h';
+die "Unable to write to '$exts'" if (!open(CNST,">$exts"));
+binmode CNST;
+
 my $exps = 'exports.txt';
 die "Unable to read '$exps'" if (!open(EXPS,$exps));
 my $exports = {};
@@ -17,9 +21,9 @@ foreach my $line (<EXPS>)
 close(EXPS);
 
 # Header
-print EXTS qq
-{#ifndef __glext_procs_h_
-#define __glext_procs_h_
+my $header = qq
+{#ifndef %s
+#define %s
 
 #ifdef __cplusplus
 extern "C" \{
@@ -31,6 +35,9 @@ extern "C" \{
 **
 };
 
+print EXTS sprintf $header, ("__glext_procs_h_") x 2;
+print CNST sprintf $header, ("__glext_consts_h_") x 2;
+
 
 # License
 while (<FILE>)
@@ -38,6 +45,7 @@ while (<FILE>)
   my $line = $_;
   next if ($line !~ m|^\*\* Copyright \(c\) 20\d\d The Khronos Group Inc\.|);
   print EXTS $line;
+  print CNST $line;
   last;
 }
 
@@ -49,6 +57,7 @@ while (<FILE>)
   {
     print "Found end\n";
     print EXTS $line;
+    print CNST $line;
     next;
   }
   elsif ($line =~ m|^\#ifndef GL_[^\s]+|)
@@ -58,6 +67,7 @@ while (<FILE>)
     if ($next_line !~ m|^\#define (GL_[^\s]+) 1|)
     {
       print EXTS $line.$next_line;
+      print CNST $line.$next_line;
       next;
     }
 
@@ -70,6 +80,7 @@ while (<FILE>)
 #define $ext 1
 #endif
 };
+    print CNST "#ifndef NO_$ext\n";
 
     my @procs;
     my $in_PROTOTYPES;
@@ -87,6 +98,7 @@ while (<FILE>)
           $proto_level = $def_level;
           $in_PROTOTYPES = 1;
         }
+        print CNST $line2 if !$in_PROTOTYPES;
         $def_level++;
         next;
       }
@@ -94,7 +106,6 @@ while (<FILE>)
       if ($line2 !~ m|^\#endif|)
       {
         print EXTS $line2;
-
         if ($line2 =~ m|APIENTRY (gl[^\s]+)|)
         {
           my $export = $1;
@@ -106,18 +117,30 @@ while (<FILE>)
           {
             push(@procs,'static PFN'.uc($1).'PROC '.$1." = NULL;\n");
           }
+          next;
         }
+        
+        if ($line2 =~ m|^\#define (GL_[^\s]+)|)
+        {
+          print CNST "    i($1)\n";
+          next;
+        }
+        
+        # the #define here blocks GLEXT_64_TYPES_DEFINED, might be needed though
+        next if $line2 =~ /^(#define|typedef|struct|#include) /;
+        print CNST $line2;
         next;
       }
       $def_level--;
 
-      $in_PROTOTYPES = 0 if $in_PROTOTYPES and $proto_level == $def_level;
-
       if($def_level>0)
       {
         print EXTS $line2;
+        print CNST $line2 if !$in_PROTOTYPES;
         next;
       }
+
+      $in_PROTOTYPES = 0 if $in_PROTOTYPES and $proto_level == $def_level;
 
       if(@procs)
       {
@@ -130,12 +153,15 @@ while (<FILE>)
       }
 
       print EXTS $line2;
+      print CNST $line2;
       last;
     }
   }
   else
   {
     print EXTS $line;
+    next if $line =~ /^(#include|#define) /;
+    print CNST $line;
   }
 }
 
