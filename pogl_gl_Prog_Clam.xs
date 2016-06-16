@@ -536,7 +536,7 @@ glVertexAttrib1sARB(index,x)
 	GLuint index
 	GLshort x
 	INIT:
-		loadProc(glVertexAttrib1s,"glVertexAttrib1s");
+		loadProc(glVertexAttrib1sARB,"glVertexAttrib1sARB");
 
 #//# glVertexAttrib1svARB_c($index,(CPTR)v);
 void
