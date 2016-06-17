@@ -474,6 +474,7 @@ sub ourBuildTextures
   if ($hasImage && -e $Tex_File)
   {
     my $img = new OpenGL::Image(source=>$Tex_File);
+    die $@ if $@;
     my($eng,$ver) = $img->Get('engine','version');
     print "Using OpenGL::Image - $eng v$ver\n";
 
