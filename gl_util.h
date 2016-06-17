@@ -291,6 +291,12 @@ GLAPI void APIENTRY glUniformMatrix4x3fv (GLint, GLsizei, GLboolean, const GLflo
 #endif
 #endif
 
+// fake bgr constants so OpenGL::Image::Targa will work on GL1.1
+#if !defined(GL_VERSION_1_2) && defined(GL_EXT_bgra)
+#define GL_BGR                            GL_BGR_EXT
+#define GL_BGRA                           GL_BGRA_EXT
+#endif
+
 #define MAX_GL_TEXPARAMETER_COUNT	4
 
 extern int gl_texparameter_count(GLenum pname);
