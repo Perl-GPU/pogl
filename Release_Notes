@@ -14,6 +14,15 @@ General Notes:
 
   * on win32, clean up mingw recognition and allow gmake
 
+  * updated included freeglut.dll to latest release in major version 2
+
+  * updated and greatly automated compilation of hardware-dependent functions
+    and constants
+
+  * enabled hardware feature detection for compilation on windows
+
+  * Fixed compilation for OSX without FreeGLUT.
+
   * Restored support for GLX.
 
   * Fixed/improved a number of GLUT issues.
