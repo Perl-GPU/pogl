@@ -16,6 +16,13 @@ General Notes:
 
   * on win32, clean up mingw recognition and allow gmake
 
+  * updated included freeglut.dll to latest release in major version 2
+
+  * updated and greatly automated compilation of hardware-dependent functions
+    and constants
+
+  * enabled hardware feature detection for compilation on windows
+
 Highlights:
 
   * Fixed a c++ name-mangling issue that was breaking builds on Linux.
