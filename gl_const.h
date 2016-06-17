@@ -745,6 +745,14 @@ if (!strncmp(name, "GL_", 3)) {
 	i(GL_ACTIVE_TEXTURE_ARB)
 	i(GL_CLIENT_ACTIVE_TEXTURE_ARB)
 	i(GL_MAX_TEXTURE_UNITS_ARB)
+#else
+
+// fake bgr constants so OpenGL::Image::Targa will work on GL1.1
+#ifdef GL_EXT_bgra
+	i(GL_BGR)
+	i(GL_BGRA)
+#endif
+
 #endif
 
 /* 2, see 37 */
