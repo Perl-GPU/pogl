@@ -816,6 +816,7 @@ glEdgeFlagPointer_s(stride, pointer)
 #endif // GL_VERSION_1_1
 
 
+#ifndef NO_GL_EXT_vertex_array
 #ifdef GL_EXT_vertex_array
 
 #//# glArrayElementEXT($i);
@@ -835,6 +836,7 @@ glDrawArraysEXT(mode, first, count)
 		loadProc(glDrawArraysEXT,"glDrawArraysEXT");
 
 #endif // GL_EXT_vertex_array
+#endif // !NO_GL_EXT_vertex_array
 
 
 #ifdef GL_MESA_resize_buffers
