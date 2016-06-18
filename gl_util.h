@@ -248,49 +248,6 @@
 #define GL_BLEND_COLOR_EXT 0x8005
 #endif
 
-
-/* 2.1 defintions */
-#if defined(HAVE_VER) || defined(_WIN32)
-#ifndef NO_GL_VERSION_2_1
-#ifndef GL_VERSION_2_1
-#define GL_VERSION_2_1 1
-#endif
-#define CURRENT_RASTER_SECONDARY_COLOR             0x845F
-#define FLOAT_MAT2x3                               0x8B65
-#define FLOAT_MAT2x4                               0x8B66
-#define FLOAT_MAT3x2                               0x8B67
-#define FLOAT_MAT3x4                               0x8B68
-#define FLOAT_MAT4x2                               0x8B69
-#define FLOAT_MAT4x3                               0x8B6A
-#define SRGB                                       0x8C40
-#define SRGB8                                      0x8C41
-#define SRGB_ALPHA                                 0x8C42
-#define SRGB8_ALPHA8                               0x8C43
-#define SLUMINANCE_ALPHA                           0x8C44
-#define SLUMINANCE8_ALPHA8                         0x8C45
-#define SLUMINANCE                                 0x8C46
-#define SLUMINANCE8                                0x8C47
-#define COMPRESSED_SRGB                            0x8C48
-#define COMPRESSED_SRGB_ALPHA                      0x8C49
-#define COMPRESSED_SLUMINANCE                      0x8C4A
-#define COMPRESSED_SLUMINANCE_ALPHA                0x8C4B
-#define PIXEL_PACK_BUFFER                          0x88EB
-#define PIXEL_UNPACK_BUFFER                        0x88EC
-#define PIXEL_PACK_BUFFER_BINDING                  0x88ED
-#define PIXEL_UNPACK_BUFFER_BINDING                0x88EF
-#define GL_MAX_ELEMENTS_VERTICES                   0x80E8
-#define GL_MAX_ELEMENTS_INDICES                    0x80E9
-#ifdef GL_GLEXT_PROTOTYPES
-GLAPI void APIENTRY glUniformMatrix2x3fv (GLint, GLsizei, GLboolean, const GLfloat *);
-GLAPI void APIENTRY glUniformMatrix3x2fv (GLint, GLsizei, GLboolean, const GLfloat *);
-GLAPI void APIENTRY glUniformMatrix2x4fv (GLint, GLsizei, GLboolean, const GLfloat *);
-GLAPI void APIENTRY glUniformMatrix4x2fv (GLint, GLsizei, GLboolean, const GLfloat *);
-GLAPI void APIENTRY glUniformMatrix3x4fv (GLint, GLsizei, GLboolean, const GLfloat *);
-GLAPI void APIENTRY glUniformMatrix4x3fv (GLint, GLsizei, GLboolean, const GLfloat *);
-#endif /* GL_GLEXT_PROTOTYPES */
-#endif
-#endif
-
 // fake bgr constants so OpenGL::Image::Targa will work on GL1.1
 #if !defined(GL_VERSION_1_2) && defined(GL_EXT_bgra)
 #define GL_BGR                            GL_BGR_EXT
