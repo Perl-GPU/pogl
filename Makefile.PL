@@ -876,6 +876,7 @@ sub get_extensions
      return '';
   }
 
+  print "This looks like OpenGL Version: $gldata->{VERSION}\n";
 
   # Parse glext_procs.h file
   return '' if (!open(GLEXT,"glext_procs.h"));
