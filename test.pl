@@ -1162,6 +1162,7 @@ sub Save
 # Cleanup routine
 sub ourCleanup
 {
+  print "Starting cleanup ...\n";
   # Disable app
   glutHideWindow();
   glutKeyboardUpFunc();
@@ -1176,13 +1177,16 @@ sub ourCleanup
   # Now you can destroy window
   if (defined($gameMode))
   {
+    print "Leaving game mode.\n";
     glutLeaveGameMode();
   }
   else
   {
+    print "Destroying window.\n";
     glutDestroyWindow($Window_ID);
   }
   undef($Window_ID);
+  print "Cleanup completed.\n";
 }
 
 sub ReleaseResources
@@ -1636,6 +1640,7 @@ Press 'c' to capture/save a RGBA targa file.
 # Pass off control to OpenGL.
 # Above functions are called as appropriate.
 if (OpenGL::_have_freeglut()) {
+   print "Setting window close to trigger return from mainloop.\n";
    glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE,GLUT_ACTION_GLUTMAINLOOP_RETURNS)
 }
 
