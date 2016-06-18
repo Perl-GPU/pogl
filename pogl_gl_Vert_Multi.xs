@@ -2922,7 +2922,7 @@ glMultiTexCoord2s(target,s,t)
 	GLshort s
 	GLshort t
 	CODE:
-		glMultiTexCoord2sARB(target,s,t);
+		glMultiTexCoord2s(target,s,t);
 
 #//# glMultiTexCoord2sv_c($target,(CPTR)v);
 void
