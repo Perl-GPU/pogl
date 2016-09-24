@@ -454,7 +454,7 @@ if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
 elsif ($interface_lib eq 'AGL')					# Mac OS X
 {
   $INCS = ""; # no include flags required: Apple gcc will automatically pick up the system frameworks
-  $DEFS .= " -DHAVE_AGL_GLUT";  # So we know we have glutWMCloseFunc() and glutCheckLoop()
+  $DEFS .= " -DHAVE_AGL_GLUT -Wno-deprecated-declarations ";  # So we know we have glutWMCloseFunc() and glutCheckLoop()
   $DYNS = { OTHERLDFLAGS => "-framework OpenGL -framework GLUT" };
 }
 else # Everyone else

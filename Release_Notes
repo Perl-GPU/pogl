@@ -14,6 +14,8 @@ Highlights:
 
   * Enhanced test.pl for OpenGL::Shader and VBOs
 
+  * suppress osx 10.9 deprecation warnings
+
 
 
 +------------------------------------------------------------------------+
