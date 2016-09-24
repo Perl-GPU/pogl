@@ -22,4 +22,4 @@ glversion: glversion.o
 	chmod u+x $@
 
 %.o: %.c
-	${CC} ${CCFLAGS} -c $<
+	${CC} -Wno-deprecated-declarations ${CCFLAGS} -c $<
