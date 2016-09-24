@@ -199,7 +199,7 @@ void release_fbo(oga_struct * oga)
     glDeleteFramebuffersEXT(1,&oga->fbo_handle);
   }
 
-  if (oga->tex_handle)
+  if (oga->tex_handle[0] || oga->tex_handle[1])
   {
     glBindTexture(oga->target,0);	
     if (oga->tex_handle[0]) glDeleteTextures(1,&oga->tex_handle[0]);
