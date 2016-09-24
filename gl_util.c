@@ -955,33 +955,33 @@ void pgl_set_type(SV * sv, GLenum type, void ** ptr)
 	{
 		unsigned long v = SvIV(sv);
 		(*(GLubyte*)*ptr) = (GLubyte)(v >> 8);
-		*(unsigned char**)ptr++;
+		(*(unsigned char**)ptr)++;
 		(*(GLubyte*)*ptr) = (GLubyte)(v & 0xff);
-		*(unsigned char**)ptr++;
+		(*(unsigned char**)ptr)++;
 		break;
 	}
 	case GL_3_BYTES:
 	{
 		unsigned long v = SvIV(sv);
 		(*(GLubyte*)*ptr) = (GLubyte)((v >> 16) & 0xff);
-		*(unsigned char**)ptr++;
+		(*(unsigned char**)ptr)++;
 		(*(GLubyte*)*ptr) = (GLubyte)((v >> 8) & 0xff);
-		*(unsigned char**)ptr++;
+		(*(unsigned char**)ptr)++;
 		(*(GLubyte*)*ptr) = (GLubyte)((v >> 0) & 0xff);
-		*(unsigned char**)ptr++;
+		(*(unsigned char**)ptr)++;
 		break;
 	}
 	case GL_4_BYTES:
 	{
 		unsigned long v = SvIV(sv);
 		(*(GLubyte*)*ptr) = (GLubyte)((v >> 24) & 0xff);
-		*(unsigned char**)ptr++;
+		(*(unsigned char**)ptr)++;
 		(*(GLubyte*)*ptr) = (GLubyte)((v >> 16) & 0xff);
-		*(unsigned char**)ptr++;
+		(*(unsigned char**)ptr)++;
 		(*(GLubyte*)*ptr) = (GLubyte)((v >> 8) & 0xff);
-		*(unsigned char**)ptr++;
+		(*(unsigned char**)ptr)++;
 		(*(GLubyte*)*ptr) = (GLubyte)((v >> 0) & 0xff);
-		*ptr++;
+		(*ptr)++;
 		break;
 	}
 	default:
@@ -1039,9 +1039,9 @@ SV * pgl_get_type(GLenum type, void ** ptr)
 	{
 		unsigned long v;
 		v = (*(GLubyte*)*ptr) << 8;
-		*(unsigned char**)ptr++;
+		(*(unsigned char**)ptr)++;
 		v |= (*(GLubyte*)*ptr) << 0;
-		*(unsigned char**)ptr++;
+		(*(unsigned char**)ptr)++;
 		result = newSViv(v);
 		break;
 	}
@@ -1049,11 +1049,11 @@ SV * pgl_get_type(GLenum type, void ** ptr)
 	{
 		unsigned long v;
 		v = (*(GLubyte*)*ptr) << 16;
-		*(unsigned char**)ptr++;
+		(*(unsigned char**)ptr)++;
 		v |= (*(GLubyte*)*ptr) << 8;
-		*(unsigned char**)ptr++;
+		(*(unsigned char**)ptr)++;
 		v |= (*(GLubyte*)*ptr) << 0;
-		*(unsigned char**)ptr++;
+		(*(unsigned char**)ptr)++;
 		result = newSViv(v);
 		break;
 	}
@@ -1061,13 +1061,13 @@ SV * pgl_get_type(GLenum type, void ** ptr)
 	{
 		unsigned long v;
 		v = (*(GLubyte*)*ptr) << 24;
-		*(unsigned char**)ptr++;
+		(*(unsigned char**)ptr)++;
 		v |= (*(GLubyte*)*ptr) << 16;
-		*(unsigned char**)ptr++;
+		(*(unsigned char**)ptr)++;
 		v |= (*(GLubyte*)*ptr) << 8;
-		*(unsigned char**)ptr++;
+		(*(unsigned char**)ptr)++;
 		v |= (*(GLubyte*)*ptr) << 0;
-		*(unsigned char**)ptr++;
+		(*(unsigned char**)ptr)++;
 		result = newSViv(v);
 		break;
 	}
