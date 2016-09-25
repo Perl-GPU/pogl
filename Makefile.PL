@@ -52,7 +52,14 @@ sub Usage
   print "\n";
   exit(0);
 }
-Usage() if (@ARGV and $ARGV[0] =~ m|^([-/]*)?h(elp)?|i);
+if (@ARGV and $ARGV[0] =~ m|^([-/]*)?h(elp)?|i)
+{
+  Usage();
+}
+else
+{
+  print "\nrun as `perl Makefile.PL help` to show user options\n";
+}
 
 
 # Get debugging flags
@@ -62,7 +69,8 @@ if ( grep { if (m/^verbose/i) { $verbose++; 1; } else { 0; } } @ARGV )
   # Strip out interface args
   @ARGV = grep { !m/^verbose=/i } @ARGV;
 }
-print "\$verbose set to $verbose\n" if $verbose;
+print "\$verbose set to $verbose" . ($verbose ? "" : " - enable by running as `perl Makefile.PL verbose`");
+print "\n\n";
 
 
 # Get distribution build flags
