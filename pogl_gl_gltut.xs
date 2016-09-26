@@ -29,6 +29,7 @@ MODULE = Acme::MITHALDU::BleedingOpenGL::GL::gltut	PACKAGE = Acme::MITHALDU::Ble
 
 
 
+#ifdef GL_VERSION_3_0
 
 #//# @vertex_arrays = glGenVertexArrays_p($n);
 void
@@ -61,6 +62,11 @@ glBindVertexArray(vertex_array)
 	{
 		glBindVertexArray(vertex_array);
 	}
+
+#endif // GL_VERSION_3_0
+
+
+#ifdef GL_VERSION_2_0
 
 #//# glAttachShader($program,$shader);
 void
@@ -148,6 +154,11 @@ glGetProgramiv_p(target,pname)
 	}
 	OUTPUT:
 		RETVAL
+
+#endif // GL_VERSION_2_0
+
+
+#ifdef GL_VERSION_1_5
 
 #//# @queryIDs = glGenQueries_p($n);
 void
@@ -251,6 +262,11 @@ glEndQuery(target)
 	INIT:
 		loadProc(glEndQuery,"glEndQuery");
 
+#endif // GL_VERSION_1_5
+
+
+#ifdef GL_VERSION_3_2
+
 #//# glDrawElementsBaseVertex_c($mode, $count, $type, (CPTR)indices, $basevertex);
 void
 glDrawElementsBaseVertex_c(mode, count, type, indices, basevertex)
@@ -263,3 +279,5 @@ glDrawElementsBaseVertex_c(mode, count, type, indices, basevertex)
 		loadProc(glDrawElementsBaseVertex,"glDrawElementsBaseVertex");
 	CODE:
 		glDrawElementsBaseVertex(mode, count, type, indices, basevertex);
+
+#endif // GL_VERSION_3_2
