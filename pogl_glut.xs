@@ -1310,7 +1310,7 @@ glutBitmapString(font, string)
 	    glutBitmapString(font, string);
 #else
     	int len, i;
-    	len = (int) strlen(string);
+    	len = (int) strlen((char *)string);
     	for (i = 0; i < len; i++) {
     		glutBitmapCharacter(font, string[i]);
     	}
