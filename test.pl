@@ -91,7 +91,7 @@ my $hasFBO = 0;
 my $hasVBO = 0;
 my $hasFragProg = 0;
 my $hasImagePointer = 0;
-my $idleTime = time();
+my $idleTime = $hasHires ? gettimeofday() : time();
 my $idleSecsMax = 5;
 my $er;
 
@@ -791,7 +791,9 @@ sub ourInitShaders
 sub cbRenderScene
 {
   # Quit if inactive
-  if ($idleSecsMax < (time()-$idleTime))
+  my $time = $hasHires ? gettimeofday() : time();
+  my $time_to_exit = $idleSecsMax - ($time-$idleTime);
+  if ($time_to_exit <= 0 )
   {
     print "Idle timeout; completing test\n";
     ourCleanup();
@@ -988,6 +990,10 @@ sub cbRenderScene
 
   # But, for fun, let's make the text partially transparent too.
   glColor4f(0.6,1.0,0.6,.75);
+
+  $buf = sprintf "TIME TO EXIT: %.1fs", $time_to_exit;
+  my $bufwidth = 6 * length $buf;
+  glRasterPos2i($Window_Width-4-$bufwidth,2); ourPrintString(GLUT_BITMAP_HELVETICA_12,$buf);
 
   # Render our various display mode settings.
   $buf = sprintf "Mode: %s", $TexModesStr[$Curr_TexMode];
@@ -1321,7 +1327,7 @@ sub cbKeyPressed
     printf "KP: No action for %d.\n", $key;
   }
 
-  $idleTime = time();
+  $idleTime = $hasHires ? gettimeofday() : time();
 }
 
 # ------
@@ -1360,7 +1366,7 @@ sub cbSpecialKeyPressed
     printf "SKP: No action for %d.\n", $key;
   }
 
-  $idleTime = time();
+  $idleTime = $hasHires ? gettimeofday() : time();
 }
 
 # ------
@@ -1466,7 +1472,7 @@ sub cbMouseClick
     print "\n";
   }
 
-  $idleTime = time();
+  $idleTime = $hasHires ? gettimeofday() : time();
 }
 
 sub GetKeyModifier
@@ -1497,7 +1503,7 @@ sub cbResizeScene
   $Window_Width  = $Width;
   $Window_Height = $Height;
 
-  $idleTime = time();
+  $idleTime = $hasHires ? gettimeofday() : time();
 }
 
 sub cbWindowStat
