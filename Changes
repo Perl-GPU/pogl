@@ -2,7 +2,7 @@
 - add glGenVertexArrays_p, glBindVertexArray, glDeleteVertexArrays
 - add glAttachShader, glDeleteShader, glGetShaderiv_p, glGetShaderInfoLog_p, glGetProgramiv_p
 - added occlusion query capability
-- add glDrawElementsBaseVertex_c
+- add glDrawElementsBaseVertex_c, GL_MAX_ARRAY_TEXTURE_LAYERS, GL_TEXTURE_2D_ARRAY
 
 0.7005 2025-04-13
 - OpenGL::Shader improved error reporting for shader compiles - thanks Ivan Baidakou
