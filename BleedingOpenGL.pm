@@ -4381,6 +4381,7 @@ push @glut_func, qw(
    GL_FIXED_ONLY_ARB
    GL_FRAMEBUFFER_SRGB
    GL_SRGB_ALPHA
+   GL_MAX_ARRAY_TEXTURE_LAYERS
 );
 # gl_const
 
