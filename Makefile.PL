@@ -4,6 +4,7 @@ use ExtUtils::MakeMaker;
 use ExtUtils::Liblist;
 use Data::Dumper;
 use Config;
+use Try::Tiny;
 
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
@@ -61,9 +62,16 @@ else
   print "\nrun as `perl Makefile.PL help` to show user options\n";
 }
 
+our $verbose = 0;
+our $IS_MINGW = 0;
+our $IS_STRAWBERRY = 0;
+our $IS_CYGWIN;
+our $IS_W32API;
+my $INCS;
+
+try {
 
 # Get debugging flags
-our $verbose = 0;
 if ( grep { if (m/^verbose/i) { $verbose++; 1; } else { 0; } } @ARGV )
 {
   # Strip out interface args
@@ -88,15 +96,14 @@ if ( grep { m/^dist=/i } @ARGV )
 
 
 # Detect CYGWIN
-our $IS_CYGWIN = $^O eq 'cygwin';
+$IS_CYGWIN = $^O eq 'cygwin';
 print "Build platform \$IS_CYGWIN==$IS_CYGWIN\n" if $IS_CYGWIN and $verbose;
 
-our $IS_W32API = ($IS_CYGWIN && grep { m/^interface=(W32API|WGL)/i } @ARGV );
+$IS_W32API = ($IS_CYGWIN && grep { m/^interface=(W32API|WGL)/i } @ARGV );
 print "Build platform \$IS_W32API==$IS_W32API\n" if $IS_W32API and $verbose;
 
 
 # Detect MINGW
-our $IS_MINGW = 0;
 if ($^O eq 'MSWin32' && $Config{cc} =~ /\bgcc/i)
 {
   $IS_MINGW = 1;
@@ -105,7 +112,6 @@ if ($^O eq 'MSWin32' && $Config{cc} =~ /\bgcc/i)
 
 
 # Detect Strawberry Perl
-our $IS_STRAWBERRY = 0;
 if ($IS_MINGW)
 {
   $IS_STRAWBERRY = ($Config{cf_by} =~ m/strawberry-perl/i);
@@ -385,7 +391,7 @@ foreach my $key (sort keys %$found_libs)
 }
 
 # Configure MakeMaker
-my($INCS,$LIBS,$OPTS,$CLEAN,$LDFROM);
+my($LIBS,$OPTS,$CLEAN,$LDFROM);
 my $EXES = [];
 my $DYNS = {};
 if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
@@ -568,7 +574,7 @@ my $build_config =
     'BleedingOpenGL.pm' => '$(INST_LIBDIR)/BleedingOpenGL.pm',
     'Config.pm' => '$(INST_LIBDIR)/BleedingOpenGL/Config.pm'
   },
-  'PREREQ_PM' => { 'Test::More' => 0, 'Import::Into' => 0 },
+  'PREREQ_PM' => { 'Test::More' => 0, 'Import::Into' => 0, 'Try::Tiny' => 0 },
   'AUTHOR'	=> "Chris Marshall ".'<chm at cpan dot org>',
   'OBJECT' 	=> '$(BASEEXT)$(OBJ_EXT) gl_util$(OBJ_EXT) pogl_const$(OBJ_EXT) pogl_gl_top$(OBJ_EXT) pogl_glu$(OBJ_EXT) pogl_rpn$(OBJ_EXT) pogl_matrix$(OBJ_EXT) pogl_glut$(OBJ_EXT) pogl_gl_Accu_GetM$(OBJ_EXT) pogl_gl_GetP_Pass$(OBJ_EXT) pogl_gl_Mult_Prog$(OBJ_EXT) pogl_gl_Pixe_Ver2$(OBJ_EXT) pogl_gl_Prog_Clam$(OBJ_EXT) pogl_gl_Tex2_Draw$(OBJ_EXT) pogl_gl_Ver3_Tex1$(OBJ_EXT) pogl_gl_Vert_Multi$(OBJ_EXT) pogl_gl_gltut$(OBJ_EXT)',
   'XSPROTOARG'	=> '-noprototypes',
@@ -613,6 +619,12 @@ if ($found_libs->{GLX} && $ENV{TERM} ne 'xterm')
 }
 
 exit 0;
+
+}
+catch {
+  warn $_;
+  die "OS unsupported\n";
+};
 
 
 
