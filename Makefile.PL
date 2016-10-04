@@ -751,10 +751,14 @@ sub get_libs
 
 
   # Everyone else
-  open(SAVEERR, ">&STDERR");
-  close(STDERR);
-  ($libs) = ExtUtils::Liblist->ext(join(' ',@glx_libs),0);
-  open(STDERR, ">&SAVEERR");
+  ($libs) = do {
+    local $SIG{__WARN__} = sub  {
+      my ( $warning ) = @_;
+      return if $warning =~ /Warning \(mostly harmless\): No library found for/;
+      warn $warning;
+    };
+    ExtUtils::Liblist->ext(join(' ',@glx_libs),0);
+  };
 
   foreach my $lib (split(' ',$libs))
   {
