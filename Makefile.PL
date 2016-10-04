@@ -61,9 +61,16 @@ else
   print "\nrun as `perl Makefile.PL help` to show user options\n";
 }
 
+our $verbose = 0;
+our $IS_MINGW = 0;
+our $IS_STRAWBERRY = 0;
+our $IS_CYGWIN;
+our $IS_W32API;
+my $INCS;
+
+my $prepare_success = eval {
 
 # Get debugging flags
-our $verbose = 0;
 if ( grep { if (m/^verbose/i) { $verbose++; 1; } else { 0; } } @ARGV )
 {
   # Strip out interface args
@@ -88,15 +95,14 @@ if ( grep { m/^dist=/i } @ARGV )
 
 
 # Detect CYGWIN
-our $IS_CYGWIN = $^O eq 'cygwin';
+$IS_CYGWIN = $^O eq 'cygwin';
 print "Build platform \$IS_CYGWIN==$IS_CYGWIN\n" if $IS_CYGWIN and $verbose;
 
-our $IS_W32API = ($IS_CYGWIN && grep { m/^interface=(W32API|WGL)/i } @ARGV );
+$IS_W32API = ($IS_CYGWIN && grep { m/^interface=(W32API|WGL)/i } @ARGV );
 print "Build platform \$IS_W32API==$IS_W32API\n" if $IS_W32API and $verbose;
 
 
 # Detect MINGW
-our $IS_MINGW = 0;
 if ($^O eq 'MSWin32' && $Config{cc} =~ /\bgcc/i)
 {
   $IS_MINGW = 1;
@@ -105,7 +111,6 @@ if ($^O eq 'MSWin32' && $Config{cc} =~ /\bgcc/i)
 
 
 # Detect Strawberry Perl
-our $IS_STRAWBERRY = 0;
 if ($IS_MINGW)
 {
   $IS_STRAWBERRY = ($Config{cf_by} =~ m/strawberry-perl/i);
@@ -385,7 +390,7 @@ foreach my $key (sort keys %$found_libs)
 }
 
 # Configure MakeMaker
-my($INCS,$LIBS,$OPTS,$CLEAN,$LDFROM);
+my($LIBS,$OPTS,$CLEAN,$LDFROM);
 my $EXES = [];
 my $DYNS = {};
 if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
@@ -609,6 +614,11 @@ if ($found_libs->{GLX} && $ENV{TERM} ne 'xterm')
 {
   print "\nThis configuration should be built under an X11 shell\n\n";
 }
+
+1; # to signal that the eval didn't bail out early
+};
+
+die "$@\nOS unsupported\n" if !$prepare_success;
 
 exit 0;
 
