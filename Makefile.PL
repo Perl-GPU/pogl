@@ -601,25 +601,11 @@ my $build_config =
   }
 };
 
-if ($verbose)
-{
-  print "\nMakeMaker configuration:\n";
-}
-else
-{
-  open(SAVEERR, ">&STDERR");
-  close(STDERR);
-}
+print "\nMakeMaker configuration:\n" if $verbose;
 
 close(CONF) if (open(CONF,">Config.pm"));	# Generate place-holder Config.pm
 WriteMakefile( %$build_config );       		# Generate the Makefile
 WriteConfigPM( $build_config );			# Regenerate final Config.pm
-
-if (!$verbose)
-{
-  open(STDERR, ">&SAVEERR");
-}
-
 
 if ($found_libs->{GLX} && $ENV{TERM} ne 'xterm')
 {
