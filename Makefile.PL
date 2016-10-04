@@ -157,7 +157,7 @@ if ($verbose)
 our $DIST_DEFS = get_extensions($found_libs,$dist_flags->{NO_EXCLUSIONS});
 
 # Don't build Makefile if we cannot compile+run glversion
-exit(0) unless length($DIST_DEFS);
+die "unable to determine extensions or no extensions found\n" if !length $DIST_DEFS;
 
 # Get user-specified interface
 my $interface_lib;
@@ -857,10 +857,7 @@ sub get_extensions
   unlink "utils/freeglut.dll" or die "could not remove temporary freeglut: $!" if -f "utils/freeglut.dll";
 
   # Parse glversion.txt file
-  if ( !defined(open(GLDATA,$glv_file)) ) {
-     print "get_extensions: could not open $glv_file: $!\n" if $verbose;
-     return '';
-  }
+  open GLDATA, $glv_file or die "get_extensions: could not open $glv_file: $!\n";
   my $gldata = {};
   my @gldata = <GLDATA>;
   close(GLDATA);
@@ -871,15 +868,12 @@ sub get_extensions
     my($key,$val) = split('=',$line);
     $gldata->{$key} = $val;
   }
-  if (!scalar(keys %$gldata)) {
-     print "get_extensions: no extensions found in $glv_file\n" if $verbose;
-     return '';
-  }
+  die "get_extensions: no extensions found in $glv_file\n" if !keys %$gldata;
 
   print "This looks like OpenGL Version: $gldata->{VERSION}\n";
 
   # Parse glext_procs.h file
-  return '' if (!open(GLEXT,"glext_procs.h"));
+  open GLEXT, "glext_procs.h" or die "get_extensions: could not open glext_procs.h: $!\n";
   my @lines = <GLEXT>;
   close(GLEXT);
 
