@@ -1,8 +1,11 @@
 +------------------------------------------------------------------------+
-|                  OpenGL-0.6704_92 (a.k.a. 0.70 rc2)
+|                  OpenGL-0.6704_93 (a.k.a. 0.70 rc3)
 +------------------------------------------------------------------------+
 
 General Notes:
+
+  * Add try/catch to catch Makefile.PL failures to improve
+    report information from CPAN Testers reports.
 
   * Added OpenGL::Matrix to support uniform shader matrices.
 
