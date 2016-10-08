@@ -8,6 +8,9 @@ use Config;
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
 
+# Ensure deterministic output
+$Data::Dumper::Sortkeys = 1;
+
 # Supported windowing interfaces
 our $is_valid_interface =
 {
@@ -506,7 +509,7 @@ else # Everyone else
   }
 
   # Marshall libs
-  my $libs = ' -l'.join(' -l',values(%$found_libs));
+  my $libs = ' -l'.join(' -l',sort values(%$found_libs));
   my @more_libs = qw
   {
     -lXext
