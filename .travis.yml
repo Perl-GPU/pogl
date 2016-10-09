@@ -1,0 +1,31 @@
+language: perl
+addons:
+  apt:
+    packages:
+      - freeglut3-dev
+      - libxi-dev
+      - libxmu-dev
+perl:
+  - "5.8"
+  - "5.10"
+  - "5.12"
+  - "5.14"
+  - "5.16"
+  - "5.18"
+  - "5.20"
+  - "5.22"
+  - "5.24"
+  - "dev"               # installs latest developer release of perl (e.g. 5.21.8)
+  - "blead"             # builds perl from git
+matrix:
+  include:
+    - perl: "5.20"
+      env: COVERAGE=1   # enables coverage+coveralls reporting
+  allow_failures:
+    - perl: blead       # ignore failures for blead perl
+sudo: false             # faster builds as long as you don't need sudo access
+before_install:
+  - export DISPLAY=:99.0;
+    sh -e /etc/init.d/xvfb start;
+    sleep 3 # give xvfb some time to start
+  - eval $(curl https://travis-perl.github.io/init) --auto
