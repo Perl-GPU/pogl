@@ -74,17 +74,17 @@ static SV * get_glut_win_handler(int win, int type)
 	SV ** h;
 
 	if (!glut_handlers)
-		croak("Unable to locate glut handler");
+		croak("Unable to locate glut handlers list");
 
 	h = av_fetch(glut_handlers, win, FALSE);
 
 	if (!h || !SvOK(*h) || !SvROK(*h))
-		croak("Unable to locate glut handler");
+		croak("Unable to locate glut handler list for window %d", win);
 
 	h = av_fetch((AV*)SvRV(*h), type, FALSE);
 
 	if (!h || !SvOK(*h) || !SvROK(*h))
-		croak("Unable to locate glut handler");
+		croak("Unable to locate glut handler type=%d for window %d", type, win);
 
 	return SvRV(*h);
 }
