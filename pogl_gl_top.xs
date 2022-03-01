@@ -635,9 +635,8 @@ int
 XPending(d=dpy)
 	void *	d
 	CODE:
-	{
+		if (!d) croak("ERROR: called XPending with null X connection");
 		RETVAL = XPending(d);
-	}
 	OUTPUT:
 	RETVAL
 
