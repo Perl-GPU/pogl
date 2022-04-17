@@ -6174,6 +6174,7 @@ sub AUTOLOAD {
     	goto &$AUTOLOAD;
     }
     
+	require AutoLoader;
 	$AutoLoader::AUTOLOAD = $AUTOLOAD;
 	goto &AutoLoader::AUTOLOAD;
     }
@@ -6182,6 +6183,7 @@ sub AUTOLOAD {
     $val = constant($constname, @_ ? $_[0] : 0);
     if (not defined $val) {
 	if ($! =~ /Invalid/) {
+	    require AutoLoader;
 	    $AutoLoader::AUTOLOAD = $AUTOLOAD;
 	    goto &AutoLoader::AUTOLOAD;
 	}
