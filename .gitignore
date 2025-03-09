@@ -12,7 +12,6 @@
 Config.pm
 Makefile
 Makefile.old
-MANIFEST
 META.yml
 MYMETA.yml
 MYMETA.json
@@ -24,7 +23,6 @@ pm_to_blib
 pogl_*.c
 utils/glversion
 utils/glversion.txt
-PDL-Graphics-OpenGL-Perl-OpenGL-*.tar.gz
 GIT_CHANGES
 /OpenGL-*.tar.gz
 
