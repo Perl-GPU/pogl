@@ -439,10 +439,11 @@ static void generic_glut_Close_handler(void)
 	DO_perl_call_sv(handler, G_DISCARD);
 }
 
+AV *glutTimer_handler_data = NULL;
 /* Callback for glutTimerFunc */
 static void generic_glut_timer_handler(int value)
 {
-	AV * handler_data = (AV*)value;
+	AV * handler_data = glutTimer_handler_data;
 	SV * handler;
 	int i;
 	dSP;
@@ -1012,11 +1013,11 @@ glutTimerFunc(msecs, handler=0, ...)
 		if (!handler || !SvOK(handler)) {
 			croak("A handler must be specified");
 		} else {
-			AV * handler_data = newAV();
+			if (glutTimer_handler_data) SvREFCNT_dec((SV*)glutTimer_handler_data);
+			glutTimer_handler_data = newAV();
+			PackCallbackST(glutTimer_handler_data, 1);
 
-			PackCallbackST(handler_data, 1);
-
-			glutTimerFunc(msecs, generic_glut_timer_handler, (int)handler_data);
+			glutTimerFunc(msecs, generic_glut_timer_handler, 0);
 		}
 	ENSURE_callback_thread;}
 
