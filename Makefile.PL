@@ -578,7 +578,10 @@ my $build_config =
     'Tessellation.pod'=> '$(INST_LIBDIR)/OpenGL/Tessellation.pod',
     'Config.pm' => '$(INST_LIBDIR)/OpenGL/Config.pm'
   },
-  'PREREQ_PM' => { 'Test::More' => 0 },
+  CONFIGURE_REQUIRES => {
+    'ExtUtils::MakeMaker' => 0
+  },
+  TEST_REQUIRES => { 'Test::More' => 0 },
   'AUTHOR'	=> "Chris Marshall ".'<chm at cpan dot org>',
   'OBJECT' 	=> '$(BASEEXT)$(OBJ_EXT) gl_util$(OBJ_EXT) pogl_const$(OBJ_EXT) pogl_gl_top$(OBJ_EXT) pogl_glu$(OBJ_EXT) pogl_rpn$(OBJ_EXT) pogl_matrix$(OBJ_EXT) pogl_glut$(OBJ_EXT) pogl_gl_Accu_GetM$(OBJ_EXT) pogl_gl_GetP_Pass$(OBJ_EXT) pogl_gl_Mult_Prog$(OBJ_EXT) pogl_gl_Pixe_Ver2$(OBJ_EXT) pogl_gl_Prog_Clam$(OBJ_EXT) pogl_gl_Tex2_Draw$(OBJ_EXT) pogl_gl_Ver3_Tex1$(OBJ_EXT) pogl_gl_Vert_Multi$(OBJ_EXT)',
   'XSPROTOARG'	=> '-noprototypes',
