@@ -1,3 +1,5 @@
+- apply better Debian-provided fix for glutTimerFunc - thanks Thomas Kremer
+
 0.7001 2025-03-09
 - Fixed glutCloseFunc for Mac OS X.
 - Fixed glutTimerFunc so doesn't try to use int to store AV* user data
