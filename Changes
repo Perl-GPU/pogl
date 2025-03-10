@@ -1,3 +1,4 @@
+0.7002 2025-03-10
 - apply better Debian-provided fix for glutTimerFunc - thanks Thomas Kremer
 
 0.7001 2025-03-09
