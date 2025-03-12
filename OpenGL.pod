@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-OpenGL - v0.70
+OpenGL - Graphics display using OpenGL
 
 =head1 SYNOPSIS
 
