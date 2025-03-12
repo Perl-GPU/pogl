@@ -103,8 +103,7 @@ my $Inset_Width = 90;
 my $Inset_Height = 90;
 my $Window_State;
 
-# Texture dimanesions
-#my $Tex_File = 'test.jpg';
+# Texture dimensions
 my $Tex_File = 'test.tga';
 my $Tex_Width = 128;
 my $Tex_Height = 128;
@@ -355,7 +354,6 @@ sub ourInitVertexBuffers
     ($VertexObjID,$NormalObjID,$ColorObjID,$TexCoordObjID,$IndexObjID) =
       glGenBuffersARB_p(5);
 
-    #glBindBufferARB(GL_ARRAY_BUFFER_ARB, $VertexObjID);
     $verts->bind($VertexObjID);
     glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $verts, GL_STATIC_DRAW_ARB);
     glVertexPointer_c(3, GL_FLOAT, 0, 0);
@@ -376,24 +374,20 @@ sub ourInitVertexBuffers
       print "  glGetBufferSubDataARB_p: $ords\n";
     }
 
-    #glBindBufferARB(GL_ARRAY_BUFFER_ARB, $NormalObjID);
     $norms->bind($NormalObjID);
     glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $norms, GL_STATIC_DRAW_ARB);
     glNormalPointer_c(GL_FLOAT, 0, 0);
 
-    #glBindBufferARB(GL_ARRAY_BUFFER_ARB, $ColorObjID);
     $colors->bind($ColorObjID);
     glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $colors, GL_DYNAMIC_DRAW_ARB);
     $rainbow->assign(0,@rainbow);
     glBufferSubDataARB_p(GL_ARRAY_BUFFER_ARB, $rainbow_offset, $rainbow);
     glColorPointer_c(4, GL_FLOAT, 0, 0);
 
-    #glBindBufferARB(GL_ARRAY_BUFFER_ARB, $TexCoordObjID);
     $texcoords->bind($TexCoordObjID);
     glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $texcoords, GL_STATIC_DRAW_ARB);
     glTexCoordPointer_c(2, GL_FLOAT, 0, 0);
 
-    #glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, $IndexObjID);
     $indices->bind($IndexObjID);
     glBufferDataARB_p(GL_ELEMENT_ARRAY_BUFFER_ARB, $indices, GL_STATIC_DRAW_ARB);
   }
@@ -887,7 +881,7 @@ sub cbRenderScene
   {
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
   }
-  # If we're blending, we don'$t want z-buffering.
+  # If we're blending, we don't want z-buffering.
   if ($Blend_On)
   {
     glDisable(GL_DEPTH_TEST);
@@ -984,7 +978,7 @@ sub cbRenderScene
   glDisable(GL_TEXTURE_2D);
   glDisable(GL_LIGHTING);
 
-  # We don'$t want depth-testing either.
+  # We don't want depth-testing either.
   glDisable(GL_DEPTH_TEST);
 
   # But, for fun, let's make the text partially transparent too.
@@ -1016,7 +1010,7 @@ sub cbRenderScene
   $buf = sprintf "Inset: %d", $Inset_On;
   glRasterPos2i(2,74); ourPrintString(GLUT_BITMAP_HELVETICA_12,$buf);
 
-  # Now we want to render the calulated FPS at the top.
+  # Now we want to render the calculated FPS at the top.
   # To ease, simply translate up.  Note we're working in screen
   # pixels in this projection.
   glTranslatef(6.0,$Window_Height - 14,0.0);
@@ -1611,7 +1605,6 @@ foreach my $ext (sort @extensions)
 
 if (!OpenGL::glpCheckExtension('GL_ARB_vertex_buffer_object'))
 {
-  #$hasVBO = 1;
   # Perl 5.10 crashes on VBOs!
   $hasVBO = ($PERL_VERSION !~ m|^5\.10\.|);
 }
