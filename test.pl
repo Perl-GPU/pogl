@@ -1288,6 +1288,14 @@ sub cbKeyPressed
   {
     Capture(Save=>'capture.tga');
   }
+  elsif ($c eq 'W')
+  {
+    $Z_Off += 0.5;
+  }
+  elsif ($c eq 'X')
+  {
+    $Z_Off -= 0.5;
+  }
   else
   {
     printf "KP: No action for %d.\n", $key;
