@@ -685,32 +685,25 @@ sub ourInitShaders
 
     # NOP Vertex shader
     my $VertexProg = qq
-     {!!ARBvp1.0
-      PARAM center = program.local[0];
-      PARAM xform[4] = {program.local[1..4]};
-      TEMP vertexClip;
-
-      # ModelView projection
-      DP4 vertexClip.x, state.matrix.mvp.row[0], vertex.position;
-      DP4 vertexClip.y, state.matrix.mvp.row[1], vertex.position;
-      DP4 vertexClip.z, state.matrix.mvp.row[2], vertex.position;
-      DP4 vertexClip.w, state.matrix.mvp.row[3], vertex.position;
-
-      # Additional transform, via matrix variable
-      DP4 vertexClip.x, vertexClip, xform[0];
-      DP4 vertexClip.y, vertexClip, xform[1];
-      DP4 vertexClip.z, vertexClip, xform[2];
-      DP4 vertexClip.w, vertexClip, xform[3];
-
-      #SUB result.position, vertexClip, center;
-      MOV result.position, vertexClip;
-
-      # Pass through color
-      MOV result.color, vertex.color;
-
-      # Pass through texcoords
-      SUB result.texcoord[0], vertex.texcoord, center;
-      END
+      {uniform vec4 center;
+      uniform mat4 xform;
+      void main(void)
+      {
+        gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+        gl_Position *= xform;
+        // Calc texcoord values
+        vec4 pos = gl_Vertex;
+        float d = sqrt(pos.x * pos.x + pos.y * pos.y);
+        float a = atan(pos.x/pos.y) / 3.1415;
+        if (a < 0.0) a += 1.0;
+        a *= 2.0;
+        a -= float(int(a));
+        pos -= center;
+        float h = pos.z;
+        h = abs(2.0 * atan(h/d) / 3.1415);
+        gl_TexCoord[0].x = a;
+        gl_TexCoord[0].y = h;
+      }
     };
 
     glBindProgramARB(GL_VERTEX_PROGRAM_ARB, $VertexProgID);
@@ -736,17 +729,13 @@ sub ourInitShaders
 
     # Lazy Metalic Fragment shader
     my $FragProg = qq
-     {!!ARBfp1.0
-      PARAM surfacecolor = program.local[5];
-      TEMP color;
-      MUL color, fragment.texcoord[0].y, 2.0;
-      ADD color, 1.0, -color;
-      ABS color, color;
-      ADD color, 1.01, -color;  #Some cards have a rounding error
-      MOV color.a, 1.0;
-      MUL color, color, surfacecolor;
-      MOV result.color, color;
-      END
+      {uniform vec4 surfacecolor;
+      void main (void)
+      {
+         float v = 2.0 * gl_TexCoord[0].y;
+         v = 1.01 - abs(1.0 - v);  // Some cards have a rounding error
+         gl_FragColor = vec4(v,v,v, 1.0) * surfacecolor;
+      }
     };
 
     glBindProgramARB(GL_FRAGMENT_PROGRAM_ARB, $FragProgID);
