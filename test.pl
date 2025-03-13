@@ -147,9 +147,11 @@ my @Light_Ambient  = ( 0.1, 0.1, 0.1, 1.0 );
 my @Light_Diffuse  = ( 1.2, 1.2, 1.2, 1.0 );
 my @Light_Position = ( 2.0, 2.0, 0.0, 1.0 );
 
-# Model/Projection/Viewport Matrices
+# Model/Projection/Texture/Colour Matrices, Viewport vector
 my $mm = OpenGL::Array->new(16,GL_DOUBLE);
 my $pm = OpenGL::Array->new(16,GL_DOUBLE);
+my $tm = OpenGL::Array->new(16,GL_DOUBLE);
+my $cm = OpenGL::Array->new(16,GL_DOUBLE);
 my $vp = OpenGL::Array->new(4,GL_INT);
 
 # Vertex Buffer Object data
@@ -1407,45 +1409,45 @@ sub cbMouseClick
   # Example of using GLU to determine 3D click points
   if ($state == GLUT_UP)
   {
-    print "\n";
-
-    glGetDoublev_c(GL_MODELVIEW_MATRIX,$mm->ptr());
-    my @model = $mm->retrieve(0,16);
-
-    glGetDoublev_c(GL_PROJECTION_MATRIX,$pm->ptr());
-    my @projection = $pm->retrieve(0,16);
-
-    glGetIntegerv_c(GL_VIEWPORT,$vp->ptr());
-    my @viewport = $vp->retrieve(0,4);
-
-    print "Model Matrix:      $model[0], $model[1], $model[2], $model[3]\n";
-    print "                   $model[4], $model[5], $model[6], $model[7]\n";
-    print "                   $model[8], $model[9], $model[10], $model[11]\n";
-    print "                   $model[12], $model[13], $model[14], $model[15]\n";
-
-    print "Projection Matrix: $projection[0], $projection[1], $projection[2], $projection[3]\n";
-    print "                   $projection[4], $projection[5], $projection[6], $projection[7]\n";
-    print "                   $projection[8], $projection[9], $projection[10], $projection[11]\n";
-    print "                   $projection[12], $projection[13], $projection[14], $projection[15]\n";
-
-    print "Viewport: $viewport[0], $viewport[1], $viewport[2], $viewport[3]\n";
-    print "\n";
-
+    my ($model, $projection, $viewport) = dumpMatrices();
     my @point = gluUnProject_p($x,$y,0,	# Cursor point
-      @model,				# Model Matrix
-      @projection,			# Projection Matrix
-      @viewport);			# Viewport
+      @$model,				# Model Matrix
+      @$projection,			# Projection Matrix
+      @$viewport);			# Viewport
     print "Model point: $point[0], $point[1], $point[2]\n";
-
-#    @point = gluProject_p(@point,	# Model point
-#      @model,				# Model Matrix
-#      @projection,			# Projection Matrix
-#      @viewport);			# Viewport
-#    print "Window point: $point[0], $point[1], $point[2]\n";
+#      @point = gluProject_p(@point,	# Model point
+#        @model,				# Model Matrix
+#        @projection,			# Projection Matrix
+#        @viewport);			# Viewport
+#      print "Window point: $point[0], $point[1], $point[2]\n";
     print "\n";
   }
 
   $idleTime = $hasHires ? gettimeofday() : time();
+}
+
+sub dumpMatrices
+{
+  print "\n";
+  glGetDoublev_c(GL_MODELVIEW_MATRIX,$mm->ptr());
+  my @model = $mm->retrieve(0,16);
+  glGetDoublev_c(GL_PROJECTION_MATRIX,$pm->ptr());
+  my @projection = $pm->retrieve(0,16);
+  glGetDoublev_c(GL_PROJECTION_MATRIX,$tm->ptr());
+  my @texture = $tm->retrieve(0,16);
+  glGetDoublev_c(GL_PROJECTION_MATRIX,$cm->ptr());
+  my @colours = $cm->retrieve(0,16);
+  for (['Model',\@model], ['Projection',\@projection], ['Texture',\@texture], ['Colour',\@colours]) {
+    printf "%-19s$_->[1][0], $_->[1][1], $_->[1][2], $_->[1][3]\n", "$_->[0] Matrix:";
+    print "                   $_->[1][4], $_->[1][5], $_->[1][6], $_->[1][7]\n";
+    print "                   $_->[1][8], $_->[1][9], $_->[1][10], $_->[1][11]\n";
+    print "                   $_->[1][12], $_->[1][13], $_->[1][14], $_->[1][15]\n";
+  }
+  glGetIntegerv_c(GL_VIEWPORT,$vp->ptr());
+  my @viewport = $vp->retrieve(0,4);
+  print "Viewport: $viewport[0], $viewport[1], $viewport[2], $viewport[3]\n";
+  print "\n";
+  (\@model, \@projection, \@viewport);
 }
 
 sub GetKeyModifier
