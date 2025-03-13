@@ -86,7 +86,6 @@ my $key_mods =
 };
 
 # Some global variables.
-my $useMipMap = 1;
 my $hasFBO = 0;
 my $hasVBO = 0;
 my $hasFragProg = 0;
@@ -531,32 +530,18 @@ sub ourBuildTextures
   glBindTexture(GL_TEXTURE_2D, $TextureID_image);
 
   # Use MipMap
-  if ($useMipMap)
+  print "Using Mipmap\n";
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
+    GL_NEAREST);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+    GL_NEAREST_MIPMAP_LINEAR);
+  # The GLU library helps us build MipMaps for our texture.
+  if (($gluerr = gluBuild2DMipmaps_c(GL_TEXTURE_2D, $Tex_Type,
+    $Tex_Width, $Tex_Height, $Tex_Format, $Tex_Size,
+    $Tex_Pixels->ptr())))
   {
-    print "Using Mipmap\n";
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
-      GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-      GL_NEAREST_MIPMAP_LINEAR);
-
-    # The GLU library helps us build MipMaps for our texture.
-    if (($gluerr = gluBuild2DMipmaps_c(GL_TEXTURE_2D, $Tex_Type,
-      $Tex_Width, $Tex_Height, $Tex_Format, $Tex_Size,
-      $Tex_Pixels->ptr())))
-    {
-      printf STDERR "GLULib%s\n", gluErrorString($gluerr);
-      exit(-1);
-    }
-  }
-  # Use normal texture - Note: dimensions must be power of 2
-  else
-  {
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-    glTexImage2D_c(GL_TEXTURE_2D, 0, $Tex_Type, $Tex_Width, $Tex_Height,
-      0, $Tex_Format, $Tex_Size, $Tex_Pixels->ptr());
+    printf STDERR "GLULib%s\n", gluErrorString($gluerr);
+    exit(-1);
   }
 
   # Benchmarks for Image Loading
@@ -700,7 +685,7 @@ sub ourInitShaders
 
     # NOP Vertex shader
     my $VertexProg = qq
-    {!!ARBvp1.0
+     {!!ARBvp1.0
       PARAM center = program.local[0];
       PARAM xform[4] = {program.local[1..4]};
       TEMP vertexClip;
@@ -751,7 +736,7 @@ sub ourInitShaders
 
     # Lazy Metalic Fragment shader
     my $FragProg = qq
-    {!!ARBfp1.0
+     {!!ARBfp1.0
       PARAM surfacecolor = program.local[5];
       TEMP color;
       MUL color, fragment.texcoord[0].y, 2.0;
