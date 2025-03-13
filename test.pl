@@ -416,7 +416,6 @@ sub ourInit
   printf("\nUsing POGL v$OpenGL::VERSION\n");
 
   # Build texture.
-  ($TextureID_image,$TextureID_FBO) = glGenTextures_p(2);
   ourBuildTextures();
   glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_DECAL);
 
@@ -543,7 +542,7 @@ sub ourBuildTextures
     print "Using Mipmap\n";
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
-      GL_NEAREST_MIPMAP_LINEAR);
+      GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
       GL_NEAREST_MIPMAP_LINEAR);
 
@@ -1682,5 +1681,12 @@ glutMainLoop();
 print "Returned from glutMainLoop\n";
 
 print "Exiting in main thread\n";
+if ($^O ne 'MSWin32') {
+  my $errors = '';
+  while((my $err = glGetError()) != 0) {
+    $errors .= "glError: " . gluErrorString($err) . "\n";
+  }
+  die $errors if $errors;
+}
 
 __END__
