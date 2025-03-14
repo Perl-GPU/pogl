@@ -619,6 +619,7 @@ sub ourBuildTextures
       0, $Tex_Format, $Tex_Size, 0);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glGenerateMipmapEXT(GL_TEXTURE_2D);
 
     # Bind texture/frame/render buffers
     glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, $FrameBufferID);
@@ -816,6 +817,8 @@ sub cbRenderScene
     #glutSolidTeapot(0.25);
     glutWireTeapot(0.25);
     glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+    glBindTexture(GL_TEXTURE_2D, $TextureID_FBO);
+    glGenerateMipmapEXT(GL_TEXTURE_2D);
 
     if ($Shader)
     {
