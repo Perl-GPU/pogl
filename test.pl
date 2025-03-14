@@ -295,6 +295,12 @@ my @xform =
 );
 my $xform = OpenGL::Array->new_list(GL_FLOAT,@xform);
 
+my @fpsbox_coords = (
+    0.0, -2.0, 0.0,
+    0.0, 12.0, 0.0,
+  140.0, 12.0, 0.0,
+  140.0, -2.0, 0.0,
+);
 
 # ------
 # Frames per second (FPS) statistic variables and routine.
@@ -1000,12 +1006,10 @@ sub cbRenderScene
   # Make sure we can read the FPS section by first placing a
   # dark, mostly opaque backdrop rectangle.
   glColor4f(0.2,0.2,0.2,0.75);
-
   glBegin(GL_QUADS);
-  glVertex3f(  0.0, -2.0, 0.0);
-  glVertex3f(  0.0, 12.0, 0.0);
-  glVertex3f(140.0, 12.0, 0.0);
-  glVertex3f(140.0, -2.0, 0.0);
+  for (my $i=0; $i<scalar(@fpsbox_coords); $i+=3) {
+    glVertex3f(@fpsbox_coords[$i..$i+2]);
+  }
   glEnd();
 
   glColor4f(0.9,0.2,0.2,.75);
