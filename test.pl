@@ -613,16 +613,15 @@ sub ourBuildTextures
     ($FrameBufferID) = glGenFramebuffersEXT_p(1);
     ($RenderBufferID) = glGenRenderbuffersEXT_p(1);
 
-    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, $FrameBufferID);
-    glBindTexture(GL_TEXTURE_2D, $TextureID_FBO);
-
     # Initiate texture
+    glBindTexture(GL_TEXTURE_2D, $TextureID_FBO);
     glTexImage2D_c(GL_TEXTURE_2D, 0, $Tex_Type, $Tex_Width, $Tex_Height,
       0, $Tex_Format, $Tex_Size, 0);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
     # Bind texture/frame/render buffers
+    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, $FrameBufferID);
     glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT,
       GL_TEXTURE_2D, $TextureID_FBO, 0);
     glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, $RenderBufferID);
@@ -778,8 +777,9 @@ sub cbRenderScene
   {
     $FBO_rendered = 1;
     glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, $FrameBufferID);
+    glViewport(0, 0, $Tex_Width, $Tex_Height);
     glPushMatrix();
-    glTranslatef(-0.35, -0.48, -1.5);
+    glTranslatef(0, 0, -1.5);
     glRotatef($Teapot_Rot--, 0.0, 1.0, 0.0);
     glClearColor(0, 0, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -813,8 +813,8 @@ sub cbRenderScene
     }
 
     glColor3f(1.0, 1.0, 1.0);
-    #glutSolidTeapot(0.125);
-    glutWireTeapot(0.125);
+    #glutSolidTeapot(0.25);
+    glutWireTeapot(0.25);
     glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
 
     if ($Shader)
@@ -923,6 +923,7 @@ sub cbRenderScene
 
 
   # Render cube
+  glViewport(0, 0, $Window_Width, $Window_Height);
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_NORMAL_ARRAY);
   glEnableClientState(GL_COLOR_ARRAY);
