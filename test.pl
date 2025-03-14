@@ -487,7 +487,12 @@ sub ourBuildTextures
   # Build texture from scratch if OpenGL::Image not available
   else
   {
-    my $hole_size = 3300; # ~ == 57.45 ^ 2.
+    my $hole_size = int(($Tex_Width / 2.2) ** 2);
+    my $hole_border = int($hole_size/30);
+    my $w_2 = $Tex_Width/2;
+    my $w_4 = $Tex_Width/4;
+    my $w_16 = $Tex_Width/16;
+    my $w_32 = $Tex_Width/32;
     # Iterate across the texture array.
     for(my $y=0; $y<$Tex_Height; $y++)
     {
@@ -495,7 +500,7 @@ sub ourBuildTextures
       {
         # A simple repeating squares pattern.
         # Dark blue on white.
-        if ( ( ($x+4)%32 < 8 ) && ( ($y+4)%32 < 8))
+        if ( ( ($x+$w_32)%$w_4 < $w_16 ) && ( ($y+$w_32)%$w_4 < $w_16))
         {
           $tex .= pack "C3", 0,0,120;       # Dark blue
         }
@@ -506,13 +511,13 @@ sub ourBuildTextures
 
         # Make a round dot in the texture's alpha-channel.
         # Calculate distance to center (squared).
-        my $t = ($x-64)*($x-64) + ($y-64)*($y-64);
+        my $t = ($x-$w_2)*($x-$w_2) + ($y-$w_2)*($y-$w_2);
 
         if ( $t < $hole_size)
         {
           $tex .= pack "C", 255;  # The dot itself is opaque.
         }
-        elsif ($t < $hole_size + 100)
+        elsif ($t < $hole_size + $hole_border)
         {
           $tex .= pack "C", 128;  # Give our dot an anti-aliased edge.
         }
