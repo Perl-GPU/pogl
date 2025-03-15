@@ -62,7 +62,8 @@ our $IS_MINGW = 0;
 our $IS_STRAWBERRY = 0;
 our $IS_CYGWIN;
 our $IS_W32API;
-my $INCS;
+our $INCS;
+our $NO_LGCC = grep /^NO_LGCC$/, @ARGV; @ARGV = grep !/^NO_LGCC$/, @ARGV;
 
 my $prepare_success = eval {
 
@@ -371,7 +372,6 @@ foreach my $key (sort keys %$found_libs)
 
 # Configure MakeMaker
 my ($LIBS,$OPTS,$CLEAN);
-my $EXES = [];
 my $DYNS = {};
 if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
 {
@@ -405,13 +405,6 @@ if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
     $OPTS = "/ogity /GDs";
   }
 
-  # Using a dll as EXES is incorrect for EU::MM, since the EXES here mean
-  # perl scripts and not windows binaries or DLLs.  This puts the DLL in
-  # blib/bin from whence it should be installed correctly.  It is not
-  # clear that this step is even needed since the freeglut.dll is installed
-  # by this Makefile.PL if no FreeGLUT is found.
-  #
-  ## $EXES = ['FreeGLUT/freeglut.dll'];
   {
      system $^X , qw[-MExtUtils::Command -e mkpath --], qw[blib/arch/auto/OpenGL];
      system $^X , qw[-MExtUtils::Command -e cp --], qw[FreeGLUT/freeglut.dll blib/arch/auto/OpenGL/freeglut.dll];
@@ -498,10 +491,8 @@ else # Everyone else
 
 
   # Handle obfuscated gcc
-  my $no_lgcc = (grep /^NO_LGCC$/, @ARGV);
-  @ARGV = grep !/^NO_LGCC$/, @ARGV;
 
-  if (!$no_lgcc)
+  if (!$NO_LGCC)
   {
     # This may be a gcc compiler in disguise.
     # Should check for gccversion as well.
@@ -527,12 +518,6 @@ else # Everyone else
   }
 }
 
-# Check for gcc version 3.2.3 and turn off OPTIMIZE to work
-# around compiler bug reported via cpan testers reports
-if ( defined( $Config{gccversion} )  and $Config{gccversion} =~ /^3\.2\.3 / ) {
-   $OPTS = '-O0';       # turn off optimization for gcc 3.2.3
-}
-
 clean_incs( $INCS );
 
 clean_libs( $LIBS );
@@ -543,8 +528,8 @@ my $build_config =
   DEFINE => $DEFS,
   INC => $INCS,
   LIBS => $LIBS,
-  dynamic_lib => $DYNS,
-  OPTIMIZE => $OPTS,
+  !defined($DYNS) ? () : (dynamic_lib => $DYNS),
+  !defined($OPTS) ? () : (OPTIMIZE => $OPTS),
 };
 
 print "\nMakeMaker configuration:\n" if $verbose;
@@ -574,7 +559,6 @@ WriteMakefile(
         x_IRC => 'irc://irc.perl.org/#pogl',
      },
   },
-  EXE_FILES	=> $EXES,
   clean       => {
     FILES =>
       "lib/OpenGL/Config.pm ".
@@ -1020,7 +1004,7 @@ sub WriteConfigPM
 
   require Data::Dumper;
   # Ensure deterministic output
-  $Data::Dumper::Sortkeys = 1;
+  { no warnings; $Data::Dumper::Sortkeys = 1; }
   print CONFIGPM Data::Dumper->Dump( [$config], [qw(OpenGL::Config)] );
 
   print CONFIGPM qq

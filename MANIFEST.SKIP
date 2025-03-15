@@ -36,7 +36,6 @@
 ^FreeGLUT/orig.*
 #!end included /usr/lib/perl5/5.10/ExtUtils/MANIFEST.SKIP
 
-EL-ELI.c
 ^.*.tar.gz
 ^.git
 ^lib/OpenGL/Config.pm
