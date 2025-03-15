@@ -103,7 +103,6 @@ utils/const.pl
 utils/exports.pl
 utils/exports.txt
 utils/glext_procs.pl
-utils/glversion
 utils/glversion.c
 utils/hdr_diff.pl
 utils/Makefile
