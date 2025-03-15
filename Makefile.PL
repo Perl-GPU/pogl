@@ -117,8 +117,6 @@ if ($IS_MINGW)
 # Look for available libs
 our @libdirs = qw
 {
-  -L/usr/lib
-  -L/usr/lib/i386-linux-gnu
   -L/usr/X11R6/lib
   -L/opt/X11/lib
   -L/usr/local/lib
@@ -386,7 +384,7 @@ foreach my $key (sort keys %$found_libs)
 }
 
 # Configure MakeMaker
-my($LIBS,$OPTS,$CLEAN,$LDFROM);
+my ($LIBS,$OPTS,$CLEAN);
 my $EXES = [];
 my $DYNS = {};
 if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
@@ -405,24 +403,19 @@ if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
     $glut_lib .= '-LFreeGLUT -lfreeglut';
   }
 
-  if ($IS_MINGW)	# MINGW
-  {
-    $LDFROM = $glut_lib;
-  }
-  elsif ($IS_W32API)	# CYGWIN W32API
+  $LIBS = $glut_lib;
+  if ($IS_W32API)	# CYGWIN W32API
   {
      my $glut = ($found_libs->{FREEGLUT32}) ? $found_libs->{FREEGLUT32} : $found_libs->{GLUT32};
 
-    $LIBS = "-L/usr/lib/w32api $glut_lib";
-    $LDFROM = $glut_lib;
+    $LIBS = "-L/usr/lib/w32api $LIBS";
     ### $INCS = '-I/usr/include/w32api';
     $INCS = '-I/usr/include/opengl';
     $DEFS .= " -DHAVE_W32API";
     $DYNS = { OTHERLDFLAGS => '-Wl,--exclude-symbols,'."\x7F".$glut.'_NULL_THUNK_DATA' };
   }
-  else			# Windows VC6
+  elsif (!$IS_MINGW) # Windows VC6
   {
-    $LIBS = $glut_lib;
     $OPTS = "/ogity /GDs";
   }
 
@@ -565,7 +558,6 @@ my $build_config =
   INC => $INCS,
   LIBS => $LIBS,
   dynamic_lib => $DYNS,
-  !defined($LDFROM) ? () : (LDFROM => '$(OBJECT) '.$LDFROM),
   OPTIMIZE => $OPTS,
 };
 
