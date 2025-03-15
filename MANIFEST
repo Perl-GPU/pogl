@@ -72,7 +72,6 @@ oga.pl
 OpenGL.xs
 os2pm_X.h
 pgopogl.h
-pgopogl.xs
 pogl_const.xs
 pogl_gl_Accu_GetM.xs
 pogl_gl_GetP_Pass.xs
