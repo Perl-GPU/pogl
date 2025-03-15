@@ -17,7 +17,7 @@ $VERSION = '0.7002';
 $BUILD_VERSION = $XS_VERSION = $VERSION;
 $VERSION = eval($VERSION);
 
-@ISA = qw(Exporter AutoLoader DynaLoader);
+@ISA = qw(Exporter DynaLoader);
 
 our $gl_version;
 our $glext_installed = {};
@@ -6159,33 +6159,27 @@ our $glext_dependencies =
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
-    # XS function.  If a constant is not found then control is passed
-    # to the AUTOLOAD in AutoLoader.
+    # XS function.
 
     # NOTE: THIS AUTOLOAD FUNCTION IS FLAWED (but is the best we can do for now).
     # Avoid old-style ``&CONST'' usage. Either remove the ``&'' or add ``()''.
     if (@_ > 0) {
 
-	# Is it an old OpenGL-0.4 function? If so, remap it to newer variant
-    local($constname);
-    ($constname = $AUTOLOAD) =~ s/.*:://;
-    if (grep ($_ eq $constname, @rename_old)) {
-    	eval "sub $AUTOLOAD { $AUTOLOAD" . "_s(\@_) }";
-    	goto &$AUTOLOAD;
-    }
-    
-	require AutoLoader;
-	$AutoLoader::AUTOLOAD = $AUTOLOAD;
-	goto &AutoLoader::AUTOLOAD;
+        # Is it an old OpenGL-0.4 function? If so, remap it to newer variant
+      local($constname);
+      ($constname = $AUTOLOAD) =~ s/.*:://;
+      if (grep ($_ eq $constname, @rename_old)) {
+          eval "sub $AUTOLOAD { $AUTOLOAD" . "_s(\@_) }";
+          goto &$AUTOLOAD;
+      }
+      die "AUTOLOAD: unknown function '$constname'";
     }
     local($constname);
     ($constname = $AUTOLOAD) =~ s/.*:://;
     $val = constant($constname, @_ ? $_[0] : 0);
     if (not defined $val) {
 	if ($! =~ /Invalid/) {
-	    require AutoLoader;
-	    $AutoLoader::AUTOLOAD = $AUTOLOAD;
-	    goto &AutoLoader::AUTOLOAD;
+            die "AUTOLOAD: unknown function '$constname'";
 	}
 	else {
 	    ($pack,$file,$line) = caller;
