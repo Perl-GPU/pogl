@@ -39,7 +39,7 @@
 EL-ELI.c
 ^.*.tar.gz
 ^.git
-^Config.pm
+^lib/OpenGL/Config.pm
 ^Makefile$
 ^MYMETA.json
 ^MYMETA.yml

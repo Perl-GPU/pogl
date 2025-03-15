@@ -9,7 +9,7 @@
 *.bak
 
 # Explicitly skip these generated files
-Config.pm
+lib/OpenGL/Config.pm
 Makefile
 Makefile.old
 META.yml
@@ -17,14 +17,15 @@ MYMETA.yml
 MYMETA.json
 OpenGL.c
 OpenGL.xs-orig
+OpenGL.def
 blib/
 gl_exclude.h
 pm_to_blib
 pogl_*.c
 utils/glversion
+utils/glversion.exe
 utils/glversion.txt
 GIT_CHANGES
-/OpenGL-*.tar.gz
 
 # Some junk files I added to ignore
 gl-funs.txt

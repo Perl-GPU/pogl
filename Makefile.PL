@@ -5,9 +5,6 @@ use ExtUtils::Liblist;
 use Data::Dumper;
 use Config;
 
-# See lib/ExtUtils/MakeMaker.pm for details of how to influence
-# the contents of the Makefile that is written.
-
 # Ensure deterministic output
 $Data::Dumper::Sortkeys = 1;
 
@@ -569,15 +566,7 @@ clean_libs( $LIBS );
 my $build_config =
 {
   'NAME'	=> 'OpenGL',
-  'VERSION_FROM'=> 'OpenGL.pm',
-  'PM' 		=>
-  {
-    'OpenGL.pm' => '$(INST_LIBDIR)/OpenGL.pm',
-    'OpenGL.pod'=> '$(INST_LIBDIR)/OpenGL.pod',
-    'Array.pod'=> '$(INST_LIBDIR)/OpenGL/Array.pod',
-    'Tessellation.pod'=> '$(INST_LIBDIR)/OpenGL/Tessellation.pod',
-    'Config.pm' => '$(INST_LIBDIR)/OpenGL/Config.pm'
-  },
+  'VERSION_FROM'=> 'lib/OpenGL.pm',
   CONFIGURE_REQUIRES => {
     'ExtUtils::MakeMaker' => 0
   },
@@ -609,7 +598,7 @@ my $build_config =
   'clean'       =>
   {
     FILES =>
-      "Config.pm ".
+      "lib/OpenGL/Config.pm ".
       "gl_exclude.h ".
       "utils/glversion.txt ".
       "utils/glversion$Config{exe_ext} ".
@@ -619,7 +608,7 @@ my $build_config =
 
 print "\nMakeMaker configuration:\n" if $verbose;
 
-close(CONF) if (open(CONF,">Config.pm"));	# Generate place-holder Config.pm
+close(CONF) if (open(CONF,">", "lib/OpenGL/Config.pm")); # empty Config.pm
 WriteMakefile( %$build_config );       		# Generate the Makefile
 WriteConfigPM( $build_config );			# Regenerate final Config.pm
 
@@ -1041,7 +1030,7 @@ sub WriteConfigPM
 {
   my($config) = @_;
 
-  die "Unable to write to Config.pm\n" if (!open(CONFIGPM, ">Config.pm"));
+  die "Unable to write to Config.pm\n" if (!open(CONFIGPM, ">", "lib/OpenGL/Config.pm"));
 
   print CONFIGPM q
 {

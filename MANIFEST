@@ -1,4 +1,3 @@
-Array.pod
 Changes
 COPYRIGHT
 examples/clip.pl
@@ -61,13 +60,15 @@ INSTALL
 isosurf.bin
 isosurf.pl
 KNOWN_PROBLEMS
+lib/OpenGL.pm
+lib/OpenGL.pod
+lib/OpenGL/Array.pod
+lib/OpenGL/Tessellation.pod
 Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP
 menutest.pl
 oga.pl
-OpenGL.pm
-OpenGL.pod
 OpenGL.xs
 os2pm_X.h
 pgopogl.h
@@ -92,7 +93,6 @@ SUPPORTS
 t/00_require.t
 t/01_use.t
 t/10_opengl_array.t
-Tessellation.pod
 test.jpg
 test.pl
 test.tga
