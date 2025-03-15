@@ -1,5 +1,3 @@
-/*  Last saved: Sun 06 Sep 2009 02:10:28 PM */
-
 /*  Copyright (c) 2015 Bob Free. All rights reserved.
  *  This program is free software; you can redistribute it and/or
  *  modify it under the same terms as Perl itself.

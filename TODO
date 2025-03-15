@@ -1,6 +1,3 @@
-Last saved: Tue 20 Sep 2011 09:52:40 AM 
-
-
 Fix segfault in glutMainLoop() for test.pl on vista
     * Build debug perl for win32
     * Get gdb for MinGW

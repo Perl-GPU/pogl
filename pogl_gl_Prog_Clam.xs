@@ -1,5 +1,3 @@
-/*  Last saved: Sun 06 Sep 2009 02:10:05 PM */
-
 /*  Copyright (c) 1998 Kenneth Albanowski. All rights reserved.
  *  Copyright (c) 2007 Bob Free. All rights reserved.
  *  Copyright (c) 2009 Chris Marshall. All rights reserved.
