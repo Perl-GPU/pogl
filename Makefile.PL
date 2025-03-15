@@ -2,11 +2,7 @@ use strict;
 use warnings;
 use ExtUtils::MakeMaker;
 use ExtUtils::Liblist;
-use Data::Dumper;
 use Config;
-
-# Ensure deterministic output
-$Data::Dumper::Sortkeys = 1;
 
 # Supported windowing interfaces
 our $is_valid_interface =
@@ -565,21 +561,28 @@ clean_libs( $LIBS );
 # This is the final build configuration
 my $build_config =
 {
-  'NAME'	=> 'OpenGL',
-  'VERSION_FROM'=> 'lib/OpenGL.pm',
+  DEFINE => $DEFS,
+  INC => $INCS,
+  LIBS => $LIBS,
+  dynamic_lib => $DYNS,
+  !defined($LDFROM) ? () : (LDFROM => '$(OBJECT) '.$LDFROM),
+  OPTIMIZE => $OPTS,
+};
+
+print "\nMakeMaker configuration:\n" if $verbose;
+
+close(CONF) if (open(CONF,">", "lib/OpenGL/Config.pm")); # empty Config.pm
+WriteMakefile(
+  NAME	=> 'OpenGL',
+  VERSION_FROM=> 'lib/OpenGL.pm',
   CONFIGURE_REQUIRES => {
     'ExtUtils::MakeMaker' => 0
   },
   TEST_REQUIRES => { 'Test::More' => 0 },
-  'AUTHOR'	=> "Chris Marshall ".'<chm at cpan dot org>',
-  'OBJECT' 	=> '$(BASEEXT)$(OBJ_EXT) gl_util$(OBJ_EXT) pogl_const$(OBJ_EXT) pogl_gl_top$(OBJ_EXT) pogl_glu$(OBJ_EXT) pogl_rpn$(OBJ_EXT) pogl_matrix$(OBJ_EXT) pogl_glut$(OBJ_EXT) pogl_gl_Accu_GetM$(OBJ_EXT) pogl_gl_GetP_Pass$(OBJ_EXT) pogl_gl_Mult_Prog$(OBJ_EXT) pogl_gl_Pixe_Ver2$(OBJ_EXT) pogl_gl_Prog_Clam$(OBJ_EXT) pogl_gl_Tex2_Draw$(OBJ_EXT) pogl_gl_Ver3_Tex1$(OBJ_EXT) pogl_gl_Vert_Multi$(OBJ_EXT)',
-  'XSPROTOARG'	=> '-noprototypes',
-  'DEFINE'	=> $DEFS,
-  'INC'		=> $INCS,
-  'LIBS' 	=> $LIBS,
-  'dynamic_lib'	=> $DYNS,
-  'LDFROM'      => '$(OBJECT) '.(defined($LDFROM)?$LDFROM:''),
-  'META_MERGE' => {
+  AUTHOR	=> "Chris Marshall ".'<chm at cpan dot org>',
+  OBJECT 	=> '$(BASEEXT)$(OBJ_EXT) gl_util$(OBJ_EXT) pogl_const$(OBJ_EXT) pogl_gl_top$(OBJ_EXT) pogl_glu$(OBJ_EXT) pogl_rpn$(OBJ_EXT) pogl_matrix$(OBJ_EXT) pogl_glut$(OBJ_EXT) pogl_gl_Accu_GetM$(OBJ_EXT) pogl_gl_GetP_Pass$(OBJ_EXT) pogl_gl_Mult_Prog$(OBJ_EXT) pogl_gl_Pixe_Ver2$(OBJ_EXT) pogl_gl_Prog_Clam$(OBJ_EXT) pogl_gl_Tex2_Draw$(OBJ_EXT) pogl_gl_Ver3_Tex1$(OBJ_EXT) pogl_gl_Vert_Multi$(OBJ_EXT)',
+  XSPROTOARG	=> '-noprototypes',
+  META_MERGE => {
      "meta-spec" => { version => 2 },
      abstract  => 'Perl bindings to the OpenGL API, GLU, and GLUT/FreeGLUT',
      resources => {
@@ -593,23 +596,17 @@ my $build_config =
         x_IRC => 'irc://irc.perl.org/#pogl',
      },
   },
-  'EXE_FILES'	=> $EXES,
-  'OPTIMIZE'	=> $OPTS,
-  'clean'       =>
-  {
+  EXE_FILES	=> $EXES,
+  clean       => {
     FILES =>
       "lib/OpenGL/Config.pm ".
       "gl_exclude.h ".
       "utils/glversion.txt ".
       "utils/glversion$Config{exe_ext} ".
       "utils/glversion$Config{obj_ext}"
-  }
-};
-
-print "\nMakeMaker configuration:\n" if $verbose;
-
-close(CONF) if (open(CONF,">", "lib/OpenGL/Config.pm")); # empty Config.pm
-WriteMakefile( %$build_config );       		# Generate the Makefile
+  },
+  %$build_config,
+);       		# Generate the Makefile
 WriteConfigPM( $build_config );			# Regenerate final Config.pm
 
 if ($found_libs->{GLX} && $ENV{TERM} ne 'xterm')
@@ -1035,7 +1032,7 @@ sub WriteConfigPM
   print CONFIGPM q
 {
 # This is the Perl OpenGL build configuration file.
-# It contains the final OpenGL build arguements from
+# It contains the final OpenGL build arguments from
 # the configuration process.  Access the values by
 # use OpenGL::Config which defines the variable
 # $OpenGL::Config containing the hash arguments from
@@ -1043,6 +1040,9 @@ sub WriteConfigPM
 #
 };
 
+  require Data::Dumper;
+  # Ensure deterministic output
+  $Data::Dumper::Sortkeys = 1;
   print CONFIGPM Data::Dumper->Dump( [$config], [qw(OpenGL::Config)] );
 
   print CONFIGPM qq
