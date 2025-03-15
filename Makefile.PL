@@ -361,20 +361,6 @@ elsif($IS_CYGWIN)
   delete($found_libs->{'OPENGL32'});
 }
 
-if (0) { # May be not necessary now, see if removing makes a difference
-   if (!$found_libs->{'GL'})
-   {
-      if ($found_libs->{'GLX'})
-      {
-         $found_libs->{'GL'} = $found_libs->{'GLX'};
-      }
-      elsif ($found_libs->{'MESA'})
-      {
-         $found_libs->{'GL'} = $found_libs->{'MESA'};
-      }
-   }
-}
-
 print "resulting libs:\n" if ($verbose);
 foreach my $key (sort keys %$found_libs)
 {
@@ -1044,4 +1030,4 @@ __END__
 };
 
   close(CONFIGPM);
-};
+}
