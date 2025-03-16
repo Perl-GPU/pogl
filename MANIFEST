@@ -70,7 +70,6 @@ MANIFEST.SKIP
 menutest.pl
 oga.pl
 OpenGL.xs
-os2pm_X.h
 pgopogl.h
 pogl_const.xs
 pogl_gl_Accu_GetM.xs
