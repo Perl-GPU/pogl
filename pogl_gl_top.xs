@@ -45,7 +45,6 @@
 
 #ifdef IN_POGL_GLX_XS
 #ifdef HAVE_GLX
-#  define HAVE_GLpc			/* Perl interface */
 #  define nativeWindowId(d, w)	(w)
 static Bool WaitForNotify(Display *d, XEvent *e, char *arg) {
     return (e->type == MapNotify) && (e->xmap.window == (Window)arg);
@@ -59,7 +58,7 @@ static Bool WaitForNotify(Display *d, XEvent *e, char *arg) {
 
 static int debug = 0;
 
-#ifdef HAVE_GLpc
+#ifdef HAVE_GLX
 
 #  define NUM_ARG 7			/* Number of mandatory args to glpcOpenWindow */
 
@@ -73,7 +72,7 @@ GLXContext ctx;
 
 static int default_attributes[] = { GLX_DOUBLEBUFFER, GLX_RGBA, None };
 
-#endif	/* defined HAVE_GLpc */ 
+#endif	/* defined HAVE_GLX */
 
 static int DBUFFER_HACK = 0;
 #define __had_dbuffer_hack() (DBUFFER_HACK)
@@ -355,11 +354,11 @@ _have_glx()
 int
 _have_glp()
 	CODE:
-#ifdef HAVE_GLpc
+#ifdef HAVE_GLX
 	RETVAL = 1;
 #else
 	RETVAL = 0;
-#endif /* defined HAVE_GLpc */
+#endif /* defined HAVE_GLX */
 	OUTPUT:
 	RETVAL
 
@@ -385,7 +384,7 @@ _have_glp()
 int
 __had_dbuffer_hack()
 
-#ifdef HAVE_GLpc			/* GLX */
+#ifdef HAVE_GLX			/* GLX */
 
 #// $ID = glpcOpenWindow($x,$y,$w,$h,$pw,$steal,$event_mask,@attribs);
 HV *
@@ -706,7 +705,7 @@ glpXQueryPointer(w=win,d=dpy)
 		PUSHs(sv_2mortal(newSViv(m)));
 	}
 
-#endif /* defined HAVE_GLpc */
+#endif /* defined HAVE_GLX */
 
 
 #// glpSetDebug(flag);
