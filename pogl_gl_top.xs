@@ -492,19 +492,9 @@ glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
         if (debug) printf("win = 0x%lx\n", win);
     }
     XMapWindow(dpy, win);
-#ifndef HAVE_GLX  /* For OS/2 GLX emulation stuff -chm 2009.09.14 */
-    /* On OS/2: cannot create a context before mapping something... */
-    /* create a GLX context */
-    ctx = glXCreateContext(dpy, vi, 0, GL_TRUE);
-    if (!ctx)
-        croak("No context!\n");
-
-    LastEventMask = event_mask;
-#else	/* HAVE_GLX, this is the default branch */
     if ( (event_mask & StructureNotifyMask) && !steal ) {
         XIfEvent(dpy, &event, WaitForNotify, (char*)win);
     }
-#endif	/* not defined HAVE_GLX */
 
     /* connect the context to the window */
     if (!glXMakeCurrent(dpy, win, ctx))

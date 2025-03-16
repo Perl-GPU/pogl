@@ -6197,7 +6197,6 @@ bootstrap OpenGL;
 *OpenGL::Matrix::CLONE_SKIP = sub { 1 };  # OpenGL::Matrix is not thread safe
 
 # The following material is directly copied from Stan Melax's original OpenGL-0.4
-# (with modifications for OS/2).
 
 %window_defaults=(
    'x'         => 0,
@@ -6245,21 +6244,9 @@ sub glpLoadMatrixf { glLoadMatrixf_p(@_) }
 sub glpMultMatrixf { glMultMatrixf_p(@_) }
 
 sub glpMainLoop {
-  if (_have_glx()) {
-     ## print "Control-D to quit...\n";
-     ## while(<>){;} # control-D to quit
-    print "Type <Enter> to quit...\n";
-    until(<>){;} # control-D to quit
-  } else {				# OS/2 PM
-    OS2::Process_Messages(0) while 1;  
-  }
+  print "Type <Enter> to quit...\n";
+  until(<>){;}
 }
-
-if (_have_glp() && !_have_glx()) { eval <<EOE } # OS2, take into account %ENV?
-  sub Button1Mask () {Button1MaskOS2()}
-  sub Button2Mask () {Button3MaskOS2()}
-  sub Button3Mask () {Button2MaskOS2()}
-EOE
 
 sub glpFlush {
   &glFlush;

@@ -1500,10 +1500,6 @@ glTexSubImage3DEXT_p(target, level, xoffset, yoffset, zoffset, width, height, de
 
 #endif
 
-
-# OS/2 PM implementation misses this function
-# It is very hard to test for this, so we check for some other omission...
-
 #if defined(GL_EXT_blend_minmax) && (!defined(GL_SRC_ALPHA_SATURATE) || defined(GL_CONSTANT_COLOR))
 
 #//# glBlendEquationEXT($mode);
