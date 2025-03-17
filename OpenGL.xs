@@ -55,7 +55,7 @@ BOOT:
   PGOPOGL_CALL_BOOT(boot_OpenGL__Matrix);
   PGOPOGL_CALL_BOOT(boot_OpenGL__Const);
   PGOPOGL_CALL_BOOT(boot_OpenGL__GL__Top);
-  PGOPOGL_CALL_BOOT(boot_OpenGL__GL__AccuGetM);
+  PGOPOGL_CALL_BOOT(boot_OpenGL__V1);
   PGOPOGL_CALL_BOOT(boot_OpenGL__GL__GetPPass);
   PGOPOGL_CALL_BOOT(boot_OpenGL__GL__MultProg);
   PGOPOGL_CALL_BOOT(boot_OpenGL__GL__PixeVer2);

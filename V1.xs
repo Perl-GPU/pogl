@@ -13,15 +13,7 @@
 #include "gl_util.h"
 #endif /* defined HAVE_GL */
 
-
-
-
-
-MODULE = OpenGL::GL::AccuGetM	PACKAGE = OpenGL
-
-
-
-
+MODULE = OpenGL::V1	PACKAGE = OpenGL
 
 #ifdef HAVE_GL
 

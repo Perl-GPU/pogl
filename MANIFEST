@@ -71,7 +71,6 @@ oga.pl
 OpenGL.xs
 pgopogl.h
 pogl_const.xs
-pogl_gl_Accu_GetM.xs
 pogl_gl_GetP_Pass.xs
 pogl_gl_Mult_Prog.xs
 pogl_gl_Pixe_Ver2.xs
@@ -111,5 +110,6 @@ utils/mingw.bat
 utils/opengl32.txt
 utils/strawberry.bat
 utils/wgl_ext.txt
+V1.xs
 vertex.arb
 vertex.glsl
