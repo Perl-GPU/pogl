@@ -49,7 +49,6 @@
 V1\.(c|o.*)
 V2\.(c|o.*)
 V3\.(c|o.*)
-ShaderObjects\.(c|o.*)
 ^gl-funs\.txt
 ^gl_exclude\.h$
 ^gl_util\.o

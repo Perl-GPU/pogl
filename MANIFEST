@@ -81,7 +81,6 @@ pogl_matrix.xs
 pogl_rpn.xs
 ppport.h
 README
-ShaderObjects.xs
 SUPPORTS
 t/00_require.t
 t/01_use.t
