@@ -478,15 +478,8 @@ else # Everyone else
   my $libs = ' -l'.join(' -l',sort values(%$found_libs));
   my @more_libs = qw
   {
-    -lXext
-    -lXmu
-    -lXi
-    -lICE
-    -lX11
-    -lstdc++
     -lm
   };
-  #-lXIE
   $LIBS = "@libdirs $libs @more_libs";
   $DEFS .= " -DGL_GLEXT_LEGACY";
 
