@@ -17,4 +17,6 @@ our @ISA = qw(DynaLoader);
 
 __PACKAGE__->bootstrap;
 
+sub CLONE_SKIP { 1 } # OpenGL::Array is not thread safe
+
 1;

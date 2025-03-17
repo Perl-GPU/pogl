@@ -18,4 +18,6 @@ our @ISA = qw(DynaLoader OpenGL::Array);
 
 __PACKAGE__->bootstrap;
 
+sub CLONE_SKIP { 1 } # OpenGL::Matrix is not thread safe
+
 1;
