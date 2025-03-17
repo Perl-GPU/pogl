@@ -4329,4 +4329,989 @@ glVertex2sv_p(x, y)
 		glVertex2sv(param);
 	}
 
+#//# glTexCoord2d($s, $t);
+void
+glTexCoord2d(s, t)
+	GLdouble	s
+	GLdouble	t
+
+#//# glTexCoord2dv_c((CPTR)v);
+void
+glTexCoord2dv_c(v)
+	void *	v
+	CODE:
+	glTexCoord2dv(v);
+
+#//# glTexCoord2dv_s((PACKED)v);
+void
+glTexCoord2dv_s(v)
+	SV *	v
+	CODE:
+	{
+		GLdouble * v_s = EL(v, sizeof(GLdouble)*2);
+		glTexCoord2dv(v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glTexCoord2d
+#//# glTexCoord2dv_p($s, $t);
+void
+glTexCoord2dv_p(s, t)
+	GLdouble	s
+	GLdouble	t
+	CODE:
+	{
+		GLdouble param[2];
+		param[0] = s;
+		param[1] = t;
+		glTexCoord2dv(param);
+	}
+
+#//# glTexCoord2f($s, $t);
+void
+glTexCoord2f(s, t)
+	GLfloat	s
+	GLfloat	t
+
+#//# glTexCoord2fv_c((CPTR)v);
+void
+glTexCoord2fv_c(v)
+	void *	v
+	CODE:
+	glTexCoord2fv(v);
+
+#//# glTexCoord2fv_s((PACKED)v);
+void
+glTexCoord2fv_s(v)
+	SV *	v
+	CODE:
+	{
+		GLfloat * v_s = EL(v, sizeof(GLfloat)*2);
+		glTexCoord2fv(v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glTexCoord2f
+#//# glTexCoord2fv_p($s, $t);
+void
+glTexCoord2fv_p(s, t)
+	GLfloat	s
+	GLfloat	t
+	CODE:
+	{
+		GLfloat param[2];
+		param[0] = s;
+		param[1] = t;
+		glTexCoord2fv(param);
+	}
+
+#//# glTexCoord2i($s, $t);
+void
+glTexCoord2i(s, t)
+	GLint	s
+	GLint	t
+
+#//# glTexCoord2iv_c((CPTR)v);
+void
+glTexCoord2iv_c(v)
+	void *	v
+	CODE:
+	glTexCoord2iv(v);
+
+#//# glTexCoord2iv_s((PACKED)v);
+void
+glTexCoord2iv_s(v)
+	SV *	v
+	CODE:
+	{
+		GLint * v_s = EL(v, sizeof(GLint)*2);
+		glTexCoord2iv(v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glTexCoord2i
+#//# glTexCoord2iv_p($s, $t);
+void
+glTexCoord2iv_p(s, t)
+	GLint	s
+	GLint	t
+	CODE:
+	{
+		GLint param[2];
+		param[0] = s;
+		param[1] = t;
+		glTexCoord2iv(param);
+	}
+
+#//# glTexCoord2s($s, $t);
+void
+glTexCoord2s(s, t)
+	GLshort	s
+	GLshort	t
+
+#//# glTexCoord2sv_c((CPTR)v);
+void
+glTexCoord2sv_c(v)
+	void *	v
+	CODE:
+	glTexCoord2sv(v);
+
+#//# glTexCoord2sv_c((PACKED)v);
+void
+glTexCoord2sv_s(v)
+	SV *	v
+	CODE:
+	{
+		GLshort * v_s = EL(v, sizeof(GLshort)*2);
+		glTexCoord2sv(v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glTexCoord2s
+#//# glTexCoord2sv_p($s, $t);
+void
+glTexCoord2sv_p(s, t)
+	GLshort	s
+	GLshort	t
+	CODE:
+	{
+		GLshort param[2];
+		param[0] = s;
+		param[1] = t;
+		glTexCoord2sv(param);
+	}
+
+#//# glTexCoord3d($s, $t, $r);
+void
+glTexCoord3d(s, t, r)
+	GLdouble	s
+	GLdouble	t
+	GLdouble	r
+
+#//# glTexCoord3dv_c((CPTR)v);
+void
+glTexCoord3dv_c(v)
+	void *	v
+	CODE:
+	glTexCoord3dv(v);
+
+#//# glTexCoord3dv_s((PACKED)v);
+void
+glTexCoord3dv_s(v)
+	SV *	v
+	CODE:
+	{
+		GLdouble * v_s = EL(v, sizeof(GLdouble)*3);
+		glTexCoord3dv(v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glTexCoord3d
+#//# glTexCoord3dv_p($s, $t, $r);
+void
+glTexCoord3dv_p(s, t, r)
+	GLdouble	s
+	GLdouble	t
+	GLdouble	r
+	CODE:
+	{
+		GLdouble param[3];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		glTexCoord3dv(param);
+	}
+
+#//# glTexCoord3f($s, $t, $r);
+void
+glTexCoord3f(s, t, r)
+	GLfloat	s
+	GLfloat	t
+	GLfloat	r
+
+#//# glTexCoord3fv_c((CPTR)v);
+void
+glTexCoord3fv_c(v)
+	void *	v
+	CODE:
+	glTexCoord3fv(v);
+
+#//# glTexCoord3fv_s((PACKED)v);
+void
+glTexCoord3fv_s(v)
+	SV *	v
+	CODE:
+	{
+		GLfloat * v_s = EL(v, sizeof(GLfloat)*3);
+		glTexCoord3fv(v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glTexCoord3f
+#//# glTexCoord3fv_p($s, $t, $r);
+void
+glTexCoord3fv_p(s, t, r)
+	GLfloat	s
+	GLfloat	t
+	GLfloat	r
+	CODE:
+	{
+		GLfloat param[3];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		glTexCoord3fv(param);
+	}
+
+#//# glTexCoord3i($s, $t, $r);
+void
+glTexCoord3i(s, t, r)
+	GLint	s
+	GLint	t
+	GLint	r
+
+#//# glTexCoord3iv_c((CPTR)v);
+void
+glTexCoord3iv_c(v)
+	void *	v
+	CODE:
+	glTexCoord3iv(v);
+
+#//# glTexCoord3iv_s((PACKED)v);
+void
+glTexCoord3iv_s(v)
+	SV *	v
+	CODE:
+	{
+		GLint * v_s = EL(v, sizeof(GLint)*3);
+		glTexCoord3iv(v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glTexCoord3i
+#//# glTexCoord3iv_p($s, $t, $r);
+void
+glTexCoord3iv_p(s, t, r)
+	GLint	s
+	GLint	t
+	GLint	r
+	CODE:
+	{
+		GLint param[3];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		glTexCoord3iv(param);
+	}
+
+#//# glTexCoord3s($s, $t, $r);
+void
+glTexCoord3s(s, t, r)
+	GLshort	s
+	GLshort	t
+	GLshort	r
+
+#//# glTexCoord3sv_s((PACKED)v);
+void
+glTexCoord3sv_s(v)
+	SV *	v
+	CODE:
+	{
+		GLshort * v_s = EL(v, sizeof(GLshort)*3);
+		glTexCoord3sv(v_s);
+	}
+
+#//# glTexCoord3sv_c((CPTR)v);
+void
+glTexCoord3sv_c(v)
+	void *	v
+	CODE:
+	glTexCoord3sv(v);
+
+#//!!! Do we really need this?  It duplicates glTexCoord3s
+#//# glTexCoord3sv_p($s, $t, $r);
+void
+glTexCoord3sv_p(s, t, r)
+	GLshort	s
+	GLshort	t
+	GLshort	r
+	CODE:
+	{
+		GLshort param[3];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		glTexCoord3sv(param);
+	}
+
+#//# glTexCoord4d($s, $t, $r, $q);
+void
+glTexCoord4d(s, t, r, q)
+	GLdouble	s
+	GLdouble	t
+	GLdouble	r
+	GLdouble	q
+
+#//# glTexCoord4dv_c((CPTR)v);
+void
+glTexCoord4dv_c(v)
+	void *	v
+	CODE:
+	glTexCoord4dv(v);
+
+#//# glTexCoord4dv_s((PACKED)v);
+void
+glTexCoord4dv_s(v)
+	SV *	v
+	CODE:
+	{
+		GLdouble * v_s = EL(v, sizeof(GLdouble)*4);
+		glTexCoord4dv(v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glTexCoord4d
+#//# glTexCoord4dv_p($s, $t, $r, $q);
+void
+glTexCoord4dv_p(s, t, r, q)
+	GLdouble	s
+	GLdouble	t
+	GLdouble	r
+	GLdouble	q
+	CODE:
+	{
+		GLdouble param[4];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		param[3] = q;
+		glTexCoord4dv(param);
+	}
+
+#//# glTexCoord4f($s, $t, $r, $q);
+void
+glTexCoord4f(s, t, r, q)
+	GLfloat	s
+	GLfloat	t
+	GLfloat	r
+	GLfloat	q
+
+#//# glTexCoord4fv_c((CPTR)v);
+void
+glTexCoord4fv_c(v)
+	void *	v
+	CODE:
+	glTexCoord4fv(v);
+
+#//# glTexCoord4fv_s((PACKED)v);
+void
+glTexCoord4fv_s(v)
+	SV *	v
+	CODE:
+	{
+		GLfloat * v_s = EL(v, sizeof(GLfloat)*4);
+		glTexCoord4fv(v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glTexCoord4f
+#//# glTexCoord4fv_p($s, $t, $r, $q);
+void
+glTexCoord4fv_p(s, t, r, q)
+	GLfloat	s
+	GLfloat	t
+	GLfloat	r
+	GLfloat	q
+	CODE:
+	{
+		GLfloat param[4];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		param[3] = q;
+		glTexCoord4fv(param);
+	}
+
+#//# glTexCoord4i($s, $t, $r, $q);
+void
+glTexCoord4i(s, t, r, q)
+	GLint	s
+	GLint	t
+	GLint	r
+	GLint	q
+
+#//# glTexCoord4iv_c((CPTR)v);
+void
+glTexCoord4iv_c(v)
+	void *	v
+	CODE:
+	glTexCoord4iv(v);
+
+#//# glTexCoord4iv_s((PACKED)v);
+void
+glTexCoord4iv_s(v)
+	SV *	v
+	CODE:
+	{
+		GLint * v_s = EL(v, sizeof(GLint)*4);
+		glTexCoord4iv(v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glTexCoord4i
+#//# glTexCoord4iv_p($s, $t, $r, $q);
+void
+glTexCoord4iv_p(s, t, r, q)
+	GLint	s
+	GLint	t
+	GLint	r
+	GLint	q
+	CODE:
+	{
+		GLint param[4];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		param[3] = q;
+		glTexCoord4iv(param);
+	}
+
+#//# glTexCoord4s($s, $t, $r, $q);
+void
+glTexCoord4s(s, t, r, q)
+	GLshort	s
+	GLshort	t
+	GLshort	r
+	GLshort	q
+
+#//# glTexCoord4sv_c((CPTR)v);
+void
+glTexCoord4sv_c(v)
+	void *	v
+	CODE:
+	glTexCoord4sv(v);
+
+#//# glTexCoord4sv_s((PACKED)v);
+void
+glTexCoord4sv_s(v)
+	SV *	v
+	CODE:
+	{
+		GLshort * v_s = EL(v, sizeof(GLshort)*4);
+		glTexCoord4sv(v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glTexCoord4s
+#//# glTexCoord4sv_p($s, $t, $r, $q);
+void
+glTexCoord4sv_p(s, t, r, q)
+	GLshort	s
+	GLshort	t
+	GLshort	r
+	GLshort	q
+	CODE:
+	{
+		GLshort param[4];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		param[3] = q;
+		glTexCoord4sv(param);
+	}
+
+#//# glRasterPos2d(x, y);
+void
+glRasterPos2d(x, y)
+	GLdouble	x
+	GLdouble	y
+
+#//# glRasterPos2dv_c((CPTR)v);
+void
+glRasterPos2dv_c(v)
+	void *	v
+	CODE:
+	glRasterPos2dv(v);
+
+#//# glRasterPos2dv_s((PACKED)v);
+void
+glRasterPos2dv_s(v)
+	SV *	v
+	CODE:
+	{
+		GLdouble * v_s = EL(v, sizeof(GLdouble)*2);
+		glRasterPos2dv(v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glRasterPos2d
+#//# glRasterPos2dv_p($x, $y);
+void
+glRasterPos2dv_p(x, y)
+	GLdouble	x
+	GLdouble	y
+	CODE:
+	{
+		GLdouble param[2];
+		param[0] = x;
+		param[1] = y;
+		glRasterPos2dv(param);
+	}
+
+#//# glRasterPos2f($x, $y);
+void
+glRasterPos2f(x, y)
+	GLfloat	x
+	GLfloat	y
+
+#//# glRasterPos2fv_c((CPTR)v);
+void
+glRasterPos2fv_c(v)
+	void *	v
+	CODE:
+	glRasterPos2fv(v);
+
+#//# glRasterPos2fv_s((PACKED)v);
+void
+glRasterPos2fv_s(v)
+	SV *	v
+	CODE:
+	{
+		GLfloat * v_s = EL(v, sizeof(GLfloat)*2);
+		glRasterPos2fv(v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glRasterPos2f
+#//# glRasterPos2fv_p($x, $y);
+void
+glRasterPos2fv_p(x, y)
+	GLfloat	x
+	GLfloat	y
+	CODE:
+	{
+		GLfloat param[2];
+		param[0] = x;
+		param[1] = y;
+		glRasterPos2fv(param);
+	}
+
+#//# glRasterPos2i($x, $y);
+void
+glRasterPos2i(x, y)
+	GLint	x
+	GLint	y
+
+#//# glRasterPos2iv_c((CPTR)v);
+void
+glRasterPos2iv_c(v)
+	void *	v
+	CODE:
+	glRasterPos2iv(v);
+
+#//# glRasterPos2iv_s((PACKED)v);
+void
+glRasterPos2iv_s(v)
+	SV *	v
+	CODE:
+	{
+		GLint * v_s = EL(v, sizeof(GLint)*2);
+		glRasterPos2iv(v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glRasterPos2i
+#//# glRasterPos2iv_p($x, $y);
+void
+glRasterPos2iv_p(x, y)
+	GLint	x
+	GLint	y
+	CODE:
+	{
+		GLint param[2];
+		param[0] = x;
+		param[1] = y;
+		glRasterPos2iv(param);
+	}
+
+#//# glRasterPos2s($x, $y);
+void
+glRasterPos2s(x, y)
+	GLshort	x
+	GLshort	y
+
+#//# glRasterPos2sv_c((CPTR)v);
+void
+glRasterPos2sv_c(v)
+	void *	v
+	CODE:
+	glRasterPos2sv(v);
+
+#//# glRasterPos2sv_s((PACKED)v);
+void
+glRasterPos2sv_s(v)
+	SV *	v
+	CODE:
+	{
+		GLshort * v_s = EL(v, sizeof(GLshort)*2);
+		glRasterPos2sv(v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glRasterPos2s
+#//# glRasterPos2sv_p($x, $y);
+void
+glRasterPos2sv_p(x, y)
+	GLshort	x
+	GLshort	y
+	CODE:
+	{
+		GLshort param[2];
+		param[0] = x;
+		param[1] = y;
+		glRasterPos2sv(param);
+	}
+
+#//# glRasterPos3d($x, $y, $z);
+void
+glRasterPos3d(x, y, z)
+	GLdouble	x
+	GLdouble	y
+	GLdouble	z
+
+#//# glRasterPos3dv_c((CPTR)v);
+void
+glRasterPos3dv_c(v)
+	void *	v
+	CODE:
+	glRasterPos3dv(v);
+
+#//# glRasterPos3dv_s((PACKED)v);
+void
+glRasterPos3dv_s(v)
+	SV *	v
+	CODE:
+	{
+		GLdouble * v_s = EL(v, sizeof(GLdouble)*3);
+		glRasterPos3dv(v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glRasterPos3d
+#//# glRasterPos3dv_p($x, $y, $z);
+void
+glRasterPos3dv_p(x, y, z)
+	GLdouble	x
+	GLdouble	y
+	GLdouble	z
+	CODE:
+	{
+		GLdouble param[3];
+		param[0] = x;
+		param[1] = y;
+		param[2] = z;
+		glRasterPos3dv(param);
+	}
+
+#//# glRasterPos3f($x, $y, $z);
+void
+glRasterPos3f(x, y, z)
+	GLfloat	x
+	GLfloat	y
+	GLfloat	z
+
+#//# glRasterPos3fv_c((CPTR)v);
+void
+glRasterPos3fv_c(v)
+	void *	v
+	CODE:
+	glRasterPos3fv(v);
+
+#//# glRasterPos3fv_s((PACKED)v);
+void
+glRasterPos3fv_s(v)
+	SV *	v
+	CODE:
+	{
+		GLfloat * v_s = EL(v, sizeof(GLfloat)*3);
+		glRasterPos3fv(v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glRasterPos3f
+#//# glRasterPos3fv_p($x, $y, $z);
+void
+glRasterPos3fv_p(x, y, z)
+	GLfloat	x
+	GLfloat	y
+	GLfloat	z
+	CODE:
+	{
+		GLfloat param[3];
+		param[0] = x;
+		param[1] = y;
+		param[2] = z;
+		glRasterPos3fv(param);
+	}
+
+#//# glRasterPos3i($x, $y, $z);
+void
+glRasterPos3i(x, y, z)
+	GLint	x
+	GLint	y
+	GLint	z
+
+#//# glRasterPos3iv_c((CPTR)v);
+void
+glRasterPos3iv_c(v)
+	void *	v
+	CODE:
+	glRasterPos3iv(v);
+
+#//# glRasterPos3iv_s((PACKED)v);
+void
+glRasterPos3iv_s(v)
+	SV *	v
+	CODE:
+	{
+		GLint * v_s = EL(v, sizeof(GLint)*3);
+		glRasterPos3iv(v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glRasterPos3i
+#//# glRasterPos3iv_p($x, $y, $z);
+void
+glRasterPos3iv_p(x, y, z)
+	GLint	x
+	GLint	y
+	GLint	z
+	CODE:
+	{
+		GLint param[3];
+		param[0] = x;
+		param[1] = y;
+		param[2] = z;
+		glRasterPos3iv(param);
+	}
+
+#//# glRasterPos3s($x, $y, $z);
+void
+glRasterPos3s(x, y, z)
+	GLshort	x
+	GLshort	y
+	GLshort	z
+
+#//# glRasterPos3sv_c((CPTR)v);
+void
+glRasterPos3sv_c(v)
+	void *	v
+	CODE:
+	glRasterPos3sv(v);
+
+#//# glRasterPos3sv_s((PACKED)v);
+void
+glRasterPos3sv_s(v)
+	SV *	v
+	CODE:
+	{
+		GLshort * v_s = EL(v, sizeof(GLshort)*3);
+		glRasterPos3sv(v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glRasterPos3s
+#//# glRasterPos3sv_p($x, $y, $z);
+void
+glRasterPos3sv_p(x, y, z)
+	GLshort	x
+	GLshort	y
+	GLshort	z
+	CODE:
+	{
+		GLshort param[3];
+		param[0] = x;
+		param[1] = y;
+		param[2] = z;
+		glRasterPos3sv(param);
+	}
+
+#//# glRasterPos4d($x, $y, $z, $w);
+void
+glRasterPos4d(x, y, z, w)
+	GLdouble	x
+	GLdouble	y
+	GLdouble	z
+	GLdouble	w
+
+#//# glRasterPos4dv_c((CPTR)v);
+void
+glRasterPos4dv_c(v)
+	void *	v
+	CODE:
+	glRasterPos4dv(v);
+
+#//# glRasterPos4dv_s((PACKED)v);
+void
+glRasterPos4dv_s(v)
+	SV *	v
+	CODE:
+	{
+		GLdouble * v_s = EL(v, sizeof(GLdouble)*4);
+		glRasterPos4dv(v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glRasterPos4d
+#//# glRasterPos4dv_p($x, $y, $z, $w);
+void
+glRasterPos4dv_p(x, y, z, w)
+	GLdouble	x
+	GLdouble	y
+	GLdouble	z
+	GLdouble	w
+	CODE:
+	{
+		GLdouble param[4];
+		param[0] = x;
+		param[1] = y;
+		param[2] = z;
+		param[3] = w;
+		glRasterPos4dv(param);
+	}
+
+#//# glRasterPos4f($x, $y, $z, $w);
+void
+glRasterPos4f(x, y, z, w)
+	GLfloat	x
+	GLfloat	y
+	GLfloat	z
+	GLfloat	w
+
+#//# glRasterPos4fv_c((CPTR)v);
+void
+glRasterPos4fv_c(v)
+	void *	v
+	CODE:
+	glRasterPos4fv(v);
+
+#//# glRasterPos4fv_s((PACKED)v);
+void
+glRasterPos4fv_s(v)
+	SV *	v
+	CODE:
+	{
+		GLfloat * v_s = EL(v, sizeof(GLfloat)*4);
+		glRasterPos4fv(v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glRasterPos4f
+#//# glRasterPos4fv_p($x, $y, $z, $w);
+void
+glRasterPos4fv_p(x, y, z, w)
+	GLfloat	x
+	GLfloat	y
+	GLfloat	z
+	GLfloat	w
+	CODE:
+	{
+		GLfloat param[4];
+		param[0] = x;
+		param[1] = y;
+		param[2] = z;
+		param[3] = w;
+		glRasterPos4fv(param);
+	}
+
+#//# glRasterPos4i($x, $y, $z, $w);
+void
+glRasterPos4i(x, y, z, w)
+	GLint	x
+	GLint	y
+	GLint	z
+	GLint	w
+
+#//# glRasterPos4iv_c((CPTR)v);
+void
+glRasterPos4iv_c(v)
+	void *	v
+	CODE:
+	glRasterPos4iv(v);
+
+#//# glRasterPos4iv_s((PACKED)v);
+void
+glRasterPos4iv_s(v)
+	SV *	v
+	CODE:
+	{
+		GLint * v_s = EL(v, sizeof(GLint)*4);
+		glRasterPos4iv(v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glRasterPos4i
+#//# glRasterPos4iv_p($x, $y, $z, $w);
+void
+glRasterPos4iv_p(x, y, z, w)
+	GLint	x
+	GLint	y
+	GLint	z
+	GLint	w
+	CODE:
+	{
+		GLint param[4];
+		param[0] = x;
+		param[1] = y;
+		param[2] = z;
+		param[3] = w;
+		glRasterPos4iv(param);
+	}
+
+#//# glRasterPos4s($x, $y, $z, $w);
+void
+glRasterPos4s(x, y, z, w)
+	GLshort	x
+	GLshort	y
+	GLshort	z
+	GLshort	w
+
+#//# glRasterPos4sv_c((CPTR)v);
+void
+glRasterPos4sv_c(v)
+	void *	v
+	CODE:
+	glRasterPos4sv(v);
+
+#//# glRasterPos4sv_s((PACKED)v);
+void
+glRasterPos4sv_s(v)
+	SV *	v
+	CODE:
+	{
+		GLshort * v_s = EL(v, sizeof(GLshort)*4);
+		glRasterPos4sv(v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glRasterPos4s
+#//# glRasterPos4sv_p($x, $y, $z, $w);
+void
+glRasterPos4sv_p(x, y, z, w)
+	GLshort	x
+	GLshort	y
+	GLshort	z
+	GLshort	w
+	CODE:
+	{
+		GLshort param[4];
+		param[0] = x;
+		param[1] = y;
+		param[2] = z;
+		param[3] = w;
+		glRasterPos4sv(param);
+	}
+
+#ifdef GL_VERSION_1_4
+
+#//# glBlendColor($red, $green, $blue, $alpha);
+void
+glBlendColor(red, green, blue, alpha)
+	GLclampf	red
+	GLclampf	green
+	GLclampf	blue
+	GLclampf	alpha
+	INIT:
+		loadProc(glBlendColor,"glBlendColor");
+	CODE:
+		glBlendColor(red, green, blue, alpha);
+
+#//# glBlendEquation($mode);
+void
+glBlendEquation(mode)
+	GLenum	mode
+	INIT:
+		loadProc(glBlendEquation,"glBlendEquation");
+	CODE:
+		glBlendEquation(mode);
+
+#endif
+
 #endif /* HAVE_GL */

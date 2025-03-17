@@ -46,6 +46,9 @@
 ^OpenGL\.bs
 ^OpenGL\.c
 ^OpenGL\.o
+V1\.(c|o.*)
+VertexProgram\.(c|o.*)
+ShaderObjects\.(c|o.*)
 ^gl-funs\.txt
 ^gl_exclude\.h$
 ^gl_util\.o
