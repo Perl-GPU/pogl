@@ -1,5 +1,8 @@
 package OpenGL;
 
+use strict;
+use warnings;
+
 #  Copyright (c) 1998,1999 Kenneth Albanowski. All rights reserved.
 #  Copyright (c) 2007 Bob Free. All rights reserved.
 #  Copyright (c) 2009 Christopher Marshall. All rights reserved.
@@ -12,8 +15,8 @@ use Exporter 'import';
 
 use Carp;
 
-$VERSION = '0.7002';
-$BUILD_VERSION = $XS_VERSION = $VERSION;
+our $VERSION = '0.7002';
+our $BUILD_VERSION = our $XS_VERSION = $VERSION;
 $VERSION =~ tr/_//d;
 
 use OpenGL::V1;
@@ -285,7 +288,7 @@ my @gl_func_common = qw(
    glVertex4s
    glViewport
 );
-@gl_func = (@gl_func_common, qw(
+our @gl_func = (@gl_func_common, qw(
    glActiveTexture
    glActiveTextureARB
    glAreTexturesResidentEXT_p
@@ -1195,7 +1198,7 @@ my @gl_func_common = qw(
    glpRestoreScreen
 ));
 
-@glu_func = qw(
+our @glu_func = qw(
    gluBeginCurve
    gluBeginPolygon
    gluBeginSurface
@@ -1248,7 +1251,7 @@ my @gl_func_common = qw(
    gluUnProject_p
 );
 
-@glut_func = qw(
+our @glut_func = qw(
    done_glutInit
    glutAddMenuEntry
    glutAddSubMenu
@@ -1386,7 +1389,7 @@ my @gl_func_common = qw(
 ##
 ##------------------------------------------------------------------------
 
-@glx_func = qw(
+our @glx_func = qw(
    glXSwapBuffers
    XPending
    glpXNextEvent
@@ -1949,7 +1952,7 @@ my @gl_const_common = qw(
    GL_ZOOM_X
    GL_ZOOM_Y
 );
-@gl_const = (@gl_const_common, qw(
+our @gl_const = (@gl_const_common, qw(
    GL_1PASS_EXT
    GL_2PASS_0_EXT
    GL_2PASS_1_EXT
@@ -4229,7 +4232,7 @@ my @glu_const_common = qw(
    GLU_VERTEX
    GLU_V_STEP
 );
-@glu_const = (@glu_const_common, qw(
+our @glu_const = (@glu_const_common, qw(
    GLU_OBJECT_PARAMETRIC_ERROR_EXT
    GLU_OBJECT_PATH_LENGTH_EXT
    GLU_TESS_BEGIN
@@ -4252,7 +4255,7 @@ my @glu_const_common = qw(
    GLU_TESS_WINDING_RULE
 ));
 
-@glut_const = qw(
+our @glut_const = qw(
    GLUT_ACCUM
    GLUT_ACTION_CONTINUE_EXECUTION
    GLUT_ACTION_EXIT
@@ -4567,7 +4570,7 @@ my @glx_const_old_functions = qw(
    X_PROTOCOL_REVISION
 );
 
-@glx_const = (@glx_const_common, qw(
+our @glx_const = (@glx_const_common, qw(
    GLX_X_VISUAL_TYPE_EXT
    GLX_TRANSPARENT_TYPE_EXT
    GLX_TRANSPARENT_INDEX_VALUE_EXT
@@ -4736,7 +4739,7 @@ my @oldfuncs_common = qw(
 	glVertex4iv
 	glVertex4sv
 );
-@oldfunctions = (@oldfuncs_common, qw(
+our @oldfunctions = (@oldfuncs_common, qw(
 	glpOpenWindow
 	glpMainLoop
 	glpMoveResizeWindow
@@ -4772,7 +4775,7 @@ my @oldfuncs_common = qw(
 	gluPerspective
 ), @glx_const_old_functions);
 
-@oldconstants = (@gl_const_common, @glx_const_common, @glu_const_common, qw(
+our @oldconstants = (@gl_const_common, @glx_const_common, @glu_const_common, qw(
 	GLU_VERSION_1_1
 	GLXBadContext
 	GLXBadContextState
@@ -4824,21 +4827,21 @@ my @oldfuncs_common = qw(
 	__GLX_NUMBER_EVENTS
 ));
 
-@EXPORT = (@oldfunctions, @oldconstants);
+our @EXPORT = (@oldfunctions, @oldconstants);
 
 # Other items we are prepared to export if requested
-@EXPORT_OK = (@gl_extensions, @gl_func, @glu_func, @glut_func, @glx_func, @gl_const, @glu_const, @glut_const, @glx_const);
+our @EXPORT_OK = (@gl_func, @glu_func, @glut_func, @glx_func, @gl_const, @glu_const, @glut_const, @glx_const);
 
-@constants = (@gl_const, @glu_const, @glut_const, @glx_const);
-@functions = (@gl_func, @glu_func, @glut_func, @glx_func);
+our @constants = (@gl_const, @glu_const, @glut_const, @glx_const);
+our @functions = (@gl_func, @glu_func, @glut_func, @glx_func);
 
-%EXPORT_TAGS = ('constants' => \@constants, 'functions' => \@functions, 'all' => \@EXPORT_OK, 'old' => \@EXPORT,
+our %EXPORT_TAGS = ('constants' => \@constants, 'functions' => \@functions, 'all' => \@EXPORT_OK, 'old' => \@EXPORT,
 	'glconstants' => \@gl_const, 'gluconstants' => \@glu_const, 'glutconstants' => \@glut_const, 'glxconstants' => \@glx_const,
 	'glfunctions' => \@gl_func, 'glufunctions' => \@glu_func, 'glutfunctions' => \@glut_func, 'glxfunctions' => \@glx_func,
 	'oldfunctions' => \@oldfunctions, 'oldconstants' => \@oldconstants,
 );
 
-@rename_old = (@oldfuncs_common, qw(
+our @rename_old = (@oldfuncs_common, qw(
 	glTranslated
 	glTranslatef
 	glViewport
@@ -4853,23 +4856,21 @@ sub AUTOLOAD {
     if (@_ > 0) {
 
         # Is it an old OpenGL-0.4 function? If so, remap it to newer variant
-      local($constname);
-      ($constname = $AUTOLOAD) =~ s/.*:://;
+      (my $constname = our $AUTOLOAD) =~ s/.*:://;
       if (grep ($_ eq $constname, @rename_old)) {
           eval "sub $AUTOLOAD { $AUTOLOAD" . "_s(\@_) }";
           goto &$AUTOLOAD;
       }
       die "AUTOLOAD: unknown function '$constname'";
     }
-    local($constname);
-    ($constname = $AUTOLOAD) =~ s/.*:://;
-    $val = constant($constname, @_ ? $_[0] : 0);
+    (my $constname = our $AUTOLOAD) =~ s/.*:://;
+    my $val = constant($constname, @_ ? $_[0] : 0);
     if (not defined $val) {
 	if ($! =~ /Invalid/) {
             die "AUTOLOAD: unknown function '$constname'";
 	}
 	else {
-	    ($pack,$file,$line) = caller;
+	    my ($pack,$file,$line) = caller;
 	    die "Your vendor has not defined OpenGL macro $constname, used at $file line $line.
 ";
 	}
@@ -4880,7 +4881,7 @@ sub AUTOLOAD {
 
 # The following material is directly copied from Stan Melax's original OpenGL-0.4
 
-%window_defaults=(
+our %window_defaults=(
    'x'         => 0,
    'y'         => 0,
    'width'     => 500,
@@ -4896,7 +4897,7 @@ sub glpOpenWindow {
         # default values
         my(%a) = @_;
         my(%p) = %window_defaults;
-        foreach $k (keys(%a)){
+        foreach my $k (keys(%a)){
                 exists($p{$k}) || warn "Not a valid parameter to glpOpenWindow: `$k'\n";
                 #print "parameter $k now ",$a{$k}," was ",$p{$k},"\n";  
                 $p{$k} = $a{$k};
@@ -4983,7 +4984,7 @@ sub glpCheckExtension
     $gl_version = glGetString(0x1F02); #GL_VERSION
     return 'Unable to retrieve OpenGL version; need context?' if (!$gl_version);
   }
-  return "Not a numeric version: '$version'" if ($gl_version !~ m|^(\d+\.\d+)|);
+  return "Not a numeric version: '$gl_version'" if ($gl_version !~ m|^(\d+\.\d+)|);
   $gl_version = $1;
 
   # Get/cache OpenGL Extension Installations
