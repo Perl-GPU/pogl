@@ -74,7 +74,6 @@ pogl_const.xs
 pogl_gl_Prog_Clam.xs
 pogl_gl_Tex2_Draw.xs
 pogl_gl_top.xs
-pogl_gl_Ver3_Tex1.xs
 pogl_gl_Vert_Multi.xs
 pogl_glu.xs
 pogl_glut.xs
