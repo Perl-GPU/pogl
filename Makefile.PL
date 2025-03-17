@@ -373,7 +373,7 @@ foreach my $key (sort keys %$found_libs)
 
 # Configure MakeMaker
 my ($LIBS,$OPTS,$CLEAN);
-my $DYNS = {};
+my $DYNS;
 if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
 {
   my $glut_lib = '-lopengl32 -lglu32 ';
@@ -393,7 +393,8 @@ if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
   $LIBS = $glut_lib;
   if ($IS_W32API)	# CYGWIN W32API
   {
-     my $glut = ($found_libs->{FREEGLUT32}) ? $found_libs->{FREEGLUT32} : $found_libs->{GLUT32};
+    my $glut = ($found_libs->{FREEGLUT32}) ? $found_libs->{FREEGLUT32} : $found_libs->{GLUT32};
+    $glut =~ s/^-l//;
 
     $LIBS = "-L/usr/lib/w32api $LIBS";
     ### $INCS = '-I/usr/include/w32api';
@@ -423,7 +424,7 @@ elsif ($interface_lib eq 'AGL')					# Mac OS X
 {
   $INCS = ""; # no include flags required: Apple gcc will automatically pick up the system frameworks
   $DEFS .= " -DHAVE_AGL_GLUT -Wno-deprecated-declarations ";  # So we know we have glutWMCloseFunc() and glutCheckLoop()
-  $DYNS = { OTHERLDFLAGS => "-framework OpenGL -framework GLUT" };
+  $LIBS = "-framework OpenGL -framework GLUT -lm";
 }
 else # Everyone else
 {
@@ -440,7 +441,6 @@ else # Everyone else
   };
   $INCS = "@includes";
 
-
   # Test for obfuscated GLX
   # quite often GLX is in -lGL...  Test for GL/glx.h instead...
   my $out = cfile_text('GL/glx.h');
@@ -451,7 +451,6 @@ else # Everyone else
 
   if ($has_glx)
   {
-    #delete($found_libs->{GLX});
     $DEFS .= " -DHAVE_GLX";
   }
   elsif (!$found_libs->{GLX} && $verbose)
@@ -469,20 +468,17 @@ else # Everyone else
 
   if ($has_freeglut)
   {
-    #delete($found_libs->{GLX});
     $DEFS .= " -DHAVE_FREEGLUT -DHAVE_FREEGLUT_H";
-    $found_libs->{FREEGLUT}="glut";
   }
 
   # Marshall libs
-  my $libs = ' -l'.join(' -l',sort values(%$found_libs));
+  my $libs = join '', map " $_", sort values %$found_libs;
   my @more_libs = qw
   {
     -lm
   };
   $LIBS = "@libdirs $libs @more_libs";
   $DEFS .= " -DGL_GLEXT_LEGACY";
-
 
   # Handle obfuscated gcc
 
@@ -513,8 +509,6 @@ else # Everyone else
 }
 
 clean_incs( $INCS );
-
-clean_libs( $LIBS );
 
 # This is the final build configuration
 my $build_config =
@@ -614,15 +608,15 @@ sub get_libs
   # Mac OS X
   if ($^O eq 'darwin' && -d '/System/Library/Frameworks/OpenGL.framework')
   {
-    $found->{GL} = 'OpenGL.framework';
-    $found->{GLU} = 'AGL.framework';
+    $found->{GL} = '-framework OpenGL';
+    $found->{GLU} = '-framework AGL';
     if (-e '/opt/X11/lib/libglut.3.dylib')
     {
-      $found->{FREEGLUT} = 'glut';
+      $found->{FREEGLUT} = '-lglut';
     }
     else
     {
-      $found->{GLUT} = 'GLUT.framework';
+      $found->{GLUT} = '-framework GLUT';
     }
     return $found;
   }
@@ -631,9 +625,9 @@ sub get_libs
   if ($IS_STRAWBERRY)
   {
      # libs for strawberry perl go here
-     $found->{FREEGLUT} = 'glut';
-     $found->{OPENGL32} = 'opengl32';
-     $found->{GLU32} = 'glu32';
+     $found->{FREEGLUT} = '-lglut';
+     $found->{OPENGL32} = '-lopengl32';
+     $found->{GLU32} = '-lglu32';
   }
   elsif (($^O eq 'MSWin32') || $IS_W32API)
   {
@@ -642,8 +636,7 @@ sub get_libs
     my $sep = $IS_W32API ? ':' : ';';
     my @paths = split($sep.'\s*',$paths);
 
-    my $sysroot = $ENV{'SYSTEMROOT'};
-    @paths = ("$sysroot/system32",@paths) if ($sysroot);
+    unshift @paths, "$ENV{SYSTEMROOT}/system32" if $ENV{SYSTEMROOT};
 
     $libs = {OPENGL32=>'opengl32.dll',GLU32=>'glu32.dll',GLUT32=>'glut32.dll',FREEGLUT32=>'freeglut.dll'};
     foreach my $key (sort keys %$libs)
@@ -659,7 +652,7 @@ sub get_libs
           next if $path eq join "/", @p or $path eq join "\\", @p;
         }
         # print "  $key: $lib\n";
-        $found->{$key} = $lib;
+        $found->{$key} = "-l$lib";
         last;
       }
     }
@@ -693,7 +686,7 @@ sub get_libs
       if (-e "$dll_dir/freeglut.dll")
       {
         print "Installed freeglut.dll at $dll_dir\n";
-        $found->{FREEGLUT32} = 'freeglut'
+        $found->{FREEGLUT32} = '-lfreeglut'
       }
       else
       {
@@ -724,28 +717,28 @@ sub get_libs
 
     if ($lib =~ m|([\w]*freeglut[\w]*)|i)
     {
-      $found->{FREEGLUT} = $1;
+      $found->{FREEGLUT} = "-l$1";
     }
     elsif ($lib =~ m|([\w]*glut[\w]*)$|i)
     {
-      $found->{GLUT} = $1;
+      $found->{GLUT} = "-l$1";
     }
     elsif ($lib =~ m|([\w]*glu[\w]*)$|i)
     {
-      $found->{GLU} = $1;
+      $found->{GLU} = "-l$1";
     }
     elsif ($lib =~ m|([\w-]*glx)$|i)
     {
-      $found->{GLX} = $1;
+      $found->{GLX} = "-l$1";
     }
     elsif ($lib =~ m|([\w]*gl)$|i)
     {
-      $found->{GL} = $1;
+      $found->{GL} = "-l$1";
     }
 
     if ($lib =~ m|([\w]*mesa(gl)?.*)|i)
     {
-      $found->{MESA} = $1;
+      $found->{MESA} = "-l$1";
     }
   }
 
@@ -807,7 +800,7 @@ sub get_extensions
   }
   elsif ($^O eq 'darwin')
   {
-    $make_ver = ";make -f Makefile.macosx " .  (length($lib) ? "GLUT_LIB=$lib " : "") . (length($def) ? "GLUT_DEF=$def " : "");
+    $make_ver = ";make -f Makefile.macosx " .  (length($lib) ? "GLUT_LIB='$lib' " : "") . (length($def) ? "GLUT_DEF=$def " : "");
     print "MacOSX glversion: '$make_ver'\n" if $verbose>1;
   }
   else
@@ -962,27 +955,6 @@ sub clean_incs {
 
    print "clean_incs: returning INCS='$outincs'\n" if $verbose>1;
    $_[0] = $outincs;
-}
-
-# Takes as input a LIBS string ready for MakeMaker and cleans out
-# non-existant directories and libraries to produce a better,
-# minimal configuration value
-sub clean_libs {
-   my $inlibs = $_[0];
-   return unless defined $inlibs;
-   print "clean_libs: got input LIBS='$inlibs'\n" if $verbose>1;
-
-   my @inlibs = split ' ', $inlibs;
-
-   # clean out -L args with non-existent directories
-   print "clean_libs: removing bad directories\n" if $verbose>1;
-   my @outlibs = grep { my $tmp = $_; /^-l/ or $tmp =~ s/^-L// and ( -d $tmp or -l $tmp) } @inlibs;
-
-
-   my $outlibs = join ' ', @outlibs;
-
-   print "clean_libs: returning LIBS='$outlibs'\n" if $verbose>1;
-   $_[0] = $outlibs;
 }
 
 # Dump Config.pm
