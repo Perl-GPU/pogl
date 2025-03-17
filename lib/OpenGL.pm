@@ -8,7 +8,7 @@ package OpenGL;
 #  This program is free software; you can redistribute it and/or
 #  modify it under the same terms as Perl itself.
 
-require Exporter;
+use Exporter 'import';
 require DynaLoader;
 
 use Carp;
@@ -17,7 +17,7 @@ $VERSION = '0.7002';
 $BUILD_VERSION = $XS_VERSION = $VERSION;
 $VERSION = eval($VERSION);
 
-@ISA = qw(Exporter DynaLoader);
+@ISA = qw(DynaLoader);
 
 our $gl_version;
 our $glext_installed = {};
