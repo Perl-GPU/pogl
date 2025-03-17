@@ -13,6 +13,10 @@
 #include "gl_util.h"
 #endif /* defined HAVE_GL */
 
+#ifdef HAVE_GLU
+#include "glu_util.h"
+#endif
+
 #ifdef HAVE_GLX
 #include "glx_util.h"
 #endif /* defined HAVE_GLX */
@@ -330,22 +334,7 @@ _have_glp()
 	OUTPUT:
 	RETVAL
 
-
-
-
-
-# /* 13000 lines snipped */
-
-##################### GLU #########################
-
-
-############################## GLUT #########################
-
-
-# /* This is assigned to GLX for now.  The glp*() functions should be split out */
-
 # /* The following material is directly copied from Stan Melax's original OpenGL-0.4 */
-
 
 int
 __had_dbuffer_hack()
