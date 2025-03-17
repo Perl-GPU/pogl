@@ -16,7 +16,7 @@ META.yml
 MYMETA.yml
 MYMETA.json
 OpenGL.c
-OpenGL.xs-orig
+V1.c
 OpenGL.def
 blib/
 gl_exclude.h

@@ -71,7 +71,6 @@ oga.pl
 OpenGL.xs
 pgopogl.h
 pogl_const.xs
-pogl_gl_GetP_Pass.xs
 pogl_gl_Mult_Prog.xs
 pogl_gl_Pixe_Ver2.xs
 pogl_gl_Prog_Clam.xs
