@@ -18,6 +18,7 @@ MYMETA.json
 OpenGL.c
 V1.c
 V2.c
+V3.c
 VertexProgram.c
 ShaderObjects.c
 OpenGL.def

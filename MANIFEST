@@ -109,6 +109,7 @@ utils/strawberry.bat
 utils/wgl_ext.txt
 V1.xs
 V2.xs
+V3.xs
 vertex.arb
 vertex.glsl
 VertexProgram.xs
