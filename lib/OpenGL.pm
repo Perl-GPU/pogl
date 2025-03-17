@@ -4846,35 +4846,32 @@ our @rename_old = (@oldfuncs_common, qw(
 	glTranslatef
 	glViewport
 ));
+my %rename_p; @rename_p{@rename_old} = (); # "p" = predicate
 
 sub AUTOLOAD {
-    # This AUTOLOAD is used to 'autoload' constants from the constant()
-    # XS function.
-
-    # NOTE: THIS AUTOLOAD FUNCTION IS FLAWED (but is the best we can do for now).
-    # Avoid old-style ``&CONST'' usage. Either remove the ``&'' or add ``()''.
-    if (@_ > 0) {
-
-        # Is it an old OpenGL-0.4 function? If so, remap it to newer variant
-      (my $constname = our $AUTOLOAD) =~ s/.*:://;
-      if (grep ($_ eq $constname, @rename_old)) {
-          no strict 'refs';
-          *$AUTOLOAD = \&{"${AUTOLOAD}_s"};
-          goto &$AUTOLOAD;
-      }
-      die "AUTOLOAD: unknown function '$constname'";
-    }
+  # This AUTOLOAD is used to 'autoload' constants from the constant()
+  # XS function.
+  # NOTE: THIS AUTOLOAD FUNCTION IS FLAWED (but is the best we can do for now).
+  # Avoid old-style ``&CONST'' usage. Either remove the ``&'' or add ``()''.
+  if (@_ > 0) {
+      # Is it an old OpenGL-0.4 function? If so, remap it to newer variant
     (my $constname = our $AUTOLOAD) =~ s/.*:://;
-    my $val = constant($constname, @_ ? $_[0] : 0);
-    if (not defined $val) {
-        die "AUTOLOAD: unknown function '$constname'" if $! =~ /Invalid/;
-        my ($pack,$file,$line) = caller;
-        die "Your vendor has not defined OpenGL macro $constname, used at $file line $line.
-";
-    }
+    die "AUTOLOAD: unknown function '$constname'" if !exists $rename_p{$constname};
     no strict 'refs';
-    *$AUTOLOAD = sub { $val };
+    *$AUTOLOAD = \&{"${AUTOLOAD}_s"};
     goto &$AUTOLOAD;
+  }
+  (my $constname = our $AUTOLOAD) =~ s/.*:://;
+  my $val = constant($constname, @_ ? $_[0] : 0);
+  if (not defined $val) {
+    die "AUTOLOAD: unknown function '$constname'" if $! =~ /Invalid/;
+    my (undef,$file,$line) = caller;
+    die "Your vendor has not defined OpenGL macro $constname, used at $file line $line.
+";
+  }
+  no strict 'refs';
+  *$AUTOLOAD = sub { $val };
+  goto &$AUTOLOAD;
 }
 
 # The following material is directly copied from Stan Melax's original OpenGL-0.4
