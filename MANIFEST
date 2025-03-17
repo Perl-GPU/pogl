@@ -71,7 +71,6 @@ oga.pl
 OpenGL.xs
 pgopogl.h
 pogl_const.xs
-pogl_gl_Tex2_Draw.xs
 pogl_gl_top.xs
 pogl_glu.xs
 pogl_glut.xs
