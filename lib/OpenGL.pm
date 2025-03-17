@@ -4858,7 +4858,8 @@ sub AUTOLOAD {
         # Is it an old OpenGL-0.4 function? If so, remap it to newer variant
       (my $constname = our $AUTOLOAD) =~ s/.*:://;
       if (grep ($_ eq $constname, @rename_old)) {
-          eval "sub $AUTOLOAD { $AUTOLOAD" . "_s(\@_) }";
+          no strict 'refs';
+          *$AUTOLOAD = \&{"${AUTOLOAD}_s"};
           goto &$AUTOLOAD;
       }
       die "AUTOLOAD: unknown function '$constname'";
@@ -4866,16 +4867,13 @@ sub AUTOLOAD {
     (my $constname = our $AUTOLOAD) =~ s/.*:://;
     my $val = constant($constname, @_ ? $_[0] : 0);
     if (not defined $val) {
-	if ($! =~ /Invalid/) {
-            die "AUTOLOAD: unknown function '$constname'";
-	}
-	else {
-	    my ($pack,$file,$line) = caller;
-	    die "Your vendor has not defined OpenGL macro $constname, used at $file line $line.
+        die "AUTOLOAD: unknown function '$constname'" if $! =~ /Invalid/;
+        my ($pack,$file,$line) = caller;
+        die "Your vendor has not defined OpenGL macro $constname, used at $file line $line.
 ";
-	}
     }
-    eval "sub $AUTOLOAD { $val }";
+    no strict 'refs';
+    *$AUTOLOAD = sub { $val };
     goto &$AUTOLOAD;
 }
 
