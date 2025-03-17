@@ -26,7 +26,6 @@ examples/with-glut.txt
 examples/with-glx.txt
 examples/wolf.bin
 fragment.arb
-fragment.cg
 fragment.glsl
 FreeGLUT/freeglut-Readme.txt
 FreeGLUT/freeglut.dll
@@ -113,5 +112,4 @@ utils/opengl32.txt
 utils/strawberry.bat
 utils/wgl_ext.txt
 vertex.arb
-vertex.cg
 vertex.glsl
