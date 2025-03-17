@@ -18,6 +18,7 @@ MYMETA.json
 OpenGL.c
 V1.c
 VertexProgram.c
+ShaderObjects.c
 OpenGL.def
 blib/
 gl_exclude.h

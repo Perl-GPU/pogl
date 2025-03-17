@@ -71,7 +71,6 @@ oga.pl
 OpenGL.xs
 pgopogl.h
 pogl_const.xs
-pogl_gl_Mult_Prog.xs
 pogl_gl_Pixe_Ver2.xs
 pogl_gl_Prog_Clam.xs
 pogl_gl_Tex2_Draw.xs
@@ -84,6 +83,7 @@ pogl_matrix.xs
 pogl_rpn.xs
 ppport.h
 README
+ShaderObjects.xs
 SUPPORTS
 t/00_require.t
 t/01_use.t

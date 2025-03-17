@@ -13,7 +13,7 @@
 #include "gl_util.h"
 #endif /* defined HAVE_GL */
 
-MODULE = OpenGL::GL::MultProg	PACKAGE = OpenGL
+MODULE = OpenGL::ShaderObjects	PACKAGE = OpenGL
 
 #ifdef HAVE_GL
 
