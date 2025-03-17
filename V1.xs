@@ -6646,4 +6646,1933 @@ glTexCoord1sv_p(s)
 		glTexCoord1sv(param);
 	}
 
+#if defined(GL_VERSION_1_1) || defined(GL_EXT_vertex_array)
+
+#//# glVertexPointerEXT_c($size, $type, $stride, $count, (CPTR)pointer);
+void
+glVertexPointerEXT_c(size, type, stride, count, pointer)
+	GLint	size
+	GLenum	type
+	GLsizei	stride
+	GLsizei	count
+	void *	pointer
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glVertexPointerEXT,"glVertexPointerEXT");
+#endif
+	CODE:
+#ifdef GL_VERSION_1_1
+		glVertexPointer(size, type, stride, pointer);
+#else // GL_EXT_vertex_array
+		glVertexPointerEXT(size, type, stride, count, pointer);
+#endif
+
+#//# glVertexPointerEXT_s($size, $type, $stride, $count, (PACKED)pointer);
+void
+glVertexPointerEXT_s(size, type, stride, count, pointer)
+	GLint	size
+	GLenum	type
+	GLsizei	stride
+	GLsizei	count
+	SV *	pointer
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glVertexPointerEXT,"glVertexPointerEXT");
+#endif
+	CODE:
+	{
+		int width = stride ? stride : (sizeof(type)*size);
+		void * pointer_s = EL(pointer, width*count);
+#ifdef GL_VERSION_1_1
+		glVertexPointer(size, type, stride, pointer_s);
+#else // GL_EXT_vertex_array
+		glVertexPointerEXT(size, type, stride, count, pointer_s);
+#endif
+	}
+
+#//# glVertexPointerEXT_p($size, (OGA)pointer);
+void
+glVertexPointerEXT_p(size, oga)
+	GLint	size
+	OpenGL::Array oga
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glVertexPointerEXT,"glVertexPointerEXT");
+#endif
+	CODE:
+	{
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
+		if (testProc(glBindBufferARB,"glBindBufferARB"))
+		{
+			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
+		}
+#endif
+#ifdef GL_VERSION_1_1
+		glVertexPointer(size, oga->types[0], 0, data);
+#else // GL_EXT_vertex_array
+		glVertexPointerEXT(size, oga->types[0], 0, oga->item_count/size, data);
+#endif
+	}
+
+#//# glVertexPointer_p($size, (OGA)pointer);
+void
+glVertexPointer_p(size, oga)
+	GLint	size
+	OpenGL::Array oga
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glVertexPointerEXT,"glVertexPointerEXT");
+#endif
+	CODE:
+	{
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
+		if (testProc(glBindBufferARB,"glBindBufferARB"))
+		{
+			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
+		}
+#endif
+#ifdef GL_VERSION_1_1
+		glVertexPointer(size, oga->types[0], 0, data);
+#else // GL_EXT_vertex_array
+		glVertexPointerEXT(size, oga->types[0], 0, oga->item_count/size, data);
+#endif
+	}
+
+#//# glNormalPointerEXT_c($size, $type, $stride, $count, (CPTR)pointer);
+void
+glNormalPointerEXT_c(size, type, stride, count, pointer)
+	GLint	size
+	GLenum	type
+	GLsizei	stride
+	GLsizei	count
+	void *	pointer
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glNormalPointerEXT,"glNormalPointerEXT");
+#endif
+	CODE:
+#ifdef GL_VERSION_1_1
+		glNormalPointer(type, stride, pointer);
+#else // GL_EXT_vertex_array
+		glNormalPointerEXT(type, stride, count, pointer);
+#endif
+
+#//# glNormalPointerEXT_s($size, $type, $stride, $count, (PACKED)pointer);
+void
+glNormalPointerEXT_s(size, type, stride, count, pointer)
+	GLint	size
+	GLenum	type
+	GLsizei	stride
+	GLsizei	count
+	SV *	pointer
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glNormalPointerEXT,"glNormalPointerEXT");
+#endif
+	CODE:
+	{
+		int width = stride ? stride : (sizeof(type)*size);
+		void * pointer_s = EL(pointer, width*count);
+#ifdef GL_VERSION_1_1
+		glNormalPointer(type, stride, pointer_s);
+#else // GL_EXT_vertex_array
+		glNormalPointerEXT(type, stride, count, pointer_s);
+#endif
+	}
+
+#//# glNormalPointerEXT_p((OGA)pointer);
+void
+glNormalPointerEXT_p(oga)
+	OpenGL::Array oga
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glNormalPointerEXT,"glNormalPointerEXT");
+#endif
+	CODE:
+	{
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
+		if (testProc(glBindBufferARB,"glBindBufferARB"))
+		{
+			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
+		}
+#endif
+#ifdef GL_VERSION_1_1
+		glNormalPointer(oga->types[0], 0, data);
+#else // GL_EXT_vertex_array
+		glNormalPointerEXT(oga->types[0], 0, oga->item_count/3, data);
+#endif
+	}
+
+#//# glNormalPointer_p((OGA)pointer);
+void
+glNormalPointer_p(oga)
+	OpenGL::Array oga
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glNormalPointerEXT,"glNormalPointerEXT");
+#endif
+	CODE:
+	{
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
+		if (testProc(glBindBufferARB,"glBindBufferARB"))
+		{
+			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
+		}
+#endif
+#ifdef GL_VERSION_1_1
+		glNormalPointer(oga->types[0], 0, data);
+#else // GL_EXT_vertex_array
+		glNormalPointerEXT(oga->types[0], 0, oga->item_count/3, data);
+#endif
+	}
+
+#//# glColorPointerEXT_c($size, $type, $stride, $count, (CPTR)pointer);
+void
+glColorPointerEXT_c(size, type, stride, count, pointer)
+	GLint	size
+	GLenum	type
+	GLsizei	stride
+	GLsizei	count
+	void *	pointer
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glColorPointerEXT,"glColorPointerEXT");
+#endif
+	CODE:
+#ifdef GL_VERSION_1_1
+		glColorPointer(size, type, stride, pointer);
+#else // GL_EXT_vertex_array
+		glColorPointerEXT(size, type, stride, count, pointer);
+#endif
+
+#//# glColorPointerEXT_s($size, $type, $stride, $count, (PACKED)pointer);
+void
+glColorPointerEXT_s(size, type, stride, count, pointer)
+	GLint	size
+	GLenum	type
+	GLsizei	stride
+	GLsizei	count
+	SV *	pointer
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glColorPointerEXT,"glColorPointerEXT");
+#endif
+	CODE:
+	{
+		int width = stride ? stride : (sizeof(type)*size);
+		void * pointer_s = EL(pointer, width*count);
+#ifdef GL_VERSION_1_1
+		glColorPointer(size, type, stride, pointer_s);
+#else // GL_EXT_vertex_array
+		glColorPointerEXT(size, type, stride, count, pointer_s);
+#endif
+	}
+
+#//# glColorPointerEXT_p($size, (OGA)pointer);
+void
+glColorPointerEXT_p(size, oga)
+	GLint	size
+	OpenGL::Array oga
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glColorPointerEXT,"glColorPointerEXT");
+#endif
+	CODE:
+	{
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
+		if (testProc(glBindBufferARB,"glBindBufferARB"))
+		{
+			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
+		}
+#endif
+#ifdef GL_VERSION_1_1
+		glColorPointer(size, oga->types[0], 0, data);
+#else // GL_EXT_vertex_array
+		glColorPointerEXT(size, oga->types[0], 0, oga->item_count/size, data);
+#endif
+	}
+
+#//# glColorPointer_p($size, (OGA)pointer);
+void
+glColorPointer_p(size, oga)
+	GLint	size
+	OpenGL::Array oga
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glColorPointerEXT,"glColorPointerEXT");
+#endif
+	CODE:
+	{
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
+		if (testProc(glBindBufferARB,"glBindBufferARB"))
+		{
+			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
+		}
+#endif
+#ifdef GL_VERSION_1_1
+		glColorPointer(size, oga->types[0], 0, data);
+#else // GL_EXT_vertex_array
+		glColorPointerEXT(size, oga->types[0], 0, oga->item_count/size, data);
+#endif
+	}
+
+#//# glIndexPointerEXT_c($size, $type, $stride, $count, (CPTR)pointer);
+void
+glIndexPointerEXT_c(size, type, stride, count, pointer)
+	GLint	size
+	GLenum	type
+	GLsizei	stride
+	GLsizei	count
+	void *	pointer
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glIndexPointerEXT,"glIndexPointerEXT");
+#endif
+	CODE:
+#ifdef GL_VERSION_1_1
+		glIndexPointer(type, stride, pointer);
+#else // GL_EXT_vertex_array
+		glIndexPointerEXT(type, stride, count, pointer);
+#endif
+
+#//# glIndexPointerEXT_s($size, $type, $stride, $count, (PACKED)pointer);
+void
+glIndexPointerEXT_s(size, type, stride, count, pointer)
+	GLint	size
+	GLenum	type
+	GLsizei	stride
+	GLsizei	count
+	SV *	pointer
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glIndexPointerEXT,"glIndexPointerEXT");
+#endif
+	CODE:
+	{
+		int width = stride ? stride : (sizeof(type)*size);
+		void * pointer_s = EL(pointer, width*count);
+#ifdef GL_VERSION_1_1
+		glIndexPointer(type, stride, pointer_s);
+#else // GL_EXT_vertex_array
+		glIndexPointerEXT(type, stride, count, pointer_s);
+#endif
+	}
+
+#//# glIndexPointerEXT_p((OGA)pointer);
+void
+glIndexPointerEXT_p(oga)
+	OpenGL::Array oga
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glIndexPointerEXT,"glIndexPointerEXT");
+#endif
+	CODE:
+	{
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
+		if (testProc(glBindBufferARB,"glBindBufferARB"))
+		{
+			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
+		}
+#endif
+#ifdef GL_VERSION_1_1
+		glIndexPointer(oga->types[0], 0, data);
+#else // GL_EXT_vertex_array
+		glIndexPointerEXT(oga->types[0], 0, oga->item_count, data);
+#endif
+	}
+
+#//# glIndexPointer_p((OGA)pointer);
+void
+glIndexPointer_p(oga)
+	OpenGL::Array oga
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glIndexPointerEXT,"glIndexPointerEXT");
+#endif
+	CODE:
+	{
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
+		if (testProc(glBindBufferARB,"glBindBufferARB"))
+		{
+			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
+		}
+#endif
+#ifdef GL_VERSION_1_1
+		glIndexPointer(oga->types[0], 0, data);
+#else // GL_EXT_vertex_array
+		glIndexPointerEXT(oga->types[0], 0, oga->item_count, data);
+#endif
+	}
+
+#//# glTexCoordPointerEXT_c($size, $type, $stride, $count, (CPTR)pointer);
+void
+glTexCoordPointerEXT_c(size, type, stride, count, pointer)
+	GLint	size
+	GLenum	type
+	GLsizei	stride
+	GLsizei	count
+	void *	pointer
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glTexCoordPointerEXT,"glTexCoordPointerEXT");
+#endif
+	CODE:
+#ifdef GL_VERSION_1_1
+		glTexCoordPointer(size, type, stride, pointer);
+#else // GL_EXT_vertex_array
+		glTexCoordPointerEXT(size, type, stride, count, pointer);
+#endif
+
+#//# glTexCoordPointerEXT_s($size, $type, $stride, $count, (PACKED)pointer);
+void
+glTexCoordPointerEXT_s(size, type, stride, count, pointer)
+	GLint	size
+	GLenum	type
+	GLsizei	stride
+	GLsizei	count
+	SV *	pointer
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glTexCoordPointerEXT,"glTexCoordPointerEXT");
+#endif
+	CODE:
+	{
+		int width = stride ? stride : (sizeof(type)*size);
+		void * pointer_s = EL(pointer, width*count);
+#ifdef GL_VERSION_1_1
+		glTexCoordPointer(size, type, stride, pointer_s);
+#else // GL_EXT_vertex_array
+		glTexCoordPointerEXT(size, type, stride, count, pointer_s);
+#endif
+	}
+
+#//# glTexCoordPointerEXT_p($size, (OGA)pointer);
+void
+glTexCoordPointerEXT_p(size, oga)
+	GLint	size
+	OpenGL::Array oga
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glTexCoordPointerEXT,"glTexCoordPointerEXT");
+#endif
+	CODE:
+	{
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
+		if (testProc(glBindBufferARB,"glBindBufferARB"))
+		{
+			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
+		}
+#endif
+#ifdef GL_VERSION_1_1
+		glTexCoordPointer(size, oga->types[0], 0, data);
+#else // GL_EXT_vertex_array
+		glTexCoordPointerEXT(size, oga->types[0], 0, oga->item_count/size, data);
+#endif
+	}
+
+#//# glTexCoordPointer_p($size, (OGA)pointer);
+void
+glTexCoordPointer_p(size, oga)
+	GLint	size
+	OpenGL::Array oga
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glTexCoordPointerEXT,"glTexCoordPointerEXT");
+#endif
+	CODE:
+	{
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
+		if (testProc(glBindBufferARB,"glBindBufferARB"))
+		{
+			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
+		}
+#endif
+#ifdef GL_VERSION_1_1
+		glTexCoordPointer(size, oga->types[0], 0, data);
+#else // GL_EXT_vertex_array
+		glTexCoordPointerEXT(size, oga->types[0], 0, oga->item_count/size, data);
+#endif
+	}
+
+#//# glEdgeFlagPointerEXT_c($size, $type, $stride, $count, (CPTR)pointer);
+void
+glEdgeFlagPointerEXT_c(size, type, stride, count, pointer)
+	GLint	size
+	GLenum	type
+	GLsizei	stride
+	GLsizei	count
+	void *	pointer
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glTexCoordPointerEXT,"glEdgeFlagPointerEXT");
+#endif
+	CODE:
+#ifdef GL_VERSION_1_1
+		glEdgeFlagPointer(stride, pointer);
+#else // GL_EXT_vertex_array
+		glEdgeFlagPointerEXT(stride, count, pointer);
+#endif
+
+#//# glEdgeFlagPointerEXT_s($size, $type, $stride, $count, (PACKED)pointer);
+void
+glEdgeFlagPointerEXT_s(size, type, stride, count, pointer)
+	GLint	size
+	GLenum	type
+	GLsizei	stride
+	GLsizei	count
+	SV *	pointer
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glTexCoordPointerEXT,"glEdgeFlagPointerEXT");
+#endif
+	CODE:
+	{
+		int width = stride ? stride : (sizeof(type)*size);
+		void * pointer_s = EL(pointer, width*count);
+#ifdef GL_VERSION_1_1
+		glEdgeFlagPointer(stride, pointer_s);
+#else // GL_EXT_vertex_array
+		glEdgeFlagPointerEXT(stride, count, pointer_s);
+#endif
+	}
+
+#//# glEdgeFlagPointerEXT_p((OGA)pointer);
+void
+glEdgeFlagPointerEXT_p(oga)
+	OpenGL::Array oga
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glTexCoordPointerEXT,"glEdgeFlagPointerEXT");
+#endif
+	CODE:
+	{
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
+		if (testProc(glBindBufferARB,"glBindBufferARB"))
+		{
+			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
+		}
+#endif
+#ifdef GL_VERSION_1_1
+		glEdgeFlagPointer(0, data);
+#else // GL_EXT_vertex_array
+		glEdgeFlagPointerEXT(0, oga->item_count, data);
+#endif
+	}
+
+#//# glEdgeFlagPointer_p((OGA)pointer);
+void
+glEdgeFlagPointer_p(oga)
+	OpenGL::Array oga
+	INIT:
+#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
+		loadProc(glTexCoordPointerEXT,"glEdgeFlagPointerEXT");
+#endif
+	CODE:
+	{
+		GLvoid * data = oga->data;
+#ifdef GL_VERSION_2_0
+		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		data = NULL;
+#elif defined(GL_ARB_vertex_buffer_object)
+		if (testProc(glBindBufferARB,"glBindBufferARB"))
+		{
+			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
+			data = NULL;
+		}
+#endif
+#ifdef GL_VERSION_1_1
+		glEdgeFlagPointer(0, data);
+#else // GL_EXT_vertex_array
+		glEdgeFlagPointerEXT(0, oga->item_count, data);
+#endif
+	}
+
+#endif // GL_EXT_vertex_array || GL_VERSION_1_1
+
+
+#ifdef GL_VERSION_1_1
+
+#// 1.1
+#//# glVertexPointer_c($size, $type, $stride, (CPTR)pointer);
+void
+glVertexPointer_c(size, type, stride, pointer)
+	GLint	size
+	GLenum	type
+	GLsizei	stride
+	void *	pointer
+	CODE:
+		glVertexPointer(size, type, stride, pointer);
+
+#//# glVertexPointer_s($size, $type, $stride, (PACKED)pointer);
+void
+glVertexPointer_s(size, type, stride, pointer)
+	GLint	size
+	GLenum	type
+	GLsizei	stride
+	SV *	pointer
+	CODE:
+	{
+		int width = stride ? stride : (sizeof(type)*size);
+		void * pointer_s = NULL;
+		if ( pointer ) {
+			pointer_s = EL(pointer, width);
+		}
+		glVertexPointer(size, type, stride, pointer_s);
+	}
+
+#//# glNormalPointer_c($type, $stride, (CPTR)pointer);
+void
+glNormalPointer_c(type, stride, pointer)
+	GLenum	type
+	GLsizei	stride
+	void *	pointer
+	CODE:
+		glNormalPointer(type, stride, pointer);
+
+#//# glNormalPointer_s($type, $stride, (PACKED)pointer);
+void
+glNormalPointer_s(type, stride, pointer)
+	GLenum	type
+	GLsizei	stride
+	SV *	pointer
+	CODE:
+	{
+		int width = stride ? stride : (gl_type_size(type)*3);
+		void * pointer_s = NULL;
+		if ( pointer ) {
+			pointer_s = EL(pointer, width);
+		}
+		glNormalPointer(type, stride, pointer_s);
+	}
+
+#//# glColorPointer_c($size, $type, $stride, (CPTR)pointer);
+void
+glColorPointer_c(size, type, stride, pointer)
+	GLint	size
+	GLenum	type
+	GLsizei	stride
+	void *	pointer
+	CODE:
+		glColorPointer(size, type, stride, pointer);
+
+#//# glColorPointer_s($size, $type, $stride, (PACKED)pointer);
+void
+glColorPointer_s(size, type, stride, pointer)
+	GLint	size
+	GLenum	type
+	GLsizei	stride
+	SV *	pointer
+	CODE:
+	{
+		int width = stride ? stride : (sizeof(type)*size);
+		void * pointer_s = NULL;
+		if ( pointer ) {
+			pointer_s = EL(pointer, width);
+		}
+		glColorPointer(size, type, stride, pointer_s);
+	}
+
+#//# glIndexPointer_c($type, $stride, (CPTR)pointer);
+void
+glIndexPointer_c(type, stride, pointer)
+	GLenum	type
+	GLsizei	stride
+	void *	pointer
+	CODE:
+		glIndexPointer(type, stride, pointer);
+
+#//# glIndexPointer_s($type, $stride, (PACKED)pointer);
+void
+glIndexPointer_s(type, stride, pointer)
+	GLenum	type
+	GLsizei	stride
+	SV *	pointer
+	CODE:
+	{
+		int width = stride ? stride : gl_type_size(type);
+		void * pointer_s = NULL;
+		if ( pointer ) {
+			pointer_s = EL(pointer, width);
+		}
+		glIndexPointer(type, stride, pointer_s);
+	}
+
+#//# glTexCoordPointer_c($size, $type, $stride, (CPTR)pointer);
+void
+glTexCoordPointer_c(size, type, stride, pointer)
+	GLint	size
+	GLenum	type
+	GLsizei	stride
+	void *	pointer
+	CODE:
+		glTexCoordPointer(size, type, stride, pointer);
+
+#//# glTexCoordPointer_s($size, $type, $stride, (PACKED)pointer);
+void
+glTexCoordPointer_s(size, type, stride, pointer)
+	GLint	size
+	GLenum	type
+	GLsizei	stride
+	SV *	pointer
+	CODE:
+	{
+		int width = stride ? stride : (sizeof(type)*size);
+		void * pointer_s = NULL;
+		if ( pointer ) {
+			pointer_s = EL(pointer, width);
+		}
+		glTexCoordPointer(size, type, stride, pointer_s);
+	}
+
+#//# glEdgeFlagPointer_c($stride, (CPTR)pointer);
+void
+glEdgeFlagPointer_c(stride, pointer)
+	GLsizei	stride
+	void *	pointer
+	CODE:
+		glEdgeFlagPointer(stride, pointer);
+
+#//# glEdgeFlagPointer_s($stride, (PACKED)pointer);
+void
+glEdgeFlagPointer_s(stride, pointer)
+	GLsizei	stride
+	SV *	pointer
+	CODE:
+	{
+		int width = stride ? stride : sizeof(GLboolean);
+		void * pointer_s = NULL;
+		if ( pointer ) {
+			pointer_s = EL(pointer, width);
+		}
+		glEdgeFlagPointer(stride, pointer_s);
+	}
+
+#endif // GL_VERSION_1_1
+
+#ifdef GL_VERSION_1_4
+
+#//# glBindBuffer($target,$buffer);
+void
+glBindBuffer(target,buffer)
+	GLenum target
+	GLuint buffer
+	CODE:
+	{
+		glBindBuffer(target,buffer);
+	}
+
+#//# glDeleteBuffers_c($n,(CPTR)buffers);
+void
+glDeleteBuffers_c(n,buffers)
+	GLsizei	n
+	void *	buffers
+	CODE:
+	{
+		glDeleteBuffers(n,buffers);
+	}
+
+#//# glDeleteBuffers_s($n,(PACKED)buffers);
+void
+glDeleteBuffers_s(n,buffers)
+	GLsizei n
+	SV *	buffers
+	CODE:
+	{
+		void * buffers_s = EL(buffers, sizeof(GLuint)*n);
+		glDeleteBuffers(n,buffers_s);
+	}
+
+#//# glDeleteBuffers_p(@buffers);
+void
+glDeleteBuffers_p(...)
+	CODE:
+	{
+		if (items) {
+			GLuint * list = malloc(sizeof(GLuint) * items);
+			int i;
+
+			for (i=0;i<items;i++)
+				list[i] = SvIV(ST(i));
+
+			glDeleteBuffers(items, list);
+			free(list);
+		}
+	}
+
+#//# glGenBuffers_c($n,(CPTR)buffers);
+void
+glGenBuffers_c(n,buffers)
+	GLsizei n
+	void *	buffers
+	CODE:
+	{
+		glGenBuffers(n, buffers);
+	}
+
+#//# glGenBuffers_s($n,(PACKED)buffers);
+void
+glGenBuffers_s(n,buffers)
+	GLsizei n
+	SV *	buffers
+	CODE:
+	{
+		void * buffers_s = EL(buffers, sizeof(GLuint)*n);
+		glGenBuffers(n, buffers_s);
+	}
+
+#//# @buffers = glGenBuffers_p($n);
+void
+glGenBuffers_p(n)
+	GLsizei n
+	PPCODE:
+	if (n)
+	{
+		GLuint * buffers = malloc(sizeof(GLuint) * n);
+		int i;
+
+		glGenBuffers(n, buffers);
+
+		EXTEND(sp, n);
+		for(i=0;i<n;i++)
+			PUSHs(sv_2mortal(newSViv(buffers[i])));
+
+		free(buffers);
+	}
+
+#//# glIsBuffer($buffer);
+GLboolean
+glIsBuffer(buffer)
+	GLuint buffer
+	CODE:
+	{
+		RETVAL = glIsBuffer(buffer);
+	}
+	OUTPUT:
+		RETVAL
+
+#//# glBufferData_c($target,$size,(CPTR)data,$usage);
+void
+glBufferData_c(target,size,data,usage)
+	GLenum	target
+	GLsizei	size
+	void *	data
+	GLenum	usage
+	CODE:
+	{
+		glBufferData(target,size,data,usage);
+	}
+
+#//# glBufferData_s($target,$size,(PACKED)data,$usage);
+void
+glBufferData_s(target,size,data,usage)
+	GLenum	target
+	GLsizei	size
+	SV *	data
+	GLenum	usage
+	CODE:
+	{
+		void * data_s = EL(data, size);
+		glBufferData(target,size,data_s,usage);
+	}
+
+#//# glBufferData_p($target,(OGA)data,$usage);
+void
+glBufferData_p(target,oga,usage)
+	GLenum target
+	OpenGL::Array oga
+	GLenum usage
+	CODE:
+	{
+		glBufferData(target,oga->data_length,oga->data,usage);
+	}
+
+#//# glBufferSubData_c($target,$offset,$size,(CPTR)data);
+void
+glBufferSubData_c(target,offset,size,data)
+	GLenum	target
+	GLint	offset
+	GLsizei	size
+	void *	data
+	CODE:
+	{
+		glBufferSubData(target,offset,size,data);
+	}
+
+#//# glBufferSubData_s($target,$offset,$size,(PACKED)data);
+void
+glBufferSubData_s(target,offset,size,data)
+	GLenum	target
+	GLint	offset
+	GLsizei	size
+	SV *	data
+	CODE:
+	{
+		void * data_s = EL(data, size);
+		glBufferSubData(target,offset,size,data);
+	}
+
+#//# glBufferSubData_p($target,$offset,(OGA)data);
+void
+glBufferSubData_p(target,offset,oga)
+	GLenum	target
+	GLint	offset
+	OpenGL::Array oga
+	CODE:
+	{
+		glBufferSubData(target,offset*oga->total_types_width,oga->data_length,oga->data);
+	}
+
+#//# glGetBufferSubData_c($target,$offset,$size,(CPTR)data)
+void
+glGetBufferSubData_c(target,offset,size,data)
+	GLenum	target
+	GLint	offset
+	GLsizei	size
+	void *	data
+	CODE:
+		glGetBufferSubData(target,offset,size,data);
+
+#//# glGetBufferSubData_s($target,$offset,$size,(PACKED)data)
+void
+glGetBufferSubData_s(target,offset,size,data)
+	GLenum	target
+	GLint	offset
+	GLsizei	size
+	SV *	data
+	CODE:
+	{
+		GLubyte * data_s = EL(data,size);
+		glGetBufferSubData(target,offset,size,data_s);
+	}
+
+#//# $oga = glGetBufferSubData_p($target,$offset,$count,@types);
+#//- If no types are provided, GLubyte is assumed
+OpenGL::Array
+glGetBufferSubData_p(target,offset,count,...)
+	GLenum	target
+	GLint	offset
+	GLsizei	count
+	CODE:
+	{
+		oga_struct * oga = malloc(sizeof(oga_struct));
+		GLint size;
+
+		oga->item_count = count;
+		oga->type_count = (items - 3);
+
+				if (oga->type_count)
+		{
+			int i,j;
+
+			oga->types = malloc(sizeof(GLenum) * oga->type_count);
+			oga->type_offset = malloc(sizeof(GLint) * oga->type_count);
+			for(i=0,j=0;i<oga->type_count;i++) {
+				oga->types[i] = SvIV(ST(i+3));
+				oga->type_offset[i] = j;
+				j += gl_type_size(oga->types[i]);
+			}
+			oga->total_types_width = j;
+		}
+		else
+		{
+			oga->type_count = 1;
+			oga->types = malloc(sizeof(GLenum) * oga->type_count);
+			oga->type_offset = malloc(sizeof(GLint) * oga->type_count);
+
+			oga->types[0] = GL_UNSIGNED_BYTE;
+			oga->type_offset[0] = 0;
+			oga->total_types_width = gl_type_size(oga->types[0]);
+		}
+		if (!oga->total_types_width) croak("Unable to determine type sizes\n");
+
+		glGetBufferParameteriv(target,GL_BUFFER_SIZE,&size);
+		size /= oga->total_types_width;
+		if (offset > size) croak("Offset is greater than elements in buffer: %d\n",size);
+
+		if ((offset+count) > size) count = size - offset;
+
+		oga->data_length = oga->total_types_width * count;
+		oga->data = malloc(oga->data_length);
+
+		glGetBufferSubData(target,offset*oga->total_types_width,
+			oga->data_length,oga->data);
+
+		oga->free_data = 1;
+
+		RETVAL = oga;
+	}
+	OUTPUT:
+		RETVAL
+
+#//# (CPTR)buffer = glMapBuffer_c($target,$access);
+void *
+glMapBuffer_c(target,access)
+	GLenum	target
+	GLenum	access
+	CODE:
+		RETVAL = glMapBuffer(target,access);
+	OUTPUT:
+		RETVAL
+
+#define FIXME /* !!! Need to refactor with glGetBufferPointerv_p */
+
+#//# $oga = glMapBuffer_p($target,$access,@types);
+#//- If no types are provided, GLubyte is assumed
+OpenGL::Array
+glMapBuffer_p(target,access,...)
+	GLenum	target
+	GLenum	access
+	CODE:
+	{
+		GLsizeiptr size;
+		oga_struct * oga;
+		int i,j;
+
+		void * buffer =	glMapBuffer(target,access);
+		if (!buffer) croak("Unable to map buffer\n");
+
+		glGetBufferParameteriv(target,GL_BUFFER_SIZE,(GLint*)&size);
+		if (!size) croak("Buffer has no size\n");
+
+		oga = malloc(sizeof(oga_struct));
+
+		oga->type_count = (items - 2);
+
+				if (oga->type_count)
+		{
+			oga->types = malloc(sizeof(GLenum) * oga->type_count);
+			oga->type_offset = malloc(sizeof(GLint) * oga->type_count);
+			for(i=0,j=0;i<oga->type_count;i++) {
+				oga->types[i] = SvIV(ST(i+2));
+				oga->type_offset[i] = j;
+				j += gl_type_size(oga->types[i]);
+			}
+			oga->total_types_width = j;
+		}
+		else
+		{
+			oga->type_count = 1;
+			oga->types = malloc(sizeof(GLenum) * oga->type_count);
+			oga->type_offset = malloc(sizeof(GLint) * oga->type_count);
+
+			oga->types[0] = GL_UNSIGNED_BYTE;
+			oga->type_offset[0] = 0;
+			oga->total_types_width = gl_type_size(oga->types[0]);
+		}
+
+		if (!oga->total_types_width) croak("Unable to determine type sizes\n");
+		oga->item_count = size / oga->total_types_width;
+
+		oga->data_length = oga->total_types_width * oga->item_count;
+
+		oga->data = buffer;
+
+		oga->free_data = 0;
+
+		RETVAL = oga;
+	}
+	OUTPUT:
+		RETVAL
+
+#//# glUnmapBuffer($target);
+GLboolean
+glUnmapBuffer(target)
+	GLenum	target
+	CODE:
+		RETVAL = glUnmapBuffer(target);
+	OUTPUT:
+		RETVAL
+
+#//# glGetBufferParameteriv_c($target,$pname,(CPTR)params);
+void
+glGetBufferParameteriv_c(target,pname,params)
+	GLenum	target
+	GLenum	pname
+	void *	params
+	CODE:
+		glGetBufferParameteriv(target,pname,params);
+
+#//# glGetBufferParameteriv_s($target,$pname,(PACKED)params);
+void
+glGetBufferParameteriv_s(target,pname,params)
+	GLenum	target
+	GLenum	pname
+	SV *	params
+	CODE:
+	{
+		GLint * params_s = EL(params, sizeof(GLint)*1);
+		glGetBufferParameteriv(target,pname,params_s);
+	}
+
+#//# @params = glGetBufferParameteriv_p($target,$pname);
+void
+glGetBufferParameteriv_p(target,pname)
+	GLenum	target
+	GLenum	pname
+	PPCODE:
+	{
+		GLint	ret;
+		glGetBufferParameteriv(target,pname,&ret);
+		PUSHs(sv_2mortal(newSViv(ret)));
+	}
+
+#//# glGetBufferPointerv_c($target,$pname,(CPTR)params);
+void
+glGetBufferPointerv_c(target,pname,params)
+	GLenum	target
+	GLenum	pname
+	void *	params
+	CODE:
+		glGetBufferPointerv(target,pname,&params);
+
+#//# glGetBufferPointerv_s($target,$pname,(PACKED)params);
+void
+glGetBufferPointerv_s(target,pname,params)
+	GLenum	target
+	GLenum	pname
+	SV *	params
+	CODE:
+	{
+		void ** params_s = EL(params, sizeof(void*));
+		glGetBufferPointerv(target,pname,params_s);
+	}
+
+#//# $oga = glGetBufferPointerv_p($target,$pname,@types);
+#//- If no types are provided, GLubyte is assumed
+OpenGL::Array
+glGetBufferPointerv_p(target,pname,...)
+	GLenum	target
+	GLenum	pname
+	CODE:
+	{
+		GLsizeiptr size;
+		oga_struct * oga;
+		void * buffer;
+		int i,j;
+
+		glGetBufferPointerv(target,pname,&buffer);
+		if (!buffer) croak("Buffer is not mapped\n");
+
+		glGetBufferParameteriv(target,GL_BUFFER_SIZE,(GLint*)&size);
+		if (!size) croak("Buffer has no size\n");
+
+		oga = malloc(sizeof(oga_struct));
+
+		oga->type_count = (items - 2);
+
+				if (oga->type_count)
+		{
+			oga->types = malloc(sizeof(GLenum) * oga->type_count);
+			oga->type_offset = malloc(sizeof(GLint) * oga->type_count);
+			for(i=0,j=0;i<oga->type_count;i++) {
+				oga->types[i] = SvIV(ST(i+2));
+				oga->type_offset[i] = j;
+				j += gl_type_size(oga->types[i]);
+			}
+			oga->total_types_width = j;
+		}
+		else
+		{
+			oga->type_count = 1;
+			oga->types = malloc(sizeof(GLenum) * oga->type_count);
+			oga->type_offset = malloc(sizeof(GLint) * oga->type_count);
+
+			oga->types[0] = GL_UNSIGNED_BYTE;
+			oga->type_offset[0] = 0;
+			oga->total_types_width = gl_type_size(oga->types[0]);
+		}
+
+		if (!oga->total_types_width) croak("Unable to determine type sizes\n");
+		oga->item_count = size / oga->total_types_width;
+
+		oga->data_length = oga->total_types_width * oga->item_count;
+
+		oga->data = buffer;
+
+		oga->free_data = 0;
+
+		RETVAL = oga;
+	}
+	OUTPUT:
+		RETVAL
+
+#endif // GL_VERSION_1_4
+
+#if defined(GL_VERSION_1_2_1) || defined(GL_VERSION_1_3)
+
+#//# glActiveTexture($texture);
+void
+glActiveTexture(texture)
+	GLenum texture
+	CODE:
+		glActiveTexture(texture);
+
+#//# glClientActiveTexture($texture);
+void
+glClientActiveTexture(texture)
+	GLenum texture
+	CODE:
+		glClientActiveTexture(texture);
+
+#//# glMultiTexCoord1d($target,$s)
+void
+glMultiTexCoord1d(target,s)
+	GLenum target
+	GLdouble s
+	CODE:
+		glMultiTexCoord1d(target,s);
+
+#//# glMultiTexCoord1dv_c($target,(CPTR)v);
+void
+glMultiTexCoord1dv_c(target,v)
+	GLenum target
+	void *v
+	CODE:
+		glMultiTexCoord1dv(target,v);
+
+#//# glMultiTexCoord1dv_s($target,(PACKED)v);
+void
+glMultiTexCoord1dv_s(target,v)
+	GLenum target
+	void *v
+	CODE:
+	{
+		GLdouble * v_s = EL(v, sizeof(GLdouble));
+		glMultiTexCoord1dv(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord1d
+#//# glMultiTexCoord1dv_p($target,$s);
+void
+glMultiTexCoord1dv_p(target,s)
+	GLenum target
+	GLdouble s
+	CODE:
+	{
+		glMultiTexCoord1dv(target,&s);
+	}
+
+#//# glMultiTexCoord1f($target,$s);
+void
+glMultiTexCoord1f(target,s)
+	GLenum target
+	GLfloat s
+	CODE:
+		glMultiTexCoord1f(target,s);
+
+#//# glMultiTexCoord1fv_c($target,(CPTR)v);
+void
+glMultiTexCoord1fv_c(target,v)
+	GLenum target
+	void *v
+	CODE:
+		glMultiTexCoord1fv(target,v);
+
+#//# glMultiTexCoord1fv_s($target,(PACKED)v);
+void
+glMultiTexCoord1fv_s(target,v)
+	GLenum target
+	void *v
+	CODE:
+	{
+		GLfloat * v_s = EL(v, sizeof(GLfloat));
+		glMultiTexCoord1fv(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord1f
+#//# glMultiTexCoord1fv_p($target,$s);
+void
+glMultiTexCoord1fv_p(target,s)
+	GLenum target
+	GLfloat s
+	CODE:
+	{
+		glMultiTexCoord1fv(target,&s);
+	}
+
+#//# glMultiTexCoord1i($target,$s);
+void
+glMultiTexCoord1i(target,s)
+	GLenum target
+	GLint s
+	CODE:
+		glMultiTexCoord1i(target,s);
+
+#//# glMultiTexCoord1iv_c($target,(CPTR)v);
+void
+glMultiTexCoord1iv_c(target,v)
+	GLenum target
+	void *v
+	CODE:
+		glMultiTexCoord1iv(target,v);
+
+#//# glMultiTexCoord1iv_s($target,(PACKED)v);
+void
+glMultiTexCoord1iv_s(target,v)
+	GLenum target
+	void *v
+	CODE:
+	{
+		GLint * v_s = EL(v, sizeof(GLint));
+		glMultiTexCoord1iv(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord1i
+#//# glMultiTexCoord1iv_p($target,$s);
+void
+glMultiTexCoord1iv_p(target,s)
+	GLenum target
+	GLint s
+	CODE:
+	{
+		glMultiTexCoord1iv(target,&s);
+	}
+
+#//# glMultiTexCoord1s($target,$s);
+void
+glMultiTexCoord1s(target,s)
+	GLenum target
+	GLshort s
+	CODE:
+		glMultiTexCoord1s(target,s);
+
+#//# glMultiTexCoord1sv_c($target,(CPTR)v);
+void
+glMultiTexCoord1sv_c(target,v)
+	GLenum target
+	void *v
+	CODE:
+		glMultiTexCoord1sv(target,v);
+
+#//# glMultiTexCoord1sv_s($target,(PACKED)v);
+void
+glMultiTexCoord1sv_s(target,v)
+	GLenum target
+	void *v
+	CODE:
+	{
+		GLshort * v_s = EL(v, sizeof(GLshort));
+		glMultiTexCoord1sv(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord1s
+#//# glMultiTexCoord1sv_p($target,$s);
+void
+glMultiTexCoord1sv_p(target,s)
+	GLenum target
+	GLshort s
+	CODE:
+	{
+		glMultiTexCoord1sv(target,&s);
+	}
+
+#//# glMultiTexCoord2d($target,$s,$t);
+void
+glMultiTexCoord2d(target,s,t)
+	GLenum target
+	GLdouble s
+	GLdouble t
+	CODE:
+		glMultiTexCoord2d(target,s,t);
+
+#//# glMultiTexCoord2dv_c(target,(CPTR)v);
+void
+glMultiTexCoord2dv_c(target,v)
+	GLenum target
+	void *v
+	CODE:
+		glMultiTexCoord2dv(target,v);
+
+#//# glMultiTexCoord2dv_s(target,(PACKED)v);
+void
+glMultiTexCoord2dv_s(target,v)
+	GLenum target
+	void *v
+	CODE:
+	{
+		GLdouble * v_s = EL(v, sizeof(GLdouble));
+		glMultiTexCoord2dv(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord2d
+#//# glMultiTexCoord2dv_p($target,$s,$t);
+void
+glMultiTexCoord2dv_p(target,s,t)
+	GLenum target
+	GLdouble s
+	GLdouble t
+	CODE:
+	{
+		GLdouble param[2];
+		param[0] = s;
+		param[1] = t;
+		glMultiTexCoord2dv(target,param);
+	}
+
+#//# glMultiTexCoord2f($target,$s,$t);
+void
+glMultiTexCoord2f(target,s,t)
+	GLenum target
+	GLfloat s
+	GLfloat t
+	CODE:
+		glMultiTexCoord2f(target,s,t);
+
+#//# glMultiTexCoord2fv_c($target,(CPTR)v);
+void
+glMultiTexCoord2fv_c(target,v)
+	GLenum target
+	void *v
+	CODE:
+		glMultiTexCoord2fv(target,v);
+
+#//# glMultiTexCoord2fv_s($target,(PACKED)v);
+void
+glMultiTexCoord2fv_s(target,v)
+	GLenum target
+	void *v
+	CODE:
+	{
+		GLfloat * v_s = EL(v, sizeof(GLfloat));
+		glMultiTexCoord2fv(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord2f
+#//# glMultiTexCoord2fv_p($target,$s,$t);
+void
+glMultiTexCoord2fv_p(target,s,t)
+	GLenum target
+	GLfloat s
+	GLfloat t
+	CODE:
+	{
+		GLfloat param[2];
+		param[0] = s;
+		param[1] = t;
+		glMultiTexCoord2fv(target,param);
+	}
+
+#//# glMultiTexCoord2i($target,$s,$t);
+void
+glMultiTexCoord2i(target,s,t)
+	GLenum target
+	GLint s
+	GLint t
+	CODE:
+		glMultiTexCoord2i(target,s,t);
+
+#//# glMultiTexCoord2iv_c($target,(CPTR)v);
+void
+glMultiTexCoord2iv_c(target,v)
+	GLenum target
+	void *v
+	CODE:
+		glMultiTexCoord2iv(target,v);
+
+#//# glMultiTexCoord2iv_s($target,(PACKED)v);
+void
+glMultiTexCoord2iv_s(target,v)
+	GLenum target
+	void *v
+	CODE:
+	{
+		GLint * v_s = EL(v, sizeof(GLint));
+		glMultiTexCoord2iv(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord2i
+#//# glMultiTexCoord2iv_p($target,$s,$t);
+void
+glMultiTexCoord2iv_p(target,s,t)
+	GLenum target
+	GLint s
+	GLint t
+	CODE:
+	{
+		GLint param[2];
+		param[0] = s;
+		param[1] = t;
+		glMultiTexCoord2iv(target,param);
+	}
+
+#//# glMultiTexCoord2s($target,$s,$t);
+void
+glMultiTexCoord2s(target,s,t)
+	GLenum target
+	GLshort s
+	GLshort t
+	CODE:
+		glMultiTexCoord2s(target,s,t);
+
+#//# glMultiTexCoord2sv_c($target,(CPTR)v);
+void
+glMultiTexCoord2sv_c(target,v)
+	GLenum target
+	void *v
+	CODE:
+		glMultiTexCoord2sv(target,v);
+
+#//# glMultiTexCoord2sv_s($target,(PACKED)v);
+void
+glMultiTexCoord2sv_s(target,v)
+	GLenum target
+	void *v
+	CODE:
+	{
+		GLshort * v_s = EL(v, sizeof(GLshort));
+		glMultiTexCoord2sv(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord2s
+#//# glMultiTexCoord2sv_p($target,$s,$t);
+void
+glMultiTexCoord2sv_p(target,s,t)
+	GLenum target
+	GLshort s
+	GLshort t
+	CODE:
+	{
+		GLshort param[2];
+		param[0] = s;
+		param[1] = t;
+		glMultiTexCoord2sv(target,param);
+	}
+
+#//# glMultiTexCoord3d($target,$s,$t,$r);
+void
+glMultiTexCoord3d(target,s,t,r)
+	GLenum target
+	GLdouble s
+	GLdouble t
+	GLdouble r
+	CODE:
+		glMultiTexCoord3d(target,s,t,r);
+
+#//# glMultiTexCoord3dv_c(target,(CPTR)v);
+void
+glMultiTexCoord3dv_c(target,v)
+	GLenum target
+	void *v
+	CODE:
+		glMultiTexCoord3dv(target,v);
+
+#//# glMultiTexCoord3dv_s(target,(PACKED)v);
+void
+glMultiTexCoord3dv_s(target,v)
+	GLenum target
+	void *v
+	CODE:
+	{
+		GLdouble * v_s = EL(v, sizeof(GLdouble));
+		glMultiTexCoord3dv(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord3d
+#//# glMultiTexCoord3dv_p($target,$s,$t,$r);
+void
+glMultiTexCoord3dv_p(target,s,t,r)
+	GLenum target
+	GLdouble s
+	GLdouble t
+	GLdouble r
+	CODE:
+	{
+		GLdouble param[3];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		glMultiTexCoord3dv(target,param);
+	}
+
+#//# glMultiTexCoord3f($target,$s,$t,$r);
+void
+glMultiTexCoord3f(target,s,t,r)
+	GLenum target
+	GLfloat s
+	GLfloat t
+	GLfloat r
+	CODE:
+		glMultiTexCoord3f(target,s,t,r);
+
+#//# glMultiTexCoord3fv_c($target,(CPTR)v);
+void
+glMultiTexCoord3fv_c(target,v)
+	GLenum target
+	void *v
+	CODE:
+		glMultiTexCoord3fv(target,v);
+
+#//# glMultiTexCoord3fv_s($target,(PACKED)v);
+void
+glMultiTexCoord3fv_s(target,v)
+	GLenum target
+	void *v
+	CODE:
+	{
+		GLfloat * v_s = EL(v, sizeof(GLfloat));
+		glMultiTexCoord3fv(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord3f
+#//# glMultiTexCoord3fv_p($target,$s,$t,$r);
+void
+glMultiTexCoord3fv_p(target,s,t,r)
+	GLenum target
+	GLfloat s
+	GLfloat t
+	GLfloat r
+	CODE:
+	{
+		GLfloat param[3];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		glMultiTexCoord3fv(target,param);
+	}
+
+#//# glMultiTexCoord3i($target,$s,$t,$r);
+void
+glMultiTexCoord3i(target,s,t,r)
+	GLenum target
+	GLint s
+	GLint t
+	GLint r
+	CODE:
+		glMultiTexCoord3i(target,s,t,r);
+
+#//# glMultiTexCoord3iv_c($target,(CPTR)v);
+void
+glMultiTexCoord3iv_c(target,v)
+	GLenum target
+	void *v
+	CODE:
+		glMultiTexCoord3iv(target,v);
+
+#//# glMultiTexCoord3iv_s($target,(PACKED)v);
+void
+glMultiTexCoord3iv_s(target,v)
+	GLenum target
+	void *v
+	CODE:
+	{
+		GLint * v_s = EL(v, sizeof(GLint));
+		glMultiTexCoord3iv(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord3i
+#//# glMultiTexCoord3iv_p($target,$s,$t,$r);
+void
+glMultiTexCoord3iv_p(target,s,t,r)
+	GLenum target
+	GLint s
+	GLint t
+	GLint r
+	CODE:
+	{
+		GLint param[3];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		glMultiTexCoord3iv(target,param);
+	}
+
+#//# glMultiTexCoord3s($target,$s,$t,$r);
+void
+glMultiTexCoord3s(target,s,t,r)
+	GLenum target
+	GLshort s
+	GLshort t
+	GLshort r
+	CODE:
+		glMultiTexCoord3s(target,s,t,r);
+
+#//# glMultiTexCoord3sv_c($target,(CPTR)v);
+void
+glMultiTexCoord3sv_c(target,v)
+	GLenum target
+	void *v
+	CODE:
+		glMultiTexCoord3sv(target,v);
+
+#//# glMultiTexCoord3sv_s($target,(PACKED)v);
+void
+glMultiTexCoord3sv_s(target,v)
+	GLenum target
+	void *v
+	CODE:
+	{
+		GLshort * v_s = EL(v, sizeof(GLshort));
+		glMultiTexCoord3sv(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord3s
+#//# glMultiTexCoord3sv_p($target,$s,$t,$r);
+void
+glMultiTexCoord3sv_p(target,s,t,r)
+	GLenum target
+	GLshort s
+	GLshort t
+	GLshort r
+	CODE:
+	{
+		GLshort param[3];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		glMultiTexCoord3sv(target,param);
+	}
+
+#//# glMultiTexCoord4d($target,$s,$t,$r,$q);
+void
+glMultiTexCoord4d(target,s,t,r,q)
+	GLenum target
+	GLdouble s
+	GLdouble t
+	GLdouble r
+	GLdouble q
+	CODE:
+		glMultiTexCoord4d(target,s,t,r,q);
+
+#//# glMultiTexCoord4dv_c($target,(CPTR)v);
+void
+glMultiTexCoord4dv_c(target,v)
+	GLenum target
+	void *v
+	CODE:
+		glMultiTexCoord4dv(target,v);
+
+#//# glMultiTexCoord4dv_s($target,(PACKED)v);
+void
+glMultiTexCoord4dv_s(target,v)
+	GLenum target
+	void *v
+	CODE:
+	{
+		GLdouble * v_s = EL(v, sizeof(GLdouble));
+		glMultiTexCoord4dv(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord4d
+#//# glMultiTexCoord4dv_p($target,$s,$t,$r,$q);
+void
+glMultiTexCoord4dv_p(target,s,t,r,q)
+	GLenum target
+	GLdouble s
+	GLdouble t
+	GLdouble r
+	GLdouble q
+	CODE:
+	{
+		GLdouble param[4];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		param[3] = q;
+		glMultiTexCoord4dv(target,param);
+	}
+
+#//# glMultiTexCoord4f($target,$s,$t,$r,$q);
+void
+glMultiTexCoord4f(target,s,t,r,q)
+	GLenum target
+	GLfloat s
+	GLfloat t
+	GLfloat r
+	GLfloat q
+	CODE:
+		glMultiTexCoord4f(target,s,t,r,q);
+
+#//# glMultiTexCoord4fv_c($target,(CPTR)v);
+void
+glMultiTexCoord4fv_c(target,v)
+	GLenum target
+	void *v
+	CODE:
+		glMultiTexCoord4fv(target,v);
+
+#//# glMultiTexCoord4fv_s($target,(PACKED)v);
+void
+glMultiTexCoord4fv_s(target,v)
+	GLenum target
+	void *v
+	CODE:
+	{
+		GLfloat * v_s = EL(v, sizeof(GLfloat));
+		glMultiTexCoord4fv(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord4f
+#//# glMultiTexCoord4fv_p($target,$s,$t,$r,$q);
+void
+glMultiTexCoord4fv_p(target,s,t,r,q)
+	GLenum target
+	GLfloat s
+	GLfloat t
+	GLfloat r
+	GLfloat q
+	CODE:
+	{
+		GLfloat param[4];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		param[3] = q;
+		glMultiTexCoord4fv(target,param);
+	}
+
+#//# glMultiTexCoord4i($target,$s,$t,$r,$q)
+void
+glMultiTexCoord4i(target,s,t,r,q)
+	GLenum target
+	GLint s
+	GLint t
+	GLint r
+	GLint q
+	CODE:
+		glMultiTexCoord4i(target,s,t,r,q);
+
+#//# glMultiTexCoord4iv_c($target,(CPTR)v);
+void
+glMultiTexCoord4iv_c(target,v)
+	GLenum target
+	void *v
+	CODE:
+		glMultiTexCoord4iv(target,v);
+
+#//# glMultiTexCoord4iv_s($target,(PACKED)v);
+void
+glMultiTexCoord4iv_s(target,v)
+	GLenum target
+	void *v
+	CODE:
+	{
+		GLint * v_s = EL(v, sizeof(GLint));
+		glMultiTexCoord4iv(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord4i
+#//# glMultiTexCoord4iv_p($target,$s,$t,$r,$q);
+void
+glMultiTexCoord4iv_p(target,s,t,r,q)
+	GLenum target
+	GLint s
+	GLint t
+	GLint r
+	GLint q
+	CODE:
+	{
+		GLint param[4];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		param[3] = q;
+		glMultiTexCoord4iv(target,param);
+	}
+
+#//# glMultiTexCoord4s($target,$s,$t,$r,$q);
+void
+glMultiTexCoord4s(target,s,t,r,q)
+	GLenum target
+	GLshort s
+	GLshort t
+	GLshort r
+	GLshort q
+	CODE:
+		glMultiTexCoord4s(target,s,t,r,q);
+
+#//# glMultiTexCoord4sv_c($target,(CPTR)v);
+void
+glMultiTexCoord4sv_c(target,v)
+	GLenum target
+	void *v
+	CODE:
+		glMultiTexCoord4sv(target,v);
+
+#//# glMultiTexCoord4sv_s($target,(PACKED)v);
+void
+glMultiTexCoord4sv_s(target,v)
+	GLenum target
+	void *v
+	CODE:
+	{
+		GLshort * v_s = EL(v, sizeof(GLshort));
+		glMultiTexCoord4sv(target,v_s);
+	}
+
+#//!!! Do we really need this?  It duplicates glMultiTexCoord4s
+#//# glMultiTexCoord4sv_p($target,$s,$t,$r,$q);
+void
+glMultiTexCoord4sv_p(target,s,t,r,q)
+	GLenum target
+	GLshort s
+	GLshort t
+	GLshort r
+	GLshort q
+	CODE:
+	{
+		GLshort param[4];
+		param[0] = s;
+		param[1] = t;
+		param[2] = r;
+		param[3] = q;
+		glMultiTexCoord4sv(target,param);
+	}
+
+#endif // defined(GL_VERSION_1_2_1) || defined(GL_VERSION_1_3)
+
 #endif /* HAVE_GL */
