@@ -9963,4 +9963,79 @@ glMultiTexCoord4svARB_p(target,s,t,r,q)
 
 #endif // GL_ARB_multitexture
 
+#ifdef GL_ARB_point_parameters
+
+#//# glPointParameterfARB($pname,$param);
+void
+glPointParameterfARB(pname,param)
+	GLenum pname
+	GLfloat param
+	INIT:
+		loadProc(glPointParameterfARB,"glPointParameterfARB");
+	CODE:
+	{
+		glPointParameterfARB(pname,param);
+	}
+
+#//# glPointParameterfvARB_c($pname,(CPTR)params);
+void
+glPointParameterfvARB_c(pname,params)
+	GLenum pname
+	void *	params
+	INIT:
+		loadProc(glPointParameterfvARB,"glPointParameterfvARB");
+	CODE:
+		glPointParameterfvARB(pname,(GLfloat*)params);
+
+#//# glPointParameterfvARB_s($pname,(PACKED)params);
+void
+glPointParameterfvARB_s(pname,params)
+	GLenum pname
+	SV *	params
+	INIT:
+		loadProc(glPointParameterfvARB,"glPointParameterfvARB");
+	CODE:
+	{
+		int count = gl_get_count(pname);
+		GLfloat * params_s = EL(params, sizeof(GLfloat)*count);
+		glPointParameterfvARB(pname,params_s);
+	}
+
+#//!!! This implementation doesn't look right
+#//# glPointParameterfvARB_p($pname,@params);
+void
+glPointParameterfvARB_p(pname, ...)
+	GLenum pname
+	INIT:
+		loadProc(glPointParameterfvARB,"glPointParameterfvARB");
+	CODE:
+	{
+		GLfloat params[4];
+		int i;
+		if ((items-1) != gl_get_count(pname))
+			croak("Incorrect number of arguments");
+		for(i=1;i<items;i++)
+			params[i-1] = (GLfloat)SvNV(ST(i));
+		glPointParameterfvARB(pname,params);
+	}
+
+#endif
+
+
+#ifdef GL_ARB_multisample
+
+#//# glSampleCoverageARB($value,$invert);
+void
+glSampleCoverageARB(value,invert)
+	GLclampf value
+	GLboolean invert
+	INIT:
+		loadProc(glSampleCoverageARB,"glSampleCoverageARB");
+	CODE:
+	{
+		glSampleCoverageARB(value,invert);
+	}
+
+#endif
+
 #endif /* HAVE_GL */

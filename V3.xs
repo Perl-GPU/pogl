@@ -739,4 +739,20 @@ glGenerateMipmapEXT(target)
 
 #endif // GL_EXT_framebuffer_object
 
+#ifdef GL_ARB_color_buffer_float
+
+#//# glClampColorARB($target,$clamp);
+void
+glClampColorARB(target,clamp)
+	GLenum target
+	GLenum clamp
+	INIT:
+		loadProc(glClampColorARB,"glClampColorARB");
+	CODE:
+	{
+		glClampColorARB(target,clamp);
+	}
+
+#endif
+
 #endif /* HAVE_GL */
