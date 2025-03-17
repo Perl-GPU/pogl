@@ -7,7 +7,6 @@
  */
 
 /* OpenGL GLU bindings */
-#define IN_POGL_GLU_XS
 
 #include <stdio.h>
 
@@ -17,16 +16,9 @@
 #include "gl_util.h"
 #endif
 
-#ifdef HAVE_GLX
-#include "glx_util.h"
-#endif
-
 #ifdef HAVE_GLU
 #include "glu_util.h"
 #endif
-
-
-#ifdef IN_POGL_GLU_XS
 
 #ifndef CALLBACK
 #define CALLBACK
@@ -363,13 +355,8 @@ void CALLBACK _s_marshal_glu_t_callback_combine (GLdouble coords[3], void * vert
 
 #endif
 
-#endif /* End IN_POGL_GLU_XS */
-
-
 MODULE = OpenGL::GLU		PACKAGE = OpenGL
 
-
-#ifdef IN_POGL_GLU_XS
 
 ##################### GLU #########################
 
@@ -1124,5 +1111,3 @@ gluUnProject_p(winx,winy,winz, m1,m2,m3,m4,m5,m6,m7,m8,m9,m10,m11,m12,m13,m14,m1
 	}
 
 #endif
-
-#endif /* End IN_POGL_GLU_XS */

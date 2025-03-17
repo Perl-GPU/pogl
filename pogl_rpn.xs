@@ -6,34 +6,14 @@
  *  modify it under the same terms as Perl itself.
  */
 
-/* OpenGL::Array */
-#define IN_POGL_ARRAY_XS
-
-/* OpenGL::Matrix */
-#define IN_POGL_MATRIX_XS
-
-/* OpenGL RPN code */
-#define IN_POGL_RPN_XS
-
 #include <stdio.h>
-
 #include "pgopogl.h"
-
 
 #ifdef HAVE_GL
 #include "gl_util.h"
 #endif
 
-#ifdef HAVE_GLX
-#include "glx_util.h"
-#endif
-
-#ifdef HAVE_GLU
-#include "glu_util.h"
-#endif
-
-
-#ifdef IN_POGL_RPN_XS
+/* OpenGL RPN code */
 #ifndef M_PI
 #ifdef PI
 #define M_PI PI
@@ -41,9 +21,6 @@
 #define M_PI 3.1415926535897932384626433832795
 #endif
 #endif
-#endif /* End IN_POGL_RPN_XS */
-
-#ifdef IN_POGL_RPN_XS
 
 /********************/
 /* RPN Processor    */
@@ -1114,16 +1091,8 @@ void rpn_exec(rpn_context * ctx)
   }
 }
 
-#endif /* End IN_POGL_RPN_XS */
-
-
-
-
-
-
+/* OpenGL::Array */
 MODULE = OpenGL::RPN		PACKAGE = OpenGL::Array
-
-#ifdef IN_POGL_ARRAY_XS
 
 #//# $oga = OpenGL::Array->new($count, @types);
 #//- Constructor for multi-type OGA - unpopulated
@@ -1917,22 +1886,3 @@ DESTROY(oga)
 		free(oga->type_offset);
 		free(oga);
 	}
-
-
-#endif /* End IN_POGL_ARRAY_XS */
-
-
-
-
-
-
-
-
-##################### GLU #########################
-
-
-############################## GLUT #########################
-
-
-# /* This is assigned to GLX for now.  The glp*() functions should be split out */
-

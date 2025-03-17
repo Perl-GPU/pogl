@@ -14,26 +14,9 @@
 #include "gl_util.h"
 #endif /* defined HAVE_GL */
 
-#ifdef HAVE_GLX
-#include "glx_util.h"
-#endif /* defined HAVE_GLX */
-
-#ifdef HAVE_GLU
-#include "glu_util.h"
-#endif /* defined HAVE_GLU */
-
-
-
-
-
 MODULE = OpenGL::GL::VertMulti	PACKAGE = OpenGL
 
-
-
-
-
 #ifdef HAVE_GL
-
 
 #if defined(GL_VERSION_1_1) || defined(GL_EXT_vertex_array)
 

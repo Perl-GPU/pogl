@@ -6,15 +6,8 @@
  */
 
 /* All OpenGL constants---should split */
-#define IN_POGL_CONST_XS
-
-/* This ends up being OpenGL.pm */
-/* #define IN_POGL_MAIN_XS */
 
 #include <stdio.h>
-
-#include "pgopogl.h"
-
 
 #ifdef HAVE_GL
 #include "gl_util.h"
@@ -35,8 +28,6 @@
 #include "glut_util.h"
 #endif
 
-#ifdef IN_POGL_CONST_XS
-
 /* These macros used in neoconstant */
 #define i(test) if (strEQ(name, #test)) return newSViv((int)test);
 #define f(test) if (strEQ(name, #test)) return newSVnv((double)test);
@@ -56,12 +47,7 @@ neoconstant(char * name, int arg)
 #undef i
 #undef f
 
-#endif /* defined IN_POGL_CONST_XS */
-
-
 MODULE = OpenGL::Const		PACKAGE = OpenGL
-
-#ifdef IN_POGL_CONST_XS
 
 #// Define a POGL Constant
 SV *
@@ -76,5 +62,3 @@ constant(name,arg)
 	}
 	OUTPUT:
 	RETVAL
-
-#endif /* End IN_POGL_CONST_XS */

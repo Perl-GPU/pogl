@@ -5,14 +5,9 @@
  *  modify it under the same terms as Perl itself.
  */
 
-/* This ends up being OpenGL.pm */
-#define IN_POGL_MAIN_XS
-
 #include <stdio.h>
 
 #include "pgopogl.h"
-
-#ifdef IN_POGL_MAIN_XS
 
 =head2 Miscellaneous
 
@@ -52,62 +47,8 @@ _pgopogl_call_XS (pTHX_ void (*subaddr) (pTHX_ CV *), CV * cv, SV ** mark)
 	(*subaddr) (aTHX_ cv);
 	PUTBACK;	/* forget return values */
 }
-#endif /* End IN_POGL_MAIN_XS */
-
-#ifdef HAVE_GL
-#include "gl_util.h"
-#endif
-
-#ifdef HAVE_GLX
-#include "glx_util.h"
-#endif
-
-#ifdef HAVE_GLU
-#include "glu_util.h"
-#endif
-
-#if defined(HAVE_GLUT) || defined(HAVE_FREEGLUT)
-#ifndef GLUT_API_VERSION
-#define GLUT_API_VERSION 4
-#endif
-#include "glut_util.h"
-#endif
-
-
-/* This does not seem to be used */
-#if 0
-static char *SWIZZLE[4] = {"x","y","z","w"}; */
-#endif 
-
-/* This does not seem to be used */
-#if 0
-static int
-not_here(s)
-char *s;
-{
-    croak("%s not implemented on this architecture", s);
-    return -1;
-}
-#endif
-
-
-
 
 MODULE = OpenGL		PACKAGE = OpenGL
-
-
-
-
-
-
-##################### GLU #########################
-
-
-############################## GLUT #########################
-
-
-# /* This is assigned to GLX for now.  The glp*() functions should be split out */
-
 
 BOOT:
   PGOPOGL_CALL_BOOT(boot_OpenGL__RPN);

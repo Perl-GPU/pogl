@@ -13,23 +13,7 @@
 #include "gl_util.h"
 #endif /* defined HAVE_GL */
 
-#ifdef HAVE_GLX
-#include "glx_util.h"
-#endif /* defined HAVE_GLX */
-
-#ifdef HAVE_GLU
-#include "glu_util.h"
-#endif /* defined HAVE_GLU */
-
-
-
-
-
 MODULE = OpenGL::GL::Ver3Tex1	PACKAGE = OpenGL
-
-
-
-
 
 #ifdef HAVE_GL
 

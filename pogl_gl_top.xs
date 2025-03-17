@@ -17,12 +17,6 @@
 #include "glx_util.h"
 #endif /* defined HAVE_GLX */
 
-#ifdef HAVE_GLU
-#include "glu_util.h"
-#endif /* defined HAVE_GLU */
-
-
-
 #ifdef HAVE_GLX
 #  define nativeWindowId(d, w)	(w)
 static Bool WaitForNotify(Display *d, XEvent *e, char *arg) {
@@ -32,8 +26,6 @@ static Bool WaitForNotify(Display *d, XEvent *e, char *arg) {
 #  define glpMoveWindow(s1,s2,w,d)		XMoveWindow(d,w,s1,s2)
 #  define glpMoveResizeWindow(s1,s2,s3,s4,w,d)	XMoveResizeWindow(d,w,s1,s2,s3,s4)
 #endif	/* defined HAVE_GLX */ 
-
-
 
 static int debug = 0;
 
