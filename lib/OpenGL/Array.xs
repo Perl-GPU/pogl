@@ -1091,8 +1091,7 @@ void rpn_exec(rpn_context * ctx)
   }
 }
 
-/* OpenGL::Array */
-MODULE = OpenGL::RPN		PACKAGE = OpenGL::Array
+MODULE = OpenGL::Array		PACKAGE = OpenGL::Array
 
 #//# $oga = OpenGL::Array->new($count, @types);
 #//- Constructor for multi-type OGA - unpopulated

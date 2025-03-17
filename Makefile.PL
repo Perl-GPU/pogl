@@ -3,6 +3,7 @@ use warnings;
 use ExtUtils::MakeMaker;
 use ExtUtils::Liblist;
 use Config;
+use File::Spec::Functions;
 
 # Supported windowing interfaces
 our $is_valid_interface =
@@ -543,7 +544,13 @@ WriteMakefile(
   },
   TEST_REQUIRES => { 'Test::More' => 0 },
   AUTHOR	=> "Chris Marshall ".'<chm at cpan dot org>',
-  OBJECT 	=> '$(BASEEXT)$(OBJ_EXT) gl_util$(OBJ_EXT) V1$(OBJ_EXT) V2$(OBJ_EXT) V3$(OBJ_EXT) pogl_const$(OBJ_EXT) pogl_gl_top$(OBJ_EXT) pogl_glu$(OBJ_EXT) pogl_rpn$(OBJ_EXT) pogl_matrix$(OBJ_EXT) pogl_glut$(OBJ_EXT)',
+  XSMULTI => 1,
+  XSBUILD => {
+    xs => {
+      map +($_ => {OBJECT => "$_\$(OBJ_EXT) gl_util\$(OBJ_EXT)"}),
+        map "lib/OpenGL/$_", qw(V1 V2 V3 Array Matrix Const GLX GLU GLUT),
+    },
+  },
   XSPROTOARG	=> '-noprototypes',
   META_MERGE => {
      "meta-spec" => { version => 2 },
@@ -568,6 +575,7 @@ WriteMakefile(
       "utils/glversion$Config{obj_ext}"
   },
   %$build_config,
+  INC => $INCS . ' -I'.curdir(),
 );       		# Generate the Makefile
 WriteConfigPM( $build_config );			# Regenerate final Config.pm
 

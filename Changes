@@ -1,4 +1,5 @@
 - OpenGL::Config now only contains keys relevant to other distros, not NAME etc
+- now split into OpenGL::{V1,V2,V3,Array,Matrix,Const,GLX,GLU,GLUT}
 
 0.7002 2025-03-10
 - apply better Debian-provided fix for glutTimerFunc - thanks Thomas Kremer

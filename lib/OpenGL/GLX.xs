@@ -254,7 +254,7 @@ void disable_fbo(oga_struct * oga)
 
 
 
-MODULE = OpenGL::GL::Top		PACKAGE = OpenGL
+MODULE = OpenGL::GLX		PACKAGE = OpenGL
 
 
 

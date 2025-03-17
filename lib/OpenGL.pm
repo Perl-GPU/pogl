@@ -9,7 +9,6 @@ package OpenGL;
 #  modify it under the same terms as Perl itself.
 
 use Exporter 'import';
-require DynaLoader;
 
 use Carp;
 
@@ -17,7 +16,15 @@ $VERSION = '0.7002';
 $BUILD_VERSION = $XS_VERSION = $VERSION;
 $VERSION = eval($VERSION);
 
-@ISA = qw(DynaLoader);
+use OpenGL::V1;
+use OpenGL::V2;
+use OpenGL::V3;
+use OpenGL::Const;
+use OpenGL::Array;
+use OpenGL::Matrix;
+use OpenGL::GLX;
+use OpenGL::GLU;
+use OpenGL::GLUT;
 
 our $gl_version;
 our $glext_installed = {};
@@ -5197,8 +5204,6 @@ sub AUTOLOAD {
     goto &$AUTOLOAD;
 }
 
-bootstrap OpenGL;
-
 *OpenGL::Array::CLONE_SKIP = sub { 1 };  # OpenGL::Array is not thread safe
 *OpenGL::Matrix::CLONE_SKIP = sub { 1 };  # OpenGL::Matrix is not thread safe
 
@@ -5344,12 +5349,4 @@ sub glpCheckExtension
   return 0;
 }
 
-
-
-#OpenGL::Array helper methods for normalizing names and chaining operations
-@OpenGL::Matrix::ISA = 'OpenGL::Array';
-
-
 1;
-__END__
-
