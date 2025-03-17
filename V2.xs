@@ -3366,4 +3366,51 @@ glGetShaderSourceARB_p(obj)
 
 #endif // GL_ARB_shader_objects
 
+#ifdef GL_ARB_draw_buffers
+
+#//# glDrawBuffersARB_c($n,(CPTR)buffers);
+void
+glDrawBuffersARB_c(n,buffers)
+	GLsizei n
+	void *	buffers
+	INIT:
+		loadProc(glDrawBuffersARB,"glDrawBuffersARB");
+	CODE:
+	{
+		glDrawBuffersARB(n,buffers);
+	}
+
+#//# glDrawBuffersARB_s($n,(PACKED)buffers);
+void
+glDrawBuffersARB_s(n,buffers)
+	GLsizei n
+	SV *	buffers
+	INIT:
+		loadProc(glDrawBuffersARB,"glDrawBuffersARB");
+	CODE:
+	{
+		void * buffers_s = EL(buffers, sizeof(GLuint)*n);
+		glDrawBuffersARB(n,buffers_s);
+	}
+
+#//# glDrawBuffersARB_p(@buffers);
+void
+glDrawBuffersARB_p(...)
+	INIT:
+		loadProc(glDrawBuffersARB,"glDrawBuffersARB");
+	CODE:
+	{
+		if (items)
+		{
+			GLuint * list = malloc(sizeof(GLuint) * items);
+			int i;
+			for (i=0;i<items;i++)
+				list[i] = SvIV(ST(i));
+			glDrawBuffersARB(items, list);
+			free(list);
+		}
+	}
+
+#endif // GL_ARB_draw_buffers
+
 #endif /* HAVE_GL */
