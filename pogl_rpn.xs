@@ -43,36 +43,6 @@
 #endif
 #endif /* End IN_POGL_RPN_XS */
 
-
-
-
-/* Note: this is caching procs once for all contexts */
-/* !!! This should instead cache per context */
-#ifdef HAVE_GL
-#if defined(_WIN32) || (defined(__CYGWIN__) && defined(HAVE_W32API))
-#define loadProc(proc,name) \
-{ \
-  if (!proc) \
-  { \
-    proc = (void *)wglGetProcAddress(name); \
-    if (!proc) croak(name " is not supported by this renderer"); \
-  } \
-}
-#define testProc(proc,name) ((proc) ? 1 : !!(proc = (void *)wglGetProcAddress(name)))
-#else
-#define loadProc(proc,name)
-#define testProc(proc,name) 1
-#endif
-#endif
-
-
-
-
-
-
-
-
-
 #ifdef IN_POGL_RPN_XS
 
 /********************/
