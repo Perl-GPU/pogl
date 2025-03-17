@@ -4829,16 +4829,16 @@ our @oldconstants = (@gl_const_common, @glx_const_common, @glu_const_common, qw(
 
 our @EXPORT = (@oldfunctions, @oldconstants);
 
+my @constants = (@gl_const, @glu_const, @glut_const, @glx_const);
+my @functions = (@gl_func, @glu_func, @glut_func, @glx_func);
 # Other items we are prepared to export if requested
-our @EXPORT_OK = (@gl_func, @glu_func, @glut_func, @glx_func, @gl_const, @glu_const, @glut_const, @glx_const);
+our @EXPORT_OK = (@constants, @functions);
 
-our @constants = (@gl_const, @glu_const, @glut_const, @glx_const);
-our @functions = (@gl_func, @glu_func, @glut_func, @glx_func);
-
-our %EXPORT_TAGS = ('constants' => \@constants, 'functions' => \@functions, 'all' => \@EXPORT_OK, 'old' => \@EXPORT,
-	'glconstants' => \@gl_const, 'gluconstants' => \@glu_const, 'glutconstants' => \@glut_const, 'glxconstants' => \@glx_const,
-	'glfunctions' => \@gl_func, 'glufunctions' => \@glu_func, 'glutfunctions' => \@glut_func, 'glxfunctions' => \@glx_func,
-	'oldfunctions' => \@oldfunctions, 'oldconstants' => \@oldconstants,
+our %EXPORT_TAGS = (
+  constants => \@constants, functions => \@functions, all => \@EXPORT_OK, old => \@EXPORT,
+  glconstants => \@gl_const, gluconstants => \@glu_const, glutconstants => \@glut_const, glxconstants => \@glx_const,
+  glfunctions => \@gl_func, glufunctions => \@glu_func, glutfunctions => \@glut_func, glxfunctions => \@glx_func,
+  oldfunctions => \@oldfunctions, oldconstants => \@oldconstants,
 );
 
 our @rename_old = (@oldfuncs_common, qw(
