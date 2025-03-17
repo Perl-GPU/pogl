@@ -5,9 +5,6 @@
  *  modify it under the same terms as Perl itself.
  */
 
-/* OpenGL GLX bindings */
-#define IN_POGL_GLX_XS
-
 #include <stdio.h>
 
 #include "pgopogl.h"

@@ -5,9 +5,6 @@
  *  modify it under the same terms as Perl itself.
  */
 
-/* OpenGL GLX bindings */
-#define IN_POGL_GLX_XS
-
 #include <stdio.h>
 
 #include "pgopogl.h"
@@ -26,7 +23,6 @@
 
 
 
-#ifdef IN_POGL_GLX_XS
 #ifdef HAVE_GLX
 #  define nativeWindowId(d, w)	(w)
 static Bool WaitForNotify(Display *d, XEvent *e, char *arg) {
@@ -59,9 +55,6 @@ static int default_attributes[] = { GLX_DOUBLEBUFFER, GLX_RGBA, None };
 
 static int DBUFFER_HACK = 0;
 #define __had_dbuffer_hack() (DBUFFER_HACK)
-
-#endif /* End IN_POGL_GLX_XS */
-
 
 
 /********************/
@@ -358,8 +351,6 @@ _have_glp()
 
 
 # /* This is assigned to GLX for now.  The glp*() functions should be split out */
-
-#ifdef IN_POGL_GLX_XS
 
 # /* The following material is directly copied from Stan Melax's original OpenGL-0.4 */
 
@@ -767,5 +758,3 @@ glpHasGPGPU()
 		RETVAL = gpgpu_size();
 	OUTPUT:
 		RETVAL
-
-#endif /* End IN_POGL_GLX_XS */
