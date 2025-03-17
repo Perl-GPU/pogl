@@ -112,3 +112,4 @@ utils/wgl_ext.txt
 V1.xs
 vertex.arb
 vertex.glsl
+VertexProgram.xs
