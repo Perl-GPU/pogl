@@ -14,7 +14,7 @@ use Carp;
 
 $VERSION = '0.7002';
 $BUILD_VERSION = $XS_VERSION = $VERSION;
-$VERSION = eval($VERSION);
+$VERSION =~ tr/_//d;
 
 use OpenGL::V1;
 use OpenGL::V2;
