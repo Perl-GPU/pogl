@@ -47,6 +47,7 @@
 ^OpenGL\.c
 ^OpenGL\.o
 V1\.(c|o.*)
+V2\.(c|o.*)
 VertexProgram\.(c|o.*)
 ShaderObjects\.(c|o.*)
 ^gl-funs\.txt

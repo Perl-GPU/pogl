@@ -56,6 +56,7 @@ BOOT:
   PGOPOGL_CALL_BOOT(boot_OpenGL__Const);
   PGOPOGL_CALL_BOOT(boot_OpenGL__GL__Top);
   PGOPOGL_CALL_BOOT(boot_OpenGL__V1);
+  PGOPOGL_CALL_BOOT(boot_OpenGL__V2);
   PGOPOGL_CALL_BOOT(boot_OpenGL__VertexProgram);
   PGOPOGL_CALL_BOOT(boot_OpenGL__ShaderObjects);
   PGOPOGL_CALL_BOOT(boot_OpenGL__GL__ProgClam);
