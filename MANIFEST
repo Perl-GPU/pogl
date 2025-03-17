@@ -112,4 +112,3 @@ V2.xs
 V3.xs
 vertex.arb
 vertex.glsl
-VertexProgram.xs
