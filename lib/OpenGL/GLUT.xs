@@ -1532,3 +1532,9 @@ glutCloseFunc(handler=0, ...)
 		}
 #endif
 	}
+
+BOOT:
+{
+   HV *stash = gv_stashpvn("OpenGL", strlen("OpenGL"), TRUE);
+#include "glut_const.h"
+}

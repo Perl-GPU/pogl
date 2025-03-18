@@ -739,3 +739,9 @@ glpHasGPGPU()
 		RETVAL = gpgpu_size();
 	OUTPUT:
 		RETVAL
+
+BOOT:
+{
+   HV *stash = gv_stashpvn("OpenGL", strlen("OpenGL"), TRUE);
+#include "glx_const.h"
+}

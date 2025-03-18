@@ -37,9 +37,6 @@ static SV *
 neoconstant(char * name, int arg)
 {
 #include "gl_const.h"
-#include "glu_const.h"
-#include "glut_const.h"
-#include "glx_const.h"
 	;
 	return 0;
 }

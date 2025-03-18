@@ -1110,4 +1110,10 @@ gluUnProject_p(winx,winy,winz, m1,m2,m3,m4,m5,m6,m7,m8,m9,m10,m11,m12,m13,m14,m1
 		}
 	}
 
+BOOT:
+{
+   HV *stash = gv_stashpvn("OpenGL", strlen("OpenGL"), TRUE);
+#include "glu_const.h"
+}
+
 #endif
