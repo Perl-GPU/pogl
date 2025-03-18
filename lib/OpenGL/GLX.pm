@@ -181,6 +181,13 @@ our @const = (@const_common, qw(
    GLX_TRANSPARENT_ALPHA_VALUE_EXT
 ), @const_old_functions);
 
+our @func = qw(
+   glXSwapBuffers
+   XPending
+   glpXNextEvent
+   glpXQueryPointer
+);
+
 __PACKAGE__->bootstrap;
 
 1;

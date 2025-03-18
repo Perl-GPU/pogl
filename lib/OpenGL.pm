@@ -1198,204 +1198,6 @@ our @gl_func = (@gl_func_common, qw(
    glpRestoreScreen
 ));
 
-our @glu_func = qw(
-   gluBeginCurve
-   gluBeginPolygon
-   gluBeginSurface
-   gluBeginTrim
-   gluBuild1DMipmaps_c
-   gluBuild1DMipmaps_s
-   gluBuild2DMipmaps_c
-   gluBuild2DMipmaps_s
-   gluCylinder
-   gluDeleteNurbsRenderer
-   gluDeleteQuadric
-   gluDeleteTess
-   gluDisk
-   gluEndCurve
-   gluEndPolygon
-   gluEndSurface
-   gluEndTrim
-   gluErrorString
-   gluGetNurbsProperty_p
-   gluGetString
-   gluGetTessProperty_p
-   gluLoadSamplingMatrices_p
-   gluLookAt
-   gluNewNurbsRenderer
-   gluNewQuadric
-   gluNewTess
-   gluNextContour
-   gluNurbsCurve_c
-   gluNurbsSurface_c
-   gluOrtho2D
-   gluPartialDisk
-   gluPerspective
-   gluPickMatrix_p
-   gluProject_p
-   gluPwlCurve_c
-   gluQuadricDrawStyle
-   gluQuadricNormals
-   gluQuadricOrientation
-   gluQuadricTexture
-   gluScaleImage_s
-   gluSphere
-   gluTessBeginContour
-   gluTessBeginPolygon
-   gluTessCallback
-   gluTessEndContour
-   gluTessEndPolygon
-   gluTessNormal
-   gluTessProperty
-   gluTessVertex_p
-   gluUnProject_p
-);
-
-our @glut_func = qw(
-   done_glutInit
-   glutAddMenuEntry
-   glutAddSubMenu
-   glutAttachMenu
-   glutBitmapCharacter
-   glutBitmapHeight
-   glutBitmapLength
-   glutBitmapString
-   glutBitmapWidth
-   glutButtonBoxFunc
-   glutChangeToMenuEntry
-   glutChangeToSubMenu
-   glutCloseFunc
-   glutCopyColormap
-   glutCreateMenu
-   glutCreateSubWindow
-   glutCreateWindow
-   glutDestroyMenu
-   glutDestroyWindow
-   glutDetachMenu
-   glutDeviceGet
-   glutDialsFunc
-   glutDisplayFunc
-   glutEnterGameMode
-   glutEntryFunc
-   glutEstablishOverlay
-   glutExtensionSupported
-   glutForceJoystickFunc
-   glutFullScreen
-   glutGameModeGet
-   glutGameModeString
-   glutGet
-   glutGetColor
-   glutGetMenu
-   glutGetModifiers
-   glutGetWindow
-   glutHideOverlay
-   glutHideWindow
-   glutIconifyWindow
-   glutIdleFunc
-   glutIgnoreKeyRepeat
-   glutInit
-   glutInitDisplayMode
-   glutInitDisplayString
-   glutInitWindowPosition
-   glutInitWindowSize
-   glutKeyboardFunc
-   glutKeyboardUpFunc
-   glutLayerGet
-   glutLeaveGameMode
-   glutLeaveMainLoop
-   glutMainLoop
-   glutMainLoopEvent
-   glutMenuDestroyFunc
-   glutMenuStateFunc
-   glutMenuStatusFunc
-   glutMotionFunc
-   glutMouseFunc
-   glutMouseWheelFunc
-   glutOverlayDisplayFunc
-   glutPassiveMotionFunc
-   glutPopWindow
-   glutPositionWindow
-   glutPostOverlayRedisplay
-   glutPostRedisplay
-   glutPostWindowOverlayRedisplay
-   glutPostWindowRedisplay
-   glutPushWindow
-   glutRemoveMenuItem
-   glutRemoveOverlay
-   glutReportErrors
-   glutReshapeFunc
-   glutReshapeWindow
-   glutSetColor
-   glutSetCursor
-   glutSetIconTitle
-   glutSetKeyRepeat
-   glutSetMenu
-   glutSetOption
-   glutSetWindow
-   glutSetWindowTitle
-   glutShowOverlay
-   glutShowWindow
-   glutSolidCone
-   glutSolidCube
-   glutSolidCylinder
-   glutSolidDodecahedron
-   glutSolidIcosahedron
-   glutSolidOctahedron
-   glutSolidRhombicDodecahedron
-   glutSolidSphere
-   glutSolidTeapot
-   glutSolidTetrahedron
-   glutSolidTorus
-   glutSpaceballButtonFunc
-   glutSpaceballMotionFunc
-   glutSpaceballRotateFunc
-   glutSpecialFunc
-   glutSpecialUpFunc
-   glutStrokeCharacter
-   glutStrokeHeight
-   glutStrokeLength
-   glutStrokeString
-   glutStrokeWidth
-   glutSwapBuffers
-   glutTabletButtonFunc
-   glutTabletMotionFunc
-   glutTimerFunc
-   glutUseLayer
-   glutVisibilityFunc
-   glutWarpPointer
-   glutWindowStatusFunc
-   glutWireCone
-   glutWireCube
-   glutWireCylinder
-   glutWireDodecahedron
-   glutWireIcosahedron
-   glutWireOctahedron
-   glutWireRhombicDodecahedron
-   glutWireSphere
-   glutWireTeapot
-   glutWireTetrahedron
-   glutWireTorus
-);
-
-##------------------------------------------------------------------------
-## FreeGLUT not implemented yet       -chm 2009-08-31
-##------------------------------------------------------------------------
-##
-## Need to determine desired/useful interface
-## glutGetProcAddress (const char *procName)
-##
-## Need to add pollInterval argument to glutJoystickFunc() call
-## glutJoystickFunc (void(*callback)(unsigned int buttons, int xaxis, int yaxis, int zaxis), int pollInterval)
-##
-##------------------------------------------------------------------------
-
-our @glx_func = qw(
-   glXSwapBuffers
-   XPending
-   glpXNextEvent
-   glpXQueryPointer
-);
-
 my @gl_const_common = qw(
    GL_1PASS_SGIS
    GL_2D
@@ -4311,7 +4113,7 @@ our @oldfunctions = (@oldfuncs_common, qw(
 	glpMoveWindow
 	glpResizeWindow
 	glpDisplay
-), @glx_func, @gl_func_common, qw(
+), @OpenGL::GLX::func, @gl_func_common, qw(
 	glColor3us
 	glColor4b
 	glConvolutionParameterfEXT
@@ -4395,14 +4197,14 @@ our @oldconstants = (@gl_const_common, @OpenGL::GLX::const_common, @OpenGL::GLU:
 our @EXPORT = (@oldfunctions, @oldconstants);
 
 my @constants = (@gl_const, @OpenGL::GLU::const, @OpenGL::GLUT::const, @OpenGL::GLX::const);
-my @functions = (@gl_func, @glu_func, @glut_func, @glx_func);
+my @functions = (@gl_func, @OpenGL::GLU::func, @OpenGL::GLUT::func, @OpenGL::GLX::func);
 # Other items we are prepared to export if requested
 our @EXPORT_OK = (@constants, @functions);
 
 our %EXPORT_TAGS = (
   constants => \@constants, functions => \@functions, all => \@EXPORT_OK, old => \@EXPORT,
   glconstants => \@gl_const, gluconstants => \@OpenGL::GLU::const, glutconstants => \@OpenGL::GLUT::const, glxconstants => \@OpenGL::GLX::const,
-  glfunctions => \@gl_func, glufunctions => \@glu_func, glutfunctions => \@glut_func, glxfunctions => \@glx_func,
+  glfunctions => \@gl_func, glufunctions => \@OpenGL::GLU::func, glutfunctions => \@OpenGL::GLUT::func, glxfunctions => \@OpenGL::GLX::func,
   oldfunctions => \@oldfunctions, oldconstants => \@oldconstants,
 );
 

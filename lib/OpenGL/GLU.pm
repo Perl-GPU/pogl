@@ -125,6 +125,59 @@ our @const = (@const_common, qw(
    GLU_TESS_WINDING_RULE
 ));
 
+our @func = qw(
+   gluBeginCurve
+   gluBeginPolygon
+   gluBeginSurface
+   gluBeginTrim
+   gluBuild1DMipmaps_c
+   gluBuild1DMipmaps_s
+   gluBuild2DMipmaps_c
+   gluBuild2DMipmaps_s
+   gluCylinder
+   gluDeleteNurbsRenderer
+   gluDeleteQuadric
+   gluDeleteTess
+   gluDisk
+   gluEndCurve
+   gluEndPolygon
+   gluEndSurface
+   gluEndTrim
+   gluErrorString
+   gluGetNurbsProperty_p
+   gluGetString
+   gluGetTessProperty_p
+   gluLoadSamplingMatrices_p
+   gluLookAt
+   gluNewNurbsRenderer
+   gluNewQuadric
+   gluNewTess
+   gluNextContour
+   gluNurbsCurve_c
+   gluNurbsSurface_c
+   gluOrtho2D
+   gluPartialDisk
+   gluPerspective
+   gluPickMatrix_p
+   gluProject_p
+   gluPwlCurve_c
+   gluQuadricDrawStyle
+   gluQuadricNormals
+   gluQuadricOrientation
+   gluQuadricTexture
+   gluScaleImage_s
+   gluSphere
+   gluTessBeginContour
+   gluTessBeginPolygon
+   gluTessCallback
+   gluTessEndContour
+   gluTessEndPolygon
+   gluTessNormal
+   gluTessProperty
+   gluTessVertex_p
+   gluUnProject_p
+);
+
 __PACKAGE__->bootstrap;
 
 1;
