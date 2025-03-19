@@ -78,34 +78,32 @@ sub DESTROY {
   glDeleteProgramsARB_p($self->{fragment_id}) if ($self->{fragment_id});
   glDeleteProgramsARB_p($self->{vertex_id}) if ($self->{vertex_id});
 }
+
 # Load shader strings
+sub _compile_shader {
+  my ($id, $src, $label) = @_;
+  glShaderSourceARB_p($id, $src);
+  glCompileShaderARB($id);
+  return '' if glGetObjectParameterivARB_p($id, GL_OBJECT_COMPILE_STATUS_ARB) == GL_TRUE;
+  my $stat = glGetInfoLogARB_p($id);
+  return "$label shader: $stat" if $stat;
+  '';
+}
 sub Load {
-  my($self,$fragment,$vertex) = @_;
+  my ($self,$fragment,$vertex) = @_;
   # Load fragment code
   if ($fragment) {
     $self->{fragment_id} = glCreateShaderObjectARB($self->{fragment_const});
-    return undef if (!$self->{fragment_id});
-    glShaderSourceARB_p($self->{fragment_id}, $fragment);
-    glCompileShaderARB($self->{fragment_id});
-    my $compilation_status =
-      glGetObjectParameterivARB_p($self->{fragment_id}, GL_OBJECT_COMPILE_STATUS_ARB);
-    if ($compilation_status != GL_TRUE) {
-      my $stat = glGetInfoLogARB_p($self->{fragment_id});
-      return "Fragment shader: $stat" if ($stat);
-    }
+    return undef if !$self->{fragment_id};
+    my $stat = _compile_shader($self->{fragment_id}, $fragment, 'Fragment');
+    return $stat if $stat;
   }
   # Load vertex code
   if ($vertex) {
     $self->{vertex_id} = glCreateShaderObjectARB($self->{vertex_const});
-    return undef if (!$self->{vertex_id});
-    glShaderSourceARB_p($self->{vertex_id}, $vertex);
-    glCompileShaderARB($self->{vertex_id});
-    my $compilation_status =
-      glGetObjectParameterivARB_p($self->{vertex_id}, GL_OBJECT_COMPILE_STATUS_ARB);
-    if ($compilation_status != GL_TRUE) {
-      my $stat = glGetInfoLogARB_p($self->{vertex_id});
-      return "Vertex shader: $stat" if ($stat);
-    }
+    return undef if !$self->{vertex_id};
+    my $stat = _compile_shader($self->{vertex_id}, $vertex, 'Vertex');
+    return $stat if $stat;
   }
   # Link shaders
   my $sp = glCreateProgramObjectARB();
