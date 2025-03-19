@@ -7,6 +7,8 @@
 *~
 .*.swp
 *.bak
+*.def
+*_def.old
 
 # Explicitly skip these generated files
 lib/OpenGL/Config.pm
@@ -24,7 +26,6 @@ lib/OpenGL/GLUT.c
 lib/OpenGL/Array.c
 lib/OpenGL/Matrix.c
 lib/OpenGL/Const.c
-OpenGL.def
 blib/
 gl_exclude.h
 pm_to_blib
