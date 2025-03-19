@@ -13,6 +13,10 @@
 #include "gl_util.h"
 #endif
 
+#ifdef HAVE_GLU
+#include "glu_util.h"
+#endif
+
 /********************/
 /* GPGPU Utils      */
 /********************/
