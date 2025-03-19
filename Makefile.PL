@@ -63,7 +63,7 @@ our $IS_MINGW = 0;
 our $IS_STRAWBERRY = 0;
 our $IS_CYGWIN;
 our $IS_W32API;
-our $INCS;
+our $INCS = '';
 our $NO_LGCC = grep /^NO_LGCC$/, @ARGV; @ARGV = grep !/^NO_LGCC$/, @ARGV;
 
 my $prepare_success = eval {
