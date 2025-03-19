@@ -23,9 +23,9 @@ use OpenGL::V1;
 use OpenGL::V2;
 use OpenGL::V3;
 use OpenGL::Const;
-use OpenGL::Array;
+use OpenGL::Array qw(glpHasGPGPU);
 use OpenGL::Matrix;
-use OpenGL::GLX qw(:constants :functions _have_glp _have_glx glpcOpenWindow __had_dbuffer_hack);
+use OpenGL::GLX qw(:constants :functions _have_glp _have_glx glpcOpenWindow __had_dbuffer_hack glpReadTex);
 use OpenGL::GLU qw(:constants :functions _have_glu);
 use OpenGL::GLUT qw(:constants :functions _have_glut _have_freeglut glpHasGLUT);
 

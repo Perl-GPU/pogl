@@ -13,6 +13,209 @@
 #include "gl_util.h"
 #endif
 
+/********************/
+/* GPGPU Utils      */
+/********************/
+
+GLint FBO_MAX = -1;
+
+/* Get max GPGPU data size */
+int gpgpu_size(void)
+{
+#if defined(GL_ARB_texture_rectangle) && defined(GL_ARB_texture_float) && \
+  defined(GL_ARB_fragment_program) && defined(GL_EXT_framebuffer_object)
+  if (FBO_MAX == -1)
+  {
+    if (testProc(glProgramStringARB,"glProgramStringARB") &&
+      testProc(glGenProgramsARB,"glGenProgramsARB") &&
+      testProc(glBindProgramARB,"glBindProgramARB") &&
+      testProc(glIsProgramARB,"glIsProgramARB") &&
+      testProc(glProgramLocalParameter4fvARB,"glProgramLocalParameter4fvARB") &&
+      testProc(glDeleteProgramsARB,"glDeleteProgramsARB") &&
+      testProc(glGenFramebuffersEXT,"glGenFramebuffersEXT") &&
+      testProc(glGenRenderbuffersEXT,"glGenRenderbuffersEXT") &&
+      testProc(glBindFramebufferEXT,"glBindFramebufferEXT") &&
+      testProc(glFramebufferTexture2DEXT,"glFramebufferTexture2DEXT") &&
+      testProc(glBindRenderbufferEXT,"glBindRenderbufferEXT") &&
+      testProc(glRenderbufferStorageEXT,"glRenderbufferStorageEXT") &&
+      testProc(glFramebufferRenderbufferEXT,"glFramebufferRenderbufferEXT") &&
+      testProc(glCheckFramebufferStatusEXT,"glCheckFramebufferStatusEXT") &&
+      testProc(glDeleteRenderbuffersEXT,"glDeleteRenderbuffersEXT") &&
+      testProc(glDeleteFramebuffersEXT,"glDeleteFramebuffersEXT"))
+    {
+      glGetIntegerv(GL_MAX_RENDERBUFFER_SIZE_EXT,&FBO_MAX);
+    }
+    else
+    {
+      FBO_MAX = 0;
+    }
+  }
+  return(FBO_MAX);
+#else
+  return(0);
+#endif
+}
+
+/* Get max square array width for a given GPGPU data size */
+int gpgpu_width(int len)
+{
+  int max = gpgpu_size();
+  if (max && len && !(len%3))
+  {
+    int count = len / 3;
+    int w = (int)sqrt(count);
+
+    while ((w <= count) && (w <= max))
+    {
+      if (!(count%w)) return(w);
+      w++;
+    }
+  }
+  return(0);
+}
+
+#ifdef GL_ARB_fragment_program
+static char affine_prog[] =
+  "!!ARBfp1.0\n"
+  "PARAM affine[4] = {program.local[0..3]};\n"
+  "TEMP decal;\n"
+  "TEX decal, fragment.texcoord[0], texture[0], RECT;\n"
+  "MOV decal.w, 1.0;\n"
+  "DP4 result.color.x, decal, affine[0];\n"
+  "DP4 result.color.y, decal, affine[1];\n"
+  "DP4 result.color.z, decal, affine[2];\n"
+  "END\n";
+
+/* Enable affine shader program */
+void enable_affine(oga_struct * oga)
+{
+  if (!oga) return;
+  if (!oga->affine_handle)
+  {
+    /* Load shader program */
+    glGenProgramsARB(1,&oga->affine_handle);
+    glBindProgramARB(GL_FRAGMENT_PROGRAM_ARB,oga->affine_handle);
+    glProgramStringARB(GL_FRAGMENT_PROGRAM_ARB,
+      GL_PROGRAM_FORMAT_ASCII_ARB, strlen(affine_prog),affine_prog);
+
+    /* Validate shader program */
+    if (!glIsProgramARB(oga->affine_handle))
+    {
+      GLint errorPos;
+      glGetIntegerv(GL_PROGRAM_ERROR_POSITION_ARB,&errorPos);
+      if (errorPos < 0) errorPos = strlen(affine_prog);
+      croak("Affine fragment program error\n%s",&affine_prog[errorPos]);
+    }
+  }
+  glEnable(GL_FRAGMENT_PROGRAM_ARB);
+}
+
+/* Disable affine shader program */
+void disable_affine(oga_struct * oga)
+{
+  if (!oga) return;
+  if (oga->affine_handle) glDisable(GL_FRAGMENT_PROGRAM_ARB);
+}
+#endif
+
+#ifdef GL_EXT_framebuffer_object
+/* Unbind an FBO to an OGA */
+void release_fbo(oga_struct * oga)
+{
+  if (oga->fbo_handle)
+  {
+    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+    glDeleteFramebuffersEXT(1,&oga->fbo_handle);
+  }
+
+  if (oga->tex_handle[0] || oga->tex_handle[1])
+  {
+    glBindTexture(oga->target,0);
+    if (oga->tex_handle[0]) glDeleteTextures(1,&oga->tex_handle[0]);
+    if (oga->tex_handle[1]) glDeleteTextures(1,&oga->tex_handle[1]);
+  }
+}
+
+/* Enable an FBO bound to an OGA */
+void enable_fbo(oga_struct * oga, int w, int h, GLuint target,
+  GLuint pixel_type, GLuint pixel_format, GLuint element_size)
+{
+  if (!oga) return;
+
+  if ((oga->fbo_w != w) || (oga->fbo_h != h) ||
+    (oga->target != target) ||
+    (oga->pixel_type != pixel_type) ||
+    (oga->pixel_format != pixel_format) ||
+    (oga->element_size != element_size)) release_fbo(oga);
+
+  if (!oga->fbo_handle)
+  {
+    GLenum status;
+
+    /* Save params */
+    oga->fbo_w = w;
+    oga->fbo_h = h;
+    oga->target = target;
+    oga->pixel_type = pixel_type;
+    oga->pixel_format = pixel_format;
+    oga->element_size = element_size;
+
+    /* Set up FBO */
+    glGenTextures(2,oga->tex_handle);
+    glGenFramebuffersEXT(1,&oga->fbo_handle);
+    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT,oga->fbo_handle);
+
+    glViewport(0,0,w,h);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(0,w,0,h);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    glBindTexture(target,oga->tex_handle[1]);
+    glTexParameteri(target,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+    glTexParameteri(target,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexParameteri(target,GL_TEXTURE_WRAP_S,GL_CLAMP);
+    glTexParameteri(target,GL_TEXTURE_WRAP_T,GL_CLAMP);
+
+    glTexImage2D(target,0,pixel_type,w,h,0,
+      pixel_format,element_size,0);
+
+    glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT,
+      GL_COLOR_ATTACHMENT0_EXT,target,oga->tex_handle[1],0);
+
+    status = glCheckFramebufferStatusEXT(GL_RENDERBUFFER_EXT);
+    if (status) croak("enable_fbo status: %04X\n",status);
+  }
+  else
+  {
+    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT,oga->fbo_handle);
+  }
+
+  /* Load data */
+  glBindTexture(target,oga->tex_handle[0]);
+  glTexImage2D(target,0,pixel_type,w,h,0,
+    pixel_format,element_size,oga->data);
+
+  glEnable(target);
+  //glDrawBuffer(GL_COLOR_ATTACHMENT0_EXT);
+  glBindTexture(target,oga->tex_handle[0]);
+  glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_DECAL);
+}
+
+/* Disable an FBO bound to an OGA */
+void disable_fbo(oga_struct * oga)
+{
+  if (!oga) return;
+  if (oga->fbo_handle)
+  {
+    glDisable(oga->target);
+    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT,0);
+  }
+}
+#endif
+
+
 /* OpenGL RPN code */
 #ifndef M_PI
 #ifdef PI
@@ -1109,10 +1312,10 @@ new(Class, count, type, ...)
 
 		oga->dimension_count = 1;
 		oga->dimensions[0] = count;
-		
+
 		oga->type_count = items - 2;
 		oga->item_count = count * (items - 2);
-		
+
 		oga->types = malloc(sizeof(GLenum) * oga->type_count);
 		oga->type_offset = malloc(sizeof(GLint) * oga->type_count);
 		for(i=0,j=0;i<oga->type_count;i++) {
@@ -1121,16 +1324,16 @@ new(Class, count, type, ...)
 			j += gl_type_size(oga->types[i]);
 		}
 		oga->total_types_width = j;
-		
+
 		oga->data_length = oga->total_types_width *
 			// ((count + oga->type_count-1) / oga->type_count); # vas is das?
 			count;
-		
+
 		oga->data = malloc(oga->data_length);
 		memset(oga->data,0,oga->data_length);
 
 		oga->free_data = 1;
-		
+
 		RETVAL = oga;
 	}
 	OUTPUT:
@@ -1158,7 +1361,7 @@ new_list(Class, type, ...)
 		oga->item_count = count;
 		oga->total_types_width = gl_type_size(type);
 		oga->data_length = oga->total_types_width * oga->item_count;
-		
+
 		oga->types = malloc(sizeof(GLenum) * oga->type_count);
 		oga->type_offset = malloc(sizeof(GLint) * oga->type_count);
 		oga->data = malloc(oga->data_length);
@@ -1168,7 +1371,7 @@ new_list(Class, type, ...)
 		oga->types[0] = type;
 
 		SvItems(type,2,(GLuint)oga->item_count,oga->data);
-		
+
 		RETVAL = oga;
 	}
 	OUTPUT:
@@ -1198,7 +1401,7 @@ new_scalar(Class, type, data, length)
 		oga->item_count = count;
 		oga->total_types_width = width;
 		oga->data_length = length;
-		
+
 		oga->types = malloc(sizeof(GLenum) * oga->type_count);
 		oga->type_offset = malloc(sizeof(GLint) * oga->type_count);
 		oga->data = malloc(oga->data_length);
@@ -1208,7 +1411,7 @@ new_scalar(Class, type, data, length)
 		oga->types[0] = type;
 
 		memcpy(oga->data,data_s,oga->data_length);
-		
+
 		RETVAL = oga;
 	}
 	OUTPUT:
@@ -1231,21 +1434,21 @@ new_pointer(Class, type, ptr, elements)
 
 		oga->dimension_count = 1;
 		oga->dimensions[0] = elements;
-		
+
 		oga->type_count = 1;
 		oga->item_count = elements;
-		
+
 		oga->types = malloc(sizeof(GLenum) * oga->type_count);
 		oga->type_offset = malloc(sizeof(GLint) * oga->type_count);
 		oga->types[0] = type;
 		oga->type_offset[0] = 0;
 		oga->total_types_width = width;
-		
+
 		oga->data_length = elements * width;
-		
+
 		oga->data = ptr;
 		oga->free_data = 0;
-		
+
 		RETVAL = oga;
 	}
 	OUTPUT:
@@ -1266,21 +1469,21 @@ new_from_pointer(Class, ptr, length)
 
 		oga->dimension_count = 1;
 		oga->dimensions[0] = length;
-		
+
 		oga->type_count = 1;
 		oga->item_count = length;
-		
+
 		oga->types = malloc(sizeof(GLenum) * oga->type_count);
 		oga->type_offset = malloc(sizeof(GLint) * oga->type_count);
 		oga->types[0] = GL_UNSIGNED_BYTE;
 		oga->type_offset[0] = 0;
 		oga->total_types_width = 1;
-		
+
 		oga->data_length = oga->item_count;
-		
+
 		oga->data = ptr;
 		oga->free_data = 0;
-		
+
 		RETVAL = oga;
 	}
 	OUTPUT:
@@ -1398,20 +1601,20 @@ assign(oga, pos, ...)
 		int end;
 		GLenum t;
 		char* offset;
-		
+
 		i = pos;
 		end = i + items - 2;
-		
+
 		if (end > oga->item_count)
 			end = oga->item_count;
 		/* FIXME: is this char* conversion what is intended? */
 		offset = ((char*)oga->data) +
-			(pos / oga->type_count * oga->total_types_width) + 
+			(pos / oga->type_count * oga->total_types_width) +
 			oga->type_offset[pos % oga->type_count];
-		
+
 		j = 2;
 
-		/* Handle multi-type OGAs */		
+		/* Handle multi-type OGAs */
 		for (;i<end;i++,j++) {
 			t = oga->types[i % oga->type_count];
 			switch (t) {
@@ -1463,11 +1666,11 @@ assign(oga, pos, ...)
 				(*(GLint*)offset) = (GLint)SvIV(ST(j));
 				offset += sizeof(GLint);
 				break;
-			case GL_FLOAT: 
+			case GL_FLOAT:
 				(*(GLfloat*)offset) = (GLfloat)SvNV(ST(j));
 				offset += sizeof(GLfloat);
 				break;
-			case GL_DOUBLE: 
+			case GL_DOUBLE:
 				(*(GLdouble*)offset) = (GLdouble)SvNV(ST(j));
 				offset += sizeof(GLdouble);
 				break;
@@ -1522,20 +1725,20 @@ assign_data(oga, pos, data)
 		void * offset;
 		void * src;
 		STRLEN len;
-		
+
 		offset = ((char*)oga->data) +
-			(pos / oga->type_count * oga->total_types_width) + 
+			(pos / oga->type_count * oga->total_types_width) +
 			oga->type_offset[pos % oga->type_count];
-		
+
 		src = SvPV(data, len);
-		
+
 		memcpy(offset, src, len);
 	}
 
 #//# @data = $oga->retrieve($pos,$len);
 #//- Get OGA data array, by offset and length
 void
-retrieve(oga, ...)	
+retrieve(oga, ...)
 	OpenGL::Array	oga
 	PPCODE:
 	{
@@ -1546,16 +1749,16 @@ retrieve(oga, ...)
 		int i;
 
 		offset = ((char*)oga->data) +
-			(pos / oga->type_count * oga->total_types_width) + 
+			(pos / oga->type_count * oga->total_types_width) +
 			oga->type_offset[pos % oga->type_count];
-		
+
 		if (end > oga->item_count)
 			end = oga->item_count;
-		
+
 		EXTEND(sp, end-pos);
-		
+
 		i = pos;
-		
+
 		for (;i<end;i++) {
 			GLenum t = oga->types[i % oga->type_count];
 			switch (t) {
@@ -1607,11 +1810,11 @@ retrieve(oga, ...)
 				PUSHs(sv_2mortal(newSViv( (*(GLint*)offset) )));
 				offset += sizeof(GLint);
 				break;
-			case GL_FLOAT: 
+			case GL_FLOAT:
 				PUSHs(sv_2mortal(newSVnv( (*(GLfloat*)offset) )));
 				offset += sizeof(GLfloat);
 				break;
-			case GL_DOUBLE: 
+			case GL_DOUBLE:
 				PUSHs(sv_2mortal(newSVnv( (*(GLdouble*)offset) )));
 				offset += sizeof(GLdouble);
 				break;
@@ -1634,9 +1837,9 @@ retrieve_data(oga, ...)
 		GLint	pos = (items > 1) ? SvIV(ST(1)) : 0;
 		GLint	len = (items > 2) ? SvIV(ST(2)) : (oga->item_count - pos);
 		void * offset;
-		
+
 		offset = ((char*)oga->data) +
-			(pos / oga->type_count * oga->total_types_width) + 
+			(pos / oga->type_count * oga->total_types_width) +
 			oga->type_offset[pos % oga->type_count];
 
 		RETVAL = newSVpv((char*)offset, len);
@@ -1682,7 +1885,7 @@ offset(oga, pos)
 	GLint	pos
 	CODE:
 	    RETVAL = ((char*)oga->data) +
-		(pos / oga->type_count * oga->total_types_width) + 
+		(pos / oga->type_count * oga->total_types_width) +
 		oga->type_offset[pos % oga->type_count];
 	OUTPUT:
 	    RETVAL
@@ -1755,7 +1958,7 @@ affine(oga, ...)
 			for (i=0; i<count; i++)
 				mat[i] = (GLfloat)SvNV(ST(i+1));
 		}
-#if 0 /* Need to figure out why this is slower than CPU calcs */ 
+#if 0 /* Need to figure out why this is slower than CPU calcs */
 		/* Use GPU if FBOs and Fragment Programs are supported */
 		fbo_width = gpgpu_width(len);
 		if (dim == 4 && fbo_width)
@@ -1880,8 +2083,16 @@ DESTROY(oga)
 			memset(oga->data, '\0', oga->data_length);
 			free(oga->data);
 		}
-	
+
 		free(oga->types);
 		free(oga->type_offset);
 		free(oga);
 	}
+
+#//# glpHasGPGPU();
+int
+glpHasGPGPU()
+	CODE:
+		RETVAL = gpgpu_size();
+	OUTPUT:
+		RETVAL

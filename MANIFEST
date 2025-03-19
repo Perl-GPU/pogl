@@ -62,7 +62,6 @@ KNOWN_PROBLEMS
 lib/OpenGL.pm
 lib/OpenGL.pod
 lib/OpenGL/Array.pm
-lib/OpenGL/Array.pod
 lib/OpenGL/Array.xs
 lib/OpenGL/Const.pm
 lib/OpenGL/Const.xs

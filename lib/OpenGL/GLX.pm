@@ -188,7 +188,7 @@ our @func = qw(
    glpXQueryPointer
 );
 
-our @EXPORT_OK = (@const, @func, qw(_have_glp _have_glx glpcOpenWindow __had_dbuffer_hack));
+our @EXPORT_OK = (@const, @func, qw(_have_glp _have_glx glpcOpenWindow __had_dbuffer_hack glpReadTex));
 our %EXPORT_TAGS = (
   all => \@EXPORT_OK,
   constants => \@const,
