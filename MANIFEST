@@ -92,6 +92,7 @@ SUPPORTS
 t/00_require.t
 t/01_use.t
 t/10_opengl_array.t
+t/OpenGL-GLU.t
 test.jpg
 test.pl
 test.tga
