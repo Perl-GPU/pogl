@@ -180,16 +180,13 @@ sub LoadFiles
   my($self,$fragment_file,$vertex_file) = @_;
 
   my $fragment = '';
-  if ($fragment_file)
-  {
+  if ($fragment_file) {
     return "Does not exist: $fragment_file" if (!-e $fragment_file);
     $fragment = $self->read_file($fragment_file);
     return "Empty fragment file" if (!$fragment);
   }
-
   my $vertex = '';
-  if ($fragment_file)
-  {
+  if ($vertex_file) {
     return "Does not exist: $vertex_file" if (!-e $vertex_file);
     $vertex = $self->read_file($vertex_file);
     return "Empty vertex file" if (!$vertex);
