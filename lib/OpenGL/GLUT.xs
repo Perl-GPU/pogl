@@ -510,6 +510,30 @@ static void generic_glut_menu_handler(int value)
 
 MODULE = OpenGL::GLUT		PACKAGE = OpenGL
 
+#// Test for GLUT
+int
+_have_glut()
+        CODE:
+#if defined(HAVE_GLUT) || defined(HAVE_FREEGLUT)
+        RETVAL = 1;
+#else
+        RETVAL = 0;
+#endif /* defined HAVE_GLUT or HAVE_FREEGLUT */
+        OUTPUT:
+        RETVAL
+
+#// Test for FreeGLUT
+int
+_have_freeglut()
+        CODE:
+#if defined(HAVE_FREEGLUT)
+        RETVAL = 1;
+#else
+        RETVAL = 0;
+#endif /* defined HAVE_FREEGLUT */
+        OUTPUT:
+        RETVAL
+
 #// Test for done with glutInit
 int
 done_glutInit()

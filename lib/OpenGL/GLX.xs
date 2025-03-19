@@ -274,42 +274,6 @@ _have_gl()
 	OUTPUT:
 	RETVAL
 
-#// Test for GLU
-int
-_have_glu()
-	CODE:
-#ifdef HAVE_GLU
-	RETVAL = 1;
-#else
-	RETVAL = 0;
-#endif /* defined HAVE_GLU */
-	OUTPUT:
-	RETVAL
-
-#// Test for GLUT
-int
-_have_glut()
-	CODE:
-#if defined(HAVE_GLUT) || defined(HAVE_FREEGLUT)
-	RETVAL = 1;
-#else
-	RETVAL = 0;
-#endif /* defined HAVE_GLUT or HAVE_FREEGLUT */
-	OUTPUT:
-	RETVAL
-
-#// Test for FreeGLUT
-int
-_have_freeglut()
-	CODE:
-#if defined(HAVE_FREEGLUT)
-	RETVAL = 1;
-#else
-	RETVAL = 0;
-#endif /* defined HAVE_FREEGLUT */
-	OUTPUT:
-	RETVAL
-
 #// Test for GLX
 int
 _have_glx()

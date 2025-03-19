@@ -358,6 +358,18 @@ void CALLBACK _s_marshal_glu_t_callback_combine (GLdouble coords[3], void * vert
 MODULE = OpenGL::GLU		PACKAGE = OpenGL
 
 
+#// Test for GLU
+int
+_have_glu()
+        CODE:
+#ifdef HAVE_GLU
+        RETVAL = 1;
+#else
+        RETVAL = 0;
+#endif /* defined HAVE_GLU */
+        OUTPUT:
+        RETVAL
+
 ##################### GLU #########################
 
 #ifdef HAVE_GLU
