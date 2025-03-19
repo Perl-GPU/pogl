@@ -6,7 +6,7 @@ use warnings;
 use Exporter 'import';
 require DynaLoader;
 
-our $VERSION = '0.7003';
+our $VERSION = '0.7101';
 our @ISA = qw(DynaLoader);
 our @EXPORT_OK = qw(glpHasGPGPU);
 
