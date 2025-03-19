@@ -299,6 +299,15 @@ our @func = qw(
    glutWireTorus
 );
 
+our @EXPORT_OK = (@const, @func, qw(_have_glut _have_freeglut glpHasGLUT));
+our %EXPORT_TAGS = (
+  all => \@EXPORT_OK,
+  constants => \@const,
+  glutconstants => \@const,
+  functions => \@func,
+  glutfunctions => \@func,
+);
+
 __PACKAGE__->bootstrap;
 
 1;

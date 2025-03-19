@@ -507,8 +507,21 @@ static void generic_glut_menu_handler(int value)
 /* End of set up for GLUT callback stuff */
 
 
+MODULE = OpenGL::GLUT		PACKAGE = OpenGL::GLUT
 
-MODULE = OpenGL::GLUT		PACKAGE = OpenGL
+#//# glpHasGLUT();
+int
+glpHasGLUT()
+        CODE:
+        {
+#if defined(HAVE_GLUT) || defined(HAVE_FREEGLUT)
+                RETVAL = 1;
+#else
+                RETVAL = 0;
+#endif /* defined HAVE_GLUT or HAVE_FREEGLUT */
+        }
+        OUTPUT:
+                RETVAL
 
 #// Test for GLUT
 int
@@ -1559,6 +1572,6 @@ glutCloseFunc(handler=0, ...)
 
 BOOT:
 {
-   HV *stash = gv_stashpvn("OpenGL", strlen("OpenGL"), TRUE);
+   HV *stash = gv_stashpvn("OpenGL::GLUT", strlen("OpenGL::GLUT"), TRUE);
 #include "glut_const.h"
 }

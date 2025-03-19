@@ -355,7 +355,7 @@ void CALLBACK _s_marshal_glu_t_callback_combine (GLdouble coords[3], void * vert
 
 #endif
 
-MODULE = OpenGL::GLU		PACKAGE = OpenGL
+MODULE = OpenGL::GLU		PACKAGE = OpenGL::GLU
 
 
 #// Test for GLU
@@ -1124,7 +1124,7 @@ gluUnProject_p(winx,winy,winz, m1,m2,m3,m4,m5,m6,m7,m8,m9,m10,m11,m12,m13,m14,m1
 
 BOOT:
 {
-   HV *stash = gv_stashpvn("OpenGL", strlen("OpenGL"), TRUE);
+   HV *stash = gv_stashpvn("OpenGL::GLU", strlen("OpenGL::GLU"), TRUE);
 #include "glu_const.h"
 }
 

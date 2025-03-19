@@ -25,9 +25,9 @@ use OpenGL::V3;
 use OpenGL::Const;
 use OpenGL::Array;
 use OpenGL::Matrix;
-use OpenGL::GLX;
-use OpenGL::GLU;
-use OpenGL::GLUT;
+use OpenGL::GLX qw(:constants :functions _have_glp _have_glx glpcOpenWindow __had_dbuffer_hack);
+use OpenGL::GLU qw(:constants :functions _have_glu);
+use OpenGL::GLUT qw(:constants :functions _have_glut _have_freeglut glpHasGLUT);
 
 our $gl_version;
 our $glext_installed = {};

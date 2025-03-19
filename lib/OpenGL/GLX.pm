@@ -188,6 +188,15 @@ our @func = qw(
    glpXQueryPointer
 );
 
+our @EXPORT_OK = (@const, @func, qw(_have_glp _have_glx glpcOpenWindow __had_dbuffer_hack));
+our %EXPORT_TAGS = (
+  all => \@EXPORT_OK,
+  constants => \@const,
+  glxconstants => \@const,
+  functions => \@func,
+  glxfunctions => \@func,
+);
+
 __PACKAGE__->bootstrap;
 
 1;

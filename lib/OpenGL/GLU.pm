@@ -178,6 +178,15 @@ our @func = qw(
    gluUnProject_p
 );
 
+our @EXPORT_OK = (@const, @func, '_have_glu');
+our %EXPORT_TAGS = (
+  all => \@EXPORT_OK,
+  constants => \@const,
+  gluconstants => \@const,
+  functions => \@func,
+  glufunctions => \@func,
+);
+
 __PACKAGE__->bootstrap;
 
 1;

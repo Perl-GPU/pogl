@@ -256,9 +256,7 @@ void disable_fbo(oga_struct * oga)
 #endif
 
 
-
-
-MODULE = OpenGL::GLX		PACKAGE = OpenGL
+MODULE = OpenGL::GLX		PACKAGE = OpenGL::GLX
 
 
 
@@ -681,20 +679,6 @@ glpReadTex(file)
 			0, GL_RGB, GL_UNSIGNED_BYTE,image);
 	}
 
-#//# glpHasGLUT();
-int
-glpHasGLUT()
-	CODE:
-	{
-#if defined(HAVE_GLUT) || defined(HAVE_FREEGLUT)
-		RETVAL = 1;
-#else
-		RETVAL = 0;
-#endif /* defined HAVE_GLUT or HAVE_FREEGLUT */
-	}
-	OUTPUT:
-		RETVAL
-
 
 #//# glpHasGPGPU();
 int
@@ -706,6 +690,6 @@ glpHasGPGPU()
 
 BOOT:
 {
-   HV *stash = gv_stashpvn("OpenGL", strlen("OpenGL"), TRUE);
+   HV *stash = gv_stashpvn("OpenGL::GLX", strlen("OpenGL::GLX"), TRUE);
 #include "glx_const.h"
 }
