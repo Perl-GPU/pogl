@@ -12,6 +12,7 @@ examples/plane.pl
 examples/planets.pl
 examples/quest.pl
 examples/README
+examples/shader-test.pl
 examples/simple.pl
 examples/smooth.pl
 examples/spaceship.nff
@@ -73,6 +74,13 @@ lib/OpenGL/GLX.pm
 lib/OpenGL/GLX.xs
 lib/OpenGL/Matrix.pm
 lib/OpenGL/Matrix.xs
+lib/OpenGL/Shader.pm
+lib/OpenGL/Shader.pod
+lib/OpenGL/Shader/ARB.pm
+lib/OpenGL/Shader/CG.pm
+lib/OpenGL/Shader/Common.pm
+lib/OpenGL/Shader/GLSL.pm
+lib/OpenGL/Shader/Objects.pm
 lib/OpenGL/Tessellation.pod
 lib/OpenGL/V1.pm
 lib/OpenGL/V1.xs
@@ -92,7 +100,14 @@ SUPPORTS
 t/00_require.t
 t/01_use.t
 t/10_opengl_array.t
+t/fragment.arb
+t/fragment.cg
+t/fragment.glsl
 t/OpenGL-GLU.t
+t/shader.t
+t/vertex.arb
+t/vertex.cg
+t/vertex.glsl
 test.jpg
 test.pl
 test.tga
