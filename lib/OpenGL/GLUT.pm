@@ -1,18 +1,12 @@
 package OpenGL::GLUT;
 
-=head1 NAME
-
-OpenGL::GLUT - module encapsulating GLUT functions
-
-=cut
-
 use strict;
 use warnings;
 
 use Exporter 'import';
 require DynaLoader;
 
-our $VERSION = '0.7003';
+our $VERSION = '0.7202';
 our @ISA = qw(DynaLoader);
 
 our @const = qw(
@@ -311,3 +305,164 @@ our %EXPORT_TAGS = (
 __PACKAGE__->bootstrap;
 
 1;
+
+__END__
+
+=head1 NAME
+
+OpenGL::GLUT - Perl bindings to GLUT/FreeGLUT GUI toolkit
+
+=head1 SYNOPSIS
+
+  use OpenGL::GLUT qw(:all); # now can use GLUT calls
+
+=head1 DESCRIPTION
+
+OpenGL::GLUT is, as of 0.7202, back as part of the main L<OpenGL>
+distribution, but now it works separately.
+The purpose is to make this functionality
+available independent of the legacy OpenGL module for use with
+L<OpenGL::Modern>.
+
+When you register a C<glutCloseFunc>, ensure that you de-register it
+before destroying the window. See the supplied F<test.pl>.
+
+=head2 EXPORT
+
+  :all - exports all GLUT functions and constants
+  :constants - export only GLUT constants (same as :glutconstants)
+  :functions - export only GLUT functions (same as :glutfunctions)
+
+=head2 Exportable functions
+
+  void glutAddMenuEntry( const char* label, int value )
+  void glutAddSubMenu( const char* label, int subMenu )
+  void glutAttachMenu( int button )
+  void glutBitmapCharacter( void* font, int character )
+  int glutBitmapLength( void* font, const unsigned char* string )
+  int glutBitmapWidth( void* font, int character )
+  void glutButtonBoxFunc( void (* callback)( int, int ) )
+  void glutChangeToMenuEntry( int item, const char* label, int value )
+  void glutChangeToSubMenu( int item, const char* label, int value )
+  void glutCloseFunc( void (* callback)( void ) )
+  void glutCopyColormap( int window )
+  int glutCreateMenu( void (* callback)( int menu ) )
+  int glutCreateSubWindow( int window, int x, int y, int width, int height )
+  int glutCreateWindow( const char* title )
+  void glutDestroyMenu( int menu )
+  void glutDestroyWindow( int window )
+  void glutDetachMenu( int button )
+  int glutDeviceGet( GLenum query )
+  void glutDialsFunc( void (* callback)( int, int ) )
+  void glutDisplayFunc( void (* callback)( void ) )
+  int glutEnterGameMode( void )
+  void glutEntryFunc( void (* callback)( int ) )
+  void glutEstablishOverlay( void )
+  int glutExtensionSupported( const char* extension )
+  void glutForceJoystickFunc( void )
+  void glutFullScreen( void )
+  int glutGameModeGet( GLenum query )
+  void glutGameModeString( const char* string )
+  int glutGet( GLenum query )
+  GLfloat glutGetColor( int color, int component )
+  int glutGetMenu( void )
+  int glutGetModifiers( void )
+  int glutGetWindow( void )
+  void glutHideOverlay( void )
+  void glutHideWindow( void )
+  void glutIconifyWindow( void )
+  void glutIdleFunc( void (* callback)( void ) )
+  void glutIgnoreKeyRepeat( int ignore )
+  void glutInit( int* pargc, char** argv )
+  void glutInitDisplayMode( unsigned int displayMode )
+  void glutInitDisplayString( const char* displayMode )
+  void glutInitWindowPosition( int x, int y )
+  void glutInitWindowSize( int width, int height )
+  void glutKeyboardFunc( void (* callback)( unsigned char, int, int ) )
+  void glutKeyboardUpFunc( void (* callback)( unsigned char, int, int ) )
+  int glutLayerGet( GLenum query )
+  void glutLeaveGameMode( void )
+  void glutMainLoop( void )
+  void glutMenuStateFunc( void (* callback)( int ) )
+  void glutMenuStatusFunc( void (* callback)( int, int, int ) )
+  void glutMotionFunc( void (* callback)( int, int ) )
+  void glutMouseFunc( void (* callback)( int, int, int, int ) )
+  void glutOverlayDisplayFunc( void (* callback)( void ) )
+  void glutPassiveMotionFunc( void (* callback)( int, int ) )
+  void glutPopWindow( void )
+  void glutPositionWindow( int x, int y )
+  void glutPostOverlayRedisplay( void )
+  void glutPostRedisplay( void )
+  void glutPostWindowOverlayRedisplay( int window )
+  void glutPostWindowRedisplay( int window )
+  void glutPushWindow( void )
+  void glutRemoveMenuItem( int item )
+  void glutRemoveOverlay( void )
+  void glutReportErrors( void )
+  void glutReshapeFunc( void (* callback)( int, int ) )
+  void glutReshapeWindow( int width, int height )
+  void glutSetColor( int color, GLfloat red, GLfloat green, GLfloat blue )
+  void glutSetCursor( int cursor )
+  void glutSetIconTitle( const char* title )
+  void glutSetKeyRepeat( int repeatMode )
+  void glutSetMenu( int menu )
+  void glutSetWindow( int window )
+  void glutSetWindowTitle( const char* title )
+  void glutSetupVideoResizing( void )
+  void glutShowOverlay( void )
+  void glutShowWindow( void )
+  void glutSolidCone( GLdouble base, GLdouble height, GLint slices, GLint stacks )
+  void glutSolidCube( GLdouble size )
+  void glutSolidDodecahedron( void )
+  void glutSolidIcosahedron( void )
+  void glutSolidOctahedron( void )
+  void glutSolidSphere( GLdouble radius, GLint slices, GLint stacks )
+  void glutSolidTeapot( GLdouble size )
+  void glutSolidTetrahedron( void )
+  void glutSolidTorus( GLdouble innerRadius, GLdouble outerRadius, GLint sides, GLint rings )
+  void glutSpaceballButtonFunc( void (* callback)( int, int ) )
+  void glutSpaceballMotionFunc( void (* callback)( int, int, int ) )
+  void glutSpaceballRotateFunc( void (* callback)( int, int, int ) )
+  void glutSpecialFunc( void (* callback)( int, int, int ) )
+  void glutSpecialUpFunc( void (* callback)( int, int, int ) )
+  void glutStopVideoResizing( void )
+  void glutStrokeCharacter( void* font, int character )
+  int glutStrokeLength( void* font, const unsigned char* string )
+  int glutStrokeWidth( void* font, int character )
+  void glutSwapBuffers( void )
+  void glutTabletButtonFunc( void (* callback)( int, int, int, int ) )
+  void glutTabletMotionFunc( void (* callback)( int, int ) )
+  void glutTimerFunc( unsigned int time, void (* callback)( int ), int value )
+  void glutUseLayer( GLenum layer )
+  void glutVideoPan( int x, int y, int width, int height )
+  void glutVideoResize( int x, int y, int width, int height )
+  int glutVideoResizeGet( GLenum query )
+  void glutVisibilityFunc( void (* callback)( int ) )
+  void glutWarpPointer( int x, int y )
+  void glutWindowStatusFunc( void (* callback)( int ) )
+  void glutWireCone( GLdouble base, GLdouble height, GLint slices, GLint stacks )
+  void glutWireCube( GLdouble size )
+  void glutWireDodecahedron( void )
+  void glutWireIcosahedron( void )
+  void glutWireOctahedron( void )
+  void glutWireSphere( GLdouble radius, GLint slices, GLint stacks )
+  void glutWireTeapot( GLdouble size )
+  void glutWireTetrahedron( void )
+  void glutWireTorus( GLdouble innerRadius, GLdouble outerRadius, GLint sides, GLint rings )
+
+=head1 SEE ALSO
+
+L<OpenGL>
+
+=head1 AUTHOR
+
+Chris Marshall E<lt>chm AT cpan DOT org<gt>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2017 by Chris Marshall
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut
