@@ -8920,7 +8920,7 @@ glMapBufferARB_p(target,access,...)
 		loadProc(glGetBufferParameterivARB,"glGetBufferParameterivARB");
 	CODE:
 	{
-		GLsizeiptrARB size;
+		GLsizeiptrARB size = 0;
 		oga_struct * oga;
 		int i,j;
 
