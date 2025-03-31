@@ -800,7 +800,9 @@ sub get_extensions
   }
   elsif ($^O eq 'darwin')
   {
-    $make_ver = ";make -f Makefile.macosx " .  (length($lib) ? "GLUT_LIB='$lib' " : "") . (length($def) ? "GLUT_DEF=$def " : "");
+    $make_ver = ";make -f Makefile.macosx " .
+      "GLUT_LIB='" . ($lib || "-framework GLUT") . "' " .
+      (length($def) ? "GLUT_DEF=$def" : "");
     print "MacOSX glversion: '$make_ver'\n" if $verbose>1;
   }
   else
