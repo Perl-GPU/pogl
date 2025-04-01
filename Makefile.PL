@@ -578,7 +578,16 @@ die "$@\nOS unsupported\n" if !$prepare_success;
 
 exit 0;
 
-
+{
+package MY; # so that "SUPER" works right
+sub init_PM {
+  my ($eumm) = @_;
+  $eumm->SUPER::init_PM;
+  my $pm = $eumm->{PM};
+  delete @$pm{grep /(?:\.(?:c|xs|bs)|\Q$::Config{obj_ext}\E)$/, keys %$pm};
+  delete @$pm{grep /\.pl$/, keys %$pm};
+}
+}
 
 # test header files for extensions
 sub cfile_text
