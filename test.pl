@@ -848,14 +848,11 @@ sub cbRenderScene
     {
       glEnable(GL_VERTEX_PROGRAM_ARB);
       glEnable(GL_FRAGMENT_PROGRAM_ARB);
-
       glProgramLocalParameter4fARB(GL_VERTEX_PROGRAM_ARB, 0, 0.0,0.0,2.0,0.0);
-
       glProgramLocalParameter4fvARB_c(GL_VERTEX_PROGRAM_ARB, 1, $xform->offset(0));
       glProgramLocalParameter4fvARB_c(GL_VERTEX_PROGRAM_ARB, 2, $xform->offset(4));
       glProgramLocalParameter4fvARB_c(GL_VERTEX_PROGRAM_ARB, 3, $xform->offset(8));
       glProgramLocalParameter4fvARB_c(GL_VERTEX_PROGRAM_ARB, 4, $xform->offset(12));
-
       glProgramLocalParameter4fARB(GL_FRAGMENT_PROGRAM_ARB, 5, 1.0,0.5,0.0,1.0);
     }
 
@@ -954,8 +951,7 @@ sub cbRenderScene
     $rainbow_inc[$i] = -$rainbow_inc[$i];
   }
 
-  if ($hasVBO)
-  {
+  if ($hasVBO) {
     glBindBufferARB(GL_ARRAY_BUFFER_ARB, $ColorObjID);
     my $color_map = glMapBufferARB_p(GL_ARRAY_BUFFER_ARB,
       GL_WRITE_ONLY_ARB,GL_FLOAT);
@@ -963,13 +959,10 @@ sub cbRenderScene
       GL_BUFFER_MAP_POINTER_ARB,GL_FLOAT);
     $color_map->assign($rainbow_offset,@rainbow);
     glUnmapBufferARB(GL_ARRAY_BUFFER_ARB);
-  }
-  else
-  {
+  } else {
     $colors->assign($rainbow_offset,@rainbow);
     glColorPointer_p(4, $colors);
   }
-
 
   # Render cube
   glViewport(0, 0, $Window_Width, $Window_Height);
@@ -987,7 +980,6 @@ sub cbRenderScene
   glDisableClientState(GL_COLOR_ARRAY);
   glDisableClientState(GL_NORMAL_ARRAY);
   glDisableClientState(GL_VERTEX_ARRAY);
-
 
   # Move back to the origin (for the text, below).
   glLoadIdentity();
@@ -1246,13 +1238,12 @@ sub ReleaseResources
   if ($hasVBO)
   {
     glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
-    glDeleteBuffersARB_p($VertexObjID) if ($VertexObjID);
-    glDeleteBuffersARB_p($NormalObjID) if ($NormalObjID);
-    glDeleteBuffersARB_p($ColorObjID) if ($ColorObjID);
-    glDeleteBuffersARB_p($TexCoordObjID) if ($TexCoordObjID);
-
+    glDeleteBuffersARB_p($VertexObjID) if $VertexObjID;
+    glDeleteBuffersARB_p($NormalObjID) if $NormalObjID;
+    glDeleteBuffersARB_p($ColorObjID) if $ColorObjID;
+    glDeleteBuffersARB_p($TexCoordObjID) if $TexCoordObjID;
     glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, 0);
-    glDeleteBuffersARB_p($IndexObjID) if ($IndexObjID);
+    glDeleteBuffersARB_p($IndexObjID) if $IndexObjID;
   }
 
   glDeleteTextures_p($TextureID_image,$TextureID_FBO);
