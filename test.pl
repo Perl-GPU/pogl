@@ -971,10 +971,7 @@ sub cbRenderScene
   glEnableClientState(GL_COLOR_ARRAY);
   glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-  for (my $i=0; $i<scalar(@indices); $i+=3)
-  {
-    glDrawArrays(GL_TRIANGLES, $i, 3);
-  }
+  glDrawArrays(GL_TRIANGLES, 0, scalar(@indices));
 
   glDisableClientState(GL_TEXTURE_COORD_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
