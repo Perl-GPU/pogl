@@ -6703,7 +6703,7 @@ glVertexPointerEXT_p(size, oga)
 	{
 		GLvoid * data = oga->data;
 #ifdef GL_VERSION_2_0
-		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		glBindBufferARB(GL_ARRAY_BUFFER, oga->bind);
 		if (oga->bind) data = NULL;
 #elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))
@@ -6732,7 +6732,7 @@ glVertexPointer_p(size, oga)
 	{
 		GLvoid * data = oga->data;
 #ifdef GL_VERSION_2_0
-		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		glBindBufferARB(GL_ARRAY_BUFFER, oga->bind);
 		if (oga->bind) data = NULL;
 #elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))
@@ -6802,7 +6802,7 @@ glNormalPointerEXT_p(oga)
 	{
 		GLvoid * data = oga->data;
 #ifdef GL_VERSION_2_0
-		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		glBindBufferARB(GL_ARRAY_BUFFER, oga->bind);
 		if (oga->bind) data = NULL;
 #elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))
@@ -6830,7 +6830,7 @@ glNormalPointer_p(oga)
 	{
 		GLvoid * data = oga->data;
 #ifdef GL_VERSION_2_0
-		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		glBindBufferARB(GL_ARRAY_BUFFER, oga->bind);
 		if (oga->bind) data = NULL;
 #elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))
@@ -6901,7 +6901,7 @@ glColorPointerEXT_p(size, oga)
 	{
 		GLvoid * data = oga->data;
 #ifdef GL_VERSION_2_0
-		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		glBindBufferARB(GL_ARRAY_BUFFER, oga->bind);
 		if (oga->bind) data = NULL;
 #elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))
@@ -7000,7 +7000,7 @@ glIndexPointerEXT_p(oga)
 	{
 		GLvoid * data = oga->data;
 #ifdef GL_VERSION_2_0
-		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		glBindBufferARB(GL_ARRAY_BUFFER, oga->bind);
 		if (oga->bind) data = NULL;
 #elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))
@@ -7028,7 +7028,7 @@ glIndexPointer_p(oga)
 	{
 		GLvoid * data = oga->data;
 #ifdef GL_VERSION_2_0
-		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		glBindBufferARB(GL_ARRAY_BUFFER, oga->bind);
 		if (oga->bind) data = NULL;
 #elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))
@@ -7099,7 +7099,7 @@ glTexCoordPointerEXT_p(size, oga)
 	{
 		GLvoid * data = oga->data;
 #ifdef GL_VERSION_2_0
-		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		glBindBufferARB(GL_ARRAY_BUFFER, oga->bind);
 		if (oga->bind) data = NULL;
 #elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))
@@ -7128,7 +7128,7 @@ glTexCoordPointer_p(size, oga)
 	{
 		GLvoid * data = oga->data;
 #ifdef GL_VERSION_2_0
-		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		glBindBufferARB(GL_ARRAY_BUFFER, oga->bind);
 		if (oga->bind) data = NULL;
 #elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))
@@ -7198,7 +7198,7 @@ glEdgeFlagPointerEXT_p(oga)
 	{
 		GLvoid * data = oga->data;
 #ifdef GL_VERSION_2_0
-		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		glBindBufferARB(GL_ARRAY_BUFFER, oga->bind);
 		if (oga->bind) data = NULL;
 #elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))
@@ -7226,7 +7226,7 @@ glEdgeFlagPointer_p(oga)
 	{
 		GLvoid * data = oga->data;
 #ifdef GL_VERSION_2_0
-		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		glBindBufferARB(GL_ARRAY_BUFFER, oga->bind);
 		if (oga->bind) data = NULL;
 #elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))

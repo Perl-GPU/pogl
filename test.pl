@@ -152,42 +152,42 @@ my ($VertexObjID,$NormalObjID,$ColorObjID,$TexCoordObjID,$IndexObjID);
 
 my @verts =
 (
-  -1.0, -1.3, -1.0,
+  -1.0, -1.3, -1.0, # bottom
   1.0, -1.3, -1.0,
   1.0, -1.3,  1.0,
   1.0, -1.3,  1.0,
   -1.0, -1.3,  1.0,
   -1.0, -1.3, -1.0,
 
-  -1.0,  1.3, -1.0,
+  -1.0,  1.3, -1.0, # top
   -1.0,  1.3,  1.0,
   1.0,  1.3,  1.0,
   1.0,  1.3,  1.0,
   1.0,  1.3, -1.0,
   -1.0,  1.3, -1.0,
 
-  -1.0, -1.0, -1.3,
+  -1.0, -1.0, -1.3, # far
   -1.0,  1.0, -1.3,
   1.0,  1.0, -1.3,
   1.0,  1.0, -1.3,
   1.0, -1.0, -1.3,
   -1.0, -1.0, -1.3,
 
-  1.3, -1.0, -1.0,
+  1.3, -1.0, -1.0, # right
   1.3,  1.0, -1.0,
   1.3,  1.0,  1.0,
   1.3,  1.0,  1.0,
   1.3, -1.0,  1.0,
   1.3, -1.0, -1.0,
 
-  -1.0, -1.0,  1.3,
+  -1.0, -1.0,  1.3, # near
   1.0, -1.0,  1.3,
   1.0,  1.0,  1.3,
   1.0,  1.0,  1.3,
   -1.0,  1.0,  1.3,
   -1.0, -1.0,  1.3,
 
-  -1.3, -1.0, -1.0,
+  -1.3, -1.0, -1.0, # left
   -1.3, -1.0,  1.0,
   -1.3,  1.0,  1.0,
   -1.3,  1.0,  1.0,
@@ -216,42 +216,42 @@ my $norms = OpenGL::Array->new_list(GL_FLOAT,@norms);
 
 my @colors =
 (
-  0.9,0.2,0.2,.75,
+  0.9,0.2,0.2,.75, # red
   0.9,0.2,0.2,.75,
   0.9,0.2,0.2,.75,
   0.9,0.2,0.2,.75,
   0.9,0.2,0.2,.75,
   0.9,0.2,0.2,.75,
 
-  0.5,0.5,0.5,.5,
+  0.5,0.5,0.5,.5, # grey
   0.5,0.5,0.5,.5,
   0.5,0.5,0.5,.5,
   0.5,0.5,0.5,.5,
   0.5,0.5,0.5,.5,
   0.5,0.5,0.5,.5,
 
-  0.2,0.9,0.2,.5,
+  0.2,0.9,0.2,.5, # green
   0.2,0.9,0.2,.5,
   0.2,0.9,0.2,.5,
   0.2,0.9,0.2,.5,
   0.2,0.9,0.2,.5,
   0.2,0.9,0.2,.5,
 
-  0.2,0.2,0.9,.25,
+  0.2,0.2,0.9,.25, # blue
   0.2,0.2,0.9,.25,
   0.2,0.2,0.9,.25,
   0.2,0.2,0.9,.25,
   0.2,0.2,0.9,.25,
   0.2,0.2,0.9,.25,
 
-  0.9, 0.2, 0.2, 0.5,
+  0.9, 0.2, 0.2, 0.5, # red/green/blue
   0.2, 0.9, 0.2, 0.5,
   0.2, 0.2, 0.9, 0.5,
   0.2, 0.2, 0.9, 0.5,
   0.1, 0.1, 0.1, 0.5,
   0.9, 0.2, 0.2, 0.5,
 
-  0.9,0.9,0.2,0.0,
+  0.9,0.9,0.2,0.0, # yellow
   0.9,0.9,0.2,0.66,
   0.9,0.9,0.2,1.0,
   0.9,0.9,0.2,1.0,
@@ -402,7 +402,6 @@ sub ourInitVertexBuffers
 
     $verts->bind($VertexObjID);
     glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $verts, GL_STATIC_DRAW_ARB);
-    glVertexPointer_c(3, GL_FLOAT, 0, 0);
 
     if (DO_TESTS)
     {
@@ -422,7 +421,6 @@ sub ourInitVertexBuffers
 
     $norms->bind($NormalObjID);
     glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $norms, GL_STATIC_DRAW_ARB);
-    glNormalPointer_c(GL_FLOAT, 0, 0);
 
     $colors->bind($ColorObjID);
     glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $colors, GL_DYNAMIC_DRAW_ARB);
@@ -431,15 +429,11 @@ sub ourInitVertexBuffers
 
     $texcoords->bind($TexCoordObjID);
     glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $texcoords, GL_STATIC_DRAW_ARB);
-    glTexCoordPointer_c(2, GL_FLOAT, 0, 0);
 
     $indices->bind($IndexObjID);
     glBufferDataARB_p(GL_ELEMENT_ARRAY_BUFFER_ARB, $indices, GL_STATIC_DRAW_ARB);
   } else {
     print "Using classic Vertex Buffers\n";
-    glVertexPointer_p(3, $verts);
-    glNormalPointer_p($norms);
-    glTexCoordPointer_p(2, $texcoords);
   }
   print "-- done\n";
 }
@@ -945,6 +939,12 @@ sub cbRenderScene
   glEnableClientState(GL_COLOR_ARRAY);
   glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
+  glVertexPointer_p(3, $verts);
+  glNormalPointer_p($norms);
+  glTexCoordPointer_p(2, $texcoords);
+  if ($hasVBO) {
+    glBindBufferARB(GL_ARRAY_BUFFER, 0);
+  }
   glDrawArrays(GL_TRIANGLES, 0, scalar(@indices));
 
   glDisableClientState(GL_TEXTURE_COORD_ARRAY);
