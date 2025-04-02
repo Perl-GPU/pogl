@@ -108,7 +108,7 @@ my $Tex_Pixels;
 
 # Our display mode settings.
 my $Light_On = 0;
-my $Blend_On = 0;
+my $Blend_On = 1;
 my $Texture_On = 1;
 my $Alpha_Add = 1;
 my $FBO_On = 0;
@@ -881,37 +881,27 @@ sub cbRenderScene
   # Enables, disables or otherwise adjusts as
   # appropriate for our current settings.
 
-  if ($Texture_On)
-  {
+  if ($Texture_On) {
     glEnable(GL_TEXTURE_2D);
-  }
-  else
-  {
+  } else {
     glDisable(GL_TEXTURE_2D);
   }
-  if ($Light_On)
-  {
+  if ($Light_On) {
     glEnable(GL_LIGHTING);
-  }
-  else
-  {
+  } else {
     glDisable(GL_LIGHTING);
   }
-  if ($Alpha_Add)
-  {
+  if ($Alpha_Add) {
     glBlendFunc(GL_SRC_ALPHA,GL_ONE);
-  }
-  else
-  {
+  } else {
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
   }
   # If we're blending, we don't want z-buffering.
-  if ($Blend_On)
-  {
+  if ($Blend_On) {
+    glEnable(GL_BLEND);
     glDisable(GL_DEPTH_TEST);
-  }
-  else
-  {
+  } else {
+    glDisable(GL_BLEND);
     glEnable(GL_DEPTH_TEST);
   }
 
@@ -933,19 +923,13 @@ sub cbRenderScene
 
 
   # Update Rainbow Cube Face
-  for (my $i=0; $i<scalar(@rainbow); $i++)
-  {
+  for (my $i=0; $i<scalar(@rainbow); $i++) {
     $rainbow[$i] += $rainbow_inc[$i];
-    if ($rainbow[$i] < 0)
-    {
+    if ($rainbow[$i] < 0) {
       $rainbow[$i] = 0.0;
-    }
-    elsif ($rainbow[$i] > 1)
-    {
+    } elsif ($rainbow[$i] > 1) {
       $rainbow[$i] = 1.0;
-    }
-    else
-    {
+    } else {
       next;
     }
     $rainbow_inc[$i] = -$rainbow_inc[$i];
@@ -1261,13 +1245,6 @@ sub cbKeyPressed
   elsif ($c eq 'B')
   {
     $Blend_On = !$Blend_On;
-    if (!$Blend_On)
-    {
-      glDisable(GL_BLEND);
-    }
-    else {
-      glEnable(GL_BLEND);
-    }
   }
   elsif ($c eq 'K')
   {
