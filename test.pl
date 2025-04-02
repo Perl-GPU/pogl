@@ -939,8 +939,6 @@ sub cbRenderScene
     glBindBufferARB(GL_ARRAY_BUFFER_ARB, $ColorObjID);
     my $color_map = glMapBufferARB_p(GL_ARRAY_BUFFER_ARB,
       GL_WRITE_ONLY_ARB,GL_FLOAT);
-    my $buffer = glGetBufferPointervARB_p(GL_ARRAY_BUFFER_ARB,
-      GL_BUFFER_MAP_POINTER_ARB,GL_FLOAT);
     $color_map->assign($rainbow_offset,@rainbow);
     glUnmapBufferARB(GL_ARRAY_BUFFER_ARB);
   } else {
