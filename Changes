@@ -3,6 +3,7 @@
 - from unreleased OpenGL::Shader 1.02: update SetMatrix to handle both 3x3 and 4x4 matrices
 - add FreeGLUT glutInitContext{Flags,Profile,Version}
 - add Array::type_size
+- add to examples/cube* to show using glDraw{Array,Element}s and GPU buffers
 
 0.7004 2025-03-19
 - re-release with higher version number for OpenGL::Array

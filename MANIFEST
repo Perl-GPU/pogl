@@ -1,7 +1,10 @@
 Changes
 COPYRIGHT
 examples/clip.pl
-examples/cube.pl
+examples/cube-glBegin.pl
+examples/cube-glDrawArrays.pl
+examples/cube-glDrawElements.pl
+examples/cube-indexbuffer.pl
 examples/depth.pl
 examples/double.pl
 examples/fun.pl
