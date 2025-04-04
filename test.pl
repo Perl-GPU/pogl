@@ -6,7 +6,7 @@ our $IS_ACTIVEPERL = ($stat =~ m|ActiveState|s);
 our $PERL_VERSION = $^V;
 $PERL_VERSION =~ s|^v||;
 
-use OpenGL qw/ :all /;
+use OpenGL qw/ :all glDrawElements_c /;
 use OpenGL::Config;     # for build information
 
 eval 'use OpenGL::Image 1.03';  # Need to use OpenGL::Image 1.03 or higher!
@@ -150,49 +150,47 @@ my $vp = OpenGL::Array->new(4,GL_INT);
 # Vertex Buffer Object data
 my ($VertexObjID,$NormalObjID,$ColorObjID,$TexCoordObjID,$IndexObjID);
 
+my @indices = (
+  0,1,2,     2,3,0,
+  4,5,6,     6,7,4,
+  8,9,10,    10,11,8,
+  12,13,14,  14,15,12,
+  16,17,18,  18,19,16,
+  20,21,22,  22,23,20,
+);
+my $indices = OpenGL::Array->new_list(GL_UNSIGNED_INT,@indices);
+
 my @verts =
 (
   -1.0, -1.3, -1.0, # bottom
   1.0, -1.3, -1.0,
   1.0, -1.3,  1.0,
-  1.0, -1.3,  1.0,
   -1.0, -1.3,  1.0,
-  -1.0, -1.3, -1.0,
 
   -1.0,  1.3, -1.0, # top
   -1.0,  1.3,  1.0,
   1.0,  1.3,  1.0,
-  1.0,  1.3,  1.0,
   1.0,  1.3, -1.0,
-  -1.0,  1.3, -1.0,
 
   -1.0, -1.0, -1.3, # far
   -1.0,  1.0, -1.3,
   1.0,  1.0, -1.3,
-  1.0,  1.0, -1.3,
   1.0, -1.0, -1.3,
-  -1.0, -1.0, -1.3,
 
   1.3, -1.0, -1.0, # right
   1.3,  1.0, -1.0,
   1.3,  1.0,  1.0,
-  1.3,  1.0,  1.0,
   1.3, -1.0,  1.0,
-  1.3, -1.0, -1.0,
 
   -1.0, -1.0,  1.3, # near
   1.0, -1.0,  1.3,
   1.0,  1.0,  1.3,
-  1.0,  1.0,  1.3,
   -1.0,  1.0,  1.3,
-  -1.0, -1.0,  1.3,
 
   -1.3, -1.0, -1.0, # left
   -1.3, -1.0,  1.0,
   -1.3,  1.0,  1.0,
-  -1.3,  1.0,  1.0,
   -1.3,  1.0, -1.0,
-  -1.3, -1.0, -1.0,
 );
 my $verts = OpenGL::Array->new_list(GL_FLOAT,@verts);
 
@@ -220,12 +218,8 @@ my @colors =
   0.9,0.2,0.2,.75,
   0.9,0.2,0.2,.75,
   0.9,0.2,0.2,.75,
-  0.9,0.2,0.2,.75,
-  0.9,0.2,0.2,.75,
 
   0.5,0.5,0.5,.5, # grey
-  0.5,0.5,0.5,.5,
-  0.5,0.5,0.5,.5,
   0.5,0.5,0.5,.5,
   0.5,0.5,0.5,.5,
   0.5,0.5,0.5,.5,
@@ -234,12 +228,8 @@ my @colors =
   0.2,0.9,0.2,.5,
   0.2,0.9,0.2,.5,
   0.2,0.9,0.2,.5,
-  0.2,0.9,0.2,.5,
-  0.2,0.9,0.2,.5,
 
   0.2,0.2,0.9,.25, # blue
-  0.2,0.2,0.9,.25,
-  0.2,0.2,0.9,.25,
   0.2,0.2,0.9,.25,
   0.2,0.2,0.9,.25,
   0.2,0.2,0.9,.25,
@@ -247,16 +237,12 @@ my @colors =
   0.9, 0.2, 0.2, 0.5, # red/green/blue
   0.2, 0.9, 0.2, 0.5,
   0.2, 0.2, 0.9, 0.5,
-  0.2, 0.2, 0.9, 0.5,
   0.1, 0.1, 0.1, 0.5,
-  0.9, 0.2, 0.2, 0.5,
 
   0.9,0.9,0.2,0.0, # yellow
   0.9,0.9,0.2,0.66,
   0.9,0.9,0.2,1.0,
-  0.9,0.9,0.2,1.0,
   0.9,0.9,0.2,0.33,
-  0.9,0.9,0.2,0.0,
 );
 my $colors = OpenGL::Array->new_list(GL_FLOAT,@colors);
 
@@ -265,12 +251,10 @@ my @rainbow =
   0.9, 0.2, 0.2, 0.5,
   0.2, 0.9, 0.2, 0.5,
   0.2, 0.2, 0.9, 0.5,
-  0.2, 0.2, 0.9, 0.5,
   0.1, 0.1, 0.1, 0.5,
-  0.9, 0.2, 0.2, 0.5,
 );
 my $rainbow = OpenGL::Array->new_list(GL_FLOAT,@rainbow);
-my $rainbow_offset = 96;
+my $rainbow_offset = 64;
 my @rainbow_inc;
 
 my @texcoords =
@@ -278,49 +262,34 @@ my @texcoords =
   0.800, 0.800,
   0.200, 0.800,
   0.200, 0.200,
-  0.200, 0.200,
   0.800, 0.200,
-  0.800, 0.800,
 
   0.005, 1.995,
   0.005, 0.005,
   1.995, 0.005,
-  1.995, 0.005,
   1.995, 1.995,
-  0.005, 1.995,
 
   0.995, 0.005,
   2.995, 2.995,
   0.005, 0.995,
-  0.005, 0.995,
   -1.995, -1.995,
-  0.995, 0.005,
 
   0.995, 0.005,
   0.995, 0.995,
   0.005, 0.995,
-  0.005, 0.995,
   0.005, 0.005,
-  0.995, 0.005,
 
   -0.5, -0.5,
   1.5, -0.5,
   1.5, 1.5,
-  1.5, 1.5,
   -0.5, 1.5,
-  -0.5, -0.5,
 
   0.005, 0.005,
   0.995, 0.005,
   0.995, 0.995,
-  0.995, 0.995,
   0.005, 0.995,
-  0.005, 0.005,
 );
 my $texcoords = OpenGL::Array->new_list(GL_FLOAT,@texcoords);
-
-my @indices = (0..35);
-my $indices = OpenGL::Array->new_list(GL_UNSIGNED_INT,@indices);
 
 my @xform =
 (
@@ -386,10 +355,8 @@ sub ourInitVertexBuffers
 {
   # Set initial colors for rainbow face
   @rainbow = map [map rand(1.0), 0..3], 0..3;
-  @rainbow = @rainbow[0,1,2,2,3,0];
   @rainbow = map @$_, @rainbow;
   @rainbow_inc = map [map 0.01 - rand(0.02), 0..3], 0..3;
-  @rainbow_inc = @rainbow_inc[0,1,2,2,3,0];
   @rainbow_inc = map @$_, @rainbow_inc;
 
   # Initialize VBOs if supported
@@ -430,7 +397,7 @@ sub ourInitVertexBuffers
     $texcoords->bind($TexCoordObjID);
     glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $texcoords, GL_STATIC_DRAW_ARB);
 
-    $indices->bind($IndexObjID);
+    glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, $IndexObjID);
     glBufferDataARB_p(GL_ELEMENT_ARRAY_BUFFER_ARB, $indices, GL_STATIC_DRAW_ARB);
   } else {
     print "Using classic Vertex Buffers\n";
@@ -943,10 +910,14 @@ sub cbRenderScene
   glNormalPointer_p($norms);
   glTexCoordPointer_p(2, $texcoords);
   if ($hasVBO) {
-    glBindBufferARB(GL_ARRAY_BUFFER, 0);
+    glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, $IndexObjID);
   }
-  glDrawArrays(GL_TRIANGLES, 0, scalar(@indices));
+  glDrawElements_c(GL_TRIANGLES, scalar(@indices), GL_UNSIGNED_INT, $hasVBO ? 0 : $indices->ptr);
 
+  if ($hasVBO) {
+    glBindBufferARB(GL_ARRAY_BUFFER, 0);
+    glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, 0);
+  }
   glDisableClientState(GL_TEXTURE_COORD_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
   glDisableClientState(GL_NORMAL_ARRAY);
