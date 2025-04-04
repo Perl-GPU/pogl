@@ -148,7 +148,7 @@ my $cm = OpenGL::Array->new(16,GL_DOUBLE);
 my $vp = OpenGL::Array->new(4,GL_INT);
 
 # Vertex Buffer Object data
-my ($VertexObjID,$NormalObjID,$ColorObjID,$TexCoordObjID,$IndexObjID);
+my ($VertexObjID,$NormalObjID,$ColorObjID,$TexCoordObjID,$IndexObjID,$FpsVertObjID,$FpsNormObjID,$FpsColourObjID,$FpsIndObjID);
 
 my @indices = (
   0,1,2,     2,3,0,
@@ -304,10 +304,21 @@ my @fpsbox_coords = (
     0.0, -2.0, 0.0,
     0.0, 12.0, 0.0,
   140.0, 12.0, 0.0,
-  140.0, 12.0, 0.0,
   140.0, -2.0, 0.0,
-    0.0, -2.0, 0.0,
 );
+my $fpsbox_coords = OpenGL::Array->new_list(GL_FLOAT,@fpsbox_coords);
+my @fpsbox_norms = (
+  (0.0,0.0,1.0) x 2,
+);
+my $fpsbox_norms = OpenGL::Array->new_list(GL_FLOAT,@fpsbox_norms);
+my @fpsbox_colours = (
+  (0.2,0.2,0.2,0.75) x 2,
+);
+my $fpsbox_colours = OpenGL::Array->new_list(GL_FLOAT,@fpsbox_colours);
+my @fpsbox_indices = (
+  0,1,2,     2,3,0,
+);
+my $fpsbox_indices = OpenGL::Array->new_list(GL_UNSIGNED_INT,@fpsbox_indices);
 
 # ------
 # Frames per second (FPS) statistic variables and routine.
@@ -364,8 +375,8 @@ sub ourInitVertexBuffers
   {
     printf("Using VBOs\n");
 
-    ($VertexObjID,$NormalObjID,$ColorObjID,$TexCoordObjID,$IndexObjID) =
-      glGenBuffersARB_p(5);
+    ($VertexObjID,$NormalObjID,$ColorObjID,$TexCoordObjID,$IndexObjID,$FpsVertObjID,$FpsNormObjID,$FpsColourObjID,$FpsIndObjID) =
+      glGenBuffersARB_p(9);
 
     $verts->bind($VertexObjID);
     glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $verts, GL_STATIC_DRAW_ARB);
@@ -399,6 +410,15 @@ sub ourInitVertexBuffers
 
     glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, $IndexObjID);
     glBufferDataARB_p(GL_ELEMENT_ARRAY_BUFFER_ARB, $indices, GL_STATIC_DRAW_ARB);
+
+    $fpsbox_coords->bind($FpsVertObjID);
+    glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $fpsbox_coords, GL_STATIC_DRAW_ARB);
+    $fpsbox_norms->bind($FpsNormObjID);
+    glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $fpsbox_norms, GL_STATIC_DRAW_ARB);
+    $fpsbox_colours->bind($FpsColourObjID);
+    glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $fpsbox_colours, GL_STATIC_DRAW_ARB);
+    glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, $FpsIndObjID);
+    glBufferDataARB_p(GL_ELEMENT_ARRAY_BUFFER_ARB, $fpsbox_indices, GL_STATIC_DRAW_ARB);
   } else {
     print "Using classic Vertex Buffers\n";
   }
@@ -979,12 +999,23 @@ sub cbRenderScene
 
   # Make sure we can read the FPS section by first placing a
   # dark, mostly opaque backdrop rectangle.
-  glColor4f(0.2,0.2,0.2,0.75);
-  glBegin(GL_TRIANGLES);
-  for (my $i=0; $i<scalar(@fpsbox_coords); $i+=3) {
-    glVertex3f(@fpsbox_coords[$i..$i+2]);
+  glEnableClientState(GL_VERTEX_ARRAY);
+  glEnableClientState(GL_NORMAL_ARRAY);
+  glEnableClientState(GL_COLOR_ARRAY);
+  glVertexPointer_p(3, $fpsbox_coords);
+  glNormalPointer_p($fpsbox_norms);
+  glColorPointer_p(4, $fpsbox_colours);
+  if ($hasVBO) {
+    glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, $FpsIndObjID);
   }
-  glEnd();
+  glDrawElements_c(GL_TRIANGLES, scalar(@fpsbox_indices), GL_UNSIGNED_INT, $hasVBO ? 0 : $fpsbox_indices->ptr);
+  if ($hasVBO) {
+    glBindBufferARB(GL_ARRAY_BUFFER, 0);
+    glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, 0);
+  }
+  glDisableClientState(GL_COLOR_ARRAY);
+  glDisableClientState(GL_NORMAL_ARRAY);
+  glDisableClientState(GL_VERTEX_ARRAY);
 
   glColor4f(0.9,0.2,0.2,.75);
   $buf = sprintf "FPS: %f F: %2d", $FrameRate, $FrameCount;
