@@ -83,7 +83,6 @@ my $key_mods =
 my $hasFBO = 0;
 my $hasVBO = 0;
 my $hasFragProg = 0;
-my $hasImagePointer = 0;
 my $idleTime = $hasHires ? gettimeofday() : time();
 my $idleSecsMax = 5;
 my $er;
@@ -513,7 +512,7 @@ sub ourBuildTextures
   # Use OpenGL::Image to load texture
   if ($hasImage && -e $Tex_File)
   {
-    my $img = new OpenGL::Image(source=>$Tex_File);
+    my $img = OpenGL::Image->new(source=>$Tex_File);
     die $@ if $@;
     my($eng,$ver) = $img->Get('engine','version');
     print "Using OpenGL::Image - $eng v$ver\n";
@@ -601,7 +600,7 @@ sub ourBuildTextures
   {
     my $loops = 1000;
 
-    my $im = new Image::Magick();
+    my $im = Image::Magick->new();
     $im->Read($Tex_File);
     $im->Set(magick=>'RGBA',depth=>8);
     $im->Negate(channel=>'alpha');
@@ -707,7 +706,7 @@ sub ourInitShaders
     printf("This installation supports the following shader types: %s\n", join(',', @types));
 
     # Use OpenGL::Shader
-    $Shader = new OpenGL::Shader();
+    $Shader = OpenGL::Shader->new();
     if (!$Shader)
     {
       printf("Unable to instantiate OpenGL::Shader\n");
@@ -1104,7 +1103,7 @@ sub Inset
   # Using OpenGL::Image and ImageMagick to read/modify/draw pixels
   if ($hasIM_635)
   {
-    my $frame = new OpenGL::Image(engine=>'Magick',
+    my $frame = OpenGL::Image->new(engine=>'Magick',
       width=>$Inset_Width, height=>$Inset_Height);
     die $@ if $@;
     my($fmt,$size) = $frame->Get('gl_format','gl_type');
@@ -1128,7 +1127,7 @@ sub Inset
   else
   {
     my $len = $Inset_Width * $Inset_Height * 4;
-    my $oga = new OpenGL::Array($len,GL_UNSIGNED_BYTE);
+    my $oga = OpenGL::Array->new($len,GL_UNSIGNED_BYTE);
 
     glReadPixels_c( $Capture_X, $Capture_Y, $Inset_Width, $Inset_Height,
       GL_RGBA, GL_UNSIGNED_BYTE, $oga->ptr() );
@@ -1144,7 +1143,7 @@ sub Save
 
   if ($hasImage)
   {
-    my $frame = new OpenGL::Image(width=>$w, height=>$h);
+    my $frame = OpenGL::Image->new(width=>$w, height=>$h);
     my($fmt,$size) = $frame->Get('gl_format','gl_type');
 
     glReadPixels_c( 0, 0, $w, $h, $fmt, $size, $frame->Ptr() );

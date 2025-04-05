@@ -24,7 +24,7 @@ OpenGL::Shader::Common - base class for use with OpenGL::Shader
 
   # Instantiate a shader
   use OpenGL::Shader;
-  my $shdr = new OpenGL::Shader();
+  my $shdr = OpenGL::Shader->new();
 
 =head1 DESCRIPTION
 
@@ -32,7 +32,7 @@ This module provides a base class for OpenGL shader types.
 Example usage:
 
   use OpenGL::Shader;
-  my $shdr = new OpenGL::Shader();
+  my $shdr = OpenGL::Shader->new();
 
   ##########
   # Methods defined in this module:
