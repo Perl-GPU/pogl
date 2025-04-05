@@ -6930,7 +6930,7 @@ glColorPointer_p(size, oga)
 	{
 		GLvoid * data = oga->data;
 #ifdef GL_VERSION_2_0
-		glBindBuffer(GL_ARRAY_BUFFER, oga->bind);
+		glBindBufferARB(GL_ARRAY_BUFFER, oga->bind);
 		if (oga->bind) data = NULL;
 #elif defined(GL_ARB_vertex_buffer_object)
 		if (testProc(glBindBufferARB,"glBindBufferARB"))

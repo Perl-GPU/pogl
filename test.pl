@@ -148,7 +148,7 @@ my $cm = OpenGL::Array->new(16,GL_DOUBLE);
 my $vp = OpenGL::Array->new(4,GL_INT);
 
 # Vertex Buffer Object data
-my($VertexObjID,$NormalObjID,$ColorObjID,$TexCoordObjID,$IndexObjID);
+my ($VertexObjID,$NormalObjID,$ColorObjID,$TexCoordObjID,$IndexObjID);
 
 my @verts =
 (
@@ -428,7 +428,6 @@ sub ourInitVertexBuffers
     glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $colors, GL_DYNAMIC_DRAW_ARB);
     $rainbow->assign(0,@rainbow);
     glBufferSubDataARB_p(GL_ARRAY_BUFFER_ARB, $rainbow_offset, $rainbow);
-    glColorPointer_c(4, GL_FLOAT, 0, 0);
 
     $texcoords->bind($TexCoordObjID);
     glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $texcoords, GL_STATIC_DRAW_ARB);
@@ -436,14 +435,10 @@ sub ourInitVertexBuffers
 
     $indices->bind($IndexObjID);
     glBufferDataARB_p(GL_ELEMENT_ARRAY_BUFFER_ARB, $indices, GL_STATIC_DRAW_ARB);
-  }
-  else
-  {
+  } else {
     print "Using classic Vertex Buffers\n";
     glVertexPointer_p(3, $verts);
     glNormalPointer_p($norms);
-    $colors->assign($rainbow_offset,@rainbow);
-    glColorPointer_p(4, $colors);
     glTexCoordPointer_p(2, $texcoords);
   }
   print "-- done\n";
@@ -856,7 +851,6 @@ sub cbRenderScene
     }
 
     glColor3f(1.0, 1.0, 1.0);
-    #glutSolidTeapot(0.25);
     glutWireTeapot(0.25);
     glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
     glBindTexture(GL_TEXTURE_2D, $TextureID_FBO);
@@ -936,14 +930,13 @@ sub cbRenderScene
 
   if ($hasVBO) {
     glBindBufferARB(GL_ARRAY_BUFFER_ARB, $ColorObjID);
-    my $color_map = glMapBufferARB_p(GL_ARRAY_BUFFER_ARB,
-      GL_WRITE_ONLY_ARB,GL_FLOAT);
-    $color_map->assign($rainbow_offset,@rainbow);
+    glMapBufferARB_c(GL_ARRAY_BUFFER_ARB, GL_WRITE_ONLY_ARB);
+    $colors->assign($rainbow_offset,@rainbow);
     glUnmapBufferARB(GL_ARRAY_BUFFER_ARB);
   } else {
     $colors->assign($rainbow_offset,@rainbow);
-    glColorPointer_p(4, $colors);
   }
+  glColorPointer_p(4, $colors);
 
   # Render cube
   glViewport(0, 0, $Window_Width, $Window_Height);
