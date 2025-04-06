@@ -142,30 +142,23 @@ our @check_libs = qw
 };
 
 our $found_libs = get_libs(@libdirs,@check_libs);
-die "No OpenGL related libs found\n" if (!scalar($found_libs));
-
-if ($verbose)
-{
+die "No OpenGL related libs found\n" if !scalar $found_libs;
+if ($verbose) {
   print "found libs:\n";
-  foreach my $key (sort keys %$found_libs)
-  {
-    print "    $key = '$found_libs->{$key}'\n";
-  }
+  print "    $_ = '$found_libs->{$_}'\n" for sort keys %$found_libs;
 }
-
-# Check for OpenGL installation
-our $DIST_DEFS = get_extensions($found_libs,$dist_flags->{NO_EXCLUSIONS});
-
-# Don't build Makefile if we cannot compile+run glversion
-die "unable to determine extensions or no extensions found\n" if !length $DIST_DEFS;
 
 # Get user-specified interface
 my $interface_lib = get_interface_lib(\@ARGV, $found_libs, $is_valid_interface);
-
 print "\nUsing interface: $interface_lib\n\n";
 
+$INCS = get_incs($interface_lib);
+
+# Check for OpenGL installation
+our $DEFS = get_extensions($found_libs,$dist_flags->{NO_EXCLUSIONS}, $INCS);
+# Don't build Makefile if we cannot compile+run glversion
+die "unable to determine extensions or no extensions found\n" if !length $DEFS;
 # Marshall compiler defines
-our $DEFS = $DIST_DEFS;
 if ($IS_STRAWBERRY)
 {
   delete($found_libs->{'GLX'});
@@ -201,7 +194,6 @@ foreach my $key (sort keys %$found_libs)
 
 # Configure MakeMaker
 my ($LIBS,$OPTS,$CLEAN);
-$INCS = get_incs($interface_lib);
 my $DYNS;
 if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
 {
@@ -625,72 +617,51 @@ sub get_interface_lib {
 }
 
 # Test for available OpenGL Extensions
-sub get_extensions
-{
-  my($found,$no_excl) = @_;
+sub get_extensions {
+  my ($found, $no_excl, $incs) = @_;
   print "Testing for OpenGL Extensions\n" if ($verbose);
-
   # clean up previous output files
   my $exc_file = 'gl_exclude.h';
   unlink($exc_file) if (-e $exc_file);
   my $glv_file = 'utils/glversion.txt';
   unlink($glv_file) if (-e $glv_file);
-
   # Only run the rest if GLUT is installed
   print "Testing GLUT version\n" if ($verbose);
   my($lib,$def);
-  if ($found->{FREEGLUT32} || $found->{FREEGLUT})
-  {
+  if ($found->{FREEGLUT32} || $found->{FREEGLUT}) {
     $lib = $found->{FREEGLUT32} || $found->{FREEGLUT};
     $def = "GLUT_DEF=HAVE_FREEGLUT ";
-  }
-  elsif ($found->{GLUT32} || $found->{GLUT})
-  {
+  } elsif ($found->{GLUT32} || $found->{GLUT}) {
     $lib = $found->{GLUT32} || $found->{GLUT};
     $def = "GLUT_DEF=HAVE_GLUT ";
-  }
-  elsif ($verbose)
-  {
+  } elsif ($verbose) {
     print "GLUT not found\n";
   }
-
   # Platform-specific makefiles for glversion
   my $make_ver;
-  if ($IS_STRAWBERRY)
-  {
+  if ($IS_STRAWBERRY) {
     $make_ver = "&strawberry.bat";
     print "strawberry glversion: '$make_ver'\n" if $verbose>1;
-  }
-  elsif ($IS_MINGW)
-  {
+  } elsif ($IS_MINGW) {
     $make_ver = "&mingw.bat";
     print "mingw glversion: '$make_ver'\n" if $verbose>1;
-  }
-  elsif ($IS_W32API)
-  {
+  } elsif ($IS_W32API) {
     $make_ver = ";make -f Makefile.cygwin " .  (length($lib) ? "GLUT_LIB=$lib " : "") . $def;
     print "cygwin glversion: '$make_ver'\n" if $verbose>1;
-  }
-  elsif ($^O eq 'MSWin32')
-  {
+  } elsif ($^O eq 'MSWin32') {
     $make_ver = '&nmake -f makefile.mak ' . $def;
     print "MSWin32 glversion: '$make_ver'\n" if $verbose>1;
-  }
-  elsif ($^O eq 'darwin')
-  {
+  } elsif ($^O eq 'darwin') {
     $make_ver = ";make -f Makefile.macosx " .
       "GLUT_LIB='" . ($lib || "-framework GLUT") . "' " .
+      "GLUT_INC='$incs' " .
       $def;
     print "MacOSX glversion: '$make_ver'\n" if $verbose>1;
-  }
-  else
-  {
-    if ($ENV{TERM} ne 'xterm')
-    {
+  } else {
+    if ($ENV{TERM} ne 'xterm') {
       print "\nIn order to test your GPU's capabilities, run this make under an X11 shell\n\n";
     }
-
-    $make_ver = ";make -f Makefile " .  (length($lib) ? "GLUT_LIB=$lib " : "") . $def;
+    $make_ver = ";make -f Makefile " .  (length($lib) ? "GLUT_LIB=$lib " : "") . "GLUT_INC='$incs' " . $def;
     print "glversion: '$make_ver'\n" if $verbose>1;
   }
   my $exec = 'cd utils'."$make_ver clean".$make_ver;
@@ -698,85 +669,61 @@ sub get_extensions
   my $stat = `$exec`;
   print "\n$stat\n\n" if ($verbose);
   unlink "utils/freeglut.dll" or die "could not remove temporary freeglut: $!" if -f "utils/freeglut.dll";
-
   # Parse glversion.txt file
   open GLDATA, $glv_file or die "get_extensions: could not open $glv_file: $!\n";
   my $gldata = {};
   my @gldata = <GLDATA>;
   close(GLDATA);
-
-  foreach my $line (@gldata)
-  {
+  foreach my $line (@gldata) {
     $line =~ s|[\r\n]+||;
     my($key,$val) = split('=',$line);
     $gldata->{$key} = $val;
   }
   die "get_extensions: no extensions found in $glv_file\n" if !keys %$gldata;
-
   print "This looks like OpenGL Version: $gldata->{VERSION}\n";
-
   # Parse glext_procs.h file
   open GLEXT, "glext_procs.h" or die "get_extensions: could not open glext_procs.h: $!\n";
   my @lines = <GLEXT>;
   close(GLEXT);
-
   my $no_ext = {};
-  foreach my $line (@lines)
-  {
+  foreach my $line (@lines) {
     next if ($line !~ m|\#ifndef NO_([^\s]+)|);
     my $ext = $1;
     next if ($ext =~ m|^GL_VERSION_|);
     $no_ext->{$ext}++;
   }
-
-
   # Create gl_exclude.h
   die "Unable to write to $exc_file\n" if (!open(GLEXC,">$exc_file"));
   print GLEXC "// OpenGL Extension Exclusions - may be modified before building.\n";
   print GLEXC "//\n";
   print GLEXC "// Generated for ".$gldata->{VENDOR}.", ".$gldata->{RENDERER}."\n";
   print GLEXC "// OpenGL v".$gldata->{VERSION}.", using ";
-
   # Fix GLUT flags based on results
-  if ($gldata->{FREEGLUT})
-  {
+  if ($gldata->{FREEGLUT}) {
     print 'Found FreeGLUT v'.$gldata->{FREEGLUT}."\n";
     print GLEXC 'FreeGLUT v'.$gldata->{FREEGLUT}."\n";
-
-    if (!$found->{FREEGLUT} && !$found->{FREEGLUT32})
-    {
+    if (!$found->{FREEGLUT} && !$found->{FREEGLUT32}) {
       $found->{FREEGLUT} = $lib;
     }
-  }
-  elsif ($gldata->{GLUT})
-  {
+  } elsif ($gldata->{GLUT}) {
     print "Found GLUT - Version: $gldata->{GLUT}\n";
-  }
-  else
-  {
+  } else {
     print "Found no GLUT\n"
   }
-
   my $GL_VERSION;
   my($GL_VERSION_MAJOR, $GL_VERSION_MINOR);
-  if ($gldata->{VERSION} =~ m|^(\d\.\d+)|)
-  {
+  if ($gldata->{VERSION} =~ m|^(\d\.\d+)|) {
     $GL_VERSION = $1;
     ($GL_VERSION_MAJOR,$GL_VERSION_MINOR) = split('.', $GL_VERSION);
   }
-
   # Make an empty exclusion file if a Windows distribution build
-  if ($no_excl)
-  {
+  if ($no_excl) {
     print "OpenGL Extension exclusions disabled\n";
     print GLEXC "//\n";
     print GLEXC "// Exclusions omitted for distribution build.\n";
-  }
-  else
-  {
+  } else {
     print GLEXC "\n";
-    if ($GL_VERSION)
-    {
+    if ($GL_VERSION) {
       print GLEXC "#define NO_GL_VERSION_4_5\n" if ($GL_VERSION < 4.5);
       print GLEXC "#define NO_GL_VERSION_4_4\n" if ($GL_VERSION < 4.4);
       print GLEXC "#define NO_GL_VERSION_4_3\n" if ($GL_VERSION < 4.3);
@@ -795,23 +742,16 @@ sub get_extensions
       print GLEXC "#define NO_GL_VERSION_1_2\n" if ($GL_VERSION < 1.2);
       print GLEXC "#define NO_GL_VERSION_1_1\n" if ($GL_VERSION < 1.1);
     }
-
-    foreach my $ext (split(' ',$gldata->{EXTENSIONS}))
-    {
+    foreach my $ext (split(' ',$gldata->{EXTENSIONS})) {
       next if (!$no_ext->{$ext});
       $no_ext->{$ext} = 0;
     }
-
-    foreach my $ext (sort keys(%$no_ext))
-    {
+    foreach my $ext (sort keys(%$no_ext)) {
       next if (!$no_ext->{$ext});
       print GLEXC "#define NO_$ext\n";
     }
   }
-
   close(GLEXC);
-
-
   # return Distributable Defs
   print "Have Version Data\n" if ($verbose);
   my $defines = '-DHAVE_VER';

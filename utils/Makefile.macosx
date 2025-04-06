@@ -2,7 +2,7 @@
 
 CC=cc
 GLUT_DEF = NO_GLUT_DEF_GIVEN # harmless to define, but must give something
-CCFLAGS= -D$(GLUT_DEF)
+CCFLAGS= -D$(GLUT_DEF) $(GLUT_INC)
 LINK=cc
 LDFLAGS=-framework OpenGL $(GLUT_LIB)
 
