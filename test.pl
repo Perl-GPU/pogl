@@ -84,7 +84,7 @@ my $hasFBO = 0;
 my $hasVBO = 0;
 my $hasFragProg = 0;
 my $idleTime = $hasHires ? gettimeofday() : time();
-my $idleSecsMax = 5;
+my $idleSecsMax = 8;
 my $er;
 
 # Window and texture IDs, window width and height.
