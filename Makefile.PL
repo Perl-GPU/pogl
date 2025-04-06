@@ -681,6 +681,10 @@ sub get_extensions {
   }
   die "get_extensions: no extensions found in $glv_file\n" if !keys %$gldata;
   print "This looks like OpenGL Version: $gldata->{VERSION}\n";
+  if ($^O eq 'darwin') {
+    $gldata->{VERSION} = '4.1';
+    print "  for MacOS X, overriding to version $gldata->{VERSION}\n";
+  }
   # Parse glext_procs.h file
   open GLEXT, "glext_procs.h" or die "get_extensions: could not open glext_procs.h: $!\n";
   my @lines = <GLEXT>;
