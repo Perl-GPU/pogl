@@ -252,7 +252,7 @@ else # Everyone else
 {
   # Test for obfuscated GLX
   # quite often GLX is in -lGL...  Test for GL/glx.h instead...
-  my $out = cfile_text('GL/glx.h');
+  my $out = cfile_text('GL/glx.h', $INCS);
   # The cpp would not let this macro through. Check for something else
   # that still exists after the cpp pass. a typedef, or type would work
   my $has_glx = ($out =~ m|GLXContext|);
@@ -266,7 +266,7 @@ else # Everyone else
   }
   # Test for obfuscated Freeglut
   # quite often Freeglut is in -lglut...  Test for GL/freeglut.h instead...
-  $out = cfile_text('GL/freeglut.h');
+  $out = cfile_text('GL/freeglut.h', $INCS);
   # The cpp would not let this macro through. Check for something else
   # that still exists after the cpp pass. a typedef, or type would work
   my $has_freeglut = ($out =~ m|glutMainLoopEvent|);
@@ -306,8 +306,6 @@ else # Everyone else
     }
   }
 }
-
-clean_incs( $INCS );
 
 # This is the final build configuration
 my $build_config =
@@ -365,8 +363,7 @@ WriteMakefile(
 );       		# Generate the Makefile
 WriteConfigPM( $build_config );			# Regenerate final Config.pm
 
-if ($found_libs->{GLX} && $ENV{TERM} ne 'xterm')
-{
+if ($found_libs->{GLX} && $ENV{TERM} ne 'xterm') {
   print "\nThis configuration should be built under an X11 shell\n\n";
 }
 
@@ -389,68 +386,50 @@ sub init_PM {
 }
 
 # test header files for extensions
-sub cfile_text
-{
-  my($filename) = @_;
-
+sub cfile_text {
+  my ($filename, $incs) = @_;
   # Use $Config{cpprun}, instead of $Config{cpp}. cpp is simply set to
   # 'cpp' after Configure has run, which is not useful, since it lives
   # in /lib/ on many systems, which is normally not on the path.  This
   # is documented, but silly behaviour.  $Config{cpprun} is what is
   # documented to be set to a cpp that will take stuff on stdin
-
   my $cmd = "echo '\#include \"$filename\"' | ".
-    "$Config{cpprun} $INCS $Config{cppflags} $Config{cppminus} 2>&1";
-
+    "$Config{cpprun} $incs $Config{cppflags} $Config{cppminus} 2>&1";
   return `$cmd`;
 }
 
 
 # Find OpenGL-related Libs
-sub get_libs
-{
+sub get_libs {
   my @glx_libs = @_;
   my $found = {};
   my $libs;
-
   # Mac OS X
-  if ($^O eq 'darwin' && -d '/System/Library/Frameworks/OpenGL.framework')
-  {
+  if ($^O eq 'darwin' && -d '/System/Library/Frameworks/OpenGL.framework') {
     $found->{GL} = '-framework OpenGL';
     $found->{GLU} = '-framework AGL';
-    if (-e '/opt/X11/lib/libglut.3.dylib')
-    {
+    if (-e '/opt/X11/lib/libglut.3.dylib') {
       $found->{FREEGLUT} = '-lglut';
-    }
-    else
-    {
+    } else {
       $found->{GLUT} = '-framework GLUT';
     }
     return $found;
   }
-
   # Win32
-  if ($IS_STRAWBERRY)
-  {
+  if ($IS_STRAWBERRY) {
      # libs for strawberry perl go here
      $found->{FREEGLUT} = '-lglut';
      $found->{OPENGL32} = '-lopengl32';
      $found->{GLU32} = '-lglu32';
-  }
-  elsif (($^O eq 'MSWin32') || $IS_W32API)
-  {
+  } elsif (($^O eq 'MSWin32') || $IS_W32API) {
     my $paths = $ENV{PATH};
     $paths =~ s|\\|/|g;
     my $sep = $IS_W32API ? ':' : ';';
     my @paths = split($sep.'\s*',$paths);
-
     unshift @paths, "$ENV{SYSTEMROOT}/system32" if $ENV{SYSTEMROOT};
-
     $libs = {OPENGL32=>'opengl32.dll',GLU32=>'glu32.dll',GLUT32=>'glut32.dll',FREEGLUT32=>'freeglut.dll'};
-    foreach my $key (sort keys %$libs)
-    {
-      foreach my $path (@paths)
-      {
+    foreach my $key (sort keys %$libs) {
+      foreach my $path (@paths) {
         $path =~ s|/$||;
         my $lib = $libs->{$key};
         next if (!-e "$path/$lib");
@@ -464,49 +443,33 @@ sub get_libs
         last;
       }
     }
-
     # Install FreeGLUT if not found
-    if (!$found->{FREEGLUT32} and !$IS_STRAWBERRY)
-    {
+    if (!$found->{FREEGLUT32} and !$IS_STRAWBERRY) {
       my $dll_dir = "utils";
-
       my $exec;
-      if ($IS_W32API)
-      {
+      if ($IS_W32API) {
         $dll_dir = '/usr/local/bin' if ($dll_dir eq '/usr/bin');
         $exec = "cp FreeGLUT/freeglut.dll $dll_dir";
-      }
-      else
-      {
+      } else {
         $exec = "copy FreeGLUT\\freeglut.dll $dll_dir";
       }
       `$exec`;
-
-      if (! -x "$dll_dir/freeglut.dll")
-      {
+      if (! -x "$dll_dir/freeglut.dll") {
          my $mode = (stat("$dll_dir/freeglut.dll"))[2];
          my $perm = $mode & 07777;
          print "freeglut.dll not executable (perms=%4o), changing permissions...\n";
          chmod $perm|0755, "$dll_dir/freeglut.dll" or warn "Error changing freeglut.dll perms: $!";
       }
-
-
-      if (-e "$dll_dir/freeglut.dll")
-      {
+      if (-e "$dll_dir/freeglut.dll") {
         print "Installed freeglut.dll at $dll_dir\n";
         $found->{FREEGLUT32} = '-lfreeglut'
-      }
-      else
-      {
+      } else {
         print "Unable to install freeglut.dll to $dll_dir\n";
         print "Try manually copying FreeGLUT/freeglut.dll to a folder in your PATH.\n";
       }
     }
-
     return $found if (!$IS_W32API);
   }
-
-
   # Everyone else
   ($libs) = do {
     local $SIG{__WARN__} = sub  {
@@ -516,40 +479,25 @@ sub get_libs
     };
     ExtUtils::Liblist->ext(join(' ',@glx_libs),0);
   };
-
-  foreach my $lib (split(' ',$libs))
-  {
+  foreach my $lib (split(' ',$libs)) {
     next if ($lib =~ m|^-L|);
     $lib =~ s/^-l//;
     #print "  $lib\n";
-
-    if ($lib =~ m|([\w]*freeglut[\w]*)|i)
-    {
+    if ($lib =~ m|([\w]*freeglut[\w]*)|i) {
       $found->{FREEGLUT} = "-l$1";
-    }
-    elsif ($lib =~ m|([\w]*glut[\w]*)$|i)
-    {
+    } elsif ($lib =~ m|([\w]*glut[\w]*)$|i) {
       $found->{GLUT} = "-l$1";
-    }
-    elsif ($lib =~ m|([\w]*glu[\w]*)$|i)
-    {
+    } elsif ($lib =~ m|([\w]*glu[\w]*)$|i) {
       $found->{GLU} = "-l$1";
-    }
-    elsif ($lib =~ m|([\w-]*glx)$|i)
-    {
+    } elsif ($lib =~ m|([\w-]*glx)$|i) {
       $found->{GLX} = "-l$1";
-    }
-    elsif ($lib =~ m|([\w]*gl)$|i)
-    {
+    } elsif ($lib =~ m|([\w]*gl)$|i) {
       $found->{GL} = "-l$1";
     }
-
-    if ($lib =~ m|([\w]*mesa(gl)?.*)|i)
-    {
+    if ($lib =~ m|([\w]*mesa(gl)?.*)|i) {
       $found->{MESA} = "-l$1";
     }
   }
-
   return $found;
 }
 
@@ -562,15 +510,15 @@ sub get_incs {
   }
   return "" if $interface_lib eq 'AGL'; # Mac OS X; no include flags required, Apple gcc will automatically pick up the system frameworks
   # Everyone else
-  join ' ', qw{
-    -I/usr/include
-    -I/usr/include
-    -I/usr/X11R6/include
-    -I/opt/X11/include
-    -I/usr/local/include
-    -I/usr/openwin/include
-    -I/opt/csw/include
-    -I/usr/local/freeglut/include
+  join ' ', map "-I$_", grep -d, qw{
+    /usr/include
+    /usr/include
+    /usr/X11R6/include
+    /opt/X11/include
+    /usr/local/include
+    /usr/openwin/include
+    /opt/csw/include
+    /usr/local/freeglut/include
   };
 }
 
@@ -869,24 +817,6 @@ sub get_extensions
   my $defines = '-DHAVE_VER';
   $defines .= " -DGL_VERSION_USED=$GL_VERSION" if ($GL_VERSION);
   return $defines;
-}
-
-# Takes as input a INCS string ready for MakeMaker and cleans out
-# non-existant directories produce a minimal configuration value
-sub clean_incs {
-   my $inincs = $_[0];
-   return unless defined $inincs;
-   print "clean_incs: got input INCS='$inincs'\n" if $verbose>1;
-
-   my @inincs = split / /, $inincs;
-
-   # clean out -I args with non-existent directories
-   print "clean_incs: removing bad directories\n" if $verbose>1;
-   my @outincs = grep { my $tmp = $_; $tmp =~ s/^-I// and ( -d $tmp or -l $tmp) } @inincs;
-   my $outincs = join ' ', @outincs;
-
-   print "clean_incs: returning INCS='$outincs'\n" if $verbose>1;
-   $_[0] = $outincs;
 }
 
 # Dump Config.pm
