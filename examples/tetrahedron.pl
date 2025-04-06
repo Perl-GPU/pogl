@@ -1,9 +1,9 @@
 #       cube
 #
-#  Draws a 3-D cube, viewed with perspective, stretched 
+#  Draws a 3-D cube, viewed with perspective, stretched
 #  along the y-axis.
 #  Adapted from "cube.c", chapter 3, listing 3-1,
-#  page 70, OpenGL Programming Guide 
+#  page 70, OpenGL Programming Guide
 
 use strict;
 use warnings;

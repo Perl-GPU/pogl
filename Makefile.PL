@@ -63,7 +63,7 @@ our $IS_MINGW = 0;
 our $IS_STRAWBERRY = 0;
 our $IS_CYGWIN;
 our $IS_W32API;
-our $INCS = '';
+our $INCS;
 our $NO_LGCC = grep /^NO_LGCC$/, @ARGV; @ARGV = grep !/^NO_LGCC$/, @ARGV;
 
 my $prepare_success = eval {
@@ -71,8 +71,7 @@ my $prepare_success = eval {
 # Get debugging flags
 if ( grep { if (m/^verbose/i) { $verbose++; 1; } else { 0; } } @ARGV )
 {
-  # Strip out interface args
-  @ARGV = grep { !m/^verbose=/i } @ARGV;
+  @ARGV = grep { !m/^verbose/i } @ARGV;
 }
 print "\$verbose set to $verbose" . ($verbose ? "" : " - enable by running as `perl Makefile.PL verbose`");
 print "\n\n";
@@ -161,178 +160,7 @@ our $DIST_DEFS = get_extensions($found_libs,$dist_flags->{NO_EXCLUSIONS});
 die "unable to determine extensions or no extensions found\n" if !length $DIST_DEFS;
 
 # Get user-specified interface
-my $interface_lib;
-if ( grep { m/^interface=/i } @ARGV )
-{
-  my @my_argv = @ARGV;    # safe copy
-  my @interface_opts = ();
-  my $fallback = 0;
-
-  foreach my $arg (@my_argv)
-  {
-    if ($arg =~ m/^interface=(\w+)/i)
-    {
-      my $interface = uc($1);
-      my $valid_type = $is_valid_interface->{$interface};
-      if (!$valid_type)
-      {
-        Usage("Invalid interface: '$interface'");
-        next;
-      }
-
-      # test if requested interfaces supported
-      # !!! Should use lookup table
-      if ($interface eq 'W32API' or $interface eq 'WGL')
-      {
-        if (!$found_libs->{FREEGLUT32} && !$found_libs->{GLUT32})
-        {
-          print "W32API interface requires GLUT or FreeGLUT\n";
-          next;
-        }
-        if (!$found_libs->{OPENGL32})
-        {
-          print "W32API interface requires OpenGL32.dll\n";
-          next;
-        }
-        if (!$found_libs->{GLU32})
-        {
-          print "W32API interface requires GLU32.dll\n";
-          next;
-        }
-      }
-      elsif ($interface eq 'AGL')
-      {
-        if ($^O ne 'darwin' || !$found_libs->{GLUT})
-        {
-          print "AGL interface requires GLUT.framework\n";
-          next;
-        }
-      }
-      elsif ($interface =~ m|GLUT|)
-      {
-        if ($interface eq 'FREEGLUT')
-        {
-          if (!$found_libs->{FREEGLUT} && !$found_libs->{FREEGLUT32})
-          {
-            print "FREEGLUT interface requires FreeGLUT\n";
-
-            if ($found_libs->{GLUT})
-            {
-              print "Falling back to the GLUT interface\n";
-              $interface = 'GLUT';
-              $fallback++;
-            }
-            else
-            {
-              print "Try installing FREEGLUT first\n";
-              next;
-            }
-          }
-        }
-        elsif ($interface eq 'GLUT')
-        {
-          if (!$found_libs->{GLUT} && $found_libs->{FREEGLUT})
-          {
-            $found_libs->{GLUT} = $found_libs->{FREEGLUT};
-          }
-
-          if (!$found_libs->{GLUT32} && $found_libs->{FREEGLUT32})
-          {
-            $found_libs->{GLUT32} = $found_libs->{FREEGLUT32};
-          }
-
-          if ($found_libs->{GLUT})
-          {
-            delete($found_libs->{FREEGLUT});
-          }
-
-          if ($found_libs->{GLUT32})
-          {
-            delete($found_libs->{FREEGLUT32});
-          }
-
-          if (!$found_libs->{GLUT} && !$found_libs->{GLUT32})
-          {
-            print "GLUT interface requires GLUT or FreeGLUT but libs were not found\n";
-            next;
-          }
-        }
-        else
-        {
-           print "Error in interface argument processing\n";
-           next;
-        }
-      }
-      elsif ($interface eq 'GLX')
-      {
-        if (!$found_libs->{GL} && !$found_libs->{MESA} && !$found_libs->{GLX})
-        {
-          print "GLX interface requires GLX/X11 but the libraries were not found\n";
-          next;
-        }
-      }
-      elsif (!$found_libs->{$interface})
-      {
-        print "$interface interface not supported\n";
-        next;
-      }
-
-      push(@interface_opts,$interface);
-    }
-  }
-
-  my $interfaces = scalar(@interface_opts);
-  if (!$interfaces)
-  {
-    die "ERROR: no supported interfaces found.\n";
-  }
-  elsif ($interfaces > 1)
-  {
-    die "ERROR: multiple opengl interfaces requested: @interface_opts.\n";
-  }
-
-  ($interface_lib) = @interface_opts;
-  print "User set interface to $interface_lib\n" if ($verbose && !$fallback);
-
-  # Strip out interface args
-  @ARGV = grep { !m/^interface=/i } @ARGV;
-}
-# Otherwise use available defaults
-elsif ($IS_CYGWIN)
-{
-  if ($found_libs->{FREEGLUT})
-  {
-    $interface_lib = 'FREEGLUT'; # CYGWIN will use X11 interface by default
-  }
-  elsif($found_libs->{GLUT})
-  {
-    $interface_lib = 'GLUT';
-  }
-  elsif($found_libs->{GLUT32} || $found_libs->{FREEGLUT32})
-  {
-    $interface_lib = 'W32API';
-  }
-  else
-  {
-    die "No suitable OpenGL+GLUT interface found for CYGWIN\n";
-  }
-}
-elsif ($^O eq 'darwin' && $found_libs->{GLUT} && !$found_libs->{FREEGLUT})
-{
-  $interface_lib = 'AGL';
-}
-elsif ($found_libs->{FREEGLUT} || $found_libs->{FREEGLUT32})
-{
-  $interface_lib = 'FREEGLUT';
-}
-elsif ($found_libs->{GLUT} || $found_libs->{GLUT32})
-{
-  $interface_lib = 'GLUT';
-}
-else
-{
-  die "FreeGLUT or GLUT libraries were not found, won't build OpenGL module.";
-}
+my $interface_lib = get_interface_lib(\@ARGV, $found_libs, $is_valid_interface);
 
 print "\nUsing interface: $interface_lib\n\n";
 
@@ -373,6 +201,7 @@ foreach my $key (sort keys %$found_libs)
 
 # Configure MakeMaker
 my ($LIBS,$OPTS,$CLEAN);
+$INCS = get_incs($interface_lib);
 my $DYNS;
 if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
 {
@@ -389,16 +218,12 @@ if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
   {
     $glut_lib .= '-LFreeGLUT -lfreeglut';
   }
-
   $LIBS = $glut_lib;
   if ($IS_W32API)	# CYGWIN W32API
   {
     my $glut = ($found_libs->{FREEGLUT32}) ? $found_libs->{FREEGLUT32} : $found_libs->{GLUT32};
     $glut =~ s/^-l//;
-
     $LIBS = "-L/usr/lib/w32api $LIBS";
-    ### $INCS = '-I/usr/include/w32api';
-    $INCS = '-I/usr/include/opengl';
     $DEFS .= " -DHAVE_W32API";
     $DYNS = { OTHERLDFLAGS => '-Wl,--exclude-symbols,'."\x7F".$glut.'_NULL_THUNK_DATA' };
   }
@@ -406,7 +231,6 @@ if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
   {
     $OPTS = "/ogity /GDs";
   }
-
   {
      system $^X , qw[-MExtUtils::Command -e mkpath --], qw[blib/arch/auto/OpenGL];
      system $^X , qw[-MExtUtils::Command -e cp --], qw[FreeGLUT/freeglut.dll blib/arch/auto/OpenGL/freeglut.dll];
@@ -418,37 +242,20 @@ if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
       sleep 2;
      }
   }
-
 }
 elsif ($interface_lib eq 'AGL')					# Mac OS X
 {
-  $INCS = ""; # no include flags required: Apple gcc will automatically pick up the system frameworks
   $DEFS .= " -DHAVE_AGL_GLUT -Wno-deprecated-declarations ";  # So we know we have glutWMCloseFunc() and glutCheckLoop()
   $LIBS = "-framework OpenGL -framework GLUT -lm";
 }
 else # Everyone else
 {
-  my @includes = qw
-  {
-    -I/usr/include
-    -I/usr/include
-    -I/usr/X11R6/include
-    -I/opt/X11/include
-    -I/usr/local/include
-    -I/usr/openwin/include
-    -I/opt/csw/include
-    -I/usr/local/freeglut/include
-  };
-  $INCS = "@includes";
-
   # Test for obfuscated GLX
   # quite often GLX is in -lGL...  Test for GL/glx.h instead...
   my $out = cfile_text('GL/glx.h');
-
   # The cpp would not let this macro through. Check for something else
   # that still exists after the cpp pass. a typedef, or type would work
   my $has_glx = ($out =~ m|GLXContext|);
-
   if ($has_glx)
   {
     $DEFS .= " -DHAVE_GLX";
@@ -457,20 +264,16 @@ else # Everyone else
   {
     print "GLX not found (neither library, nor headers).";
   }
-
   # Test for obfuscated Freeglut
   # quite often Freeglut is in -lglut...  Test for GL/freeglut.h instead...
   $out = cfile_text('GL/freeglut.h');
-
   # The cpp would not let this macro through. Check for something else
   # that still exists after the cpp pass. a typedef, or type would work
   my $has_freeglut = ($out =~ m|glutMainLoopEvent|);
-
   if ($has_freeglut)
   {
     $DEFS .= " -DHAVE_FREEGLUT -DHAVE_FREEGLUT_H";
   }
-
   # Marshall libs
   my $libs = join '', map " $_", sort values %$found_libs;
   my @more_libs = qw
@@ -479,13 +282,10 @@ else # Everyone else
   };
   $LIBS = "@libdirs $libs @more_libs";
   $DEFS .= " -DGL_GLEXT_LEGACY";
-
   # Handle obfuscated gcc
-
   if (!$NO_LGCC)
   {
     # This may be a gcc compiler in disguise.
-    # Should check for gccversion as well.
     if ($Config{cc} ne 'gcc' && !$Config{gccversion})
     {
       my $gcclibdir;
@@ -494,7 +294,6 @@ else # Everyone else
       {
         ($gcclibdir = $1) =~ s,\bspecs\s*$,,;
         $LIBS .= " -L$gcclibdir -lgcc";
-
         print STDERR qq
         {
 #
@@ -754,6 +553,128 @@ sub get_libs
   return $found;
 }
 
+sub get_incs {
+  my ($interface_lib) = @_;
+  if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
+  {
+    return '-I/usr/include/opengl' if $IS_W32API;	# CYGWIN W32API
+    return '';
+  }
+  return "" if $interface_lib eq 'AGL'; # Mac OS X; no include flags required, Apple gcc will automatically pick up the system frameworks
+  # Everyone else
+  join ' ', qw{
+    -I/usr/include
+    -I/usr/include
+    -I/usr/X11R6/include
+    -I/opt/X11/include
+    -I/usr/local/include
+    -I/usr/openwin/include
+    -I/opt/csw/include
+    -I/usr/local/freeglut/include
+  };
+}
+
+sub get_interface_lib {
+  my ($argv_ref, $found_libs, $is_valid_interface) = @_;
+  my $interface_lib;
+  if ( grep { m/^interface=/i } @$argv_ref ) {
+    my @interface_opts = ();
+    my $fallback = 0;
+    foreach my $arg (@$argv_ref) {
+      if ($arg =~ m/^interface=(\w+)/i) {
+        my $interface = uc($1);
+        my $valid_type = $is_valid_interface->{$interface};
+        if (!$valid_type) {
+          Usage("Invalid interface: '$interface'");
+          next;
+        }
+        # test if requested interfaces supported
+        # !!! Should use lookup table
+        if ($interface eq 'W32API' or $interface eq 'WGL') {
+          if (!$found_libs->{FREEGLUT32} && !$found_libs->{GLUT32}) {
+            print "W32API interface requires GLUT or FreeGLUT\n";
+            next;
+          }
+          if (!$found_libs->{OPENGL32}) {
+            print "W32API interface requires OpenGL32.dll\n";
+            next;
+          }
+          if (!$found_libs->{GLU32}) {
+            print "W32API interface requires GLU32.dll\n";
+            next;
+          }
+        } elsif ($interface eq 'AGL') {
+          if ($^O ne 'darwin' || !$found_libs->{GLUT}) {
+            print "AGL interface requires GLUT.framework\n";
+            next;
+          }
+        } elsif ($interface =~ m|GLUT|) {
+          if ($interface eq 'FREEGLUT') {
+            if (!$found_libs->{FREEGLUT} && !$found_libs->{FREEGLUT32}) {
+              print "FREEGLUT interface requires FreeGLUT\n";
+              if ($found_libs->{GLUT}) {
+                print "Falling back to the GLUT interface\n";
+                $interface = 'GLUT';
+                $fallback++;
+              } else {
+                print "Try installing FREEGLUT first\n";
+                next;
+              }
+            }
+          } elsif ($interface eq 'GLUT') {
+            if (!$found_libs->{GLUT} && $found_libs->{FREEGLUT}) {
+              $found_libs->{GLUT} = $found_libs->{FREEGLUT};
+            }
+            if (!$found_libs->{GLUT32} && $found_libs->{FREEGLUT32}) {
+              $found_libs->{GLUT32} = $found_libs->{FREEGLUT32};
+            }
+            if ($found_libs->{GLUT}) {
+              delete($found_libs->{FREEGLUT});
+            }
+            if ($found_libs->{GLUT32}) {
+              delete($found_libs->{FREEGLUT32});
+            }
+            if (!$found_libs->{GLUT} && !$found_libs->{GLUT32}) {
+              print "GLUT interface requires GLUT or FreeGLUT but libs were not found\n";
+              next;
+            }
+          } else {
+            print "Error in interface argument processing\n";
+            next;
+          }
+        } elsif ($interface eq 'GLX') {
+          if (!$found_libs->{GL} && !$found_libs->{MESA} && !$found_libs->{GLX}) {
+            print "GLX interface requires GLX/X11 but the libraries were not found\n";
+            next;
+          }
+        } elsif (!$found_libs->{$interface}) {
+          print "$interface interface not supported\n";
+          next;
+        }
+        push(@interface_opts,$interface);
+      }
+    }
+    die "ERROR: no supported interfaces found.\n" if !@interface_opts;
+    die "ERROR: multiple opengl interfaces requested: @interface_opts.\n"
+      if @interface_opts > 1;
+    ($interface_lib) = @interface_opts;
+    print "User set interface to $interface_lib\n" if ($verbose && !$fallback);
+    # Strip out interface args
+    @$argv_ref = grep { !m/^interface=/i } @$argv_ref;
+    return $interface_lib;
+  }
+  # Otherwise use available defaults
+  if ($IS_CYGWIN) {
+    return 'FREEGLUT' if $found_libs->{FREEGLUT}; # CYGWIN will use X11 interface by default
+    return 'GLUT' if $found_libs->{GLUT};
+    return 'W32API' if $found_libs->{GLUT32} || $found_libs->{FREEGLUT32};
+    die "No suitable OpenGL+GLUT interface found for CYGWIN\n";
+  }
+  return 'AGL' if $^O eq 'darwin' && $found_libs->{GLUT} && !$found_libs->{FREEGLUT};
+  return 'FREEGLUT' if $found_libs->{FREEGLUT} || $found_libs->{FREEGLUT32};
+  return 'GLUT' if $found_libs->{GLUT} || $found_libs->{GLUT32};
+  die "FreeGLUT or GLUT libraries were not found, won't build OpenGL module.";
+}
 
 # Test for available OpenGL Extensions
 sub get_extensions
@@ -773,12 +694,12 @@ sub get_extensions
   if ($found->{FREEGLUT32} || $found->{FREEGLUT})
   {
     $lib = $found->{FREEGLUT32} || $found->{FREEGLUT};
-    $def = "HAVE_FREEGLUT";
+    $def = "GLUT_DEF=HAVE_FREEGLUT ";
   }
   elsif ($found->{GLUT32} || $found->{GLUT})
   {
     $lib = $found->{GLUT32} || $found->{GLUT};
-    $def = "HAVE_GLUT";
+    $def = "GLUT_DEF=HAVE_GLUT ";
   }
   elsif ($verbose)
   {
@@ -799,19 +720,19 @@ sub get_extensions
   }
   elsif ($IS_W32API)
   {
-    $make_ver = ";make -f Makefile.cygwin " .  (length($lib) ? "GLUT_LIB=$lib " : "") . (length($def) ? "GLUT_DEF=$def " : "");
+    $make_ver = ";make -f Makefile.cygwin " .  (length($lib) ? "GLUT_LIB=$lib " : "") . $def;
     print "cygwin glversion: '$make_ver'\n" if $verbose>1;
   }
   elsif ($^O eq 'MSWin32')
   {
-    $make_ver = '&nmake -f makefile.mak ' . (length($def) ? "GLUT_DEF=$def " : "");
+    $make_ver = '&nmake -f makefile.mak ' . $def;
     print "MSWin32 glversion: '$make_ver'\n" if $verbose>1;
   }
   elsif ($^O eq 'darwin')
   {
     $make_ver = ";make -f Makefile.macosx " .
       "GLUT_LIB='" . ($lib || "-framework GLUT") . "' " .
-      (length($def) ? "GLUT_DEF=$def" : "");
+      $def;
     print "MacOSX glversion: '$make_ver'\n" if $verbose>1;
   }
   else
@@ -821,7 +742,7 @@ sub get_extensions
       print "\nIn order to test your GPU's capabilities, run this make under an X11 shell\n\n";
     }
 
-    $make_ver = ";make -f Makefile " .  (length($lib) ? "GLUT_LIB=$lib " : "") . (length($def) ? "GLUT_DEF=$def " : "");
+    $make_ver = ";make -f Makefile " .  (length($lib) ? "GLUT_LIB=$lib " : "") . $def;
     print "glversion: '$make_ver'\n" if $verbose>1;
   }
   my $exec = 'cd utils'."$make_ver clean".$make_ver;
