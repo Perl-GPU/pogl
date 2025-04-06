@@ -21,6 +21,7 @@ examples/smooth.pl
 examples/spaceship.nff
 examples/stan.ppm
 examples/tessellation.pl
+examples/tetrahedron.pl
 examples/texhack.pl
 examples/texture.pl
 examples/tk_demo.pl
