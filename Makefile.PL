@@ -460,11 +460,8 @@ sub get_found_libs {
 
 sub get_incs {
   my ($interface_lib) = @_;
-  if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
-  {
-    return '-I/usr/include/opengl' if $IS_W32API;	# CYGWIN W32API
-    return '';
-  }
+  return '-I/usr/include/opengl' if $IS_W32API;	# CYGWIN W32API
+  return '' if $^O eq 'MSWin32'; # Win32
   return "" if $interface_lib eq 'AGL'; # Mac OS X; no include flags required, Apple gcc will automatically pick up the system frameworks
   # Everyone else
   join ' ', map "-I$_", grep -d, qw{
