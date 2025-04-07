@@ -141,7 +141,7 @@ our @check_libs = qw
   -lMesaGLUT
 };
 
-our $found_libs = get_libs(@libdirs,@check_libs);
+our $found_libs = get_found_libs(@libdirs,@check_libs);
 die "No OpenGL related libs found\n" if !scalar $found_libs;
 if ($verbose) {
   print "found libs:\n";
@@ -392,7 +392,7 @@ sub cfile_text {
 
 
 # Find OpenGL-related Libs
-sub get_libs {
+sub get_found_libs {
   my @glx_libs = @_;
   my $found = {};
   my $libs;
@@ -714,12 +714,7 @@ sub get_extensions {
   } else {
     print "Found no GLUT\n"
   }
-  my $GL_VERSION;
-  my($GL_VERSION_MAJOR, $GL_VERSION_MINOR);
-  if ($gldata->{VERSION} =~ m|^(\d\.\d+)|) {
-    $GL_VERSION = $1;
-    ($GL_VERSION_MAJOR,$GL_VERSION_MINOR) = split('.', $GL_VERSION);
-  }
+  my $GL_VERSION = $gldata->{VERSION} =~ m|^(\d\.\d+)| ? $1 : undef;
   # Make an empty exclusion file if a Windows distribution build
   if ($no_excl) {
     print "OpenGL Extension exclusions disabled\n";
@@ -728,6 +723,7 @@ sub get_extensions {
   } else {
     print GLEXC "\n";
     if ($GL_VERSION) {
+      print GLEXC "#define NO_GL_VERSION_4_6\n" if ($GL_VERSION < 4.6);
       print GLEXC "#define NO_GL_VERSION_4_5\n" if ($GL_VERSION < 4.5);
       print GLEXC "#define NO_GL_VERSION_4_4\n" if ($GL_VERSION < 4.4);
       print GLEXC "#define NO_GL_VERSION_4_3\n" if ($GL_VERSION < 4.3);
@@ -759,7 +755,6 @@ sub get_extensions {
   # return Distributable Defs
   print "Have Version Data\n" if ($verbose);
   my $defines = '-DHAVE_VER';
-  $defines .= " -DGL_VERSION_USED=$GL_VERSION" if ($GL_VERSION);
   return $defines;
 }
 
@@ -767,9 +762,7 @@ sub get_extensions {
 sub WriteConfigPM
 {
   my($config) = @_;
-
   die "Unable to write to Config.pm\n" if (!open(CONFIGPM, ">", "lib/OpenGL/Config.pm"));
-
   print CONFIGPM q
 {
 # This is the Perl OpenGL build configuration file.
@@ -780,17 +773,14 @@ sub WriteConfigPM
 # the WriteMakefile() call.
 #
 };
-
   require Data::Dumper;
   # Ensure deterministic output
   { no warnings; $Data::Dumper::Sortkeys = 1; }
   print CONFIGPM Data::Dumper->Dump( [$config], [qw(OpenGL::Config)] );
-
   print CONFIGPM qq
 {
 1;
 __END__
 };
-
   close(CONFIGPM);
 }
