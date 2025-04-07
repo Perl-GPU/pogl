@@ -113,34 +113,23 @@ if ($verbose) {
 # Get user-specified interface
 my $interface_lib = get_interface_lib(\@ARGV, $found_libs, $is_valid_interface);
 print "\nUsing interface: $interface_lib\n\n";
+delete @$found_libs{qw(GLX MESA)} if ($^O eq 'MSWin32') || $IS_W32API;
 
 $INCS = get_incs($interface_lib);
 
 # Check for OpenGL installation
 my $gldata = get_gldata($found_libs, $INCS);
 generate_excl($gldata);
-if ($IS_STRAWBERRY)
-{
-  delete($found_libs->{'GLX'});
-  delete($found_libs->{'MESA'});
+if ($IS_STRAWBERRY) {
   $found_libs->{'GLU'} = $found_libs->{'GLU32'};
   $found_libs->{'GL'} = $found_libs->{'OPENGL32'};
-}
-elsif (($^O eq 'MSWin32') || $IS_W32API || $IS_MINGW)
-{
-  delete($found_libs->{'GLX'});
-  delete($found_libs->{'MESA'});
+} elsif (($^O eq 'MSWin32') || $IS_W32API) {
   $found_libs->{'FREEGLUT'} = $found_libs->{'FREEGLUT32'};
   $found_libs->{'GLUT'} = $found_libs->{'GLUT32'};
   $found_libs->{'GLU'} = $found_libs->{'GLU32'};
   $found_libs->{'GL'} = $found_libs->{'OPENGL32'};
-}
-elsif($IS_CYGWIN)
-{
-  delete($found_libs->{'FREEGLUT32'});
-  delete($found_libs->{'GLUT32'});
-  delete($found_libs->{'GLU32'});
-  delete($found_libs->{'OPENGL32'});
+} elsif($IS_CYGWIN) {
+  delete @$found_libs{qw(FREEGLUT32 GLUT32 GLU32 OPENGL32)};
 }
 
 our $DEFS = get_defines($found_libs, $interface_lib, $INCS);
@@ -548,16 +537,12 @@ sub get_gldata {
   unlink($glv_file) if (-e $glv_file);
   # Only run the rest if GLUT is installed
   print "Testing GLUT version\n" if ($verbose);
-  my($lib,$def);
-  if ($found->{FREEGLUT32} || $found->{FREEGLUT}) {
-    $lib = $found->{FREEGLUT32} || $found->{FREEGLUT};
-    $def = "GLUT_DEF=HAVE_FREEGLUT ";
-  } elsif ($found->{GLUT32} || $found->{GLUT}) {
-    $lib = $found->{GLUT32} || $found->{GLUT};
-    $def = "GLUT_DEF=HAVE_GLUT ";
-  } elsif ($verbose) {
-    print "GLUT not found\n";
-  }
+  my $lib = $found->{FREEGLUT32} || $found->{FREEGLUT} || $found->{GLUT32} || $found->{GLUT};
+  print "GLUT not found\n" if $verbose and !$lib;
+  my $def =
+    ($found->{FREEGLUT32} || $found->{FREEGLUT}) ? "GLUT_DEF=HAVE_FREEGLUT " :
+    ($found->{GLUT32} || $found->{GLUT}) ? "GLUT_DEF=HAVE_GLUT " :
+    '';
   # Platform-specific makefiles for glversion
   my $make_ver;
   if ($IS_STRAWBERRY) {
