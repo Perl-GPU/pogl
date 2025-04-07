@@ -135,29 +135,19 @@ if ($IS_STRAWBERRY) {
 our $DEFS = get_defines($found_libs, $interface_lib, $INCS);
 
 # Configure MakeMaker
-my ($LIBS,$OPTS,$CLEAN);
-my $DYNS;
+my ($LIBS,$OPTS,$DYNS);
 if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
 {
-  my $glut_lib = '-lopengl32 -lglu32 ';
-  if ($interface_lib eq 'GLUT')
-  {
-    $glut_lib .= '-lglut32';
-  }
-  elsif ($interface_lib eq 'FREEGLUT' and $IS_STRAWBERRY)
-  {
-    $glut_lib .= '-lglut';
-  }
-  else
-  {
-    $glut_lib .= '-LFreeGLUT -lfreeglut';
-  }
-  $LIBS = $glut_lib;
+  $LIBS = '-lopengl32 -lglu32 ' . (
+    $interface_lib eq 'GLUT' ? '-lglut32' :
+    $interface_lib eq 'FREEGLUT' && $IS_STRAWBERRY ? '-lglut' :
+    '-LFreeGLUT -lfreeglut'
+  );
   if ($IS_W32API)	# CYGWIN W32API
   {
-    my $glut = ($found_libs->{FREEGLUT32}) ? $found_libs->{FREEGLUT32} : $found_libs->{GLUT32};
-    $glut =~ s/^-l//;
     $LIBS = "-L/usr/lib/w32api $LIBS";
+    my $glut = $found_libs->{FREEGLUT32} || $found_libs->{GLUT32};
+    $glut =~ s/^-l//;
     $DYNS = { OTHERLDFLAGS => '-Wl,--exclude-symbols,'."\x7F".$glut.'_NULL_THUNK_DATA' };
   }
   elsif (!$IS_MINGW) # Windows VC6
@@ -183,12 +173,8 @@ elsif ($interface_lib eq 'AGL')					# Mac OS X
 else # Everyone else
 {
   # Marshall libs
-  my $libs = join '', map " $_", sort values %$found_libs;
-  my @more_libs = qw
-  {
-    -lm
-  };
-  $LIBS = "@libdirs $libs @more_libs";
+  my $libs = join '', map " $_", sort(values %$found_libs), '-lm';
+  $LIBS = "@libdirs $libs";
   # Handle obfuscated gcc
   if (!$NO_LGCC)
   {
