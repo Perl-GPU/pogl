@@ -34,8 +34,6 @@ sub Usage
     verbose             Display additional status info, can be
                         repeated for more verbosity
 
-    dist=NO_EXCLUSIONS  Build with no OpenGL Extension exclusions
-
     interface=XFACE     Build for a specific windowing interface
                         Currently supports:
   };
@@ -75,20 +73,6 @@ if ( grep { if (m/^verbose/i) { $verbose++; 1; } else { 0; } } @ARGV )
 }
 print "\$verbose set to $verbose" . ($verbose ? "" : " - enable by running as `perl Makefile.PL verbose`");
 print "\n\n";
-
-
-# Get distribution build flags
-our $dist_flags = {};
-if ( grep { m/^dist=/i } @ARGV )
-{
-  foreach my $arg (@ARGV)
-  {
-    $dist_flags->{uc($1)}++ if ($arg =~ m/^dist=(\w+)/i);
-  }
-
-  # Strip out interface args
-  @ARGV = grep { !m/^dist=/i } @ARGV;
-}
 
 
 # Detect CYGWIN
@@ -155,7 +139,10 @@ print "\nUsing interface: $interface_lib\n\n";
 $INCS = get_incs($interface_lib);
 
 # Check for OpenGL installation
-our $DEFS = get_extensions($found_libs,$dist_flags->{NO_EXCLUSIONS}, $INCS);
+my $gldata = get_gldata($found_libs, $INCS);
+generate_excl($found_libs, $gldata);
+our $DEFS = '-DHAVE_VER';
+print "Have Version Data\n" if ($verbose);
 # Don't build Makefile if we cannot compile+run glversion
 die "unable to determine extensions or no extensions found\n" if !length $DEFS;
 # Marshall compiler defines
@@ -617,12 +604,10 @@ sub get_interface_lib {
 }
 
 # Test for available OpenGL Extensions
-sub get_extensions {
-  my ($found, $no_excl, $incs) = @_;
+sub get_gldata {
+  my ($found, $incs) = @_;
   print "Testing for OpenGL Extensions\n" if ($verbose);
   # clean up previous output files
-  my $exc_file = 'gl_exclude.h';
-  unlink($exc_file) if (-e $exc_file);
   my $glv_file = 'utils/glversion.txt';
   unlink($glv_file) if (-e $glv_file);
   # Only run the rest if GLUT is installed
@@ -670,7 +655,7 @@ sub get_extensions {
   print "\n$stat\n\n" if ($verbose);
   unlink "utils/freeglut.dll" or die "could not remove temporary freeglut: $!" if -f "utils/freeglut.dll";
   # Parse glversion.txt file
-  open GLDATA, $glv_file or die "get_extensions: could not open $glv_file: $!\n";
+  open GLDATA, $glv_file or die "get_gldata: could not open $glv_file: $!\n";
   my $gldata = {};
   my @gldata = <GLDATA>;
   close(GLDATA);
@@ -679,33 +664,15 @@ sub get_extensions {
     my($key,$val) = split('=',$line);
     $gldata->{$key} = $val;
   }
-  die "get_extensions: no extensions found in $glv_file\n" if !keys %$gldata;
+  die "get_gldata: no extensions found in $glv_file\n" if !keys %$gldata;
   print "This looks like OpenGL Version: $gldata->{VERSION}\n";
   if ($^O eq 'darwin') {
     $gldata->{VERSION} = '4.1';
     print "  for MacOS X, overriding to version $gldata->{VERSION}\n";
   }
-  # Parse glext_procs.h file
-  open GLEXT, "glext_procs.h" or die "get_extensions: could not open glext_procs.h: $!\n";
-  my @lines = <GLEXT>;
-  close(GLEXT);
-  my $no_ext = {};
-  foreach my $line (@lines) {
-    next if ($line !~ m|\#ifndef NO_([^\s]+)|);
-    my $ext = $1;
-    next if ($ext =~ m|^GL_VERSION_|);
-    $no_ext->{$ext}++;
-  }
-  # Create gl_exclude.h
-  die "Unable to write to $exc_file\n" if (!open(GLEXC,">$exc_file"));
-  print GLEXC "// OpenGL Extension Exclusions - may be modified before building.\n";
-  print GLEXC "//\n";
-  print GLEXC "// Generated for ".$gldata->{VENDOR}.", ".$gldata->{RENDERER}."\n";
-  print GLEXC "// OpenGL v".$gldata->{VERSION}.", using ";
   # Fix GLUT flags based on results
   if ($gldata->{FREEGLUT}) {
     print 'Found FreeGLUT v'.$gldata->{FREEGLUT}."\n";
-    print GLEXC 'FreeGLUT v'.$gldata->{FREEGLUT}."\n";
     if (!$found->{FREEGLUT} && !$found->{FREEGLUT32}) {
       $found->{FREEGLUT} = $lib;
     }
@@ -714,48 +681,61 @@ sub get_extensions {
   } else {
     print "Found no GLUT\n"
   }
+  $gldata;
+}
+
+sub generate_excl {
+  my ($found, $gldata) = @_;
+  # clean up previous output files
+  my $exc_file = 'gl_exclude.h';
+  unlink($exc_file) if (-e $exc_file);
+  # Parse glext_procs.h file
+  my @lines = do { open my $fh, "glext_procs.h" or die "generate_excl: could not open glext_procs.h: $!\n"; <$fh>; };
+  my $no_ext = {};
+  foreach my $line (@lines) {
+    next if ($line !~ m|\#ifndef NO_([^\s]+)|);
+    my $ext = $1;
+    next if ($ext =~ m|^GL_VERSION_|);
+    $no_ext->{$ext}++;
+  }
+  # Create gl_exclude.h
+  die "Unable to write to $exc_file\n" if !open my $excl_fh, ">", $exc_file;
+  print $excl_fh "// OpenGL Extension Exclusions - may be modified before building.\n";
+  print $excl_fh "//\n";
+  print $excl_fh "// Generated for ".$gldata->{VENDOR}.", ".$gldata->{RENDERER}."\n";
+  print $excl_fh "// OpenGL v".$gldata->{VERSION}.", using ";
+  print $excl_fh 'FreeGLUT v'.$gldata->{FREEGLUT}."\n" if $gldata->{FREEGLUT};
   my $GL_VERSION = $gldata->{VERSION} =~ m|^(\d\.\d+)| ? $1 : undef;
   # Make an empty exclusion file if a Windows distribution build
-  if ($no_excl) {
-    print "OpenGL Extension exclusions disabled\n";
-    print GLEXC "//\n";
-    print GLEXC "// Exclusions omitted for distribution build.\n";
-  } else {
-    print GLEXC "\n";
-    if ($GL_VERSION) {
-      print GLEXC "#define NO_GL_VERSION_4_6\n" if ($GL_VERSION < 4.6);
-      print GLEXC "#define NO_GL_VERSION_4_5\n" if ($GL_VERSION < 4.5);
-      print GLEXC "#define NO_GL_VERSION_4_4\n" if ($GL_VERSION < 4.4);
-      print GLEXC "#define NO_GL_VERSION_4_3\n" if ($GL_VERSION < 4.3);
-      print GLEXC "#define NO_GL_VERSION_4_2\n" if ($GL_VERSION < 4.2);
-      print GLEXC "#define NO_GL_VERSION_4_1\n" if ($GL_VERSION < 4.1);
-      print GLEXC "#define NO_GL_VERSION_4_0\n" if ($GL_VERSION < 4.0);
-      print GLEXC "#define NO_GL_VERSION_3_3\n" if ($GL_VERSION < 3.3);
-      print GLEXC "#define NO_GL_VERSION_3_2\n" if ($GL_VERSION < 3.2);
-      print GLEXC "#define NO_GL_VERSION_3_1\n" if ($GL_VERSION < 3.1);
-      print GLEXC "#define NO_GL_VERSION_3_0\n" if ($GL_VERSION < 3.0);
-      print GLEXC "#define NO_GL_VERSION_2_1\n" if ($GL_VERSION < 2.1);
-      print GLEXC "#define NO_GL_VERSION_2_0\n" if ($GL_VERSION < 2.0);
-      print GLEXC "#define NO_GL_VERSION_1_5\n" if ($GL_VERSION < 1.5);
-      print GLEXC "#define NO_GL_VERSION_1_4\n" if ($GL_VERSION < 1.4);
-      print GLEXC "#define NO_GL_VERSION_1_3\n" if ($GL_VERSION < 1.3);
-      print GLEXC "#define NO_GL_VERSION_1_2\n" if ($GL_VERSION < 1.2);
-      print GLEXC "#define NO_GL_VERSION_1_1\n" if ($GL_VERSION < 1.1);
-    }
-    foreach my $ext (split(' ',$gldata->{EXTENSIONS})) {
-      next if (!$no_ext->{$ext});
-      $no_ext->{$ext} = 0;
-    }
-    foreach my $ext (sort keys(%$no_ext)) {
-      next if (!$no_ext->{$ext});
-      print GLEXC "#define NO_$ext\n";
-    }
+  print $excl_fh "\n";
+  if ($GL_VERSION) {
+    print $excl_fh "#define NO_GL_VERSION_4_6\n" if ($GL_VERSION < 4.6);
+    print $excl_fh "#define NO_GL_VERSION_4_5\n" if ($GL_VERSION < 4.5);
+    print $excl_fh "#define NO_GL_VERSION_4_4\n" if ($GL_VERSION < 4.4);
+    print $excl_fh "#define NO_GL_VERSION_4_3\n" if ($GL_VERSION < 4.3);
+    print $excl_fh "#define NO_GL_VERSION_4_2\n" if ($GL_VERSION < 4.2);
+    print $excl_fh "#define NO_GL_VERSION_4_1\n" if ($GL_VERSION < 4.1);
+    print $excl_fh "#define NO_GL_VERSION_4_0\n" if ($GL_VERSION < 4.0);
+    print $excl_fh "#define NO_GL_VERSION_3_3\n" if ($GL_VERSION < 3.3);
+    print $excl_fh "#define NO_GL_VERSION_3_2\n" if ($GL_VERSION < 3.2);
+    print $excl_fh "#define NO_GL_VERSION_3_1\n" if ($GL_VERSION < 3.1);
+    print $excl_fh "#define NO_GL_VERSION_3_0\n" if ($GL_VERSION < 3.0);
+    print $excl_fh "#define NO_GL_VERSION_2_1\n" if ($GL_VERSION < 2.1);
+    print $excl_fh "#define NO_GL_VERSION_2_0\n" if ($GL_VERSION < 2.0);
+    print $excl_fh "#define NO_GL_VERSION_1_5\n" if ($GL_VERSION < 1.5);
+    print $excl_fh "#define NO_GL_VERSION_1_4\n" if ($GL_VERSION < 1.4);
+    print $excl_fh "#define NO_GL_VERSION_1_3\n" if ($GL_VERSION < 1.3);
+    print $excl_fh "#define NO_GL_VERSION_1_2\n" if ($GL_VERSION < 1.2);
+    print $excl_fh "#define NO_GL_VERSION_1_1\n" if ($GL_VERSION < 1.1);
   }
-  close(GLEXC);
-  # return Distributable Defs
-  print "Have Version Data\n" if ($verbose);
-  my $defines = '-DHAVE_VER';
-  return $defines;
+  foreach my $ext (split(' ',$gldata->{EXTENSIONS})) {
+    next if (!$no_ext->{$ext});
+    $no_ext->{$ext} = 0;
+  }
+  foreach my $ext (sort keys(%$no_ext)) {
+    next if (!$no_ext->{$ext});
+    print $excl_fh "#define NO_$ext\n";
+  }
 }
 
 # Dump Config.pm
