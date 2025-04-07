@@ -57,48 +57,26 @@ else
 }
 
 our $verbose = 0;
-our $IS_MINGW = 0;
-our $IS_STRAWBERRY = 0;
-our $IS_CYGWIN;
-our $IS_W32API;
-our $INCS;
-our $NO_LGCC = grep /^NO_LGCC$/, @ARGV; @ARGV = grep !/^NO_LGCC$/, @ARGV;
-
-my $prepare_success = eval {
-
 # Get debugging flags
-if ( grep { if (m/^verbose/i) { $verbose++; 1; } else { 0; } } @ARGV )
-{
+if ( grep { if (m/^verbose/i) { $verbose++; 1; } else { 0; } } @ARGV ) {
   @ARGV = grep { !m/^verbose/i } @ARGV;
 }
 print "\$verbose set to $verbose" . ($verbose ? "" : " - enable by running as `perl Makefile.PL verbose`");
 print "\n\n";
 
-
-# Detect CYGWIN
-$IS_CYGWIN = $^O eq 'cygwin';
+our $IS_MINGW = $^O eq 'MSWin32' && $Config{cc} =~ /\bgcc/i;
+print "Build platform \$IS_MINGW==1" if $IS_MINGW and $verbose;
+our $IS_STRAWBERRY = $IS_MINGW && $Config{cf_by} =~ m/strawberry-perl/i;
+print "Build platform \$IS_STRAWBERRY==$IS_STRAWBERRY\n" if $IS_STRAWBERRY and $verbose;
+our $IS_CYGWIN = $^O eq 'cygwin';
 print "Build platform \$IS_CYGWIN==$IS_CYGWIN\n" if $IS_CYGWIN and $verbose;
-
-$IS_W32API = ($IS_CYGWIN && grep { m/^interface=(W32API|WGL)/i } @ARGV );
+our $IS_W32API = ($IS_CYGWIN && grep { m/^interface=(W32API|WGL)/i } @ARGV );
 print "Build platform \$IS_W32API==$IS_W32API\n" if $IS_W32API and $verbose;
 
+our $INCS;
+our $NO_LGCC = grep /^NO_LGCC$/, @ARGV; @ARGV = grep !/^NO_LGCC$/, @ARGV;
 
-# Detect MINGW
-if ($^O eq 'MSWin32' && $Config{cc} =~ /\bgcc/i)
-{
-  $IS_MINGW = 1;
-  print "Build platform \$IS_MINGW==1" if  $verbose;
-}
-
-
-# Detect Strawberry Perl
-if ($IS_MINGW)
-{
-  $IS_STRAWBERRY = ($Config{cf_by} =~ m/strawberry-perl/i);
-  print "Build platform \$IS_STRAWBERRY==$IS_STRAWBERRY\n" if $IS_STRAWBERRY and $verbose;
-}
-
-
+my $prepare_success = eval {
 # Look for available libs
 our @libdirs = qw
 {
@@ -126,7 +104,7 @@ our @check_libs = qw
 };
 
 our $found_libs = get_found_libs(@libdirs,@check_libs);
-die "No OpenGL related libs found\n" if !scalar $found_libs;
+die "No OpenGL related libs found\n" if !$found_libs;
 if ($verbose) {
   print "found libs:\n";
   print "    $_ = '$found_libs->{$_}'\n" for sort keys %$found_libs;
