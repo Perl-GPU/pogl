@@ -136,7 +136,7 @@ our $DEFS = get_defines($found_libs, $interface_lib, $INCS);
 
 # Configure MakeMaker
 my ($LIBS,$OPTS,$DYNS);
-if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
+if ($IS_W32API || $^O eq 'MSWin32')		# Win32
 {
   $LIBS = '-lopengl32 -lglu32 ' . (
     $interface_lib eq 'GLUT' ? '-lglut32' :
