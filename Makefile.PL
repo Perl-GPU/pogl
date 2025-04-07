@@ -118,19 +118,13 @@ $INCS = get_incs($interface_lib);
 
 # Check for OpenGL installation
 my $gldata = get_gldata($found_libs, $INCS);
-generate_excl($found_libs, $gldata);
-our $DEFS = '-DHAVE_VER';
-print "Have Version Data\n" if ($verbose);
-# Don't build Makefile if we cannot compile+run glversion
-die "unable to determine extensions or no extensions found\n" if !length $DEFS;
-# Marshall compiler defines
+generate_excl($gldata);
 if ($IS_STRAWBERRY)
 {
   delete($found_libs->{'GLX'});
   delete($found_libs->{'MESA'});
   $found_libs->{'GLU'} = $found_libs->{'GLU32'};
   $found_libs->{'GL'} = $found_libs->{'OPENGL32'};
-  $DEFS .= " -DIS_STRAWBERRY";
 }
 elsif (($^O eq 'MSWin32') || $IS_W32API || $IS_MINGW)
 {
@@ -149,13 +143,7 @@ elsif($IS_CYGWIN)
   delete($found_libs->{'OPENGL32'});
 }
 
-print "resulting libs:\n" if ($verbose);
-foreach my $key (sort keys %$found_libs)
-{
-  next if (!$found_libs->{$key});
-  $DEFS .= " -DHAVE_$key";
-  print "    $key = '$found_libs->{$key}'\n" if ($verbose);
-}
+our $DEFS = get_defines($found_libs, $interface_lib, $INCS);
 
 # Configure MakeMaker
 my ($LIBS,$OPTS,$CLEAN);
@@ -181,7 +169,6 @@ if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
     my $glut = ($found_libs->{FREEGLUT32}) ? $found_libs->{FREEGLUT32} : $found_libs->{GLUT32};
     $glut =~ s/^-l//;
     $LIBS = "-L/usr/lib/w32api $LIBS";
-    $DEFS .= " -DHAVE_W32API";
     $DYNS = { OTHERLDFLAGS => '-Wl,--exclude-symbols,'."\x7F".$glut.'_NULL_THUNK_DATA' };
   }
   elsif (!$IS_MINGW) # Windows VC6
@@ -202,35 +189,10 @@ if ($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN))		# Win32
 }
 elsif ($interface_lib eq 'AGL')					# Mac OS X
 {
-  $DEFS .= " -DHAVE_AGL_GLUT -Wno-deprecated-declarations ";  # So we know we have glutWMCloseFunc() and glutCheckLoop()
   $LIBS = "-framework OpenGL -framework GLUT -lm";
 }
 else # Everyone else
 {
-  # Test for obfuscated GLX
-  # quite often GLX is in -lGL...  Test for GL/glx.h instead...
-  my $out = cfile_text('GL/glx.h', $INCS);
-  # The cpp would not let this macro through. Check for something else
-  # that still exists after the cpp pass. a typedef, or type would work
-  my $has_glx = ($out =~ m|GLXContext|);
-  if ($has_glx)
-  {
-    $DEFS .= " -DHAVE_GLX";
-  }
-  elsif (!$found_libs->{GLX} && $verbose)
-  {
-    print "GLX not found (neither library, nor headers).";
-  }
-  # Test for obfuscated Freeglut
-  # quite often Freeglut is in -lglut...  Test for GL/freeglut.h instead...
-  $out = cfile_text('GL/freeglut.h', $INCS);
-  # The cpp would not let this macro through. Check for something else
-  # that still exists after the cpp pass. a typedef, or type would work
-  my $has_freeglut = ($out =~ m|glutMainLoopEvent|);
-  if ($has_freeglut)
-  {
-    $DEFS .= " -DHAVE_FREEGLUT -DHAVE_FREEGLUT_H";
-  }
   # Marshall libs
   my $libs = join '', map " $_", sort values %$found_libs;
   my @more_libs = qw
@@ -238,7 +200,6 @@ else # Everyone else
     -lm
   };
   $LIBS = "@libdirs $libs @more_libs";
-  $DEFS .= " -DGL_GLEXT_LEGACY";
   # Handle obfuscated gcc
   if (!$NO_LGCC)
   {
@@ -660,7 +621,7 @@ sub get_gldata {
 }
 
 sub generate_excl {
-  my ($found, $gldata) = @_;
+  my ($gldata) = @_;
   # clean up previous output files
   my $exc_file = 'gl_exclude.h';
   unlink($exc_file) if (-e $exc_file);
@@ -711,6 +672,35 @@ sub generate_excl {
     next if (!$no_ext->{$ext});
     print $excl_fh "#define NO_$ext\n";
   }
+}
+
+sub get_defines {
+  my ($found_libs, $interface_lib, $incs) = @_;
+  my $defs = '-DHAVE_VER';
+  $defs .= " -DIS_STRAWBERRY" if $IS_STRAWBERRY;
+  print "resulting libs:\n" if ($verbose);
+  foreach my $key (sort keys %$found_libs) {
+    next if (!$found_libs->{$key});
+    $defs .= " -DHAVE_$key";
+    print "    $key = '$found_libs->{$key}'\n" if ($verbose);
+  }
+  $defs .= " -DHAVE_W32API" if $IS_W32API; # CYGWIN W32API
+  $defs .= " -DHAVE_AGL_GLUT -Wno-deprecated-declarations " if $interface_lib eq 'AGL'; # So we know we have glutWMCloseFunc() and glutCheckLoop()
+  if (!($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN)) && !($interface_lib eq 'AGL')) {
+    # Test for obfuscated GLX using GL/glx.h
+    my $out = cfile_text('GL/glx.h', $incs);
+    if ($out =~ m|GLXContext|) {
+      $defs .= " -DHAVE_GLX";
+    } elsif (!$found_libs->{GLX} && $verbose) {
+      print "GLX not found (neither library, nor headers).";
+    }
+    # Test for obfuscated Freeglut using GL/freeglut.h instead.
+    $out = cfile_text('GL/freeglut.h', $INCS);
+    $defs .= " -DHAVE_FREEGLUT -DHAVE_FREEGLUT_H"
+      if $out =~ m|glutMainLoopEvent|;
+    $defs .= " -DGL_GLEXT_LEGACY";
+  }
+  $defs;
 }
 
 # Dump Config.pm
