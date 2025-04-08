@@ -556,9 +556,6 @@ sub get_gldata {
   # Fix GLUT flags based on results
   if ($gldata->{FREEGLUT}) {
     print 'Found FreeGLUT v'.$gldata->{FREEGLUT}."\n";
-    if (!$found->{FREEGLUT} && !$found->{FREEGLUT32}) {
-      $found->{FREEGLUT} = $lib;
-    }
   } elsif ($gldata->{GLUT}) {
     print "Found GLUT - Version: $gldata->{GLUT}\n";
   } else {
