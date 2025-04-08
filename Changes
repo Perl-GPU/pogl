@@ -4,6 +4,7 @@
 - add FreeGLUT glutInitContext{Flags,Profile,Version}
 - add Array::type_size
 - add to examples/cube* to show using glDraw{Array,Element}s and GPU buffers
+- allow `perl Makefile.PL interface=AGL` to work when FreeGLUT present
 
 0.7004 2025-03-19
 - re-release with higher version number for OpenGL::Array

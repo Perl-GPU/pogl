@@ -117,6 +117,8 @@ if ($verbose) {
 # Get user-specified interface
 my $interface_lib = get_interface_lib(\@ARGV, $found_libs, $is_valid_interface);
 print "\nUsing interface: $interface_lib\n\n";
+delete @$found_libs{grep /^GLUT/, keys %$found_libs} if $interface_lib eq 'FREEGLUT';
+delete @$found_libs{grep /^FREEGLUT/, keys %$found_libs} if $interface_lib =~ /^(GLUT|AGL)$/;
 
 $INCS = get_incs($interface_lib);
 
@@ -278,11 +280,8 @@ sub get_found_libs {
   if ($^O eq 'darwin' && -d '/System/Library/Frameworks/OpenGL.framework') {
     $found->{GL} = '-framework OpenGL';
     $found->{GLU} = '-framework AGL';
-    if (-e '/opt/X11/lib/libglut.3.dylib') {
-      $found->{FREEGLUT} = '-lglut';
-    } else {
-      $found->{GLUT} = '-framework GLUT';
-    }
+    $found->{GLUT} = '-framework GLUT';
+    $found->{FREEGLUT} = '-lglut' if -e '/opt/X11/lib/libglut.3.dylib';
     return $found;
   }
   # Win32
