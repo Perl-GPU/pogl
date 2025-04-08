@@ -30,12 +30,6 @@ use OpenGL qw/
   glPixelZoom glReadPixels_c glDrawPixels_c
   glGetDoublev_c glGetIntegerv_c
   glClearColor glClearDepth glClear glViewport glDrawElements_c
-
-  glGenProgramsARB_p glBindProgramARB glProgramStringARB_p
-    glDeleteProgramsARB_p
-  glGetProgramivARB_p glGetProgramEnvParameterdvARB_p
-  glGetProgramEnvParameterfvARB_p glGetProgramStringARB_p
-  glProgramLocalParameter4fARB
 /;
 use OpenGL::GLUT qw/
   :constants :functions
@@ -114,7 +108,6 @@ my $key_mods =
 # Some global variables.
 my $hasFBO = 0;
 my $hasVBO = 0;
-my $hasFragProg = 0;
 my $idleTime = $hasHires ? gettimeofday() : time();
 my $idleSecsMax = 8;
 my $er;
@@ -705,8 +698,7 @@ sub ourInitShaders
 {
   # Setup Vertex/Fragment Programs to render FBO texture
 
-  if ($hasShader)
-  {
+  if ($hasShader) {
     my $version = $OpenGL::Shader::VERSION;
     printf("Using OpenGL::Shader v$version\n");
     my $types = OpenGL::Shader->GetTypes();
@@ -734,76 +726,6 @@ sub ourInitShaders
     else
     {
       print "$stat\n";
-    }
-  }
-  # Fall back to doing it manually
-  elsif ($hasFragProg)
-  {
-    printf("Using native OpenGL ARB Shader functions\n");
-    ($VertexProgID,$FragProgID) = glGenProgramsARB_p(2);
-
-    # NOP Vertex shader
-    my $VertexProg = qq
-      {uniform vec4 center;
-      uniform mat4 xform;
-      void main(void)
-      {
-        gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
-        gl_Position *= xform;
-        // Calc texcoord values
-        vec4 pos = gl_Vertex;
-        float d = sqrt(pos.x * pos.x + pos.y * pos.y);
-        float a = atan(pos.x/pos.y) / 3.1415;
-        if (a < 0.0) a += 1.0;
-        a *= 2.0;
-        a -= float(int(a));
-        pos -= center;
-        float h = pos.z;
-        h = abs(2.0 * atan(h/d) / 3.1415);
-        gl_TexCoord[0].x = a;
-        gl_TexCoord[0].y = h;
-      }
-    };
-
-    glBindProgramARB(GL_VERTEX_PROGRAM_ARB, $VertexProgID);
-    glProgramStringARB_p(GL_VERTEX_PROGRAM_ARB, $VertexProg);
-
-    if (DO_TESTS)
-    {
-      my $format = glGetProgramivARB_p(GL_VERTEX_PROGRAM_ARB,
-        GL_PROGRAM_FORMAT_ARB);
-      printf("glGetProgramivARB_p format: '#%04X'\n",$format);
-
-      my @params = glGetProgramEnvParameterdvARB_p(GL_VERTEX_PROGRAM_ARB,0);
-      my $params = join(', ',@params);
-      print "glGetProgramEnvParameterdvARB_p: $params\n";
-
-      @params = glGetProgramEnvParameterfvARB_p(GL_VERTEX_PROGRAM_ARB,0);
-      $params = join(', ',@params);
-      print "glGetProgramEnvParameterfvARB_p: $params\n";
-
-      my $vprog = glGetProgramStringARB_p(GL_VERTEX_PROGRAM_ARB);
-      print "Vertex Prog: $vprog\n";
-    }
-
-    # Lazy Metallic Fragment shader
-    my $FragProg = qq
-      {uniform vec4 surfacecolor;
-      void main (void)
-      {
-         float v = 2.0 * gl_TexCoord[0].y;
-         v = 1.01 - abs(1.0 - v);  // Some cards have a rounding error
-         gl_FragColor = vec4(v,v,v, 1.0) * surfacecolor;
-      }
-    };
-
-    glBindProgramARB(GL_FRAGMENT_PROGRAM_ARB, $FragProgID);
-    glProgramStringARB_p(GL_FRAGMENT_PROGRAM_ARB, $FragProg);
-
-    if (DO_TESTS)
-    {
-      my $fprog = glGetProgramStringARB_p(GL_FRAGMENT_PROGRAM_ARB);
-      print "Fragment Prog: $fprog\n";
     }
   }
 }
@@ -843,24 +765,11 @@ sub cbRenderScene
 
     # Run shader programs for texture.
     # If installed, use OpenGL::Shader
-    if ($Shader)
-    {
+    if ($Shader) {
       $Shader->Enable();
       $Shader->SetVector('center',0.0,0.0,2.0,0.0);
       $Shader->SetMatrix('xform',$xform);
       $Shader->SetVector('surfacecolor',1.0,0.5,0.0,1.0);
-    }
-    # Otherwise, do it manually
-    elsif ($hasFragProg)
-    {
-      glEnable(GL_VERTEX_PROGRAM_ARB);
-      glEnable(GL_FRAGMENT_PROGRAM_ARB);
-      glProgramLocalParameter4fARB(GL_VERTEX_PROGRAM_ARB, 0, 0.0,0.0,2.0,0.0);
-      glProgramLocalParameter4fvARB_c(GL_VERTEX_PROGRAM_ARB, 1, $xform->offset(0));
-      glProgramLocalParameter4fvARB_c(GL_VERTEX_PROGRAM_ARB, 2, $xform->offset(4));
-      glProgramLocalParameter4fvARB_c(GL_VERTEX_PROGRAM_ARB, 3, $xform->offset(8));
-      glProgramLocalParameter4fvARB_c(GL_VERTEX_PROGRAM_ARB, 4, $xform->offset(12));
-      glProgramLocalParameter4fARB(GL_FRAGMENT_PROGRAM_ARB, 5, 1.0,0.5,0.0,1.0);
     }
 
     glColor3f(1.0, 1.0, 1.0);
@@ -869,14 +778,8 @@ sub cbRenderScene
     glBindTexture(GL_TEXTURE_2D, $TextureID_FBO);
     glGenerateMipmapEXT(GL_TEXTURE_2D);
 
-    if ($Shader)
-    {
+    if ($Shader) {
       $Shader->Disable();
-    }
-    elsif ($hasFragProg)
-    {
-      glDisable(GL_FRAGMENT_PROGRAM_ARB);
-      glDisable(GL_VERTEX_PROGRAM_ARB);
     }
 
     glPopAttrib();
@@ -1183,8 +1086,7 @@ sub Save
 }
 
 # Cleanup routine
-sub ourCleanup
-{
+sub ourCleanup {
   print "Starting cleanup ...\n";
   # Disable app
   glutHideWindow();
@@ -1199,13 +1101,10 @@ sub ourCleanup
   ReleaseResources();
 
   # Now you can destroy window
-  if (defined($gameMode))
-  {
+  if (defined($gameMode)) {
     print "Leaving game mode.\n";
     glutLeaveGameMode();
-  }
-  else
-  {
+  } else {
     print "Destroying window.\n";
     glutDestroyWindow($Window_ID);
   }
@@ -1213,35 +1112,22 @@ sub ourCleanup
   print "Cleanup completed.\n";
 }
 
-sub ReleaseResources
-{
-  return if (!defined($Window_ID));
+sub ReleaseResources {
+  return if !defined $Window_ID;
 
-  if ($hasFBO)
-  {
+  if ($hasFBO) {
     # Release resources
     glBindRenderbufferEXT( GL_RENDERBUFFER_EXT, 0 );
     glBindFramebufferEXT( GL_FRAMEBUFFER_EXT, 0 );
-
-    glDeleteRenderbuffersEXT_p( $RenderBufferID ) if ($RenderBufferID);
-    glDeleteFramebuffersEXT_p( $FrameBufferID ) if ($FrameBufferID);
+    glDeleteRenderbuffersEXT_p( $RenderBufferID ) if $RenderBufferID;
+    glDeleteFramebuffersEXT_p( $FrameBufferID ) if $FrameBufferID;
   }
 
-  if ($Shader)
-  {
+  if ($Shader) {
     undef($Shader);
   }
-  elsif ($hasFragProg)
-  {
-    glBindProgramARB(GL_VERTEX_PROGRAM_ARB, 0);
-    glDeleteProgramsARB_p( $VertexProgID ) if ($VertexProgID);
 
-    glBindProgramARB(GL_FRAGMENT_PROGRAM_ARB, 0);
-    glDeleteProgramsARB_p( $FragProgID ) if ($FragProgID);
-  }
-
-  if ($hasVBO)
-  {
+  if ($hasVBO) {
     glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
     glDeleteBuffersARB_p($VertexObjID) if $VertexObjID;
     glDeleteBuffersARB_p($NormalObjID) if $NormalObjID;
@@ -1626,20 +1512,15 @@ foreach my $ext (sort @extensions)
   print("    $stat\n") if ($stat && $stat !~ m|^$ext |);
 }
 
-if (!OpenGL::glpCheckExtension('GL_ARB_vertex_buffer_object'))
-{
+if (!OpenGL::glpCheckExtension('GL_ARB_vertex_buffer_object')) {
   # Perl 5.10 crashes on VBOs!
   $hasVBO = ($PERL_VERSION !~ m|^5\.10\.|);
 }
 
-if (!OpenGL::glpCheckExtension('GL_EXT_framebuffer_object'))
-{
+if (!OpenGL::glpCheckExtension('GL_EXT_framebuffer_object')) {
   $hasFBO = 1;
   $FBO_On = 1;
-
-  if (!OpenGL::glpCheckExtension('GL_ARB_fragment_program'))
-  {
-    $hasFragProg = 1;
+  if (!OpenGL::glpCheckExtension('GL_ARB_fragment_program')) {
     $FBO_On++;
   }
 }
