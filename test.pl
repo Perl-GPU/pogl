@@ -6,7 +6,46 @@ our $IS_ACTIVEPERL = ($stat =~ m|ActiveState|s);
 our $PERL_VERSION = $^V;
 $PERL_VERSION =~ s|^v||;
 
-use OpenGL qw/ :all glDrawElements_c /;
+use OpenGL qw/
+  :glconstants
+  glpHasGLUT glpCheckExtension
+  glGetString glGetError
+  glGenTextures_p glBindTexture glTexParameteri glTexImage2D_c glTexEnvf
+    glDeleteTextures_p
+  glGenerateMipmapEXT
+  glGenFramebuffersEXT_p glBindFramebufferEXT glFramebufferTexture2DEXT
+    glCheckFramebufferStatusEXT glDeleteFramebuffersEXT_p
+  glGenRenderbuffersEXT_p glBindRenderbufferEXT glRenderbufferStorageEXT
+    glDeleteRenderbuffersEXT_p
+  glFramebufferRenderbufferEXT
+  glGenBuffersARB_p glBindBufferARB glBufferDataARB_p glBufferSubDataARB_p
+    glMapBufferARB_c glUnmapBufferARB glDeleteBuffersARB_p
+  glVertexPointer_p glNormalPointer_p glColorPointer_p glTexCoordPointer_p
+  glEnableClientState glDisableClientState
+  glEnable glDisable glBlendFunc glDepthFunc glShadeModel
+    glMatrixMode glLoadIdentity glLightfv_p glColorMaterial
+    glTranslatef glRotatef
+    glColor3f glColor4f
+    glPushMatrix glPopMatrix glPushAttrib glPopAttrib
+    glOrtho
+  glRasterPos2i glRasterPos2f
+  glPixelZoom glReadPixels_c glDrawPixels_c
+  glGetDoublev_c glGetIntegerv_c
+  glClearColor glClearDepth glClear glViewport glDrawElements_c
+
+  glGenProgramsARB_p glBindProgramARB glProgramStringARB_p
+    glDeleteProgramsARB_p
+  glGetProgramivARB_p glGetProgramEnvParameterdvARB_p
+  glGetProgramEnvParameterfvARB_p glGetProgramStringARB_p
+  glProgramLocalParameter4fARB
+/;
+use OpenGL::GLUT qw/
+  :constants :functions
+/;
+use OpenGL::GLU qw/
+  gluBuild2DMipmaps_c gluErrorString
+  gluOrtho2D gluProject_p gluUnProject_p gluPerspective
+/;
 use OpenGL::Config;     # for build information
 
 eval 'use OpenGL::Image 1.03';  # Need to use OpenGL::Image 1.03 or higher!
@@ -43,19 +82,14 @@ $|++;
 # Requires GLUT/FreeGLUT
 if (!glpHasGLUT())
 {
-  print qq
-  {
+  print <<'EOF';
     This test requires GLUT:
     If you have X installed, you can try the scripts in ./examples/
     Most of them do not use GLUT.
 
     It is recommended that you install FreeGLUT for improved Makefile.PL
     configuration, installation and debugging.
-
-  };
-
-  print "Attempting to run examples/texhack instead...\n";
-  `perl examples/texhack`;
+EOF
   exit 0;
 }
 
@@ -497,7 +531,7 @@ sub ourBuildTextures
     my $alpha = $img->Get('alpha') ? 'has' : 'no';
     print "Loading texture: $Tex_File, $Tex_Width x $Tex_Height, $alpha alpha\n";
 
-    ($Tex_Type,$Tex_Format,$Tex_Size) = 
+    ($Tex_Type,$Tex_Format,$Tex_Size) =
       $img->Get('gl_internalformat','gl_format','gl_type');
 
     # Use OGA for testing
@@ -1055,7 +1089,7 @@ sub Capture
   glDisable( GL_DEPTH_TEST );
   glDisable( GL_CULL_FACE );
   glDisable( GL_STENCIL_TEST );
- 
+
   glViewport( 0, 0, $w, $h );
   glMatrixMode( GL_PROJECTION );
   glPushMatrix();
@@ -1064,7 +1098,7 @@ sub Capture
   glMatrixMode( GL_MODELVIEW );
   glPushMatrix();
   glLoadIdentity();
-  
+
   glPixelZoom( 1, 1 );
 
   # Save
