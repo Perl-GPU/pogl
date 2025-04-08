@@ -1,8 +1,6 @@
 #!/usr/bin/perl -w
 use strict;
 
-my $stat = `perl -v`;
-our $IS_ACTIVEPERL = ($stat =~ m|ActiveState|s);
 our $PERL_VERSION = $^V;
 $PERL_VERSION =~ s|^v||;
 
