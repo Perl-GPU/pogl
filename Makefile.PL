@@ -113,7 +113,6 @@ if ($verbose) {
 # Get user-specified interface
 my $interface_lib = get_interface_lib(\@ARGV, $found_libs, $is_valid_interface);
 print "\nUsing interface: $interface_lib\n\n";
-delete @$found_libs{qw(GLX MESA)} if ($^O eq 'MSWin32') || $IS_W32API;
 
 $INCS = get_incs($interface_lib);
 
@@ -361,6 +360,7 @@ sub get_found_libs {
         print "Try manually copying FreeGLUT/freeglut.dll to a folder in your PATH.\n";
       }
     }
+    delete @$found{qw(GLX MESA)};
     return $found if (!$IS_W32API);
   }
   # Everyone else
@@ -391,7 +391,7 @@ sub get_found_libs {
       $found->{MESA} = "-l$1";
     }
   }
-  return $found;
+  $found;
 }
 
 sub get_incs {
