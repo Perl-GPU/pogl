@@ -84,6 +84,7 @@ our @libdirs = map "-L$_", grep -d, qw(
   /usr/local/lib
   /usr/openwin/lib
   /opt/csw/lib
+  /opt/local/lib
   /usr/local/freeglut/lib
   /usr/lib
   /usr/lib/xorg/modules
@@ -107,7 +108,7 @@ our @check_libs = qw
   -lMesaGLUT
 };
 
-our $found_libs = get_found_libs(@libdirs,@check_libs);
+our $found_libs = get_found_libs(\@libdirs,@check_libs);
 die "No OpenGL related libs found\n" if !$found_libs;
 if ($verbose) {
   print "found libs:\n";
@@ -262,7 +263,7 @@ EOF
 
 # Find OpenGL-related Libs
 sub get_found_libs {
-  my @glx_libs = @_;
+  my ($ldirs, @glx_libs) = @_;
   my $found = {};
   my $libs;
   # Mac OS X
@@ -270,7 +271,12 @@ sub get_found_libs {
     $found->{GL} = '-framework OpenGL';
     $found->{GLU} = '-framework AGL';
     $found->{GLUT} = '-framework GLUT';
-    $found->{FREEGLUT} = '-lglut' if -e '/opt/X11/lib/libglut.3.dylib';
+    for (@$ldirs) {
+      (my $dir = $_) =~ s/^-L//;
+      next if !-e "$dir/libglut.3.dylib";
+      $found->{FREEGLUT} = '-lglut';
+      last;
+    }
     return $found;
   }
   # Win32
@@ -340,7 +346,7 @@ sub get_found_libs {
       return if $warning =~ /Warning \(mostly harmless\): No library found for/;
       warn $warning;
     };
-    ExtUtils::Liblist->ext(join(' ',@glx_libs),0);
+    ExtUtils::Liblist->ext(join(' ', @$ldirs, @glx_libs),0);
   };
   foreach my $lib (split(' ',$libs)) {
     next if ($lib =~ m|^-L|);
@@ -379,6 +385,7 @@ sub get_incs {
     /usr/local/include
     /usr/openwin/include
     /opt/csw/include
+    /opt/local/include
     /usr/local/freeglut/include
   };
 }
