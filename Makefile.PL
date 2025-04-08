@@ -138,70 +138,9 @@ if ($IS_STRAWBERRY) {
 our $DEFS = get_defines($found_libs, $interface_lib, $INCS);
 
 # Configure MakeMaker
-my ($LIBS,$OPTS,$DYNS);
-if ($IS_W32API || $^O eq 'MSWin32')		# Win32
-{
-  $LIBS = '-lopengl32 -lglu32 ' . (
-    $interface_lib eq 'GLUT' ? '-lglut32' :
-    $interface_lib eq 'FREEGLUT' && $IS_STRAWBERRY ? '-lglut' :
-    '-LFreeGLUT -lfreeglut'
-  );
-  if ($IS_W32API)	# CYGWIN W32API
-  {
-    $LIBS = "-L/usr/lib/w32api $LIBS";
-    my $glut = $found_libs->{FREEGLUT32} || $found_libs->{GLUT32};
-    $glut =~ s/^-l//;
-    $DYNS = { OTHERLDFLAGS => '-Wl,--exclude-symbols,'."\x7F".$glut.'_NULL_THUNK_DATA' };
-  }
-  elsif (!$IS_MINGW) # Windows VC6
-  {
-    $OPTS = "/ogity /GDs";
-  }
-  {
-     system $^X , qw[-MExtUtils::Command -e mkpath --], qw[blib/arch/auto/OpenGL];
-     system $^X , qw[-MExtUtils::Command -e cp --], qw[FreeGLUT/freeglut.dll blib/arch/auto/OpenGL/freeglut.dll];
-     my @other_installs = grep { -e "$_\\freeglut.dll" } split /;/, $ENV{PATH};
-     if(@other_installs) {
-      print "\n" ;
-      print "XXX Other freeglut.dll installed in $_\n" for @other_installs;
-      print "Please verify whether the other found dll(s) are from older OpenGL.pm installs, and delete them if so!\n\n\n";
-      sleep 2;
-     }
-  }
-}
-elsif ($interface_lib eq 'AGL')					# Mac OS X
-{
-  $LIBS = "-framework OpenGL -framework GLUT -lm";
-}
-else # Everyone else
-{
-  # Marshall libs
-  my $libs = join '', map " $_", sort(values %$found_libs), '-lm';
-  $LIBS = "@libdirs $libs";
-  # Handle obfuscated gcc
-  if (!$NO_LGCC)
-  {
-    # This may be a gcc compiler in disguise.
-    if ($Config{cc} ne 'gcc' && !$Config{gccversion})
-    {
-      my $gcclibdir;
-      my $gccout = `gcc -v 2>&1`;
-      if ($gccout =~ /specs from (.*)/)	# gcc present
-      {
-        ($gcclibdir = $1) =~ s,\bspecs\s*$,,;
-        $LIBS .= " -L$gcclibdir -lgcc";
-        print STDERR qq
-        {
-#
-### Non-gcc compiler, and gcc is present.
-### Adding -lgcc as a dependency: your OpenGL libraries may be gcc-compiled.
-### Use NO_LGCC command-line option to disable this.
-#
-        };
-      }
-    }
-  }
-}
+my $OPTS = $^O eq 'MSWin32' && !$IS_MINGW ? "/ogity /GDs" : undef;
+my $DYNS = get_dyns($found_libs);
+my $LIBS = get_libs($found_libs, $interface_lib, \@libdirs);
 
 # This is the final build configuration
 my $build_config =
@@ -294,6 +233,41 @@ sub cfile_text {
   return `$cmd`;
 }
 
+sub get_dyns {
+  my ($found_libs) = @_;
+  return if !$IS_W32API;
+  my $glut = $found_libs->{FREEGLUT32} || $found_libs->{GLUT32};
+  $glut =~ s/^-l//;
+  { OTHERLDFLAGS => '-Wl,--exclude-symbols,'."\x7F".$glut.'_NULL_THUNK_DATA' };
+}
+
+sub get_libs {
+  my ($found_libs, $interface_lib, $ldirs) = @_;
+  return "-framework OpenGL -framework GLUT -lm" if $interface_lib eq 'AGL';
+  return +($IS_W32API ? "-L/usr/lib/w32api " : '') .
+    '-lopengl32 -lglu32 ' . (
+      $interface_lib eq 'GLUT' ? '-lglut32' :
+      $interface_lib eq 'FREEGLUT' && $IS_STRAWBERRY ? '-lglut' :
+      '-LFreeGLUT -lfreeglut'
+    )
+      if $IS_W32API || $^O eq 'MSWin32';
+  my $libs = join '', map " $_", sort(values %$found_libs), '-lm';
+  $libs = "@$ldirs $libs";
+  return $libs if $NO_LGCC || $Config{cc} eq 'gcc' || $Config{gccversion};
+  # Handle obfuscated gcc
+  # This may be a gcc compiler in disguise.
+  my $gccout = `gcc -v 2>&1`;
+  return $libs if $gccout !~ /specs from (.*)/;
+  (my $gcclibdir = $1) =~ s,\bspecs\s*$,,;
+  print STDERR <<'EOF';
+#
+### Non-gcc compiler, and gcc is present.
+### Adding -lgcc as a dependency: your OpenGL libraries may be gcc-compiled.
+### Use NO_LGCC command-line option to disable this.
+#
+EOF
+  $libs . " -L$gcclibdir -lgcc";
+}
 
 # Find OpenGL-related Libs
 sub get_found_libs {
