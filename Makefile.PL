@@ -123,16 +123,15 @@ delete @$found_libs{grep /^FREEGLUT/, keys %$found_libs} if $interface_lib =~ /^
 
 $INCS = get_incs($interface_lib);
 
-# Check for OpenGL installation
-my $gldata = get_gldata($found_libs, $INCS);
-generate_excl($gldata);
-
 our $DEFS = get_defines($found_libs, $interface_lib, $INCS);
 
 # Configure MakeMaker
 my $OPTS = $^O eq 'MSWin32' && !$IS_MINGW ? "/ogity /GDs" : undef;
 my $DYNS = get_dyns($found_libs);
 my $LIBS = get_libs($found_libs, $interface_lib, \@libdirs);
+
+my $gldata = get_gldata($found_libs, $INCS, $DEFS, $LIBS);
+generate_excl($gldata);
 
 # This is the final build configuration
 my $build_config =
@@ -492,7 +491,7 @@ sub get_interface_lib {
 
 # Test for available OpenGL Extensions
 sub get_gldata {
-  my ($found, $incs) = @_;
+  my ($found, $incs, $defs, $libs) = @_;
   print "Testing for OpenGL Extensions\n" if $verbose;
   # clean up previous output files
   my $glv_file = 'utils/glversion.txt';
@@ -507,6 +506,7 @@ sub get_gldata {
     '';
   # Platform-specific makefiles for glversion
   my $make_ver;
+  my $append = " LIB='$libs' INC='$incs' DEF='$defs'";
   if ($IS_STRAWBERRY) {
     $make_ver = "&strawberry.bat";
     print "strawberry glversion: '$make_ver'\n" if $verbose>1;
@@ -514,27 +514,22 @@ sub get_gldata {
     $make_ver = "&mingw.bat";
     print "mingw glversion: '$make_ver'\n" if $verbose>1;
   } elsif ($IS_W32API) {
-    $make_ver = ";make -f Makefile.cygwin " .  (length($lib) ? "GLUT_LIB=$lib " : "") . $def;
+    $make_ver = ";make -f Makefile.cygwin $append";
     print "cygwin glversion: '$make_ver'\n" if $verbose>1;
   } elsif ($^O eq 'MSWin32') {
-    $make_ver = '&nmake -f makefile.mak ' . $def;
+    $make_ver = '&nmake -f makefile.mak ' . $append;
     print "MSWin32 glversion: '$make_ver'\n" if $verbose>1;
-  } elsif ($^O eq 'darwin') {
-    $make_ver = ";make -f Makefile.macosx " .
-      "GLUT_LIB='" . ($lib || "-framework GLUT") . "' " .
-      "GLUT_INC='$incs' " .
-      $def;
-    print "MacOSX glversion: '$make_ver'\n" if $verbose>1;
   } else {
-    if ($ENV{TERM} ne 'xterm') {
+    if ($ENV{TERM} ne 'xterm' and $^O ne 'darwin') {
       print "\nIn order to test your GPU's capabilities, run this make under an X11 shell\n\n";
     }
-    $make_ver = ";make -f Makefile " .  (length($lib) ? "GLUT_LIB=$lib " : "") . "GLUT_INC='$incs' " . $def;
+    $make_ver = ";make -f Makefile $append";
     print "glversion: '$make_ver'\n" if $verbose>1;
   }
   my $exec = 'cd utils'."$make_ver clean".$make_ver;
   print "glversion: $exec\n" if $verbose;
   my $stat = `$exec`;
+  die "Error building glversion.txt: $stat" if $?;
   print "\n$stat\n\n" if $verbose;
   unlink "utils/freeglut.dll" or die "could not remove temporary freeglut: $!" if -f "utils/freeglut.dll";
   # Parse glversion.txt file
@@ -630,7 +625,8 @@ sub get_defines {
   }
   print "\n" if $verbose;
   $defs .= " -DHAVE_W32API" if $IS_W32API; # CYGWIN W32API
-  $defs .= " -DHAVE_AGL_GLUT -Wno-deprecated-declarations " if $interface_lib eq 'AGL'; # So we know we have glutWMCloseFunc() and glutCheckLoop()
+  $defs .= " -DHAVE_AGL_GLUT" if $interface_lib eq 'AGL'; # So we know we have glutWMCloseFunc() and glutCheckLoop()
+  $defs .= " -Wno-deprecated-declarations" if $^O eq 'darwin';
   if (!($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN)) && !($interface_lib eq 'AGL')) {
     # Test for obfuscated GLX using GL/glx.h
     my $out = cfile_text('GL/glx.h', $incs);
