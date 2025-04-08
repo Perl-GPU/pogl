@@ -78,15 +78,19 @@ our $NO_LGCC = grep /^NO_LGCC$/, @ARGV; @ARGV = grep !/^NO_LGCC$/, @ARGV;
 
 my $prepare_success = eval {
 # Look for available libs
-our @libdirs = qw
-{
-  -L/usr/X11R6/lib
-  -L/opt/X11/lib
-  -L/usr/local/lib
-  -L/usr/openwin/lib
-  -L/opt/csw/lib
-  -L/usr/local/freeglut/lib
-};
+our @libdirs = map "-L$_", grep -d, qw(
+  /usr/X11R6/lib
+  /opt/X11/lib
+  /usr/local/lib
+  /usr/openwin/lib
+  /opt/csw/lib
+  /usr/local/freeglut/lib
+  /usr/lib
+  /usr/lib/xorg/modules
+  /usr/X11R6/lib/modules
+  /usr/lib/xorg/modules/extensions
+  /usr/X11R6/lib/modules/extensions
+);
 
 our @check_libs = qw
 {
@@ -120,13 +124,13 @@ $INCS = get_incs($interface_lib);
 my $gldata = get_gldata($found_libs, $INCS);
 generate_excl($gldata);
 if ($IS_STRAWBERRY) {
-  $found_libs->{'GLU'} = $found_libs->{'GLU32'};
-  $found_libs->{'GL'} = $found_libs->{'OPENGL32'};
+  $found_libs->{GLU} = $found_libs->{GLU32};
+  $found_libs->{GL} = $found_libs->{OPENGL32};
 } elsif (($^O eq 'MSWin32') || $IS_W32API) {
-  $found_libs->{'FREEGLUT'} = $found_libs->{'FREEGLUT32'};
-  $found_libs->{'GLUT'} = $found_libs->{'GLUT32'};
-  $found_libs->{'GLU'} = $found_libs->{'GLU32'};
-  $found_libs->{'GL'} = $found_libs->{'OPENGL32'};
+  $found_libs->{FREEGLUT} = $found_libs->{FREEGLUT32};
+  $found_libs->{GLUT} = $found_libs->{GLUT32};
+  $found_libs->{GLU} = $found_libs->{GLU32};
+  $found_libs->{GL} = $found_libs->{OPENGL32};
 } elsif($IS_CYGWIN) {
   delete @$found_libs{qw(FREEGLUT32 GLUT32 GLU32 OPENGL32)};
 }
@@ -209,7 +213,7 @@ my $build_config =
   !defined($OPTS) ? () : (OPTIMIZE => $OPTS),
 };
 
-print "\nMakeMaker configuration:\n" if $verbose;
+print "MakeMaker configuration:\n DEFINE=$DEFS\n INC=$INCS\n LIBS=$LIBS\n\n" if $verbose;
 
 close(CONF) if (open(CONF,">", "lib/OpenGL/Config.pm")); # empty Config.pm
 WriteMakefile(
@@ -496,7 +500,7 @@ sub get_interface_lib {
     die "ERROR: multiple opengl interfaces requested: @interface_opts.\n"
       if @interface_opts > 1;
     ($interface_lib) = @interface_opts;
-    print "User set interface to $interface_lib\n" if ($verbose && !$fallback);
+    print "User set interface to $interface_lib\n" if $verbose && !$fallback;
     # Strip out interface args
     @$argv_ref = grep { !m/^interface=/i } @$argv_ref;
     return $interface_lib;
@@ -517,12 +521,12 @@ sub get_interface_lib {
 # Test for available OpenGL Extensions
 sub get_gldata {
   my ($found, $incs) = @_;
-  print "Testing for OpenGL Extensions\n" if ($verbose);
+  print "Testing for OpenGL Extensions\n" if $verbose;
   # clean up previous output files
   my $glv_file = 'utils/glversion.txt';
   unlink($glv_file) if (-e $glv_file);
   # Only run the rest if GLUT is installed
-  print "Testing GLUT version\n" if ($verbose);
+  print "Testing GLUT version\n" if $verbose;
   my $lib = $found->{FREEGLUT32} || $found->{FREEGLUT} || $found->{GLUT32} || $found->{GLUT};
   print "GLUT not found\n" if $verbose and !$lib;
   my $def =
@@ -557,9 +561,9 @@ sub get_gldata {
     print "glversion: '$make_ver'\n" if $verbose>1;
   }
   my $exec = 'cd utils'."$make_ver clean".$make_ver;
-  print "glversion: $exec\n" if ($verbose);
+  print "glversion: $exec\n" if $verbose;
   my $stat = `$exec`;
-  print "\n$stat\n\n" if ($verbose);
+  print "\n$stat\n\n" if $verbose;
   unlink "utils/freeglut.dll" or die "could not remove temporary freeglut: $!" if -f "utils/freeglut.dll";
   # Parse glversion.txt file
   open GLDATA, $glv_file or die "get_gldata: could not open $glv_file: $!\n";
@@ -649,12 +653,13 @@ sub get_defines {
   my ($found_libs, $interface_lib, $incs) = @_;
   my $defs = '-DHAVE_VER';
   $defs .= " -DIS_STRAWBERRY" if $IS_STRAWBERRY;
-  print "resulting libs:\n" if ($verbose);
+  print "resulting libs:\n" if $verbose;
   foreach my $key (sort keys %$found_libs) {
     next if (!$found_libs->{$key});
     $defs .= " -DHAVE_$key";
-    print "    $key = '$found_libs->{$key}'\n" if ($verbose);
+    print "    $key = '$found_libs->{$key}'\n" if $verbose;
   }
+  print "\n" if $verbose;
   $defs .= " -DHAVE_W32API" if $IS_W32API; # CYGWIN W32API
   $defs .= " -DHAVE_AGL_GLUT -Wno-deprecated-declarations " if $interface_lib eq 'AGL'; # So we know we have glutWMCloseFunc() and glutCheckLoop()
   if (!($IS_W32API || (($^O eq 'MSWin32') && !$IS_CYGWIN)) && !($interface_lib eq 'AGL')) {
