@@ -393,82 +393,80 @@ sub get_incs {
 sub get_interface_lib {
   my ($argv_ref, $found_libs, $is_valid_interface) = @_;
   my $interface_lib;
-  if ( grep { m/^interface=/i } @$argv_ref ) {
+  if (my @if_args = map m/^interface=(\w+)/i ? $1 : (), @$argv_ref) {
     my @interface_opts = ();
     my $fallback = 0;
-    foreach my $arg (@$argv_ref) {
-      if ($arg =~ m/^interface=(\w+)/i) {
-        my $interface = uc($1);
-        my $valid_type = $is_valid_interface->{$interface};
-        if (!$valid_type) {
-          Usage("Invalid interface: '$interface'");
+    foreach my $arg (@if_args) {
+      my $interface = uc($arg);
+      my $valid_type = $is_valid_interface->{$interface};
+      if (!$valid_type) {
+        Usage("Invalid interface: '$interface'");
+        next;
+      }
+      # test if requested interfaces supported
+      # !!! Should use lookup table
+      if ($interface eq 'W32API' or $interface eq 'WGL') {
+        if (!$found_libs->{FREEGLUT32} && !$found_libs->{GLUT32}) {
+          print "W32API interface requires GLUT or FreeGLUT\n";
           next;
         }
-        # test if requested interfaces supported
-        # !!! Should use lookup table
-        if ($interface eq 'W32API' or $interface eq 'WGL') {
-          if (!$found_libs->{FREEGLUT32} && !$found_libs->{GLUT32}) {
-            print "W32API interface requires GLUT or FreeGLUT\n";
-            next;
-          }
-          if (!$found_libs->{OPENGL32}) {
-            print "W32API interface requires OpenGL32.dll\n";
-            next;
-          }
-          if (!$found_libs->{GLU32}) {
-            print "W32API interface requires GLU32.dll\n";
-            next;
-          }
-        } elsif ($interface eq 'AGL') {
-          if ($^O ne 'darwin' || !$found_libs->{GLUT}) {
-            print "AGL interface requires GLUT.framework\n";
-            next;
-          }
-        } elsif ($interface =~ m|GLUT|) {
-          if ($interface eq 'FREEGLUT') {
-            if (!$found_libs->{FREEGLUT} && !$found_libs->{FREEGLUT32}) {
-              print "FREEGLUT interface requires FreeGLUT\n";
-              if ($found_libs->{GLUT}) {
-                print "Falling back to the GLUT interface\n";
-                $interface = 'GLUT';
-                $fallback++;
-              } else {
-                print "Try installing FREEGLUT first\n";
-                next;
-              }
-            }
-          } elsif ($interface eq 'GLUT') {
-            if (!$found_libs->{GLUT} && $found_libs->{FREEGLUT}) {
-              $found_libs->{GLUT} = $found_libs->{FREEGLUT};
-            }
-            if (!$found_libs->{GLUT32} && $found_libs->{FREEGLUT32}) {
-              $found_libs->{GLUT32} = $found_libs->{FREEGLUT32};
-            }
+        if (!$found_libs->{OPENGL32}) {
+          print "W32API interface requires OpenGL32.dll\n";
+          next;
+        }
+        if (!$found_libs->{GLU32}) {
+          print "W32API interface requires GLU32.dll\n";
+          next;
+        }
+      } elsif ($interface eq 'AGL') {
+        if ($^O ne 'darwin' || !$found_libs->{GLUT}) {
+          print "AGL interface requires GLUT.framework\n";
+          next;
+        }
+      } elsif ($interface =~ m|GLUT|) {
+        if ($interface eq 'FREEGLUT') {
+          if (!$found_libs->{FREEGLUT} && !$found_libs->{FREEGLUT32}) {
+            print "FREEGLUT interface requires FreeGLUT\n";
             if ($found_libs->{GLUT}) {
-              delete($found_libs->{FREEGLUT});
-            }
-            if ($found_libs->{GLUT32}) {
-              delete($found_libs->{FREEGLUT32});
-            }
-            if (!$found_libs->{GLUT} && !$found_libs->{GLUT32}) {
-              print "GLUT interface requires GLUT or FreeGLUT but libs were not found\n";
+              print "Falling back to the GLUT interface\n";
+              $interface = 'GLUT';
+              $fallback++;
+            } else {
+              print "Try installing FREEGLUT first\n";
               next;
             }
-          } else {
-            print "Error in interface argument processing\n";
+          }
+        } elsif ($interface eq 'GLUT') {
+          if (!$found_libs->{GLUT} && $found_libs->{FREEGLUT}) {
+            $found_libs->{GLUT} = $found_libs->{FREEGLUT};
+          }
+          if (!$found_libs->{GLUT32} && $found_libs->{FREEGLUT32}) {
+            $found_libs->{GLUT32} = $found_libs->{FREEGLUT32};
+          }
+          if ($found_libs->{GLUT}) {
+            delete($found_libs->{FREEGLUT});
+          }
+          if ($found_libs->{GLUT32}) {
+            delete($found_libs->{FREEGLUT32});
+          }
+          if (!$found_libs->{GLUT} && !$found_libs->{GLUT32}) {
+            print "GLUT interface requires GLUT or FreeGLUT but libs were not found\n";
             next;
           }
-        } elsif ($interface eq 'GLX') {
-          if (!$found_libs->{GL} && !$found_libs->{MESA} && !$found_libs->{GLX}) {
-            print "GLX interface requires GLX/X11 but the libraries were not found\n";
-            next;
-          }
-        } elsif (!$found_libs->{$interface}) {
-          print "$interface interface not supported\n";
+        } else {
+          print "Error in interface argument processing\n";
           next;
         }
-        push(@interface_opts,$interface);
+      } elsif ($interface eq 'GLX') {
+        if (!$found_libs->{GL} && !$found_libs->{MESA} && !$found_libs->{GLX}) {
+          print "GLX interface requires GLX/X11 but the libraries were not found\n";
+          next;
+        }
+      } elsif (!$found_libs->{$interface}) {
+        print "$interface interface not supported\n";
+        next;
       }
+      push(@interface_opts,$interface);
     }
     die "ERROR: no supported interfaces found.\n" if !@interface_opts;
     die "ERROR: multiple opengl interfaces requested: @interface_opts.\n"
