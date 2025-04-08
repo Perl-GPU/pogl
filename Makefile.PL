@@ -125,17 +125,6 @@ $INCS = get_incs($interface_lib);
 # Check for OpenGL installation
 my $gldata = get_gldata($found_libs, $INCS);
 generate_excl($gldata);
-if ($IS_STRAWBERRY) {
-  $found_libs->{GLU} = $found_libs->{GLU32};
-  $found_libs->{GL} = $found_libs->{OPENGL32};
-} elsif (($^O eq 'MSWin32') || $IS_W32API) {
-  $found_libs->{FREEGLUT} = $found_libs->{FREEGLUT32};
-  $found_libs->{GLUT} = $found_libs->{GLUT32};
-  $found_libs->{GLU} = $found_libs->{GLU32};
-  $found_libs->{GL} = $found_libs->{OPENGL32};
-} elsif($IS_CYGWIN) {
-  delete @$found_libs{qw(FREEGLUT32 GLUT32 GLU32 OPENGL32)};
-}
 
 our $DEFS = get_defines($found_libs, $interface_lib, $INCS);
 
@@ -288,8 +277,8 @@ sub get_found_libs {
   if ($IS_STRAWBERRY) {
      # libs for strawberry perl go here
      $found->{FREEGLUT} = '-lglut';
-     $found->{OPENGL32} = '-lopengl32';
-     $found->{GLU32} = '-lglu32';
+     $found->{GL} = $found->{OPENGL32} = '-lopengl32';
+     $found->{GLU} = $found->{GLU32} = '-lglu32';
   } elsif (($^O eq 'MSWin32') || $IS_W32API) {
     my $paths = $ENV{PATH};
     $paths =~ s|\\|/|g;
@@ -338,6 +327,10 @@ sub get_found_libs {
       }
     }
     delete @$found{qw(GLX MESA)};
+    $found->{GL} = $found->{OPENGL32};
+    $found->{GLU} = $found->{GLU32};
+    $found->{FREEGLUT} = $found->{FREEGLUT32};
+    $found->{GLUT} = $found->{GLUT32};
     return $found if (!$IS_W32API);
   }
   # Everyone else
@@ -368,6 +361,7 @@ sub get_found_libs {
       $found->{MESA} = "-l$1";
     }
   }
+  delete @$found{qw(FREEGLUT32 GLUT32 GLU32 OPENGL32)} if $IS_CYGWIN and !$IS_W32API;
   $found;
 }
 
