@@ -115,7 +115,6 @@ test.pl
 test.tga
 TODO
 typemap
-utils/cleanup.pl
 utils/const.pl
 utils/exports.pl
 utils/exports.txt
@@ -127,6 +126,4 @@ utils/Makefile.cygwin
 utils/makefile.mak
 utils/makefile.mingw
 utils/mingw.bat
-utils/opengl32.txt
 utils/strawberry.bat
-utils/wgl_ext.txt
