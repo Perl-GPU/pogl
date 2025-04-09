@@ -30,8 +30,6 @@ examples/try.pl
 examples/with-glut.txt
 examples/with-glx.txt
 examples/wolf.bin
-fragment.arb
-fragment.glsl
 FreeGLUT/freeglut-Readme.txt
 FreeGLUT/freeglut.dll
 FreeGLUT/freeglut.lib
@@ -132,5 +130,3 @@ utils/mingw.bat
 utils/opengl32.txt
 utils/strawberry.bat
 utils/wgl_ext.txt
-vertex.arb
-vertex.glsl

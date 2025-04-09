@@ -694,37 +694,107 @@ sub ourSelectTexture
     glBindTexture(GL_TEXTURE_2D, $FBO_On ? $TextureID_FBO : $TextureID_image);
 }
 
+my %ext2shaders = (
+  arb => [
+<<'EOF',
+!!ARBfp1.0
+PARAM surfacecolor = program.local[5];
+TEMP color;
+MUL color, fragment.texcoord[0].y, 2.0;
+ADD color, 1.0, -color;
+ABS color, color;
+ADD color, 1.01, -color;  # Some cards have a rounding error
+MOV color.a, 1.0;
+MUL color, color, surfacecolor;
+MOV result.color, color;
+END
+EOF
+<<'EOF',
+!!ARBvp1.0
+PARAM center = program.local[0];
+PARAM xform[4] = {program.local[1..4]};
+TEMP vertexClip;
+
+# ModelView projection
+DP4 vertexClip.x, state.matrix.mvp.row[0], vertex.position;
+DP4 vertexClip.y, state.matrix.mvp.row[1], vertex.position;
+DP4 vertexClip.z, state.matrix.mvp.row[2], vertex.position;
+DP4 vertexClip.w, state.matrix.mvp.row[3], vertex.position;
+
+# Additional transform, via matrix variable
+DP4 vertexClip.x, vertexClip, xform[0];
+DP4 vertexClip.y, vertexClip, xform[1];
+DP4 vertexClip.z, vertexClip, xform[2];
+DP4 vertexClip.w, vertexClip, xform[3];
+
+#SUB result.position, vertexClip, center;
+MOV result.position, vertexClip;
+
+# Pass through color
+MOV result.color, vertex.color;
+
+# Pass through texcoords
+SUB result.texcoord[0], vertex.texcoord, center;
+END
+EOF
+  ],
+  glsl => [
+<<'EOF',
+uniform vec4 surfacecolor;
+
+void main (void) {
+   float v = 2.0 * gl_TexCoord[0].y;
+   v = 1.01 - abs(1.0 - v);  // Some cards have a rounding error
+   gl_FragColor = vec4(v,v,v, 1.0) * surfacecolor;
+}
+EOF
+<<'EOF',
+uniform vec4 center;
+uniform mat4 xform;
+
+void main(void) {
+  gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+  gl_Position *= xform;
+  // Calc texcoord values
+  vec4 pos = gl_Vertex;
+  float d = sqrt(pos.x * pos.x + pos.y * pos.y);
+  float a = atan(pos.x/pos.y) / 3.1415;
+  if (a < 0.0) a += 1.0;
+  a *= 2.0;
+  a -= float(int(a));
+  pos -= center;
+  float h = pos.z;
+  h = abs(2.0 * atan(h/d) / 3.1415);
+  gl_TexCoord[0].x = a;
+  gl_TexCoord[0].y = h;
+}
+EOF
+  ],
+);
 sub ourInitShaders
 {
   # Setup Vertex/Fragment Programs to render FBO texture
-
   if ($hasShader) {
     my $version = $OpenGL::Shader::VERSION;
     printf("Using OpenGL::Shader v$version\n");
     my $types = OpenGL::Shader->GetTypes();
     my @types = keys(%$types);
     printf("This installation supports the following shader types: %s\n", join(',', @types));
-
     # Use OpenGL::Shader
     $Shader = OpenGL::Shader->new();
-    if (!$Shader)
-    {
+    if (!$Shader) {
       printf("Unable to instantiate OpenGL::Shader\n");
       return;
     }
-
     my $type = $Shader->GetType();
     my $ext = lc($type);
-
-    my $stat = $Shader->LoadFiles("fragment.$ext","vertex.$ext");
-    if (!$stat)
-    {
+    my $shaders = $ext2shaders{$ext};
+    my $stat = !$shaders ? "Shader: unknown extension '$ext'" : $Shader->Load(@$shaders);
+    if (!$stat) {
       my $ver = $Shader->GetVersion();
       print "Using OpenGL::Shader('$type') v$ver\n";
       return;
-    }
-    else
-    {
+    } else {
       print "$stat\n";
     }
   }
