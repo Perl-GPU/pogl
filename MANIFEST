@@ -11,6 +11,7 @@ examples/fun.pl
 examples/glu_test.pl
 examples/glxgears.pl
 examples/light.pl
+examples/menutest.pl
 examples/plane.pl
 examples/planets.pl
 examples/quest.pl
@@ -93,7 +94,6 @@ lib/OpenGL/V3.xs
 Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP
-menutest.pl
 oga.pl
 pgopogl.h
 ppport.h

@@ -50,8 +50,6 @@
 ^gllist
 ^pdl.h
 cpp.sh
-freeglut-funs-name.txt
-^ogl-calls-in-test.txt
 pogl_gl_funcs.txt
 utils/glversion$
 utils/glversion\.exe
