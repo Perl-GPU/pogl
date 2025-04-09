@@ -56,5 +56,4 @@ utils/glversion\.exe
 utils/glversion\.o
 utils/glversion\.txt
 utils/glxinfo\.c
-test.png
 ^xt/
