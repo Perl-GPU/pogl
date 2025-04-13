@@ -189,7 +189,7 @@ WriteMakefile(
 );       		# Generate the Makefile
 WriteConfigPM( $build_config );			# Regenerate final Config.pm
 
-if ($found_libs->{GLX} && $ENV{TERM} ne 'xterm') {
+if ($found_libs->{GLX} && $ENV{TERM} !~ /^xterm/) {
   print "\nThis configuration should be built under an X11 shell\n\n";
 }
 
@@ -520,9 +520,6 @@ sub get_gldata {
     $make_ver = '&nmake -f makefile.mak ' . $append;
     print "MSWin32 glversion: '$make_ver'\n" if $verbose>1;
   } else {
-    if ($ENV{TERM} ne 'xterm' and $^O ne 'darwin') {
-      print "\nIn order to test your GPU's capabilities, run this make under an X11 shell\n\n";
-    }
     $make_ver = ";make -f Makefile $append";
     print "glversion: '$make_ver'\n" if $verbose>1;
   }
