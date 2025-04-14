@@ -305,6 +305,7 @@ our @gl_func = (@gl_func_common, qw(
    glBindRenderbufferEXT
    glBindTexture
    glBindTextureEXT
+   glBindVertexArray
    glBitmap_c
    glBitmap_p
    glBitmap_s
@@ -410,6 +411,7 @@ our @gl_func = (@gl_func_common, qw(
    glDeleteTextures_c
    glDeleteTextures_p
    glDeleteTextures_s
+   glDeleteVertexArrays
    glDetachObjectARB
    glDisableClientState
    glDisableVertexAttribArrayARB
@@ -465,6 +467,7 @@ our @gl_func = (@gl_func_common, qw(
    glGenTextures_c
    glGenTextures_p
    glGenTextures_s
+   glGenVertexArrays_p
    glGenerateMipmapEXT
    glGetActiveAttribARB_c
    glGetActiveAttribARB_p
