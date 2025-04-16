@@ -8626,7 +8626,7 @@ glGetQueryObjectiv(id, pname)
 		loadProc(glGetQueryObjectiv,"glGetQueryObjectiv");
 	CODE:
 		{
-		GLuint result;
+		GLint result;
 		glGetQueryObjectiv(id, pname, &result);
 		RETVAL = result;
 		}
