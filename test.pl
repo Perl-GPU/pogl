@@ -6,7 +6,7 @@ $PERL_VERSION =~ s|^v||;
 
 use OpenGL qw/
   :glconstants
-  glpHasGLUT glpCheckExtension
+  glpHasGLUT glpCheckExtension glpFullScreen glpRestoreScreen
   glGetString glGetError
   glGenTextures_p glBindTexture glTexParameteri glTexImage2D_c glTexEnvf
     glDeleteTextures_p
