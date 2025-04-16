@@ -8,6 +8,7 @@
 #include <stdio.h>
 
 #include "pgopogl.h"
+#include "gl_errors.h"
 
 #ifdef HAVE_GL
 #include "gl_util.h"
@@ -10321,5 +10322,13 @@ glBlendColorEXT(red, green, blue, alpha)
 		glBlendColorEXT(red, green, blue, alpha);
 
 #endif
+
+const char *
+glpErrorString(err)
+  int err
+CODE:
+  RETVAL = gl_error_string(err);
+OUTPUT:
+  RETVAL
 
 #endif /* HAVE_GL */

@@ -7,7 +7,7 @@ $PERL_VERSION =~ s|^v||;
 use OpenGL qw/
   :glconstants
   glpHasGLUT glpCheckExtension glpFullScreen glpRestoreScreen
-  glGetString glGetError
+  glGetString glGetError glpErrorString
   glGenTextures_p glBindTexture glTexParameteri glTexImage2D_c glTexEnvf
     glDeleteTextures_p
   glGenerateMipmapEXT
@@ -25,7 +25,7 @@ use OpenGL qw/
     glTranslatef glRotatef
     glColor3f glColor4f
     glPushMatrix glPopMatrix glPushAttrib glPopAttrib
-    glOrtho
+    glOrtho glFrustum
   glRasterPos2i glRasterPos2f
   glPixelZoom glReadPixels_c glDrawPixels_c
   glGetDoublev_c glGetIntegerv_c
@@ -33,10 +33,6 @@ use OpenGL qw/
 /;
 use OpenGL::GLUT qw/
   :constants :functions
-/;
-use OpenGL::GLU qw/
-  gluBuild2DMipmaps_c gluErrorString
-  gluOrtho2D gluProject_p gluUnProject_p gluPerspective
 /;
 use OpenGL::Config;     # for build information
 
@@ -582,18 +578,27 @@ sub ourBuildTextures
   }
   glBindTexture(GL_TEXTURE_2D, $TextureID_image);
 
-  # Use MipMap
-  print "Using Mipmap\n";
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
-    GL_NEAREST);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-    GL_NEAREST_MIPMAP_LINEAR);
-  # The GLU library helps us build MipMaps for our texture.
-  if (($gluerr = gluBuild2DMipmaps_c(GL_TEXTURE_2D, $Tex_Type,
-    $Tex_Width, $Tex_Height, $Tex_Format, $Tex_Size,
-    $Tex_Pixels->ptr())))
-  {
-    die sprintf "GLULib%s\n", gluErrorString($gluerr);
+  if ($hasFBO) {
+    # Use MipMap
+    print "Using Mipmap\n";
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
+      GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+      GL_NEAREST_MIPMAP_LINEAR);
+  } else {
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  }
+  glTexImage2D_c(GL_TEXTURE_2D, 0, $Tex_Type,
+    $Tex_Width, $Tex_Height,
+    0, $Tex_Format, $Tex_Size, $Tex_Pixels->ptr);
+  glGenerateMipmapEXT(GL_TEXTURE_2D) if $hasFBO;
+  if ($^O ne 'MSWin32') {
+    my $errors = '';
+    while((my $err = glGetError()) != 0) {
+      $errors .= "glError: " . glpErrorString($err) . "\n";
+    }
+    die $errors if $errors;
   }
 
   # Benchmarks for Image Loading
@@ -679,7 +684,7 @@ sub ourBuildTextures
 
     # Test status
     my $stat = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
-    die "FBO Status error: " . gluErrorString(glGetError()) if !$stat;
+    die "FBO Status error: " . glpErrorString(glGetError()) if !$stat;
     die sprintf "FBO Status: %04X", $stat if $stat != GL_FRAMEBUFFER_COMPLETE_EXT;
   }
 
@@ -1065,7 +1070,7 @@ sub Capture
   glMatrixMode( GL_PROJECTION );
   glPushMatrix();
   glLoadIdentity();
-  eval { gluOrtho2D( 0, $w, 0, $h ); 1 } or $er++ or warn "Catched: $@";
+  eval { glOrtho( 0, $w, 0, $h, -1, 1 ); 1 } or $er++ or warn "Catched: $@";
   glMatrixMode( GL_MODELVIEW );
   glPushMatrix();
   glLoadIdentity();
@@ -1408,16 +1413,6 @@ sub cbMouseClick
   if ($state == GLUT_UP)
   {
     my ($model, $projection, $viewport) = dumpMatrices();
-    my @point = gluUnProject_p($x,$y,0,	# Cursor point
-      @$model,				# Model Matrix
-      @$projection,			# Projection Matrix
-      @$viewport);			# Viewport
-    print "Model point: $point[0], $point[1], $point[2]\n";
-#      @point = gluProject_p(@point,	# Model point
-#        @model,				# Model Matrix
-#        @projection,			# Projection Matrix
-#        @viewport);			# Viewport
-#      print "Window point: $point[0], $point[1], $point[2]\n";
     print "\n";
   }
 
@@ -1456,26 +1451,26 @@ sub GetKeyModifier
 # ------
 # Callback routine executed whenever our window is resized.  Lets us
 # request the newly appropriate perspective projection matrix for
-# our needs.  Try removing the gluPerspective() call to see what happens.
+# our needs.  Try removing the glFrustum() call to see what happens.
 
-sub cbResizeScene
-{
+use constant PI => 3.1415926535897932384626433832795;
+use constant FOVY => 45.0;
+use constant ANGLE => FOVY / 360 * PI;
+use constant TAN => sin(ANGLE)/cos(ANGLE);
+use constant { zNEAR => 0.1, zFAR => 100.0 };
+use constant fH => TAN * zNEAR;
+sub cbResizeScene {
   my($Width, $Height) = @_;
-
   # Let's not core dump, no matter what.
   $Height = 1 if ($Height == 0);
-
   glViewport(0, 0, $Width, $Height);
-
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  gluPerspective(45.0,$Width/$Height,0.1,100.0);
-
+  my $fW = fH * $Width/$Height;
+  glFrustum(-$fW, $fW, -fH, fH, zNEAR, zFAR);
   glMatrixMode(GL_MODELVIEW);
-
   $Window_Width  = $Width;
   $Window_Height = $Height;
-
   $idleTime = $hasHires ? gettimeofday() : time();
 }
 
@@ -1651,7 +1646,7 @@ print "Exiting in main thread\n";
 if ($^O ne 'MSWin32') {
   my $errors = '';
   while((my $err = glGetError()) != 0) {
-    $errors .= "glError: " . gluErrorString($err) . "\n";
+    $errors .= "glError: " . glpErrorString($err) . "\n";
   }
   die $errors if $errors;
 }

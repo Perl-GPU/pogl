@@ -37,6 +37,7 @@ FreeGLUT/freeglut.lib
 FreeGLUT/README.txt
 genvars.pl
 gl_const.h
+gl_errors.h
 gl_util.c
 gl_util.h
 glext_consts.h

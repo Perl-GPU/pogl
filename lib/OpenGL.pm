@@ -1209,6 +1209,7 @@ our @gl_func = (@gl_func_common, qw(
    glWindowPos4dMESA
    glWindowPos4iMESA
    glpCheckExtension
+   glpErrorString
    glpFullScreen
    glpHasGLUT
    glpRestoreScreen
