@@ -638,6 +638,7 @@ sub get_defines {
       if $out =~ m|glutMainLoopEvent|;
     $defs .= " -DGL_GLEXT_LEGACY";
   }
+  $defs .= " -Wno-compound-token-split-by-macro" if $^O eq 'darwin';
   $defs;
 }
 
