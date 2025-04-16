@@ -242,7 +242,7 @@ sub get_libs {
       '-LFreeGLUT -lfreeglut'
     )
       if $IS_W32API || $^O eq 'MSWin32';
-  my $libs = join '', map " $_", sort(values %$found_libs), '-lm';
+  my $libs = join '', map " $_", grep $_, sort(values %$found_libs), '-lm';
   $libs = "@$ldirs $libs";
   return $libs if $NO_LGCC || $Config{cc} eq 'gcc' || $Config{gccversion};
   # Handle obfuscated gcc
@@ -268,7 +268,7 @@ sub get_found_libs {
   # Mac OS X
   if ($^O eq 'darwin' && -d '/System/Library/Frameworks/OpenGL.framework') {
     $found->{GL} = '-framework OpenGL';
-    $found->{GLU} = '-framework AGL';
+    $found->{GLU} = '';
     $found->{GLUT} = '-framework GLUT';
     for (@$ldirs) {
       (my $dir = $_) =~ s/^-L//;
@@ -616,7 +616,7 @@ sub get_defines {
   $defs .= " -DIS_STRAWBERRY" if $IS_STRAWBERRY;
   print "resulting libs:\n" if $verbose;
   foreach my $key (sort keys %$found_libs) {
-    next if (!$found_libs->{$key});
+    next if !defined $found_libs->{$key}; # defined but empty OK
     $defs .= " -DHAVE_$key";
     print "    $key = '$found_libs->{$key}'\n" if $verbose;
   }
