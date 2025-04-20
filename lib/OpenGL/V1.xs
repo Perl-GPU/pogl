@@ -926,18 +926,14 @@ void
 glGenTextures_p(n)
 	GLint	n
 	PPCODE:
-	if (n) {
-		GLuint * textures = malloc(sizeof(GLuint) * n);
-		int i;
-
-		glGenTextures(n, textures);
-
-		EXTEND(sp, n);
-		for(i=0;i<n;i++)
-			PUSHs(sv_2mortal(newSViv(textures[i])));
-
-		free(textures);
-	}
+	if (!n) XSRETURN_EMPTY;
+	GLuint * textures = malloc(sizeof(GLuint) * n);
+	int i;
+	glGenTextures(n, textures);
+	EXTEND(sp, n);
+	for(i=0;i<n;i++)
+		PUSHs(sv_2mortal(newSViv(textures[i])));
+	free(textures);
 
 #endif
 
