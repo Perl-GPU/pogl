@@ -58,7 +58,6 @@ include/GL/glprocs.h
 include/GL/glu.h
 include/GL/glut.h
 include/GL/glxext.h
-include/GL/SGIFreeSWLicB.1.1.pdf
 include/GL/wglext.h
 INSTALL
 isosurf.bin

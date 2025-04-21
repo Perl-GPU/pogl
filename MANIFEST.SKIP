@@ -31,6 +31,8 @@
 # Avoid Devel::Cover files.
 \bcover_db\b
 
+\.DS_Store$
+
 # Don't include extra DLL and lib files
 ^FreeGLUT/new.*
 ^FreeGLUT/orig.*
