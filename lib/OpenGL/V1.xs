@@ -8750,21 +8750,15 @@ glDeleteBuffersARB_s(n,buffers)
 #//# glDeleteBuffersARB_p(@buffers);
 void
 glDeleteBuffersARB_p(...)
-	INIT:
-		loadProc(glDeleteBuffersARB,"glDeleteBuffersARB");
-	CODE:
-	{
-		if (items) {
-			GLuint * list = malloc(sizeof(GLuint) * items);
-			int i;
-
-			for (i=0;i<items;i++)
-				list[i] = SvIV(ST(i));
-
-			glDeleteBuffersARB(items, list);
-			free(list);
-		}
-	}
+INIT:
+  loadProc(glDeleteBuffersARB,"glDeleteBuffersARB");
+CODE:
+  if (!items) XSRETURN_EMPTY;
+  GLuint * list = malloc(sizeof(GLuint) * items);
+  int i;
+  for (i=0;i<items;i++) list[i] = SvIV(ST(i));
+  glDeleteBuffersARB(items, list);
+  free(list);
 
 #//# glGenBuffersARB_c($n,(CPTR)buffers);
 void
