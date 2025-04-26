@@ -64,11 +64,9 @@ sub read_surface_bin {
 
 sub draw_surface {
    my ($i);
-   
-#   glDrawArrays(GL_TRIANGLE_STRIP, 0, $numverts);
 
    if ($use_vertex_arrays) {
-      glDrawArraysEXT( GL_TRIANGLE_STRIP, 0, $numverts );
+      glDrawArrays( GL_TRIANGLE_STRIP, 0, $numverts );
    }
    else {
       glBegin( GL_TRIANGLE_STRIP );
@@ -147,34 +145,34 @@ sub InitMaterials {
 }
 
 sub Init {
+  glClearColor(0.0, 0.0, 0.0, 0.0);
 
-   glClearColor(0.0, 0.0, 0.0, 0.0);
+  glShadeModel(GL_SMOOTH);
+  glEnable(GL_DEPTH_TEST);
 
-   glShadeModel(GL_SMOOTH);
-   glEnable(GL_DEPTH_TEST);
+  InitMaterials();
 
-   InitMaterials();
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  glFrustum( -1.0, 1.0, -1.0, 1.0, 5, 25 );
 
-   glMatrixMode(GL_PROJECTION);
-   glLoadIdentity();
-   glFrustum( -1.0, 1.0, -1.0, 1.0, 5, 25 );
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+  glTranslated( 0.0, 0.0, -6.0 );
 
-   glMatrixMode(GL_MODELVIEW);
-   glLoadIdentity();
-   glTranslated( 0.0, 0.0, -6.0 );
-   
-#   glVertexPointer_a( 3, GL_FLOAT, 0, $verts );
-#   glNormalPointer_a( GL_FLOAT, 0, $norms );
-#   glEnable( GL_VERTEX_ARRAY );
-#   glEnable( GL_NORMAL_ARRAY );
-   
-
-   if ($use_vertex_arrays) {
-      glVertexPointerEXT_c( 3, GL_FLOAT, 0, $numverts, $verts->ptr );
-      glNormalPointerEXT_c( GL_FLOAT, 0, $numverts, $norms->ptr );
-      glEnable( GL_VERTEX_ARRAY_EXT );
-      glEnable( GL_NORMAL_ARRAY_EXT );
-   }
+  if ($use_vertex_arrays) {
+    glVertexPointerEXT_c( 3, GL_FLOAT, 0, $numverts, $verts->ptr );
+    glNormalPointerEXT_c( 3, GL_FLOAT, 0, $numverts, $norms->ptr );
+    glEnableClientState( GL_VERTEX_ARRAY );
+    glEnableClientState( GL_NORMAL_ARRAY );
+  }
+  if ($^O ne 'MSWin32') {
+    my $errors = '';
+    while((my $err = glGetError()) != 0) {
+      $errors .= "glError: " . glpErrorString($err) . "\n";
+    }
+    die $errors if $errors;
+  }
 }
 
 sub Reshape {
