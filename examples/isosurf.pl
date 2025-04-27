@@ -1,25 +1,26 @@
-#!/usr/bin/perl -w
-
+use strict;
+use warnings;
 use OpenGL qw(:all);
+use FindBin;
 
-$speed_test = GL_FALSE;
-$use_vertex_arrays = GL_TRUE;
+my $speed_test = GL_FALSE;
+my $use_vertex_arrays = GL_TRUE;
 
-$doubleBuffer = GL_TRUE;
+my $doubleBuffer = GL_TRUE;
 
-$smooth = GL_TRUE;
-$lighting = GL_TRUE;
-$light0 = GL_TRUE;
-$light1 = GL_TRUE;
+my $smooth = GL_TRUE;
+my $lighting = GL_TRUE;
+my $light0 = GL_TRUE;
+my $light1 = GL_TRUE;
 
-$MAXVERTS = 10000;
+my $MAXVERTS = 10000;
 
-$verts = OpenGL::Array->new($MAXVERTS * 3, GL_FLOAT);
-$norms = OpenGL::Array->new($MAXVERTS * 3, GL_FLOAT);
-$numverts = 0;
+my $verts = OpenGL::Array->new($MAXVERTS * 3, GL_FLOAT);
+my $norms = OpenGL::Array->new($MAXVERTS * 3, GL_FLOAT);
+my $numverts = 0;
 
-$xrot=0;
-$yrot=0;
+my $xrot=0;
+my $yrot=0;
 
 sub read_surface_dat {
 	my ($filename) = @_;
@@ -29,7 +30,7 @@ sub read_surface_dat {
 	$numverts = 0;
 	while ($numverts < $MAXVERTS and defined($_ = <F>)) {
 		chop;
-		@d = split(/\s+/, $_);
+		my @d = split(/\s+/, $_);
 		$verts->assign($numverts*3, @d[0..2]);
 		$norms->assign($numverts*3, @d[3..5]);
 		$numverts++;
@@ -49,7 +50,7 @@ sub read_surface_bin {
 	binmode(F);
 	$numverts = 0;
 	while ($numverts < $MAXVERTS and read(F, $_, 12)==12) {
-		@d = map(($_-32000) / 10000 , unpack("nnnnnn", $_));
+		my @d = map(($_-32000) / 10000 , unpack("nnnnnn", $_));
 		$verts->assign($numverts*3, @d[0..2]);
 		$norms->assign($numverts*3, @d[3..5]);
 		$numverts++;
@@ -273,7 +274,7 @@ my $WindowId;
 #   GLenum type;
 #   char *extensions;
 
-   read_surface_bin( "isosurf.bin" );
+   read_surface_bin( "$FindBin::Bin/isosurf.bin" );
 
 #   if (Args(argc, argv) == GL_FALSE) {
 #      exit(0);
@@ -283,7 +284,7 @@ my $WindowId;
    glutInitWindowPosition(0, 0);
    glutInitWindowSize(400, 400);
    
-   $type = GLUT_DEPTH;
+   my $type = GLUT_DEPTH;
    $type |= GLUT_RGB;
    $type |= ($doubleBuffer) ? GLUT_DOUBLE : GLUT_SINGLE;
    glutInitDisplayMode($type);

@@ -10,6 +10,8 @@ examples/double.pl
 examples/fun.pl
 examples/glu_test.pl
 examples/glxgears.pl
+examples/isosurf.bin
+examples/isosurf.pl
 examples/light.pl
 examples/menutest.pl
 examples/plane.pl
@@ -60,8 +62,6 @@ include/GL/glut.h
 include/GL/glxext.h
 include/GL/wglext.h
 INSTALL
-isosurf.bin
-isosurf.pl
 KNOWN_PROBLEMS
 lib/OpenGL.pm
 lib/OpenGL.pod
