@@ -150,7 +150,7 @@ WriteMakefile(
   NAME	=> 'OpenGL',
   VERSION_FROM=> 'lib/OpenGL.pm',
   CONFIGURE_REQUIRES => {
-    'ExtUtils::MakeMaker' => 0
+    'ExtUtils::MakeMaker' => 0,
   },
   TEST_REQUIRES => { 'Test::More' => '0.88' },
   AUTHOR	=> "Chris Marshall ".'<chm at cpan dot org>',
@@ -164,6 +164,7 @@ WriteMakefile(
   XSPROTOARG	=> '-noprototypes',
   META_MERGE => {
      "meta-spec" => { version => 2 },
+     dynamic_config => 0,
      abstract  => 'Perl bindings to the OpenGL API, GLU, and GLUT/FreeGLUT',
      resources => {
         homepage => 'http://sourceforge.net/projects/pogl/',
