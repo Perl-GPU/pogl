@@ -19,16 +19,6 @@ MODULE = OpenGL::V2	PACKAGE = OpenGL
 
 #ifdef GL_VERSION_2_0
 
-#//# glDrawBuffers_c($n,(CPTR)buffers);
-void
-glDrawBuffers_c(n,buffers)
-	GLsizei n
-	void *	buffers
-	CODE:
-	{
-		glDrawBuffers(n,buffers);
-	}
-
 #//# glDrawBuffers_s($n,(PACKED)buffers);
 void
 glDrawBuffers_s(n,buffers)
@@ -55,29 +45,6 @@ glDrawBuffers_p(...)
 			glDrawBuffers(items, list);
 			free(list);
 		}
-	}
-
-#//# glAttachShader($program,$shader);
-void
-glAttachShader(program,shader)
-	GLuint	program
-	GLuint	shader
-	INIT:
-		loadProc(glAttachShader,"glAttachShader");
-	CODE:
-	{
-		glAttachShader(program,shader);
-	}
-
-#//# glDeleteShader($shader);
-void
-glDeleteShader(shader)
-	GLuint	shader
-	INIT:
-		loadProc(glDeleteShader,"glDeleteShader");
-	CODE:
-	{
-		glDeleteShader(shader);
 	}
 
 #//# $value = glGetShaderiv_p($target,$pname);
@@ -147,18 +114,6 @@ glGetProgramiv_p(target,pname)
 
 #ifdef GL_ARB_vertex_program
 
-#//# glProgramStringARB_c($target,$format,$len,(CPTR)string);
-void
-glProgramStringARB_c(target,format,len,string)
-	GLenum target
-	GLenum format
-	GLsizei len
-	void * string
-	INIT:
-		loadProc(glProgramStringARB,"glProgramStringARB");
-	CODE:
-		glProgramStringARB(target,format,len,string);
-
 #//# glProgramStringARB_s($target,$format,$len,(PACKED)string);
 void
 glProgramStringARB_s(target,format,len,string)
@@ -188,27 +143,7 @@ glProgramStringARB_p(target,string)
 		glProgramStringARB(target,GL_PROGRAM_FORMAT_ASCII_ARB,len,string);
 	}
 
-#//# glBindProgramARB($target,$program);
-void
-glBindProgramARB(target,program)
-	GLenum target
-	GLuint program
-	INIT:
-		loadProc(glBindProgramARB,"glBindProgramARB");
-
-#//# glDeleteProgramsARB_c($n,(CPTR)programs);
-void
-glDeleteProgramsARB_c(n,programs)
-	GLsizei n
-	void *	programs
-	INIT:
-		loadProc(glDeleteProgramsARB,"glDeleteProgramsARB");
-	CODE:
-	{
-		glDeleteProgramsARB(n,(GLuint*)programs);
-	}
-
-#//# glDeleteProgramsARB_c($n,(PACKED)programs);
+#//# glDeleteProgramsARB_s($n,(PACKED)programs);
 void
 glDeleteProgramsARB_s(n,programs)
 	GLsizei n
@@ -219,37 +154,6 @@ glDeleteProgramsARB_s(n,programs)
 	{
 		GLuint * programs_s = EL(programs, sizeof(GLuint)*n);
 		glDeleteProgramsARB(n,programs_s);
-	}
-
-#//# glDeleteProgramsARB_p(@programIDs);
-void
-glDeleteProgramsARB_p(...)
-	INIT:
-		loadProc(glDeleteProgramsARB,"glDeleteProgramsARB");
-	CODE:
-	{
-		if (items) {
-			GLuint * list = malloc(sizeof(GLuint) * items);
-			int i;
-
-			for (i=0;i<items;i++)
-				list[i] = SvIV(ST(i));
-
-			glDeleteProgramsARB(items, list);
-			free(list);
-		}
-	}
-
-#//# glGenProgramsARB_c($n,(CPTR)programs);
-void
-glGenProgramsARB_c(n,programs)
-	GLsizei n
-	void *	programs
-	INIT:
-		loadProc(glGenProgramsARB,"glGenProgramsARB");
-	CODE:
-	{
-		glGenProgramsARB(n,(GLuint*)programs);
 	}
 
 #//# glGenProgramsARB_s($n,(PACKED)programs);
@@ -264,50 +168,6 @@ glGenProgramsARB_s(n,programs)
 		GLuint * programs_s = EL(programs, sizeof(GLuint)*n);
 		glGenProgramsARB(n, programs_s);
 	}
-
-#//# @programIDs = glGenProgramsARB_c($n);
-void
-glGenProgramsARB_p(n)
-	GLsizei n
-	INIT:
-		loadProc(glGenProgramsARB,"glGenProgramsARB");
-	PPCODE:
-	if (n)
-	{
-		GLuint * programs = malloc(sizeof(GLuint) * n);
-		int i;
-
-		glGenProgramsARB(n, programs);
-
-		EXTEND(sp, n);
-		for(i=0;i<n;i++)
-			PUSHs(sv_2mortal(newSViv(programs[i])));
-
-		free(programs);
-	}
-
-#//# glProgramEnvParameter4dARB($target,$index,$x,$y,$z,$w);
-void
-glProgramEnvParameter4dARB(target,index,x,y,z,w)
-	GLenum target
-	GLuint index
-	GLdouble x
-	GLdouble y
-	GLdouble z
-	GLdouble w
-	INIT:
-		loadProc(glProgramEnvParameter4dARB,"glProgramEnvParameter4dARB");
-
-#//# glProgramEnvParameter4dvARB_c($target,$index,(CPTR)v);
-void
-glProgramEnvParameter4dvARB_c(target,index,v)
-	GLenum target
-	GLuint index
-	void *	v
-	INIT:
-		loadProc(glProgramEnvParameter4dvARB,"glProgramEnvParameter4dvARB");
-	CODE:
-		glProgramEnvParameter4dvARB(target,index,(GLdouble*)v);
 
 #//# glProgramEnvParameter4dvARB_s($target,$index,(PACKED)v);
 void
@@ -345,29 +205,6 @@ glProgramEnvParameter4dvARB_p(target,index,x,y,z,w)
 		glProgramEnvParameter4dvARB(target,index,param);
 	}
 
-#//# glProgramEnvParameter4fARB($target,$index,$x,$y,$z,$w);
-void
-glProgramEnvParameter4fARB(target,index,x,y,z,w)
-	GLenum target
-	GLuint index
-	GLfloat x
-	GLfloat y
-	GLfloat z
-	GLfloat w
-	INIT:
-		loadProc(glProgramEnvParameter4fARB,"glProgramEnvParameter4fARB");
-
-#//# glProgramEnvParameter4fvARB_c($target,$index,(CPTR)v);
-void
-glProgramEnvParameter4fvARB_c(target,index,v)
-	GLenum target
-	GLuint index
-	void *	v
-	INIT:
-		loadProc(glProgramEnvParameter4fvARB,"glProgramEnvParameter4fvARB");
-	CODE:
-		glProgramEnvParameter4fvARB(target,index,(GLfloat*)v);
-
 #//# glProgramEnvParameter4fvARB_s($target,$index,(PACKED)v);
 void
 glProgramEnvParameter4fvARB_s(target,index,v)
@@ -403,29 +240,6 @@ glProgramEnvParameter4fvARB_p(target,index,x,y,z,w)
 		param[3] = w;
 		glProgramEnvParameter4fvARB(target,index,param);
 	}
-
-#//# glProgramLocalParameter4dARB($target,$index,$x,$y,$z,$w);
-void
-glProgramLocalParameter4dARB(target,index,x,y,z,w)
-	GLenum target
-	GLuint index
-	GLdouble x
-	GLdouble y
-	GLdouble z
-	GLdouble w
-	INIT:
-		loadProc(glProgramLocalParameter4dARB,"glProgramLocalParameter4dARB");
-
-#//# glProgramLocalParameter4dvARB_c($target,$index,(CPTR)v);
-void
-glProgramLocalParameter4dvARB_c(target,index,v)
-	GLenum target
-	GLuint index
-	void *	v
-	INIT:
-		loadProc(glProgramLocalParameter4dvARB,"glProgramLocalParameter4dvARB");
-	CODE:
-		glProgramLocalParameter4dvARB(target,index,(GLdouble*)v);
 
 #//# glProgramLocalParameter4dvARB_s($target,$index,(PACKED)v);
 void
@@ -463,29 +277,6 @@ glProgramLocalParameter4dvARB_p(target,index,x,y,z,w)
 		glProgramLocalParameter4dvARB(target,index,param);
 	}
 
-#//# glProgramLocalParameter4fARB($target,$index,$x,$y,$z,$w);
-void
-glProgramLocalParameter4fARB(target,index,x,y,z,w)
-	GLenum target
-	GLuint index
-	GLfloat x
-	GLfloat y
-	GLfloat z
-	GLfloat w
-	INIT:
-		loadProc(glProgramLocalParameter4fARB,"glProgramLocalParameter4fARB");
-
-#//# glProgramLocalParameter4fvARB_c($target,$index,(CPTR)v);
-void
-glProgramLocalParameter4fvARB_c(target,index,v)
-	GLenum target
-	GLuint index
-	void *	v
-	INIT:
-		loadProc(glProgramLocalParameter4fvARB,"glProgramLocalParameter4fvARB");
-	CODE:
-		glProgramLocalParameter4fvARB(target,index,(GLfloat*)v);
-
 #//# glProgramLocalParameter4fvARB_s($target,$index,(PACKED)v);
 void
 glProgramLocalParameter4fvARB_s(target,index,v)
@@ -522,17 +313,6 @@ glProgramLocalParameter4fvARB_p(target,index,x,y,z,w)
 		glProgramLocalParameter4fvARB(target,index,param);
 	}
 
-#//# glGetProgramEnvParameterdvARB_c($target,$index,(CPTR)params);
-void
-glGetProgramEnvParameterdvARB_c(target,index,params)
-	GLenum	target
-	GLint	index
-	void *	params
-	INIT:
-		loadProc(glGetProgramEnvParameterdvARB,"glGetProgramEnvParameterdvARB");
-	CODE:
-		glGetProgramEnvParameterdvARB(target,index,(GLdouble*)params);
-
 #//# glGetProgramEnvParameterdvARB_s($target,$index,(PACKED)params);
 void
 glGetProgramEnvParameterdvARB_s(target,index,params)
@@ -565,17 +345,6 @@ glGetProgramEnvParameterdvARB_p(target,index)
 		PUSHs(sv_2mortal(newSVnv(params[2])));
 		PUSHs(sv_2mortal(newSVnv(params[3])));
 	}
-
-#//# glGetProgramEnvParameterfvARB_c($target,$index,(CPTR)params);
-void
-glGetProgramEnvParameterfvARB_c(target,index,params)
-	GLenum	target
-	GLint	index
-	void *	params
-	INIT:
-		loadProc(glGetProgramEnvParameterfvARB,"glGetProgramEnvParameterfvARB");
-	CODE:
-		glGetProgramEnvParameterfvARB(target,index,(GLfloat*)params);
 
 #//# glGetProgramEnvParameterfvARB_s($target,$index,(PACKED)params);
 void
@@ -610,17 +379,6 @@ glGetProgramEnvParameterfvARB_p(target,index)
 		PUSHs(sv_2mortal(newSVnv(params[3])));
 	}
 
-#//# glGetProgramLocalParameterdvARB_c($target,$index,(CPTR)params);
-void
-glGetProgramLocalParameterdvARB_c(target,index,params)
-	GLenum	target
-	GLint	index
-	void *	params
-	INIT:
-		loadProc(glGetProgramLocalParameterdvARB,"glGetProgramLocalParameterdvARB");
-	CODE:
-		glGetProgramLocalParameterdvARB(target,index,(GLdouble*)params);
-
 #//# glGetProgramLocalParameterdvARB_s($target,$index,(PACKED)params);
 void
 glGetProgramLocalParameterdvARB_s(target,index,params)
@@ -653,17 +411,6 @@ glGetProgramLocalParameterdvARB_p(target,index)
 		PUSHs(sv_2mortal(newSVnv(params[2])));
 		PUSHs(sv_2mortal(newSVnv(params[3])));
 	}
-
-#//# glGetProgramLocalParameterfvARB_c($target,$index,(CPTR)params);
-void
-glGetProgramLocalParameterfvARB_c(target,index,params)
-	GLenum	target
-	GLint	index
-	void *	params
-	INIT:
-		loadProc(glGetProgramLocalParameterfvARB,"glGetProgramLocalParameterfvARB");
-	CODE:
-		glGetProgramLocalParameterfvARB(target,index,(GLfloat*)params);
 
 #//# glGetProgramLocalParameterfvARB_s($target,$index,(PACKED)params);
 void
@@ -698,17 +445,6 @@ glGetProgramLocalParameterfvARB_p(target,index)
 		PUSHs(sv_2mortal(newSVnv(params[3])));
 	}
 
-#//# glGetProgramivARB_c($target,$pname,(CPTR)params);
-void
-glGetProgramivARB_c(target,pname,params)
-	GLenum	target
-	GLenum	pname
-	void *	params
-	INIT:
-		loadProc(glGetProgramivARB,"glGetProgramivARB");
-	CODE:
-		glGetProgramivARB(target,pname,params);
-
 #//# glGetProgramivARB_s($target,$pname,(PACKED)params);
 void
 glGetProgramivARB_s(target,pname,params)
@@ -738,17 +474,6 @@ glGetProgramivARB_p(target,pname)
 	}
 	OUTPUT:
 		RETVAL
-
-#//# glGetProgramStringARB_c(target,pname,(CPTR)string);
-void
-glGetProgramStringARB_c(target,pname,string)
-	GLenum	target
-	GLenum	pname
-	void *	string
-	INIT:
-		loadProc(glGetProgramStringARB,"glGetProgramStringARB");
-	CODE:
-		glGetProgramStringARB(target,pname,string);
 
 #//# glGetProgramStringARB_s(target,pname,(PACKED)string);
 void
@@ -803,41 +528,10 @@ glGetProgramStringARB_p(target,pname=GL_PROGRAM_STRING_ARB)
 	OUTPUT:
 		RETVAL
 
-#//# glIsProgramARB(program);
-GLboolean
-glIsProgramARB(program)
-	GLuint	program
-	INIT:
-		loadProc(glIsProgramARB,"glIsProgramARB");
-	CODE:
-	{
-		RETVAL = glIsProgramARB(program);
-	}
-	OUTPUT:
-		RETVAL
-
 #endif // GL_ARB_vertex_program
 
 
 #if defined(GL_ARB_vertex_program) || defined(GL_ARB_vertex_shader)
-
-#//# glVertexAttrib1dARB($index,$x);
-void
-glVertexAttrib1dARB(index,x)
-	GLuint index
-	GLdouble x
-	INIT:
-		loadProc(glVertexAttrib1dARB,"glVertexAttrib1dARB");
-
-#//# glVertexAttrib1dvARB_c($index,(CPTR)v);
-void
-glVertexAttrib1dvARB_c(index,v)
-	GLuint index
-	void *	v
-	INIT:
-		loadProc(glVertexAttrib1dvARB,"glVertexAttrib1dvARB");
-	CODE:
-		glVertexAttrib1dvARB(index,(GLdouble*)v);
 
 #//# glVertexAttrib1dvARB_s($index,(PACKED)v);
 void
@@ -867,32 +561,6 @@ glVertexAttrib1dvARB_p(index,x)
 		glVertexAttrib1dvARB(index,param);
 	}
 
-#//# glVertexAttrib1fARB($index,$x);
-void
-glVertexAttrib1fARB(index,x)
-	GLuint index
-	GLfloat x
-	INIT:
-		loadProc(glVertexAttrib1fARB,"glVertexAttrib1fARB");
-
-#//# glVertexAttrib1sARB($index,$x);
-void
-glVertexAttrib1sARB(index,x)
-	GLuint index
-	GLshort x
-	INIT:
-		loadProc(glVertexAttrib1sARB,"glVertexAttrib1sARB");
-
-#//# glVertexAttrib1svARB_c($index,(CPTR)v);
-void
-glVertexAttrib1svARB_c(index,v)
-	GLuint index
-	void *	v
-	INIT:
-		loadProc(glVertexAttrib1svARB,"glVertexAttrib1svARB");
-	CODE:
-		glVertexAttrib1svARB(index,(GLshort*)v);
-
 #//# glVertexAttrib1svARB_s($index,(PACKED)v);
 void
 glVertexAttrib1svARB_s(index,v)
@@ -920,25 +588,6 @@ glVertexAttrib1svARB_p(index,x)
 		param[0] = x;
 		glVertexAttrib1svARB(index,param);
 	}
-
-#//# glVertexAttrib2dARB($index,$x,$y);
-void
-glVertexAttrib2dARB(index,x,y)
-	GLuint index
-	GLdouble x
-	GLdouble y
-	INIT:
-		loadProc(glVertexAttrib2dARB,"glVertexAttrib2dARB");
-
-#//# glVertexAttrib2dvARB_c($index,(CPTR)v);
-void
-glVertexAttrib2dvARB_c(index,v)
-	GLuint index
-	void *	v
-	INIT:
-		loadProc(glVertexAttrib2dvARB,"glVertexAttrib2dvARB");
-	CODE:
-		glVertexAttrib2dvARB(index,(GLdouble*)v);
 
 #//# glVertexAttrib2dvARB_s($index,(PACKED)v);
 void
@@ -970,34 +619,6 @@ glVertexAttrib2dvARB_p(index,x,y)
 		glVertexAttrib2dvARB(index,param);
 	}
 
-#//# glVertexAttrib2fARB($index,$x,$y);
-void
-glVertexAttrib2fARB(index,x,y)
-	GLuint index
-	GLfloat x
-	GLfloat y
-	INIT:
-		loadProc(glVertexAttrib2fARB,"glVertexAttrib2fARB");
-
-#//# glVertexAttrib2sARB($index,$x,$y);
-void
-glVertexAttrib2sARB(index,x,y)
-	GLuint index
-	GLshort x
-	GLshort y
-	INIT:
-		loadProc(glVertexAttrib2sARB,"glVertexAttrib2sARB");
-
-#//# glVertexAttrib2svARB_c($index,(CPTR)v);
-void
-glVertexAttrib2svARB_c(index,v)
-	GLuint index
-	void *	v
-	INIT:
-		loadProc(glVertexAttrib2svARB,"glVertexAttrib2svARB");
-	CODE:
-		glVertexAttrib2svARB(index,(GLshort*)v);
-
 #//# glVertexAttrib2svARB_s($index,(PACKED)v);
 void
 glVertexAttrib2svARB_s(index,v)
@@ -1027,26 +648,6 @@ glVertexAttrib2svARB_p(index,x,y)
 		param[1] = y;
 		glVertexAttrib2svARB(index,param);
 	}
-
-#//# glVertexAttrib3dARB($index,$x,$y,$z);
-void
-glVertexAttrib3dARB(index,x,y,z)
-	GLuint index
-	GLdouble x
-	GLdouble y
-	GLdouble z
-	INIT:
-		loadProc(glVertexAttrib3dARB,"glVertexAttrib3dARB");
-
-#//# glVertexAttrib3dvARB_c($index,(CPTR)v);
-void
-glVertexAttrib3dvARB_c(index,v)
-	GLuint index
-	void *	v
-	INIT:
-		loadProc(glVertexAttrib3dvARB,"glVertexAttrib3dvARB");
-	CODE:
-		glVertexAttrib3dvARB(index,(GLdouble*)v);
 
 #//# glVertexAttrib3dvARB_s($index,(PACKED)v);
 void
@@ -1080,26 +681,6 @@ glVertexAttrib3dvARB_p(index,x,y,z)
 		glVertexAttrib3dvARB(index,param);
 	}
 
-#//# glVertexAttrib3fARB($index,$x,$y,$z);
-void
-glVertexAttrib3fARB(index,x,y,z)
-	GLuint index
-	GLfloat x
-	GLfloat y
-	GLfloat z
-	INIT:
-		loadProc(glVertexAttrib3fARB,"glVertexAttrib3fARB");
-
-#//# glVertexAttrib3fvARB_c($index,(CPTR)v);
-void
-glVertexAttrib3fvARB_c(index,v)
-	GLuint index
-	void *	v
-	INIT:
-		loadProc(glVertexAttrib3fvARB,"glVertexAttrib3fvARB");
-	CODE:
-		glVertexAttrib3fvARB(index,(GLfloat*)v);
-
 #//# glVertexAttrib3fvARB_s($index,(PACKED)v);
 void
 glVertexAttrib3fvARB_s(index,v)
@@ -1132,26 +713,6 @@ glVertexAttrib3fvARB_p(index,x,y,z)
 		glVertexAttrib3fvARB(index,param);
 	}
 
-#//# glVertexAttrib3sARB($index,$x,$y,$z);
-void
-glVertexAttrib3sARB(index,x,y,z)
-	GLuint index
-	GLshort x
-	GLshort y
-	GLshort z
-	INIT:
-		loadProc(glVertexAttrib3sARB,"glVertexAttrib3sARB");
-
-#//# glVertexAttrib3svARB_c($index,(CPTR)v);
-void
-glVertexAttrib3svARB_c(index,v)
-	GLuint index
-	void *	v
-	INIT:
-		loadProc(glVertexAttrib3svARB,"glVertexAttrib3svARB");
-	CODE:
-		glVertexAttrib3svARB(index,(GLshort*)v);
-
 #//# glVertexAttrib3svARB_s($index,(PACKED)v);
 void
 glVertexAttrib3svARB_s(index,v)
@@ -1183,16 +744,6 @@ glVertexAttrib3svARB_p(index,x,y,z)
 		param[2] = z;
 		glVertexAttrib3svARB(index,param);
 	}
-
-#//# glVertexAttrib4NbvARB_c($index,(CPTR)v);
-void
-glVertexAttrib4NbvARB_c(index,v)
-	GLuint index
-	void *	v
-	INIT:
-		loadProc(glVertexAttrib4NbvARB,"glVertexAttrib4NbvARB");
-	CODE:
-		glVertexAttrib4NbvARB(index,(GLbyte*)v);
 
 #//# glVertexAttrib4NbvARB_s($index,(PACKED)v);
 void
@@ -1227,16 +778,6 @@ glVertexAttrib4NbvARB_p(index,x,y,z,w)
 		glVertexAttrib4NbvARB(index,param);
 	}
 
-#//# glVertexAttrib4NivARB_c($index,(CPTR)v);
-void
-glVertexAttrib4NivARB_c(index,v)
-	GLuint index
-	void *	v
-	INIT:
-		loadProc(glVertexAttrib4NivARB,"glVertexAttrib4NivARB");
-	CODE:
-		glVertexAttrib4NivARB(index,(GLint*)v);
-
 #//# glVertexAttrib4NivARB_s($index,(PACKED)v);
 void
 glVertexAttrib4NivARB_s(index,v)
@@ -1269,16 +810,6 @@ glVertexAttrib4NivARB_p(index,x,y,z,w)
 		param[3] = w;
 		glVertexAttrib4NivARB(index,param);
 	}
-
-#//# glVertexAttrib4NsvARB_c($index,(CPTR)v);
-void
-glVertexAttrib4NsvARB_c(index,v)
-	GLuint index
-	void *	v
-	INIT:
-		loadProc(glVertexAttrib4NsvARB,"glVertexAttrib4NsvARB");
-	CODE:
-		glVertexAttrib4NsvARB(index,(GLshort*)v);
 
 #//# glVertexAttrib4NsvARB_s($index,(PACKED)v);
 void
@@ -1313,27 +844,6 @@ glVertexAttrib4NsvARB_p(index,x,y,z,w)
 		glVertexAttrib4NsvARB(index,param);
 	}
 
-#//# glVertexAttrib4NubARB($index,$x,$y,$z,$w);
-void
-glVertexAttrib4NubARB(index,x,y,z,w)
-	GLuint index
-	GLubyte x
-	GLubyte y
-	GLubyte z
-	GLubyte w
-	INIT:
-		loadProc(glVertexAttrib4NubARB,"glVertexAttrib4NubARB");
-
-#//# glVertexAttrib4NubvARB_c($index,(CPTR)v);
-void
-glVertexAttrib4NubvARB_c(index,v)
-	GLuint index
-	void *	v
-	INIT:
-		loadProc(glVertexAttrib4NubvARB,"glVertexAttrib4NubvARB");
-	CODE:
-		glVertexAttrib4NubvARB(index,(GLubyte*)v);
-
 #//# glVertexAttrib4NubvARB_s($index,(PACKED)v);
 void
 glVertexAttrib4NubvARB_s(index,v)
@@ -1366,16 +876,6 @@ glVertexAttrib4NubvARB_p(index,x,y,z,w)
 		param[3] = w;
 		glVertexAttrib4NubvARB(index,param);
 	}
-
-#//# glVertexAttrib4NuivARB_c($index,(CPTR)v);
-void
-glVertexAttrib4NuivARB_c(index,v)
-	GLuint index
-	void *	v
-	INIT:
-		loadProc(glVertexAttrib4NuivARB,"glVertexAttrib4NuivARB");
-	CODE:
-		glVertexAttrib4NuivARB(index,(GLuint*)v);
 
 #//# glVertexAttrib4NuivARB_s($index,(PACKED)v);
 void
@@ -1410,16 +910,6 @@ glVertexAttrib4NuivARB_p(index,x,y,z,w)
 		glVertexAttrib4NuivARB(index,param);
 	}
 
-#//# glVertexAttrib4NusvARB_c($index,(CPTR)v);
-void
-glVertexAttrib4NusvARB_c(index,v)
-	GLuint index
-	void *	v
-	INIT:
-		loadProc(glVertexAttrib4NusvARB,"glVertexAttrib4NusvARB");
-	CODE:
-		glVertexAttrib4NusvARB(index,(GLushort*)v);
-
 #//# glVertexAttrib4NusvARB_s($index,(PACKED)v);
 void
 glVertexAttrib4NusvARB_s(index,v)
@@ -1453,16 +943,6 @@ glVertexAttrib4NusvARB_p(index,x,y,z,w)
 		glVertexAttrib4NusvARB(index,param);
 	}
 
-#//# glVertexAttrib4bvARB_c($index,(CPTR)v);
-void
-glVertexAttrib4bvARB_c(index,v)
-	GLuint index
-	void *	v
-	INIT:
-		loadProc(glVertexAttrib4bvARB,"glVertexAttrib4bvARB");
-	CODE:
-		glVertexAttrib4bvARB(index,(GLbyte*)v);
-
 #//# glVertexAttrib4bvARB_s($index,(PACKED)v);
 void
 glVertexAttrib4bvARB_s(index,v)
@@ -1495,27 +975,6 @@ glVertexAttrib4bvARB_p(index,x,y,z,w)
 		param[3] = w;
 		glVertexAttrib4bvARB(index,param);
 	}
-
-#//# glVertexAttrib4dARB($index,$x,$y,$z,$w);
-void
-glVertexAttrib4dARB(index,x,y,z,w)
-	GLuint index
-	GLdouble x
-	GLdouble y
-	GLdouble z
-	GLdouble w
-	INIT:
-		loadProc(glVertexAttrib4dARB,"glVertexAttrib4dARB");
-
-#//# glVertexAttrib4dvARB_c($index,(CPTR)v);
-void
-glVertexAttrib4dvARB_c(index,v)
-	GLuint index
-	void *	v
-	INIT:
-		loadProc(glVertexAttrib4dvARB,"glVertexAttrib4dvARB");
-	CODE:
-		glVertexAttrib4dvARB(index,(GLdouble*)v);
 
 #//# glVertexAttrib4dvARB_s($index,(PACKED)v);
 void
@@ -1551,27 +1010,6 @@ glVertexAttrib4dvARB_p(index,x,y,z,w)
 		glVertexAttrib4dvARB(index,param);
 	}
 
-#//# glVertexAttrib4fARB($index,$x,$y,$z,$w);
-void
-glVertexAttrib4fARB(index,x,y,z,w)
-	GLuint index
-	GLfloat x
-	GLfloat y
-	GLfloat z
-	GLfloat w
-	INIT:
-		loadProc(glVertexAttrib4fARB,"glVertexAttrib4fARB");
-
-#//# glVertexAttrib4fvARB_c($index,(CPTR)v);
-void
-glVertexAttrib4fvARB_c(index,v)
-	GLuint index
-	void *	v
-	INIT:
-		loadProc(glVertexAttrib4fvARB,"glVertexAttrib4fvARB");
-	CODE:
-		glVertexAttrib4fvARB(index,(GLfloat*)v);
-
 #//# glVertexAttrib4fvARB_s($index,(PACKED)v);
 void
 glVertexAttrib4fvARB_s(index,v)
@@ -1606,16 +1044,6 @@ glVertexAttrib4fvARB_p(index,x,y,z,w)
 		glVertexAttrib4fvARB(index,param);
 	}
 
-#//# glVertexAttrib4ivARB_c($index,(CPTR)v);
-void
-glVertexAttrib4ivARB_c(index,v)
-	GLuint index
-	void *	v
-	INIT:
-		loadProc(glVertexAttrib4ivARB,"glVertexAttrib4ivARB");
-	CODE:
-		glVertexAttrib4ivARB(index,(GLint*)v);
-
 #//# glVertexAttrib4ivARB_s($index,(PACKED)v);
 void
 glVertexAttrib4ivARB_s(index,v)
@@ -1648,27 +1076,6 @@ glVertexAttrib4ivARB_p(index,x,y,z,w)
 		param[3] = w;
 		glVertexAttrib4ivARB(index,param);
 	}
-
-#//# glVertexAttrib4sARB($index,$x,$y,$z,$w);
-void
-glVertexAttrib4sARB(index,x,y,z,w)
-	GLuint index
-	GLshort x
-	GLshort y
-	GLshort z
-	GLshort w
-	INIT:
-		loadProc(glVertexAttrib4sARB,"glVertexAttrib4sARB");
-
-#//# glVertexAttrib4svARB_c($index,(CPTR)v);
-void
-glVertexAttrib4svARB_c(index,v)
-	GLuint index
-	void *	v
-	INIT:
-		loadProc(glVertexAttrib4svARB,"glVertexAttrib4svARB");
-	CODE:
-		glVertexAttrib4svARB(index,(GLshort*)v);
 
 #//# glVertexAttrib4svARB_s($index,(PACKED)v);
 void
@@ -1704,16 +1111,6 @@ glVertexAttrib4svARB_p(index,x,y,z,w)
 		glVertexAttrib4svARB(index,param);
 	}
 
-#//# glVertexAttrib4ubvARB_c($index,(CPTR)v);
-void
-glVertexAttrib4ubvARB_c(index,v)
-	GLuint index
-	void *	v
-	INIT:
-		loadProc(glVertexAttrib4ubvARB,"glVertexAttrib4ubvARB");
-	CODE:
-		glVertexAttrib4ubvARB(index,(GLubyte*)v);
-
 #//# glVertexAttrib4ubvARB_s($index,(PACKED)v);
 void
 glVertexAttrib4ubvARB_s(index,v)
@@ -1746,16 +1143,6 @@ glVertexAttrib4ubvARB_p(index,x,y,z,w)
 		param[3] = w;
 		glVertexAttrib4ubvARB(index,param);
 	}
-
-#//# glVertexAttrib4uivARB_c($index,(CPTR)v);
-void
-glVertexAttrib4uivARB_c(index,v)
-	GLuint index
-	void *	v
-	INIT:
-		loadProc(glVertexAttrib4uivARB,"glVertexAttrib4uivARB");
-	CODE:
-		glVertexAttrib4uivARB(index,(GLuint*)v);
 
 #//# glVertexAttrib4uivARB_s($index,(PACKED)v);
 void
@@ -1790,17 +1177,7 @@ glVertexAttrib4uivARB_p(index,x,y,z,w)
 		glVertexAttrib4uivARB(index,param);
 	}
 
-#//# glVertexAttrib4usvARB_c($index,(CPTR)v);
-void
-glVertexAttrib4usvARB_c(index,v)
-	GLuint index
-	void *	v
-	INIT:
-		loadProc(glVertexAttrib4usvARB,"glVertexAttrib4usvARB");
-	CODE:
-		glVertexAttrib4usvARB(index,(GLushort*)v);
-
-#//# glVertexAttrib4usvARB_c($index,(PACKED)v);
+#//# glVertexAttrib4usvARB_s($index,(PACKED)v);
 void
 glVertexAttrib4usvARB_s(index,v)
 	GLuint index
@@ -1833,21 +1210,6 @@ glVertexAttrib4usvARB_p(index,x,y,z,w)
 		glVertexAttrib4usvARB(index,param);
 	}
 
-#//# glVertexAttribPointerARB_c($index,$size,$type,$normalized,$stride,(CPTR)pointer);
-void
-glVertexAttribPointerARB_c(index,size,type,normalized,stride,pointer)
-	GLuint index
-	GLint size
-	GLenum type
-	GLboolean normalized
-	GLsizei stride
-	void * pointer
-	INIT:
-		loadProc(glVertexAttribPointerARB,"glVertexAttribPointerARB");
-	CODE:
-		glVertexAttribPointerARB(index,size,type,
-			normalized,stride,pointer);
-
 #//# glVertexAttribPointerARB_p($index,$type,$normalized,$stride,@attribs);
 void
 glVertexAttribPointerARB_p(index,type,normalized,stride,...)
@@ -1870,31 +1232,6 @@ glVertexAttribPointerARB_p(index,type,normalized,stride,...)
 
 		free(pointer);
 	}
-
-#//# glEnableVertexAttribArrayARB($index);
-void
-glEnableVertexAttribArrayARB(index)
-	GLuint index
-	INIT:
-		loadProc(glEnableVertexAttribArrayARB,"glEnableVertexAttribArrayARB");
-
-#//# glDisableVertexAttribArrayARB($index);
-void
-glDisableVertexAttribArrayARB(index)
-	GLuint index
-	INIT:
-		loadProc(glDisableVertexAttribArrayARB,"glDisableVertexAttribArrayARB");
-
-#//# glGetVertexAttribdvARB_c($index,$pname,(CPTR)params);
-void
-glGetVertexAttribdvARB_c(index,pname,params)
-	GLuint	index
-	GLenum	pname
-	void *	params
-	INIT:
-		loadProc(glGetVertexAttribdvARB,"glGetVertexAttribdvARB");
-	CODE:
-		glGetVertexAttribdvARB(index,pname,(GLdouble*)params);
 
 #//# glGetVertexAttribdvARB_s($index,$pname,(PACKED)params);
 void
@@ -1926,17 +1263,6 @@ glGetVertexAttribdvARB_p(index,pname)
 	OUTPUT:
 		RETVAL
 
-#//# glGetVertexAttribfvARB_c($index,$pname,(CPTR)params);
-void
-glGetVertexAttribfvARB_c(index,pname,params)
-	GLuint	index
-	GLenum	pname
-	void *	params
-	INIT:
-		loadProc(glGetVertexAttribfvARB,"glGetVertexAttribfvARB");
-	CODE:
-		glGetVertexAttribfvARB(index,pname,(GLfloat*)params);
-
 #//# glGetVertexAttribfvARB_s($index,$pname,(PACKED)params);
 void
 glGetVertexAttribfvARB_s(index,pname,params)
@@ -1967,17 +1293,6 @@ glGetVertexAttribfvARB_p(index,pname)
 	OUTPUT:
 		RETVAL
 
-#//# glGetVertexAttribivARB_c($index,$pname,(CPTR)params);
-void
-glGetVertexAttribivARB_c(index,pname,params)
-	GLuint	index
-	GLenum	pname
-	void *	params
-	INIT:
-		loadProc(glGetVertexAttribivARB,"glGetVertexAttribivARB");
-	CODE:
-		glGetVertexAttribivARB(index,pname,(GLint*)params);
-
 #//# glGetVertexAttribivARB_s($index,$pname,(PACKED)params);
 void
 glGetVertexAttribivARB_s(index,pname,params)
@@ -2007,17 +1322,6 @@ glGetVertexAttribivARB_p(index,pname)
 	}
 	OUTPUT:
 		RETVAL
-
-#//# glGetVertexAttribPointervARB_c($index,$pname,(CPTR)pointer);
-void
-glGetVertexAttribPointervARB_c(index,pname,pointer)
-	GLuint	index
-	GLenum	pname
-	void *	pointer
-	INIT:
-		loadProc(glGetVertexAttribPointervARB,"glGetVertexAttribPointervARB");
-	CODE:
-		glGetVertexAttribPointervARB(index,pname,pointer);
 
 #//# $param = glGetVertexAttribPointervARB_p($index,$pname);
 void
@@ -2129,32 +1433,6 @@ glGetVertexAttribPointervARB_p(index,pname)
 
 #ifdef GL_ARB_vertex_shader
 
-#//# glBindAttribLocationARB($programObj, $index, $name);
-void
-glBindAttribLocationARB(programObj, index, name)
-	GLhandleARB programObj
-	GLuint index
-	void *name
-	INIT:
-		loadProc(glBindAttribLocationARB,"glBindAttribLocationARB");
-	CODE:
-		glBindAttribLocationARB(programObj,index,name);
-
-#//# glGetActiveAttribARB_c($programObj, $index, $maxLength, (CPTR)length, (CPTR)size, (CPTR)type, (CPTR)name);
-void
-glGetActiveAttribARB_c(programObj, index, maxLength, length, size, type, name)
-	GLhandleARB programObj
-	GLuint	index
-	GLsizei	maxLength
-	void	*length
-	void	*size
-	void	*type
-	void	*name
-	INIT:
-		loadProc(glGetActiveAttribARB,"glGetActiveAttribARB");
-	CODE:
-		glGetActiveAttribARB(programObj,index,maxLength,length,size,type,name);
-
 #//# glGetActiveAttribARB_s($programObj, $index, $maxLength, (PACKED)length, (PACKED)size, (PACKED)type, (PACKED)name);
 void
 glGetActiveAttribARB_s(programObj, index, maxLength, length, size, type, name)
@@ -2223,18 +1501,6 @@ glGetActiveAttribARB_p(programObj, index)
 		}
 	}
 
-#//# glGetAttribLocationARB_c($programObj, (CPTR)name);
-GLint
-glGetAttribLocationARB_c(programObj, name)
-	GLhandleARB programObj
-	void	*name
-	INIT:
-		loadProc(glGetAttribLocationARB,"glGetAttribLocationARB");
-	CODE:
-		RETVAL = glGetAttribLocationARB(programObj, name);
-	OUTPUT:
-		RETVAL
-
 #//!!! Since pointer is string, should combine _C and _p
 #//# $value = glGetAttribLocationARB_p(programObj, $name);
 GLint
@@ -2254,17 +1520,6 @@ glGetAttribLocationARB_p(programObj, ...)
 
 #ifdef GL_ARB_shader_objects
 
-#//# glDeleteObjectARB($obj);
-void
-glDeleteObjectARB(obj)
-	GLhandleARB	obj
-	INIT:
-		loadProc(glDeleteObjectARB,"glDeleteObjectARB");
-	CODE:
-	{
-		glDeleteObjectARB(obj);
-	}
-
 #//# glGetHandleARB($pname);
 GLhandleARB
 glGetHandleARB(pname)
@@ -2277,45 +1532,6 @@ glGetHandleARB(pname)
 	}
 	OUTPUT:
 		RETVAL
-
-#//# glDetachObjectARB($containerObj, $attachedObj);
-void
-glDetachObjectARB(containerObj, attachedObj)
-	GLhandleARB containerObj
-	GLhandleARB attachedObj
-	INIT:
-		loadProc(glDetachObjectARB,"glDetachObjectARB");
-	CODE:
-	{
-		glDetachObjectARB(containerObj, attachedObj);
-	}
-
-#//# glCreateShaderObjectARB($shaderType);
-GLhandleARB
-glCreateShaderObjectARB(shaderType)
-	GLenum shaderType
-	INIT:
-		loadProc(glCreateShaderObjectARB,"glCreateShaderObjectARB");
-	CODE:
-	{
-		RETVAL = glCreateShaderObjectARB(shaderType);
-	}
-	OUTPUT:
-		RETVAL
-
-#//# glShaderSourceARB_c($shaderObj, $count, (CPTR)string, (CPTR)length);
-void
-glShaderSourceARB_c(shaderObj, count, string, length)
-	GLhandleARB shaderObj
-	GLsizei count
-	void	*string
-	void	*length
-	INIT:
-		loadProc(glShaderSourceARB,"glShaderSourceARB");
-	CODE:
-	{
-		glShaderSourceARB(shaderObj, count, string, length);
-	}
 
 #//# glShaderSourceARB_p($shaderObj, @string);
 void
@@ -2341,193 +1557,6 @@ glShaderSourceARB_p(shaderObj, ...)
 		free(length);
                 free(string);
 	}
-
-#//# glCompileShaderARB($shaderObj);
-void
-glCompileShaderARB(shaderObj)
-	GLhandleARB shaderObj
-	INIT:
-		loadProc(glCompileShaderARB,"glCompileShaderARB");
-	CODE:
-	{
-		glCompileShaderARB(shaderObj);
-	}
-
-#//# $obj = glCreateProgramObjectARB();
-GLhandleARB
-glCreateProgramObjectARB()
-	INIT:
-		loadProc(glCreateProgramObjectARB,"glCreateProgramObjectARB");
-	CODE:
-	{
-		RETVAL = glCreateProgramObjectARB();
-	}
-	OUTPUT:
-		RETVAL
-
-#//# glAttachObjectARB($containerObj, $obj);
-void
-glAttachObjectARB(containerObj, obj)
-	GLhandleARB containerObj
-	GLhandleARB obj
-	INIT:
-		loadProc(glAttachObjectARB,"glAttachObjectARB");
-	CODE:
-	{
-		glAttachObjectARB(containerObj, obj);
-	}
-
-#//# glLinkProgramARB($programObj);
-void
-glLinkProgramARB(programObj)
-	GLhandleARB programObj
-	INIT:
-		loadProc(glLinkProgramARB,"glLinkProgramARB");
-	CODE:
-	{
-		glLinkProgramARB(programObj);
-	}
-
-#//# glUseProgramObjectARB($programObj);
-void
-glUseProgramObjectARB(programObj)
-	GLhandleARB programObj
-	INIT:
-		loadProc(glUseProgramObjectARB,"glUseProgramObjectARB");
-	CODE:
-	{
-		glUseProgramObjectARB(programObj);
-	}
-
-#//# glValidateProgramARB($programObj);
-void
-glValidateProgramARB(programObj)
-	GLhandleARB programObj
-	INIT:
-		loadProc(glValidateProgramARB,"glValidateProgramARB");
-	CODE:
-	{
-		glValidateProgramARB(programObj);
-	}
-
-#//# glUniform1fARB($location, $v0);
-void
-glUniform1fARB(location, v0)
-	GLint location
-	GLfloat v0
-	INIT:
-		loadProc(glUniform1fARB,"glUniform1fARB");
-	CODE:
-	{
-		glUniform1fARB(location, v0);
-	}
-
-#//# glUniform2fARB($location, $v0, $v1);
-void
-glUniform2fARB(location, v0, v1)
-	GLint location
-	GLfloat v0
-	GLfloat v1
-	INIT:
-		loadProc(glUniform2fARB,"glUniform2fARB");
-	CODE:
-	{
-		glUniform2fARB(location, v0, v1);
-	}
-
-#//# glUniform3fARB($location, $v0, $v1, $v2);
-void
-glUniform3fARB(location, v0, v1, v2)
-	GLint location
-	GLfloat v0
-	GLfloat v1
-	GLfloat v2
-	INIT:
-		loadProc(glUniform3fARB,"glUniform3fARB");
-	CODE:
-	{
-		glUniform3fARB(location, v0, v1, v2);
-	}
-
-#//# glUniform4fARB($location, $v0, $v1, $v2, $v3);
-void
-glUniform4fARB(location, v0, v1, v2, v3)
-	GLint location
-	GLfloat v0
-	GLfloat v1
-	GLfloat v2
-	GLfloat v3
-	INIT:
-		loadProc(glUniform4fARB,"glUniform4fARB");
-	CODE:
-	{
-		glUniform4fARB(location, v0, v1, v2, v3);
-	}
-
-#//# glUniform1iARB($location, $v0);
-void
-glUniform1iARB(location, v0)
-	GLint location
-	GLint v0
-	INIT:
-		loadProc(glUniform1iARB,"glUniform1iARB");
-	CODE:
-	{
-		glUniform1iARB(location, v0);
-	}
-
-#//# glUniform2iARB($location, $v0, $v1);
-void
-glUniform2iARB(location, v0, v1)
-	GLint location
-	GLint v0
-	GLint v1
-	INIT:
-		loadProc(glUniform2iARB,"glUniform2iARB");
-	CODE:
-	{
-		glUniform2iARB(location, v0, v1);
-	}
-
-#//# glUniform3iARB($location, $v0, $v1, $v2);
-void
-glUniform3iARB(location, v0, v1, v2)
-	GLint location
-	GLint v0
-	GLint v1
-	GLint v2
-	INIT:
-		loadProc(glUniform3iARB,"glUniform3iARB");
-	CODE:
-	{
-		glUniform3iARB(location, v0, v1, v2);
-	}
-
-#//# glUniform4iARB($location, $v0, $v1, $v2, $v3);
-void
-glUniform4iARB(location, v0, v1, v2, v3)
-	GLint location
-	GLint v0
-	GLint v1
-	GLint v2
-	GLint v3
-	INIT:
-		loadProc(glUniform4iARB,"glUniform4iARB");
-	CODE:
-	{
-		glUniform4iARB(location, v0, v1, v2, v3);
-	}
-
-#//# glUniform1fvARB_c($location, $count, (CPTR)value);
-void
-glUniform1fvARB_c(location, count, value)
-	GLint	location
-	GLsizei	count
-	void	*value
-	INIT:
-		loadProc(glUniform1fvARB,"glUniform1fvARB");
-	CODE:
-		glUniform1fvARB(location, count, value);
 
 #//# glUniform1fvARB_s($location, $count, (PACKED)value);
 void
@@ -2563,17 +1592,6 @@ glUniform1fvARB_p(location, ...)
 
 		free(value);
 	}
-
-#//# glUniform2fvARB_c($location, $count, (CPTR)value);
-void
-glUniform2fvARB_c(location, count, value)
-	GLint	location
-	GLsizei	count
-	void	*value
-	INIT:
-		loadProc(glUniform2fvARB,"glUniform2fvARB");
-	CODE:
-		glUniform2fvARB(location, count, value);
 
 #//# glUniform2fvARB_s($location, $count, (PACKED)value);
 void
@@ -2611,17 +1629,6 @@ glUniform2fvARB_p(location, ...)
 		free(value);
 	}
 
-#//# glUniform3fvARB_c($location, $count, (CPTR)value);
-void
-glUniform3fvARB_c(location, count, value)
-	GLint	location
-	GLsizei	count
-	void	*value
-	INIT:
-		loadProc(glUniform3fvARB,"glUniform3fvARB");
-	CODE:
-		glUniform3fvARB(location, count, value);
-
 #//# glUniform3fvARB_s($location, $count, (PACKED)value);
 void
 glUniform3fvARB_s(location, count, value)
@@ -2657,17 +1664,6 @@ glUniform3fvARB_p(location, ...)
 
 		free(value);
 	}
-
-#//# glUniform4fvARB_c($location, $count, (CPTR)value);
-void
-glUniform4fvARB_c(location, count, value)
-	GLint	location
-	GLsizei	count
-	void	*value
-	INIT:
-		loadProc(glUniform4fvARB,"glUniform4fvARB");
-	CODE:
-		glUniform4fvARB(location, count, value);
 
 #//# glUniform4fvARB_s($location, $count, (PACKED)value);
 void
@@ -2705,17 +1701,6 @@ glUniform4fvARB_p(location, ...)
 		free(value);
 	}
 
-#//# glUniform1ivARB_c($location, $count, (CPTR)value);
-void
-glUniform1ivARB_c(location, count, value)
-	GLint	location
-	GLsizei	count
-	void	*value
-	INIT:
-		loadProc(glUniform1ivARB,"glUniform1ivARB");
-	CODE:
-		glUniform1ivARB(location, count, value);
-
 #//# glUniform1ivARB_s($location, $count, (PACKED)value);
 void
 glUniform1ivARB_s(location, count, value)
@@ -2750,17 +1735,6 @@ glUniform1ivARB_p(location, ...)
 
 		free(value);
 	}
-
-#//# glUniform2ivARB_c($location, $count, (CPTR)value);
-void
-glUniform2ivARB_c(location, count, value)
-	GLint	location
-	GLsizei	count
-	void	*value
-	INIT:
-		loadProc(glUniform2ivARB,"glUniform2ivARB");
-	CODE:
-		glUniform2ivARB(location, count, value);
 
 #//# glUniform2ivARB_s($location, $count, (PACKED)value);
 void
@@ -2798,17 +1772,6 @@ glUniform2ivARB_p(location, ...)
 		free(value);
 	}
 
-#//# glUniform3ivARB_c($location, $count, (CPTR)value);
-void
-glUniform3ivARB_c(location, count, value)
-	GLint	location
-	GLsizei	count
-	void	*value
-	INIT:
-		loadProc(glUniform3ivARB,"glUniform3ivARB");
-	CODE:
-		glUniform3ivARB(location, count, value);
-
 #//# glUniform3ivARB_s($location, $count, (PACKED)value);
 void
 glUniform3ivARB_s(location, count, value)
@@ -2845,17 +1808,6 @@ glUniform3ivARB_p(location, ...)
 		free(value);
 	}
 
-#//# glUniform4ivARB_c($location, $count, (CPTR)value);
-void
-glUniform4ivARB_c(location, count, value)
-	GLint	location
-	GLsizei	count
-	void	*value
-	INIT:
-		loadProc(glUniform4ivARB,"glUniform4ivARB");
-	CODE:
-		glUniform4ivARB(location, count, value);
-
 #//# glUniform4ivARB_s($location, $count, (PACKED)value);
 void
 glUniform4ivARB_s(location, count, value)
@@ -2891,18 +1843,6 @@ glUniform4ivARB_p(location, ...)
 
 		free(value);
 	}
-
-#//# glUniformMatrix2fvARB_c($location, $count, $transpose, (CPTR)value);
-void
-glUniformMatrix2fvARB_c(location, count, transpose, value)
-	GLint	location
-	GLsizei	count
-	GLboolean transpose
-	void	*value
-	INIT:
-		loadProc(glUniformMatrix2fvARB,"glUniformMatrix2fvARB");
-	CODE:
-		glUniformMatrix2fvARB(location, count, transpose, value);
 
 #//# glUniformMatrix2fvARB_s($location, $count, $transpose, (PACKED)value);
 void
@@ -2942,18 +1882,6 @@ glUniformMatrix2fvARB_p(location, transpose, ...)
 		free(value);
 	}
 
-#//# glUniformMatrix3fvARB_c($location, $count, $transpose, (CPTR)value);
-void
-glUniformMatrix3fvARB_c(location, count, transpose, value)
-	GLint	location
-	GLsizei	count
-	GLboolean transpose
-	void	*value
-	INIT:
-		loadProc(glUniformMatrix3fvARB,"glUniformMatrix2fvARB");
-	CODE:
-		glUniformMatrix3fvARB(location, count, transpose, value);
-
 #//# glUniformMatrix3fvARB_s($location, $count, $transpose, (PACKED)value);
 void
 glUniformMatrix3fvARB_s(location, count, transpose, value)
@@ -2991,18 +1919,6 @@ glUniformMatrix3fvARB_p(location, transpose, ...)
 
 		free(value);
 	}
-
-#//# glUniformMatrix4fvARB_c($location, $count, $transpose, (CPTR)value);
-void
-glUniformMatrix4fvARB_c(location, count, transpose, value)
-	GLint	location
-	GLsizei	count
-	GLboolean transpose
-	void	*value
-	INIT:
-		loadProc(glUniformMatrix4fvARB,"glUniformMatrix4fvARB");
-	CODE:
-		glUniformMatrix4fvARB(location, count, transpose, value);
 
 #//# glUniformMatrix4fvARB_s($location, $count, $transpose, (PACKED)value);
 void
@@ -3042,17 +1958,6 @@ glUniformMatrix4fvARB_p(location, transpose, ...)
 		free(value);
 	}
 
-#//# glGetObjectParameterfvARB_c($obj,$pname,(CPTR)params);
-void
-glGetObjectParameterfvARB_c(obj,pname,params)
-	GLhandleARB obj
-	GLenum	pname
-	void	*params
-	INIT:
-		loadProc(glGetObjectParameterfvARB,"glGetObjectParameterfvARB");
-	CODE:
-		glGetObjectParameterfvARB(obj,pname,params);
-
 #//# glGetObjectParameterfvARB_s($obj,$pname,(PACKED)params);
 void
 glGetObjectParameterfvARB_s(obj,pname,params)
@@ -3083,17 +1988,6 @@ glGetObjectParameterfvARB_p(obj,pname)
 	OUTPUT:
 		RETVAL
 
-#//# glGetObjectParameterivARB_c($obj,$pname,(CPTR)params);
-void
-glGetObjectParameterivARB_c(obj,pname,params)
-	GLhandleARB obj
-	GLenum	pname
-	void	*params
-	INIT:
-		loadProc(glGetObjectParameterivARB,"glGetObjectParameterivARB");
-	CODE:
-		glGetObjectParameterivARB(obj,pname,params);
-
 #//# glGetObjectParameterivARB_s($obj,$pname,(PACKED)params);
 void
 glGetObjectParameterivARB_s(obj,pname,params)
@@ -3108,7 +2002,7 @@ glGetObjectParameterivARB_s(obj,pname,params)
 		glGetObjectParameterivARB(obj,pname,params_s);
 	}
 
-#//# $param = glGetObjectParameterivARB_c($obj,$pname);
+#//# $param = glGetObjectParameterivARB_p($obj,$pname);
 GLint
 glGetObjectParameterivARB_p(obj,pname)
 	GLhandleARB obj
@@ -3124,19 +2018,7 @@ glGetObjectParameterivARB_p(obj,pname)
 	OUTPUT:
 		RETVAL
 
-#//# glGetInfoLogARB_c($obj, $maxLength, (CPTR)length, (CPTR)infoLog);
-void
-glGetInfoLogARB_c(obj, maxLength, length, infoLog)
-	GLhandleARB obj
-	GLsizei	maxLength
-	void	*length
-	void	*infoLog
-	INIT:
-		loadProc(glGetInfoLogARB,"glGetInfoLogARB");
-	CODE:
-		glGetInfoLogARB(obj, maxLength, length, infoLog);
-
-#//# $infoLog = glGetInfoLogARB_c($obj);
+#//# $infoLog = glGetInfoLogARB_p($obj);
 SV *
 glGetInfoLogARB_p(obj)
 	GLhandleARB obj
@@ -3167,18 +2049,6 @@ glGetInfoLogARB_p(obj)
 	}
 	OUTPUT:
 		RETVAL
-
-#//# glGetAttachedObjectsARB_c($containerObj, $maxCount, (CPTR)count, (CPTR)obj);
-void
-glGetAttachedObjectsARB_c(containerObj, maxCount, count, obj)
-	GLhandleARB containerObj
-	GLsizei	maxCount
-	void	*count
-	void	*obj
-	INIT:
-		loadProc(glGetAttachedObjectsARB,"glGetAttachedObjectsARB");
-	CODE:
-		glGetAttachedObjectsARB(containerObj, maxCount, count, obj);
 
 #//# glGetAttachedObjectsARB_s($containerObj, $maxCount, (PACKED)count, (PACKED)obj);
 void
@@ -3230,18 +2100,6 @@ glGetAttachedObjectsARB_p(containerObj)
 		free(obj);
 	}
 
-#//# glGetUniformLocationARB_c($programObj, (CPTR)name);
-GLint
-glGetUniformLocationARB_c(programObj, name)
-	GLhandleARB programObj
-	void	*name
-	INIT:
-		loadProc(glGetUniformLocationARB,"glGetUniformLocationARB");
-	CODE:
-		RETVAL = glGetUniformLocationARB(programObj, name);
-	OUTPUT:
-		RETVAL
-
 #//# $value = glGetUniformLocationARB_p($programObj, $name);
 GLint
 glGetUniformLocationARB_p(programObj, ...)
@@ -3255,21 +2113,6 @@ glGetUniformLocationARB_p(programObj, ...)
 	}
 	OUTPUT:
 		RETVAL
-
-#//# glGetActiveUniformARB_c($programObj, $index, $maxLength, (CPTR)length, (CPTR)size, (CPTR)type, (CPTR)name);
-void
-glGetActiveUniformARB_c(programObj, index, maxLength, length, size, type, name)
-	GLhandleARB programObj
-	GLuint	index
-	GLsizei	maxLength
-	void	*length
-	void	*size
-	void	*type
-	void	*name
-	INIT:
-		loadProc(glGetActiveUniformARB,"glGetActiveUniformARB");
-	CODE:
-		glGetActiveUniformARB(programObj,index,maxLength,length,size,type,name);
 
 #//# glGetActiveUniformARB_s($programObj, $index, $maxLength, (PACKED)length, (PACKED)size, (PACKED)type, (PACKED)name);
 void
@@ -3339,17 +2182,6 @@ glGetActiveUniformARB_p(programObj, index)
 		}
 	}
 
-#//# glGetUniformfvARB_c($programObj, $location, (CPTR)params);
-void
-glGetUniformfvARB_c(programObj, location, params)
-	GLhandleARB programObj
-	GLint	location
-	void	*params
-	INIT:
-		loadProc(glGetUniformfvARB,"glGetUniformfvARB");
-	CODE:
-		glGetUniformfvARB(programObj, location, params);
-
 #//# @params = glGetUniformfvARB_p($programObj, $location[, $count]);
 void
 glGetUniformfvARB_p(programObj, location, count=1)
@@ -3368,17 +2200,6 @@ glGetUniformfvARB_p(programObj, location, count=1)
 			PUSHs(sv_2mortal(newSVnv(ret[i])));
 	}
 
-#//# glGetUniformivARB_c($programObj, $location, (CPTR)params);
-void
-glGetUniformivARB_c(programObj, location, params)
-	GLhandleARB programObj
-	GLint	location
-	void	*params
-	INIT:
-		loadProc(glGetUniformivARB,"glGetUniformivARB");
-	CODE:
-		glGetUniformivARB(programObj, location, params);
-
 #//# @params = glGetUniformivARB_p($programObj, $location[, $count]);
 void
 glGetUniformivARB_p(programObj, location, count=1)
@@ -3396,18 +2217,6 @@ glGetUniformivARB_p(programObj, location, count=1)
 		for(i=0;i<count;i++)
 			PUSHs(sv_2mortal(newSViv(ret[i])));
 	}
-
-#//# glGetShaderSourceARB_c($obj, $maxLength, (CPTR)length, (CPTR)source);
-void
-glGetShaderSourceARB_c(obj, maxLength, length, source)
-	GLhandleARB obj
-	GLsizei	maxLength
-	void	*length
-	void	*source
-	INIT:
-		loadProc(glGetShaderSourceARB,"glGetShaderSourceARB");
-	CODE:
-		glGetShaderSourceARB(obj, maxLength, length, source);
 
 #//# $source = glGetShaderSourceARB_p($obj);
 void
@@ -3453,18 +2262,6 @@ glGetShaderSourceARB_p(obj)
 #endif // GL_ARB_shader_objects
 
 #ifdef GL_ARB_draw_buffers
-
-#//# glDrawBuffersARB_c($n,(CPTR)buffers);
-void
-glDrawBuffersARB_c(n,buffers)
-	GLsizei n
-	void *	buffers
-	INIT:
-		loadProc(glDrawBuffersARB,"glDrawBuffersARB");
-	CODE:
-	{
-		glDrawBuffersARB(n,buffers);
-	}
 
 #//# glDrawBuffersARB_s($n,(PACKED)buffers);
 void

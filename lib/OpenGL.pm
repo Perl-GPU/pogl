@@ -118,7 +118,16 @@ our $glext_dependencies =
    GL_SUN_slice_accum=>'1.0' #258
 };
 
-my @gl_func_common = qw(
+my (@gl_func_common, @gl_func_common_modern); BEGIN { @gl_func_common = qw(
+   glGetProgramiv_p
+   glGetShaderiv_p
+   glGetShaderInfoLog_p
+   glDeleteQueries
+   glGetQueryObjectiv
+   glGetQueryObjectuiv
+   glGetQueryiv
+);
+@gl_func_common_modern = qw(
    glAccum
    glAlphaFunc
    glAttachShader
@@ -153,7 +162,6 @@ my @gl_func_common = qw(
    glCopyPixels
    glCullFace
    glDeleteLists
-   glDeleteQueries
    glDeleteShader
    glDepthFunc
    glDepthMask
@@ -183,12 +191,6 @@ my @gl_func_common = qw(
    glGenLists
    glGenQueries_p
    glGetError
-   glGetProgramiv_p
-   glGetQueryObjectiv
-   glGetQueryObjectuiv
-   glGetQueryiv
-   glGetShaderiv_p
-   glGetShaderInfoLog_p
    glHint
    glIndexMask
    glIndexd
@@ -301,701 +303,396 @@ my @gl_func_common = qw(
    glVertex4s
    glViewport
 );
-our @gl_func = (@gl_func_common, qw(
-   glActiveTexture
-   glActiveTextureARB
+push@gl_func_common, @gl_func_common_modern;
+}
+my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
    glAreTexturesResidentEXT_p
-   glAreTexturesResident_c
    glAreTexturesResident_p
    glAreTexturesResident_s
-   glArrayElement
-   glArrayElementEXT
-   glAttachObjectARB
-   glBindAttribLocationARB
-   glBindBufferARB
-   glBindFramebufferEXT
-   glBindProgramARB
-   glBindRenderbufferEXT
-   glBindTexture
-   glBindTextureEXT
-   glBindVertexArray
-   glBitmap_c
    glBitmap_p
    glBitmap_s
-   glBufferDataARB_c
    glBufferDataARB_o
    glBufferDataARB_p
    glBufferDataARB_s
-   glBufferSubDataARB_c
    glBufferSubDataARB_o
    glBufferSubDataARB_p
    glBufferSubDataARB_s
-   glCallLists_c
    glCallLists_p
    glCallLists_s
-   glCheckFramebufferStatusEXT
-   glClampColorARB
-   glClientActiveTexture
-   glClientActiveTextureARB
-   glClipPlane_c
    glClipPlane_p
    glClipPlane_s
-   glColor3bv_c
    glColor3bv_p
    glColor3bv_s
-   glColor3dv_c
    glColor3dv_p
    glColor3dv_s
-   glColor3fv_c
    glColor3fv_p
    glColor3fv_s
-   glColor3iv_c
    glColor3iv_p
    glColor3iv_s
-   glColor3sv_c
    glColor3sv_p
    glColor3sv_s
-   glColor3ubv_c
    glColor3ubv_p
    glColor3ubv_s
-   glColor3uiv_c
    glColor3uiv_p
    glColor3uiv_s
-   glColor3us
-   glColor3usv_c
    glColor3usv_p
    glColor3usv_s
-   glColor4b
-   glColor4bv_c
    glColor4bv_p
    glColor4bv_s
-   glColor4dv_c
    glColor4dv_p
    glColor4dv_s
-   glColor4fv_c
    glColor4fv_p
    glColor4fv_s
-   glColor4iv_c
    glColor4iv_p
    glColor4iv_s
-   glColor4sv_c
    glColor4sv_p
    glColor4sv_s
-   glColor4ubv_c
    glColor4ubv_p
    glColor4ubv_s
-   glColor4uiv_c
    glColor4uiv_p
    glColor4uiv_s
-   glColor4usv_c
    glColor4usv_p
    glColor4usv_s
-   glColorPointerEXT_c
    glColorPointerEXT_o
    glColorPointerEXT_p
    glColorPointerEXT_s
-   glColorPointer_c
    glColorPointer_o
    glColorPointer_p
    glColorPointer_s
-   glCompileShaderARB
-   glCopyTexImage1D
-   glCopyTexImage1DEXT
-   glCopyTexImage2D
-   glCopyTexImage2DEXT
-   glCopyTexSubImage1D
-   glCopyTexSubImage1DEXT
-   glCopyTexSubImage2D
-   glCopyTexSubImage2DEXT
-   glCopyTexSubImage3D
-   glCopyTexSubImage3DEXT
-   glCreateProgramObjectARB
-   glCreateShaderObjectARB
-   glDeleteBuffersARB_c
-   glDeleteBuffersARB_p
    glDeleteBuffersARB_s
-   glDeleteFramebuffersEXT_c
-   glDeleteFramebuffersEXT_p
    glDeleteFramebuffersEXT_s
-   glDeleteObjectARB
-   glDeleteProgramsARB_c
-   glDeleteProgramsARB_p
    glDeleteProgramsARB_s
-   glDeleteRenderbuffersEXT_c
-   glDeleteRenderbuffersEXT_p
    glDeleteRenderbuffersEXT_s
-   glDeleteTexturesEXT_p
-   glDeleteTextures_c
-   glDeleteTextures_p
-   glDeleteTextures_s
    glDeleteVertexArrays
-   glDetachObjectARB
-   glDisableClientState
-   glDisableVertexAttribArrayARB
-   glDrawArrays
-   glDrawArraysEXT
-   glDrawBuffersARB_c
+   glDeleteTextures_s
    glDrawBuffersARB_p
    glDrawBuffersARB_s
-   glDrawBuffers_c
    glDrawBuffers_p
    glDrawBuffers_s
-   glDrawElements_c
    glDrawElements_p
    glDrawElements_s
-   glDrawPixels_c
    glDrawPixels_p
    glDrawPixels_s
-   glDrawRangeElements_c
    glDrawRangeElements_p
    glDrawRangeElements_s
-   glEdgeFlagPointerEXT_c
    glEdgeFlagPointerEXT_p
    glEdgeFlagPointerEXT_s
-   glEdgeFlagPointer_c
    glEdgeFlagPointer_p
    glEdgeFlagPointer_s
-   glEnableClientState
-   glEnableVertexAttribArrayARB
-   glFeedbackBuffer_c
-   glFogfv_c
    glFogfv_p
    glFogfv_s
-   glFogiv_c
    glFogiv_p
    glFogiv_s
-   glFramebufferRenderbufferEXT
-   glFramebufferTexture1DEXT
-   glFramebufferTexture2DEXT
-   glFramebufferTexture3DEXT
-   glGenBuffersARB_c
-   glGenBuffersARB_p
    glGenBuffersARB_s
-   glGenFramebuffersEXT_c
-   glGenFramebuffersEXT_p
    glGenFramebuffersEXT_s
-   glGenProgramsARB_c
-   glGenProgramsARB_p
    glGenProgramsARB_s
-   glGenRenderbuffersEXT_c
-   glGenRenderbuffersEXT_p
    glGenRenderbuffersEXT_s
-   glGenTexturesEXT_p
-   glGenTextures_c
    glGenTextures_p
    glGenTextures_s
-   glGenVertexArrays_p
-   glGenerateMipmapEXT
-   glGetActiveAttribARB_c
    glGetActiveAttribARB_p
    glGetActiveAttribARB_s
-   glGetActiveUniformARB_c
    glGetActiveUniformARB_p
    glGetActiveUniformARB_s
-   glGetAttachedObjectsARB_c
    glGetAttachedObjectsARB_p
    glGetAttachedObjectsARB_s
    glGetAttribLocationARB_c
    glGetAttribLocationARB_p
-   glGetBooleanv_c
    glGetBooleanv_p
    glGetBooleanv_s
-   glGetBufferParameterivARB_c
    glGetBufferParameterivARB_p
    glGetBufferParameterivARB_s
-   glGetBufferPointervARB_c
    glGetBufferPointervARB_o
    glGetBufferPointervARB_p
    glGetBufferPointervARB_s
-   glGetBufferSubDataARB_c
    glGetBufferSubDataARB_o
    glGetBufferSubDataARB_p
    glGetBufferSubDataARB_s
-   glGetClipPlane_c
    glGetClipPlane_p
    glGetClipPlane_s
-   glGetDoublev_c
    glGetDoublev_p
    glGetDoublev_s
-   glGetFloatv_c
    glGetFloatv_p
    glGetFloatv_s
-   glGetFramebufferAttachmentParameterivEXT_c
    glGetFramebufferAttachmentParameterivEXT_s
-   glGetGLhandleARB
-   glGetInfoLogARB_c
    glGetInfoLogARB_p
-   glGetIntegerv_c
    glGetIntegerv_p
    glGetIntegerv_s
-   glGetLightfv_c
    glGetLightfv_p
    glGetLightfv_s
-   glGetLightiv_c
    glGetLightiv_p
    glGetLightiv_s
-   glGetMapdv_c
    glGetMapdv_p
    glGetMapdv_s
-   glGetMapfv_c
    glGetMapfv_p
    glGetMapfv_s
-   glGetMapiv_c
    glGetMapiv_p
    glGetMapiv_s
-   glGetMaterialfv_c
    glGetMaterialfv_p
    glGetMaterialfv_s
-   glGetMaterialiv_c
    glGetMaterialiv_p
    glGetMaterialiv_s
-   glGetObjectParameterfvARB_c
    glGetObjectParameterfvARB_p
    glGetObjectParameterfvARB_s
-   glGetObjectParameterivARB_c
    glGetObjectParameterivARB_p
    glGetObjectParameterivARB_s
-   glGetPixelMapfv_c
    glGetPixelMapfv_p
    glGetPixelMapfv_s
-   glGetPixelMapuiv_c
    glGetPixelMapuiv_p
    glGetPixelMapuiv_s
-   glGetPixelMapusv_c
    glGetPixelMapusv_p
    glGetPixelMapusv_s
-   glGetPointerv_c
    glGetPointerv_p
    glGetPointerv_s
-   glGetPolygonStipple_c
    glGetPolygonStipple_p
    glGetPolygonStipple_s
-   glGetProgramEnvParameterdvARB_c
    glGetProgramEnvParameterdvARB_p
    glGetProgramEnvParameterdvARB_s
-   glGetProgramEnvParameterfvARB_c
    glGetProgramEnvParameterfvARB_p
    glGetProgramEnvParameterfvARB_s
-   glGetProgramLocalParameterdvARB_c
    glGetProgramLocalParameterdvARB_p
    glGetProgramLocalParameterdvARB_s
-   glGetProgramLocalParameterfvARB_c
    glGetProgramLocalParameterfvARB_p
    glGetProgramLocalParameterfvARB_s
-   glGetProgramStringARB_c
    glGetProgramStringARB_p
    glGetProgramStringARB_s
-   glGetProgramivARB_c
    glGetProgramivARB_p
    glGetProgramivARB_s
-   glGetRenderbufferParameterivEXT_c
    glGetRenderbufferParameterivEXT_s
-   glGetShaderSourceARB_c
    glGetShaderSourceARB_p
-   glGetString
-   glGetTexEnvfv_c
    glGetTexEnvfv_p
    glGetTexEnvfv_s
-   glGetTexEnviv_c
    glGetTexEnviv_p
    glGetTexEnviv_s
-   glGetTexGendv_c
    glGetTexGendv_p
    glGetTexGendv_s
-   glGetTexGenfv_c
    glGetTexGenfv_p
    glGetTexGenfv_s
-   glGetTexGeniv_c
    glGetTexGeniv_p
    glGetTexGeniv_s
-   glGetTexImage_c
    glGetTexImage_p
    glGetTexImage_s
-   glGetTexLevelParameterfv_c
    glGetTexLevelParameterfv_p
    glGetTexLevelParameterfv_s
-   glGetTexLevelParameteriv_c
    glGetTexLevelParameteriv_p
    glGetTexLevelParameteriv_s
-   glGetTexParameterfv_c
    glGetTexParameterfv_p
    glGetTexParameterfv_s
-   glGetTexParameteriv_c
    glGetTexParameteriv_p
    glGetTexParameteriv_s
    glGetUniformLocationARB_c
-   glGetUniformLocationARB_p
-   glGetUniformfvARB_c
-   glGetUniformfvARB_p
-   glGetUniformivARB_c
-   glGetUniformivARB_p
-   glGetVertexAttribPointervARB_c
-   glGetVertexAttribPointervARB_p
-   glGetVertexAttribdvARB_c
-   glGetVertexAttribdvARB_p
    glGetVertexAttribdvARB_s
-   glGetVertexAttribfvARB_c
+   glGetUniformLocationARB_p
+   glGetUniformfvARB_p
+   glGetUniformivARB_p
+   glGetVertexAttribPointervARB_p
+   glGetVertexAttribdvARB_p
    glGetVertexAttribfvARB_p
    glGetVertexAttribfvARB_s
-   glGetVertexAttribivARB_c
    glGetVertexAttribivARB_p
    glGetVertexAttribivARB_s
-   glIndexPointerEXT_c
    glIndexPointerEXT_o
    glIndexPointerEXT_p
    glIndexPointerEXT_s
-   glIndexPointer_c
    glIndexPointer_o
    glIndexPointer_p
    glIndexPointer_s
-   glInterleavedArrays_c
-   glIsBufferARB
-   glIsFramebufferEXT
-   glIsProgramARB
-   glIsRenderbufferEXT
-   glIsTexture
-   glIsTextureEXT
-   glLightModelfv_c
    glLightModelfv_p
    glLightModelfv_s
-   glLightModeliv_c
    glLightModeliv_p
    glLightModeliv_s
-   glLightfv_c
    glLightfv_p
    glLightfv_s
-   glLightiv_c
    glLightiv_p
    glLightiv_s
-   glLinkProgramARB
-   glLoadMatrixd_c
    glLoadMatrixd_p
    glLoadMatrixd_s
-   glLoadMatrixf_c
    glLoadMatrixf_p
    glLoadMatrixf_s
-   glMap1d_c
    glMap1d_p
    glMap1d_s
-   glMap1f_c
    glMap1f_p
    glMap1f_s
-   glMap2d_c
    glMap2d_p
    glMap2d_s
-   glMap2f_c
    glMap2f_p
    glMap2f_s
-   glMapBufferARB_c
    glMapBufferARB_o
    glMapBufferARB_p
-   glMaterialfv_c
    glMaterialfv_p
    glMaterialfv_s
-   glMaterialiv_c
    glMaterialiv_p
    glMaterialiv_s
    glMultMatrixd_p
    glMultMatrixf_p
-   glMultiTexCoord1d
-   glMultiTexCoord1dARB
-   glMultiTexCoord1dvARB_c
    glMultiTexCoord1dvARB_p
    glMultiTexCoord1dvARB_s
-   glMultiTexCoord1dv_c
    glMultiTexCoord1dv_p
    glMultiTexCoord1dv_s
-   glMultiTexCoord1f
-   glMultiTexCoord1fARB
-   glMultiTexCoord1fvARB_c
    glMultiTexCoord1fvARB_p
    glMultiTexCoord1fvARB_s
-   glMultiTexCoord1fv_c
    glMultiTexCoord1fv_p
    glMultiTexCoord1fv_s
-   glMultiTexCoord1i
-   glMultiTexCoord1iARB
-   glMultiTexCoord1ivARB_c
    glMultiTexCoord1ivARB_p
    glMultiTexCoord1ivARB_s
-   glMultiTexCoord1iv_c
    glMultiTexCoord1iv_p
    glMultiTexCoord1iv_s
-   glMultiTexCoord1s
-   glMultiTexCoord1sARB
-   glMultiTexCoord1svARB_c
    glMultiTexCoord1svARB_p
    glMultiTexCoord1svARB_s
-   glMultiTexCoord1sv_c
    glMultiTexCoord1sv_p
    glMultiTexCoord1sv_s
-   glMultiTexCoord2d
-   glMultiTexCoord2dARB
-   glMultiTexCoord2dvARB_c
    glMultiTexCoord2dvARB_p
    glMultiTexCoord2dvARB_s
-   glMultiTexCoord2dv_c
    glMultiTexCoord2dv_p
    glMultiTexCoord2dv_s
-   glMultiTexCoord2f
-   glMultiTexCoord2fARB
-   glMultiTexCoord2fvARB_c
    glMultiTexCoord2fvARB_p
    glMultiTexCoord2fvARB_s
-   glMultiTexCoord2fv_c
    glMultiTexCoord2fv_p
    glMultiTexCoord2fv_s
-   glMultiTexCoord2i
-   glMultiTexCoord2iARB
-   glMultiTexCoord2ivARB_c
    glMultiTexCoord2ivARB_p
    glMultiTexCoord2ivARB_s
-   glMultiTexCoord2iv_c
    glMultiTexCoord2iv_p
    glMultiTexCoord2iv_s
-   glMultiTexCoord2s
-   glMultiTexCoord2sARB
-   glMultiTexCoord2svARB_c
    glMultiTexCoord2svARB_p
    glMultiTexCoord2svARB_s
-   glMultiTexCoord2sv_c
    glMultiTexCoord2sv_p
    glMultiTexCoord2sv_s
-   glMultiTexCoord3d
-   glMultiTexCoord3dARB
-   glMultiTexCoord3dvARB_c
    glMultiTexCoord3dvARB_p
    glMultiTexCoord3dvARB_s
-   glMultiTexCoord3dv_c
    glMultiTexCoord3dv_p
    glMultiTexCoord3dv_s
-   glMultiTexCoord3f
-   glMultiTexCoord3fARB
-   glMultiTexCoord3fvARB_c
    glMultiTexCoord3fvARB_p
    glMultiTexCoord3fvARB_s
-   glMultiTexCoord3fv_c
    glMultiTexCoord3fv_p
    glMultiTexCoord3fv_s
-   glMultiTexCoord3i
-   glMultiTexCoord3iARB
-   glMultiTexCoord3ivARB_c
    glMultiTexCoord3ivARB_p
    glMultiTexCoord3ivARB_s
-   glMultiTexCoord3iv_c
    glMultiTexCoord3iv_p
    glMultiTexCoord3iv_s
-   glMultiTexCoord3s
-   glMultiTexCoord3sARB
-   glMultiTexCoord3svARB_c
    glMultiTexCoord3svARB_p
    glMultiTexCoord3svARB_s
-   glMultiTexCoord3sv_c
    glMultiTexCoord3sv_p
    glMultiTexCoord3sv_s
-   glMultiTexCoord4d
-   glMultiTexCoord4dARB
-   glMultiTexCoord4dvARB_c
    glMultiTexCoord4dvARB_p
    glMultiTexCoord4dvARB_s
-   glMultiTexCoord4dv_c
    glMultiTexCoord4dv_p
    glMultiTexCoord4dv_s
-   glMultiTexCoord4f
-   glMultiTexCoord4fARB
-   glMultiTexCoord4fvARB_c
    glMultiTexCoord4fvARB_p
    glMultiTexCoord4fvARB_s
-   glMultiTexCoord4fv_c
    glMultiTexCoord4fv_p
    glMultiTexCoord4fv_s
-   glMultiTexCoord4i
-   glMultiTexCoord4iARB
-   glMultiTexCoord4ivARB_c
    glMultiTexCoord4ivARB_p
    glMultiTexCoord4ivARB_s
-   glMultiTexCoord4iv_c
    glMultiTexCoord4iv_p
    glMultiTexCoord4iv_s
-   glMultiTexCoord4s
-   glMultiTexCoord4sARB
-   glMultiTexCoord4svARB_c
    glMultiTexCoord4svARB_p
    glMultiTexCoord4svARB_s
-   glMultiTexCoord4sv_c
    glMultiTexCoord4sv_p
    glMultiTexCoord4sv_s
-   glNormal3bv_c
    glNormal3bv_p
    glNormal3bv_s
-   glNormal3dv_c
    glNormal3dv_p
    glNormal3dv_s
-   glNormal3fv_c
    glNormal3fv_p
    glNormal3fv_s
-   glNormal3iv_c
    glNormal3iv_p
    glNormal3iv_s
-   glNormal3sv_c
    glNormal3sv_p
    glNormal3sv_s
-   glNormalPointerEXT_c
    glNormalPointerEXT_o
    glNormalPointerEXT_p
    glNormalPointerEXT_s
-   glNormalPointer_c
    glNormalPointer_o
    glNormalPointer_p
    glNormalPointer_s
-   glPixelMapfv_c
    glPixelMapfv_p
    glPixelMapfv_s
-   glPixelMapuiv_c
    glPixelMapuiv_p
    glPixelMapuiv_s
-   glPixelMapusv_c
    glPixelMapusv_p
    glPixelMapusv_s
-   glPointParameterfARB
-   glPointParameterfvARB_c
    glPointParameterfvARB_p
    glPointParameterfvARB_s
-   glPolygonOffset
-   glPolygonStipple_c
    glPolygonStipple_p
    glPolygonStipple_s
-   glPopClientAttrib
    glPrioritizeTexturesEXT_p
-   glPrioritizeTextures_c
    glPrioritizeTextures_p
    glPrioritizeTextures_s
-   glProgramEnvParameter4dARB
-   glProgramEnvParameter4dvARB_c
    glProgramEnvParameter4dvARB_p
    glProgramEnvParameter4dvARB_s
-   glProgramEnvParameter4fARB
-   glProgramEnvParameter4fvARB_c
    glProgramEnvParameter4fvARB_p
    glProgramEnvParameter4fvARB_s
-   glProgramLocalParameter4dARB
-   glProgramLocalParameter4dvARB_c
    glProgramLocalParameter4dvARB_p
    glProgramLocalParameter4dvARB_s
-   glProgramLocalParameter4fARB
-   glProgramLocalParameter4fvARB_c
    glProgramLocalParameter4fvARB_p
    glProgramLocalParameter4fvARB_s
-   glProgramStringARB_c
    glProgramStringARB_p
    glProgramStringARB_s
-   glPushClientAttrib
-   glRasterPos2dv_c
    glRasterPos2dv_p
    glRasterPos2dv_s
-   glRasterPos2fv_c
    glRasterPos2fv_p
    glRasterPos2fv_s
-   glRasterPos2iv_c
    glRasterPos2iv_p
    glRasterPos2iv_s
-   glRasterPos2sv_c
    glRasterPos2sv_p
    glRasterPos2sv_s
-   glRasterPos3dv_c
    glRasterPos3dv_p
    glRasterPos3dv_s
-   glRasterPos3fv_c
    glRasterPos3fv_p
    glRasterPos3fv_s
-   glRasterPos3iv_c
    glRasterPos3iv_p
    glRasterPos3iv_s
-   glRasterPos3sv_c
    glRasterPos3sv_p
    glRasterPos3sv_s
-   glRasterPos4dv_c
    glRasterPos4dv_p
    glRasterPos4dv_s
-   glRasterPos4fv_c
    glRasterPos4fv_p
    glRasterPos4fv_s
-   glRasterPos4iv_c
    glRasterPos4iv_p
    glRasterPos4iv_s
-   glRasterPos4sv_c
    glRasterPos4sv_p
    glRasterPos4sv_s
-   glReadPixels_c
    glReadPixels_p
    glReadPixels_s
-   glRectdv_c
    glRectdv_s
-   glRectfv_c
    glRectfv_s
-   glRectiv_c
    glRectiv_s
-   glRectsv_c
    glRectsv_s
-   glRenderbufferStorageEXT
-   glResizeBuffersMESA
-   glSampleCoverageARB
-   glSelectBuffer_c
-   glShaderSourceARB_c
    glShaderSourceARB_p
-   glTexCoord1dv_c
    glTexCoord1dv_p
    glTexCoord1dv_s
-   glTexCoord1fv_c
    glTexCoord1fv_p
    glTexCoord1fv_s
-   glTexCoord1iv_c
    glTexCoord1iv_p
    glTexCoord1iv_s
-   glTexCoord1sv_c
    glTexCoord1sv_p
    glTexCoord1sv_s
-   glTexCoord2dv_c
    glTexCoord2dv_p
    glTexCoord2dv_s
-   glTexCoord2fv_c
    glTexCoord2fv_p
    glTexCoord2fv_s
-   glTexCoord2iv_c
    glTexCoord2iv_p
    glTexCoord2iv_s
-   glTexCoord2sv_c
    glTexCoord2sv_p
    glTexCoord2sv_s
-   glTexCoord3dv_c
    glTexCoord3dv_p
    glTexCoord3dv_s
-   glTexCoord3fv_c
    glTexCoord3fv_p
    glTexCoord3fv_s
-   glTexCoord3iv_c
    glTexCoord3iv_p
    glTexCoord3iv_s
-   glTexCoord3sv_c
    glTexCoord3sv_p
    glTexCoord3sv_s
-   glTexCoord4dv_c
    glTexCoord4dv_p
    glTexCoord4dv_s
-   glTexCoord4fv_c
    glTexCoord4fv_p
    glTexCoord4fv_s
-   glTexCoord4iv_c
    glTexCoord4iv_p
    glTexCoord4iv_s
-   glTexCoord4sv_c
    glTexCoord4sv_p
    glTexCoord4sv_s
-   glTexCoordPointerEXT_c
    glTexCoordPointerEXT_o
    glTexCoordPointerEXT_p
    glTexCoordPointerEXT_s
-   glTexCoordPointer_c
    glTexCoordPointer_o
    glTexCoordPointer_p
    glTexCoordPointer_s
@@ -1003,232 +700,585 @@ our @gl_func = (@gl_func_common, qw(
    glTexEnvfv_s
    glTexEnviv_p
    glTexEnviv_s
-   glTexGendv_c
    glTexGendv_p
    glTexGendv_s
-   glTexGenfv_c
    glTexGenfv_p
    glTexGenfv_s
-   glTexGeniv_c
    glTexGeniv_p
    glTexGeniv_s
-   glTexImage1D_c
    glTexImage1D_p
    glTexImage1D_s
-   glTexImage2D_c
    glTexImage2D_p
    glTexImage2D_s
-   glTexImage3DEXT_c
    glTexImage3DEXT_p
    glTexImage3DEXT_s
-   glTexImage3D_c
    glTexImage3D_p
    glTexImage3D_s
-   glTexParameterfv_c
    glTexParameterfv_p
    glTexParameterfv_s
-   glTexParameteriv_c
    glTexParameteriv_p
    glTexParameteriv_s
-   glTexSubImage1DEXT_c
    glTexSubImage1DEXT_p
    glTexSubImage1DEXT_s
-   glTexSubImage1D_c
    glTexSubImage1D_p
    glTexSubImage1D_s
-   glTexSubImage2DEXT_c
    glTexSubImage2DEXT_p
    glTexSubImage2DEXT_s
-   glTexSubImage2D_c
    glTexSubImage2D_p
    glTexSubImage2D_s
-   glTexSubImage3D_c
    glTexSubImage3D_p
    glTexSubImage3D_s
-   glUniform1fARB
-   glUniform1fvARB_c
    glUniform1fvARB_p
    glUniform1fvARB_s
-   glUniform1iARB
-   glUniform1ivARB_c
    glUniform1ivARB_p
    glUniform1ivARB_s
-   glUniform2fARB
-   glUniform2fvARB_c
    glUniform2fvARB_p
    glUniform2fvARB_s
-   glUniform2iARB
-   glUniform2ivARB_c
    glUniform2ivARB_p
    glUniform2ivARB_s
-   glUniform3fARB
-   glUniform3fvARB_c
    glUniform3fvARB_p
    glUniform3fvARB_s
-   glUniform3iARB
-   glUniform3ivARB_c
    glUniform3ivARB_p
    glUniform3ivARB_s
-   glUniform4fARB
-   glUniform4fvARB_c
    glUniform4fvARB_p
    glUniform4fvARB_s
-   glUniform4iARB
-   glUniform4ivARB_c
    glUniform4ivARB_p
    glUniform4ivARB_s
-   glUniformMatrix2fvARB_c
    glUniformMatrix2fvARB_p
    glUniformMatrix2fvARB_s
-   glUniformMatrix3fvARB_c
    glUniformMatrix3fvARB_p
    glUniformMatrix3fvARB_s
-   glUniformMatrix4fvARB_c
    glUniformMatrix4fvARB_p
    glUniformMatrix4fvARB_s
-   glUnmapBufferARB
-   glUseProgramObjectARB
-   glValidateProgramARB
-   glVertex2dv_c
    glVertex2dv_p
    glVertex2dv_s
-   glVertex2fv_c
    glVertex2fv_p
    glVertex2fv_s
-   glVertex2iv_c
    glVertex2iv_p
    glVertex2iv_s
-   glVertex2sv_c
    glVertex2sv_p
    glVertex2sv_s
-   glVertex3dv_c
    glVertex3dv_p
    glVertex3dv_s
-   glVertex3fv_c
    glVertex3fv_p
    glVertex3fv_s
-   glVertex3iv_c
    glVertex3iv_p
    glVertex3iv_s
-   glVertex3sv_c
    glVertex3sv_p
    glVertex3sv_s
-   glVertex4dv_c
    glVertex4dv_p
    glVertex4dv_s
-   glVertex4fv_c
    glVertex4fv_p
    glVertex4fv_s
-   glVertex4iv_c
    glVertex4iv_p
    glVertex4iv_s
-   glVertex4sv_c
    glVertex4sv_p
    glVertex4sv_s
-   glVertexAttrib1dARB
-   glVertexAttrib1dvARB_c
    glVertexAttrib1dvARB_p
    glVertexAttrib1dvARB_s
-   glVertexAttrib1fARB
-   glVertexAttrib1fvARB_c
    glVertexAttrib1fvARB_p
    glVertexAttrib1fvARB_s
-   glVertexAttrib1sARB
-   glVertexAttrib1svARB_c
    glVertexAttrib1svARB_p
    glVertexAttrib1svARB_s
-   glVertexAttrib2dARB
-   glVertexAttrib2dvARB_c
    glVertexAttrib2dvARB_p
    glVertexAttrib2dvARB_s
-   glVertexAttrib2fARB
-   glVertexAttrib2fvARB_c
    glVertexAttrib2fvARB_p
    glVertexAttrib2fvARB_s
-   glVertexAttrib2sARB
-   glVertexAttrib2svARB_c
    glVertexAttrib2svARB_p
    glVertexAttrib2svARB_s
-   glVertexAttrib3dARB
-   glVertexAttrib3dvARB_c
    glVertexAttrib3dvARB_p
    glVertexAttrib3dvARB_s
-   glVertexAttrib3fARB
-   glVertexAttrib3fvARB_c
    glVertexAttrib3fvARB_p
    glVertexAttrib3fvARB_s
-   glVertexAttrib3sARB
-   glVertexAttrib3svARB_c
    glVertexAttrib3svARB_p
    glVertexAttrib3svARB_s
-   glVertexAttrib4NbvARB_c
    glVertexAttrib4NbvARB_p
    glVertexAttrib4NbvARB_s
-   glVertexAttrib4NivARB_c
    glVertexAttrib4NivARB_p
    glVertexAttrib4NivARB_s
-   glVertexAttrib4NsvARB_c
    glVertexAttrib4NsvARB_p
    glVertexAttrib4NsvARB_s
-   glVertexAttrib4NubARB
-   glVertexAttrib4NubvARB_c
    glVertexAttrib4NubvARB_p
    glVertexAttrib4NubvARB_s
-   glVertexAttrib4NuivARB_c
    glVertexAttrib4NuivARB_p
    glVertexAttrib4NuivARB_s
-   glVertexAttrib4NusvARB_c
    glVertexAttrib4NusvARB_p
    glVertexAttrib4NusvARB_s
-   glVertexAttrib4bvARB_c
    glVertexAttrib4bvARB_p
    glVertexAttrib4bvARB_s
-   glVertexAttrib4dARB
-   glVertexAttrib4dvARB_c
    glVertexAttrib4dvARB_p
    glVertexAttrib4dvARB_s
-   glVertexAttrib4fARB
-   glVertexAttrib4fvARB_c
    glVertexAttrib4fvARB_p
    glVertexAttrib4fvARB_s
-   glVertexAttrib4ivARB_c
    glVertexAttrib4ivARB_p
    glVertexAttrib4ivARB_s
-   glVertexAttrib4sARB
-   glVertexAttrib4svARB_c
    glVertexAttrib4svARB_p
    glVertexAttrib4svARB_s
-   glVertexAttrib4ubvARB_c
    glVertexAttrib4ubvARB_p
    glVertexAttrib4ubvARB_s
-   glVertexAttrib4uivARB_c
    glVertexAttrib4uivARB_p
    glVertexAttrib4uivARB_s
-   glVertexAttrib4usvARB_c
    glVertexAttrib4usvARB_p
    glVertexAttrib4usvARB_s
-   glVertexAttribPointerARB_c
    glVertexAttribPointerARB_p
-   glVertexPointerEXT_c
    glVertexPointerEXT_o
    glVertexPointerEXT_p
    glVertexPointerEXT_s
-   glVertexPointer_c
    glVertexPointer_o
    glVertexPointer_p
    glVertexPointer_s
-   glWindowPos2dMESA
-   glWindowPos2iMESA
-   glWindowPos3dMESA
-   glWindowPos3iMESA
-   glWindowPos4dMESA
-   glWindowPos4iMESA
    glpCheckExtension
    glpErrorString
    glpFullScreen
    glpHasGLUT
    glpRestoreScreen
-));
+);
+@extra_gl_func_modern = qw(
+  glActiveTexture
+  glActiveTextureARB
+  glAreTexturesResident_c
+  glArrayElement
+  glArrayElementEXT
+  glAttachObjectARB
+  glBindAttribLocationARB
+  glBindBufferARB
+  glBindFramebufferEXT
+  glBindProgramARB
+  glBindRenderbufferEXT
+  glBindTexture
+  glBindTextureEXT
+  glBindVertexArray
+  glBitmap_c
+  glBufferDataARB_c
+  glBufferSubDataARB_c
+  glCallLists_c
+  glCheckFramebufferStatusEXT
+  glClampColorARB
+  glClientActiveTexture
+  glClientActiveTextureARB
+  glClipPlane_c
+  glColor3bv_c
+  glColor3dv_c
+  glColor3fv_c
+  glColor3iv_c
+  glColor3sv_c
+  glColor3ubv_c
+  glColor3uiv_c
+  glColor3us
+  glColor3usv_c
+  glColor4b
+  glColor4bv_c
+  glColor4dv_c
+  glColor4fv_c
+  glColor4iv_c
+  glColor4sv_c
+  glColor4ubv_c
+  glColor4uiv_c
+  glColor4usv_c
+  glColorPointerEXT_c
+  glColorPointer_c
+  glCompileShaderARB
+  glCopyTexImage1D
+  glCopyTexImage1DEXT
+  glCopyTexImage2D
+  glCopyTexImage2DEXT
+  glCopyTexSubImage1D
+  glCopyTexSubImage1DEXT
+  glCopyTexSubImage2D
+  glCopyTexSubImage2DEXT
+  glCopyTexSubImage3D
+  glCopyTexSubImage3DEXT
+  glCreateProgramObjectARB
+  glCreateShaderObjectARB
+  glDeleteBuffersARB_c
+  glDeleteBuffersARB_p
+  glDeleteFramebuffersEXT_c
+  glDeleteFramebuffersEXT_p
+  glDeleteObjectARB
+  glDeleteProgramsARB_c
+  glDeleteProgramsARB_p
+  glDeleteRenderbuffersEXT_c
+  glDeleteRenderbuffersEXT_p
+  glDeleteTexturesEXT_p
+  glDeleteTextures_c
+  glDeleteTextures_p
+  glDetachObjectARB
+  glDisableClientState
+  glDisableVertexAttribArrayARB
+  glDrawArrays
+  glDrawArraysEXT
+  glDrawBuffersARB_c
+  glDrawBuffers_c
+  glDrawElements_c
+  glDrawPixels_c
+  glDrawRangeElements_c
+  glEdgeFlagPointerEXT_c
+  glEdgeFlagPointer_c
+  glEnableClientState
+  glEnableVertexAttribArrayARB
+  glFeedbackBuffer_c
+  glFogfv_c
+  glFogiv_c
+  glFramebufferRenderbufferEXT
+  glFramebufferTexture1DEXT
+  glFramebufferTexture2DEXT
+  glFramebufferTexture3DEXT
+  glGenBuffersARB_c
+  glGenBuffersARB_p
+  glGenFramebuffersEXT_c
+  glGenFramebuffersEXT_p
+  glGenProgramsARB_c
+  glGenProgramsARB_p
+  glGenRenderbuffersEXT_c
+  glGenRenderbuffersEXT_p
+  glGenTexturesEXT_p
+  glGenVertexArrays_p
+  glGenTextures_c
+  glGenerateMipmapEXT
+  glGetActiveAttribARB_c
+  glGetActiveUniformARB_c
+  glGetAttachedObjectsARB_c
+  glGetBooleanv_c
+  glGetBufferParameterivARB_c
+  glGetBufferPointervARB_c
+  glGetBufferSubDataARB_c
+  glGetClipPlane_c
+  glGetDoublev_c
+  glGetFloatv_c
+  glGetFramebufferAttachmentParameterivEXT_c
+  glGetInfoLogARB_c
+  glGetIntegerv_c
+  glGetLightfv_c
+  glGetLightiv_c
+  glGetMapdv_c
+  glGetMapfv_c
+  glGetMapiv_c
+  glGetMaterialfv_c
+  glGetMaterialiv_c
+  glGetObjectParameterfvARB_c
+  glGetObjectParameterivARB_c
+  glGetPixelMapfv_c
+  glGetPixelMapuiv_c
+  glGetPixelMapusv_c
+  glGetPointerv_c
+  glGetPolygonStipple_c
+  glGetProgramEnvParameterdvARB_c
+  glGetProgramEnvParameterfvARB_c
+  glGetProgramLocalParameterdvARB_c
+  glGetProgramLocalParameterfvARB_c
+  glGetProgramStringARB_c
+  glGetProgramivARB_c
+  glGetRenderbufferParameterivEXT_c
+  glGetShaderSourceARB_c
+  glGetString
+  glGetTexEnvfv_c
+  glGetTexEnviv_c
+  glGetTexGendv_c
+  glGetTexGenfv_c
+  glGetTexGeniv_c
+  glGetTexImage_c
+  glGetTexLevelParameterfv_c
+  glGetTexLevelParameteriv_c
+  glGetTexParameterfv_c
+  glGetTexParameteriv_c
+  glGetUniformfvARB_c
+  glGetUniformivARB_c
+  glGetVertexAttribPointervARB_c
+  glGetVertexAttribdvARB_c
+  glGetVertexAttribfvARB_c
+  glGetVertexAttribivARB_c
+  glIndexPointerEXT_c
+  glIndexPointer_c
+  glInterleavedArrays_c
+  glIsBufferARB
+  glIsFramebufferEXT
+  glIsProgramARB
+  glIsRenderbufferEXT
+  glIsTexture
+  glIsTextureEXT
+  glLightModelfv_c
+  glLightModeliv_c
+  glLightfv_c
+  glLightiv_c
+  glLinkProgramARB
+  glLoadMatrixd_c
+  glLoadMatrixf_c
+  glMap1d_c
+  glMap1f_c
+  glMap2d_c
+  glMap2f_c
+  glMapBufferARB_c
+  glMaterialfv_c
+  glMaterialiv_c
+  glMultiTexCoord1d
+  glMultiTexCoord1dARB
+  glMultiTexCoord1dvARB_c
+  glMultiTexCoord1dv_c
+  glMultiTexCoord1f
+  glMultiTexCoord1fARB
+  glMultiTexCoord1fvARB_c
+  glMultiTexCoord1fv_c
+  glMultiTexCoord1i
+  glMultiTexCoord1iARB
+  glMultiTexCoord1ivARB_c
+  glMultiTexCoord1iv_c
+  glMultiTexCoord1s
+  glMultiTexCoord1sARB
+  glMultiTexCoord1svARB_c
+  glMultiTexCoord1sv_c
+  glMultiTexCoord2d
+  glMultiTexCoord2dARB
+  glMultiTexCoord2dvARB_c
+  glMultiTexCoord2dv_c
+  glMultiTexCoord2f
+  glMultiTexCoord2fARB
+  glMultiTexCoord2fvARB_c
+  glMultiTexCoord2fv_c
+  glMultiTexCoord2i
+  glMultiTexCoord2iARB
+  glMultiTexCoord2ivARB_c
+  glMultiTexCoord2iv_c
+  glMultiTexCoord2s
+  glMultiTexCoord2sARB
+  glMultiTexCoord2svARB_c
+  glMultiTexCoord2sv_c
+  glMultiTexCoord3d
+  glMultiTexCoord3dARB
+  glMultiTexCoord3dvARB_c
+  glMultiTexCoord3dv_c
+  glMultiTexCoord3f
+  glMultiTexCoord3fARB
+  glMultiTexCoord3fvARB_c
+  glMultiTexCoord3fv_c
+  glMultiTexCoord3i
+  glMultiTexCoord3iARB
+  glMultiTexCoord3ivARB_c
+  glMultiTexCoord3iv_c
+  glMultiTexCoord3s
+  glMultiTexCoord3sARB
+  glMultiTexCoord3svARB_c
+  glMultiTexCoord3sv_c
+  glMultiTexCoord4d
+  glMultiTexCoord4dARB
+  glMultiTexCoord4dvARB_c
+  glMultiTexCoord4dv_c
+  glMultiTexCoord4f
+  glMultiTexCoord4fARB
+  glMultiTexCoord4fvARB_c
+  glMultiTexCoord4fv_c
+  glMultiTexCoord4i
+  glMultiTexCoord4iARB
+  glMultiTexCoord4ivARB_c
+  glMultiTexCoord4iv_c
+  glMultiTexCoord4s
+  glMultiTexCoord4sARB
+  glMultiTexCoord4svARB_c
+  glMultiTexCoord4sv_c
+  glNormal3bv_c
+  glNormal3dv_c
+  glNormal3fv_c
+  glNormal3iv_c
+  glNormal3sv_c
+  glNormalPointerEXT_c
+  glNormalPointer_c
+  glPixelMapfv_c
+  glPixelMapuiv_c
+  glPixelMapusv_c
+  glPointParameterfARB
+  glPointParameterfvARB_c
+  glPolygonOffset
+  glPolygonStipple_c
+  glPopClientAttrib
+  glPrioritizeTextures_c
+  glProgramEnvParameter4dARB
+  glProgramEnvParameter4dvARB_c
+  glProgramEnvParameter4fARB
+  glProgramEnvParameter4fvARB_c
+  glProgramLocalParameter4dARB
+  glProgramLocalParameter4dvARB_c
+  glProgramLocalParameter4fARB
+  glProgramLocalParameter4fvARB_c
+  glProgramStringARB_c
+  glPushClientAttrib
+  glRasterPos2dv_c
+  glRasterPos2fv_c
+  glRasterPos2iv_c
+  glRasterPos2sv_c
+  glRasterPos3dv_c
+  glRasterPos3fv_c
+  glRasterPos3iv_c
+  glRasterPos3sv_c
+  glRasterPos4dv_c
+  glRasterPos4fv_c
+  glRasterPos4iv_c
+  glRasterPos4sv_c
+  glReadPixels_c
+  glRectdv_c
+  glRectfv_c
+  glRectiv_c
+  glRectsv_c
+  glRenderbufferStorageEXT
+  glResizeBuffersMESA
+  glSampleCoverageARB
+  glSelectBuffer_c
+  glShaderSourceARB_c
+  glTexCoord1dv_c
+  glTexCoord1fv_c
+  glTexCoord1iv_c
+  glTexCoord1sv_c
+  glTexCoord2dv_c
+  glTexCoord2fv_c
+  glTexCoord2iv_c
+  glTexCoord2sv_c
+  glTexCoord3dv_c
+  glTexCoord3fv_c
+  glTexCoord3iv_c
+  glTexCoord3sv_c
+  glTexCoord4dv_c
+  glTexCoord4fv_c
+  glTexCoord4iv_c
+  glTexCoord4sv_c
+  glTexCoordPointerEXT_c
+  glTexCoordPointer_c
+  glTexGendv_c
+  glTexGenfv_c
+  glTexGeniv_c
+  glTexImage1D_c
+  glTexImage2D_c
+  glTexImage3DEXT_c
+  glTexImage3D_c
+  glTexParameterfv_c
+  glTexParameteriv_c
+  glTexSubImage1DEXT_c
+  glTexSubImage1D_c
+  glTexSubImage2DEXT_c
+  glTexSubImage2D_c
+  glTexSubImage3D_c
+  glUniform1fARB
+  glUniform1fvARB_c
+  glUniform1iARB
+  glUniform1ivARB_c
+  glUniform2fARB
+  glUniform2fvARB_c
+  glUniform2iARB
+  glUniform2ivARB_c
+  glUniform3fARB
+  glUniform3fvARB_c
+  glUniform3iARB
+  glUniform3ivARB_c
+  glUniform4fARB
+  glUniform4fvARB_c
+  glUniform4iARB
+  glUniform4ivARB_c
+  glUniformMatrix2fvARB_c
+  glUniformMatrix3fvARB_c
+  glUniformMatrix4fvARB_c
+  glUnmapBufferARB
+  glUseProgramObjectARB
+  glValidateProgramARB
+  glVertex2dv_c
+  glVertex2fv_c
+  glVertex2iv_c
+  glVertex2sv_c
+  glVertex3dv_c
+  glVertex3fv_c
+  glVertex3iv_c
+  glVertex3sv_c
+  glVertex4dv_c
+  glVertex4fv_c
+  glVertex4iv_c
+  glVertex4sv_c
+  glVertexAttrib1dARB
+  glVertexAttrib1dvARB_c
+  glVertexAttrib1fARB
+  glVertexAttrib1fvARB_c
+  glVertexAttrib1sARB
+  glVertexAttrib1svARB_c
+  glVertexAttrib2dARB
+  glVertexAttrib2dvARB_c
+  glVertexAttrib2fARB
+  glVertexAttrib2fvARB_c
+  glVertexAttrib2sARB
+  glVertexAttrib2svARB_c
+  glVertexAttrib3dARB
+  glVertexAttrib3dvARB_c
+  glVertexAttrib3fARB
+  glVertexAttrib3fvARB_c
+  glVertexAttrib3sARB
+  glVertexAttrib3svARB_c
+  glVertexAttrib4NbvARB_c
+  glVertexAttrib4NivARB_c
+  glVertexAttrib4NsvARB_c
+  glVertexAttrib4NubARB
+  glVertexAttrib4NubvARB_c
+  glVertexAttrib4NuivARB_c
+  glVertexAttrib4NusvARB_c
+  glVertexAttrib4bvARB_c
+  glVertexAttrib4dARB
+  glVertexAttrib4dvARB_c
+  glVertexAttrib4fARB
+  glVertexAttrib4fvARB_c
+  glVertexAttrib4ivARB_c
+  glVertexAttrib4sARB
+  glVertexAttrib4svARB_c
+  glVertexAttrib4ubvARB_c
+  glVertexAttrib4uivARB_c
+  glVertexAttrib4usvARB_c
+  glVertexAttribPointerARB_c
+  glVertexPointerEXT_c
+  glVertexPointer_c
+  glWindowPos2dMESA
+  glWindowPos2iMESA
+  glWindowPos3dMESA
+  glWindowPos3iMESA
+  glWindowPos4dMESA
+  glWindowPos4iMESA
+);
+push @extra_gl_func, @extra_gl_func_modern;
+}
+
+use OpenGL::Modern @gl_func_common_modern, @extra_gl_func_modern, qw(
+  glBindFramebuffer
+  glBindRenderbuffer
+  glCheckFramebufferStatus
+  glDeleteFramebuffers_p
+  glDeleteRenderbuffers_p
+  glDeleteVertexArrays_p
+  glFramebufferRenderbuffer
+  glFramebufferTexture1D
+  glFramebufferTexture2D
+  glFramebufferTexture3D
+  glGenFramebuffers_p
+  glGenRenderbuffers_p
+  glGenerateMipmap
+  glIsFramebuffer
+  glIsRenderbuffer
+  glRenderbufferStorage
+);
+for (qw(
+  glRectd
+  glRectf
+  glRecti
+  glRects
+)) {
+  no strict 'refs';
+  *{$_."v_p"} = *{"OpenGL::Modern::$_"};
+}
+for (qw(
+  glGetAttribLocationARB
+  glGetUniformLocationARB
+)) {
+  no strict 'refs';
+  *{$_."_c"} = *{"OpenGL::Modern::$_"};
+}
+for (qw(
+  glDeleteQueries
+)) {
+  no strict 'refs';
+  *$_ = *{"OpenGL::Modern::${_}_p"};
+}
+
+our @gl_func = (@gl_func_common, @extra_gl_func);
 
 my @gl_const_common = qw(
    GL_1PASS_SGIS

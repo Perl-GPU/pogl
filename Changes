@@ -1,5 +1,6 @@
 - add glpErrorString
 - add _o aliases for all functions taking OpenGL::Array args
+- use OpenGL::Modern for _c and simple bindings
 
 0.7006 2025-04-14
 - incorporate Acme::MITHALDU::BleedingOpenGL changes - thanks @wchristian
