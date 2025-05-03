@@ -1467,7 +1467,7 @@ sub cbResizeScene {
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   my $fW = fH * $Width/$Height;
-  glFrustum(-$fW, $fW, -fH, fH, zNEAR, zFAR);
+  glFrustum(-$fW, $fW, -fH(), fH, zNEAR, zFAR);
   glMatrixMode(GL_MODELVIEW);
   $Window_Width  = $Width;
   $Window_Height = $Height;
