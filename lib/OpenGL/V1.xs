@@ -6695,6 +6695,8 @@ glVertexPointerEXT_p(size, oga)
 	OpenGL::Array oga
 	ALIAS:
 	glVertexPointer_p = 1
+	glVertexPointer_o = 2
+	glVertexPointerEXT_o = 3
 	INIT:
 #ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glVertexPointerEXT,"glVertexPointerEXT");
@@ -6768,6 +6770,8 @@ glNormalPointer_p(oga)
 	OpenGL::Array oga
 	ALIAS:
 	glNormalPointerEXT_p = 1
+	glNormalPointer_o = 2
+	glNormalPointerEXT_o = 3
 	INIT:
 #ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glNormalPointerEXT,"glNormalPointerEXT");
@@ -6842,6 +6846,8 @@ glColorPointer_p(size, oga)
 	OpenGL::Array oga
 	ALIAS:
 	glColorPointerEXT_p = 1
+	glColorPointerEXT_o = 2
+	glColorPointer_o = 3
 	INIT:
 #ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glColorPointerEXT,"glColorPointerEXT");
@@ -6915,6 +6921,8 @@ glIndexPointer_p(oga)
 	OpenGL::Array oga
 	ALIAS:
 	glIndexPointerEXT_p = 1
+	glIndexPointerEXT_o = 2
+	glIndexPointer_o = 3
 	INIT:
 #ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glIndexPointerEXT,"glIndexPointerEXT");
@@ -6989,6 +6997,8 @@ glTexCoordPointer_p(size, oga)
 	OpenGL::Array oga
 	ALIAS:
 	glTexCoordPointerEXT_p = 1
+	glTexCoordPointerEXT_o = 2
+	glTexCoordPointer_o = 3
 	INIT:
 #ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glTexCoordPointerEXT,"glTexCoordPointerEXT");
@@ -7062,6 +7072,8 @@ glEdgeFlagPointer_p(oga)
 	OpenGL::Array oga
 	ALIAS:
 	glEdgeFlagPointerEXT_p = 1
+	glEdgeFlagPointerEXT_o = 2
+	glEdgeFlagPointer_o = 3
 	INIT:
 #ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glTexCoordPointerEXT,"glEdgeFlagPointerEXT");
@@ -7380,6 +7392,8 @@ glBufferData_p(target,oga,usage)
 	GLenum target
 	OpenGL::Array oga
 	GLenum usage
+	ALIAS:
+	glBufferData_o = 1
 	CODE:
 	{
 		glBufferData(target,oga->data_length,oga->data,usage);
@@ -7416,6 +7430,8 @@ glBufferSubData_p(target,offset,oga)
 	GLenum	target
 	GLint	offset
 	OpenGL::Array oga
+	ALIAS:
+	glBufferSubData_o = 1
 	CODE:
 	{
 		glBufferSubData(target,offset*oga->total_types_width,oga->data_length,oga->data);
@@ -7451,6 +7467,8 @@ glGetBufferSubData_p(target,offset,count,...)
 	GLenum	target
 	GLint	offset
 	GLsizei	count
+	ALIAS:
+	glGetBufferSubData_o = 1
 	CODE:
 	{
 		oga_struct * oga = malloc(sizeof(oga_struct));
@@ -7521,6 +7539,8 @@ OpenGL::Array
 glMapBuffer_p(target,access,...)
 	GLenum	target
 	GLenum	access
+	ALIAS:
+	glMapBuffer_o = 1
 	CODE:
 	{
 		GLsizeiptr size;
@@ -7642,6 +7662,8 @@ OpenGL::Array
 glGetBufferPointerv_p(target,pname,...)
 	GLenum	target
 	GLenum	pname
+	ALIAS:
+	glGetBufferPointerv_o = 1
 	CODE:
 	{
 		GLsizeiptr size;
@@ -8701,6 +8723,8 @@ glBufferDataARB_p(target,oga,usage)
 	GLenum target
 	OpenGL::Array oga
 	GLenum usage
+	ALIAS:
+	glBufferDataARB_o = 1
 	INIT:
 		loadProc(glBufferDataARB,"glBufferDataARB");
 	CODE:
@@ -8743,6 +8767,8 @@ glBufferSubDataARB_p(target,offset,oga)
 	GLenum	target
 	GLint	offset
 	OpenGL::Array oga
+	ALIAS:
+	glBufferSubDataARB_o = 1
 	INIT:
 		loadProc(glBufferSubDataARB,"glBufferSubDataARB");
 	CODE:
@@ -8784,6 +8810,8 @@ glGetBufferSubDataARB_p(target,offset,count,...)
 	GLenum	target
 	GLint	offset
 	GLsizei	count
+	ALIAS:
+	glGetBufferSubDataARB_o = 1
 	INIT:
 		loadProc(glGetBufferSubDataARB,"glGetBufferSubDataARB");
 		loadProc(glGetBufferParameterivARB,"glGetBufferParameterivARB");
@@ -8859,6 +8887,8 @@ OpenGL::Array
 glMapBufferARB_p(target,access,...)
 	GLenum	target
 	GLenum	access
+	ALIAS:
+	glMapBufferARB_o = 1
 	INIT:
 		loadProc(glMapBufferARB,"glMapBufferARB");
 		loadProc(glGetBufferParameterivARB,"glGetBufferParameterivARB");
@@ -8995,6 +9025,8 @@ OpenGL::Array
 glGetBufferPointervARB_p(target,pname,...)
 	GLenum	target
 	GLenum	pname
+	ALIAS:
+	glGetBufferPointervARB_p = 1
 	INIT:
 		loadProc(glGetBufferPointervARB,"glGetBufferPointervARB");
 		loadProc(glGetBufferParameterivARB,"glGetBufferParameterivARB");

@@ -16,9 +16,9 @@ use OpenGL qw/
   glGenRenderbuffersEXT_p glBindRenderbufferEXT glRenderbufferStorageEXT
     glDeleteRenderbuffersEXT_p
   glFramebufferRenderbufferEXT
-  glGenBuffersARB_p glBindBufferARB glBufferDataARB_p glBufferSubDataARB_p
+  glGenBuffersARB_p glBindBufferARB glBufferDataARB_o glBufferSubDataARB_o
     glMapBufferARB_c glUnmapBufferARB glDeleteBuffersARB_p
-  glVertexPointer_p glNormalPointer_p glColorPointer_p glTexCoordPointer_p
+  glVertexPointer_o glNormalPointer_o glColorPointer_o glTexCoordPointer_o
   glEnableClientState glDisableClientState
   glEnable glDisable glBlendFunc glDepthFunc glShadeModel
     glMatrixMode glLoadIdentity glLightfv_p glColorMaterial
@@ -400,7 +400,7 @@ sub ourInitVertexBuffers
       glGenBuffersARB_p(9);
 
     $verts->bind($VertexObjID);
-    glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $verts, GL_STATIC_DRAW_ARB);
+    glBufferDataARB_o(GL_ARRAY_BUFFER_ARB, $verts, GL_STATIC_DRAW_ARB);
 
     if (DO_TESTS)
     {
@@ -412,34 +412,34 @@ sub ourInitVertexBuffers
       my $count = $verts->elements();
       print "  Vertex Buffer Size (elements): $count\n";
 
-      my $test = glGetBufferSubDataARB_p(GL_ARRAY_BUFFER_ARB,12,3,GL_FLOAT);
+      my $test = glGetBufferSubDataARB_o(GL_ARRAY_BUFFER_ARB,12,3,GL_FLOAT);
       my @test = $test->retrieve(0,3);
       my $ords = join('/',@test);
-      print "  glGetBufferSubDataARB_p: $ords\n";
+      print "  glGetBufferSubDataARB_o: $ords\n";
     }
 
     $norms->bind($NormalObjID);
-    glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $norms, GL_STATIC_DRAW_ARB);
+    glBufferDataARB_o(GL_ARRAY_BUFFER_ARB, $norms, GL_STATIC_DRAW_ARB);
 
     $colors->bind($ColorObjID);
-    glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $colors, GL_DYNAMIC_DRAW_ARB);
+    glBufferDataARB_o(GL_ARRAY_BUFFER_ARB, $colors, GL_DYNAMIC_DRAW_ARB);
     $rainbow->assign(0,@rainbow);
-    glBufferSubDataARB_p(GL_ARRAY_BUFFER_ARB, $rainbow_offset, $rainbow);
+    glBufferSubDataARB_o(GL_ARRAY_BUFFER_ARB, $rainbow_offset, $rainbow);
 
     $texcoords->bind($TexCoordObjID);
-    glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $texcoords, GL_STATIC_DRAW_ARB);
+    glBufferDataARB_o(GL_ARRAY_BUFFER_ARB, $texcoords, GL_STATIC_DRAW_ARB);
 
     glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, $IndexObjID);
-    glBufferDataARB_p(GL_ELEMENT_ARRAY_BUFFER_ARB, $indices, GL_STATIC_DRAW_ARB);
+    glBufferDataARB_o(GL_ELEMENT_ARRAY_BUFFER_ARB, $indices, GL_STATIC_DRAW_ARB);
 
     $fpsbox_coords->bind($FpsVertObjID);
-    glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $fpsbox_coords, GL_STATIC_DRAW_ARB);
+    glBufferDataARB_o(GL_ARRAY_BUFFER_ARB, $fpsbox_coords, GL_STATIC_DRAW_ARB);
     $fpsbox_norms->bind($FpsNormObjID);
-    glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $fpsbox_norms, GL_STATIC_DRAW_ARB);
+    glBufferDataARB_o(GL_ARRAY_BUFFER_ARB, $fpsbox_norms, GL_STATIC_DRAW_ARB);
     $fpsbox_colours->bind($FpsColourObjID);
-    glBufferDataARB_p(GL_ARRAY_BUFFER_ARB, $fpsbox_colours, GL_STATIC_DRAW_ARB);
+    glBufferDataARB_o(GL_ARRAY_BUFFER_ARB, $fpsbox_colours, GL_STATIC_DRAW_ARB);
     glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, $FpsIndObjID);
-    glBufferDataARB_p(GL_ELEMENT_ARRAY_BUFFER_ARB, $fpsbox_indices, GL_STATIC_DRAW_ARB);
+    glBufferDataARB_o(GL_ELEMENT_ARRAY_BUFFER_ARB, $fpsbox_indices, GL_STATIC_DRAW_ARB);
   } else {
     print "Using classic Vertex Buffers\n";
   }
@@ -927,7 +927,7 @@ sub cbRenderScene
   } else {
     $colors->assign($rainbow_offset,@rainbow);
   }
-  glColorPointer_p(4, $colors);
+  glColorPointer_o(4, $colors);
 
   # Render cube
   glViewport(0, 0, $Window_Width, $Window_Height);
@@ -936,9 +936,9 @@ sub cbRenderScene
   glEnableClientState(GL_COLOR_ARRAY);
   glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-  glVertexPointer_p(3, $verts);
-  glNormalPointer_p($norms);
-  glTexCoordPointer_p(2, $texcoords);
+  glVertexPointer_o(3, $verts);
+  glNormalPointer_o($norms);
+  glTexCoordPointer_o(2, $texcoords);
   if ($hasVBO) {
     glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, $IndexObjID);
   }
@@ -1012,9 +1012,9 @@ sub cbRenderScene
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_NORMAL_ARRAY);
   glEnableClientState(GL_COLOR_ARRAY);
-  glVertexPointer_p(3, $fpsbox_coords);
-  glNormalPointer_p($fpsbox_norms);
-  glColorPointer_p(4, $fpsbox_colours);
+  glVertexPointer_o(3, $fpsbox_coords);
+  glNormalPointer_o($fpsbox_norms);
+  glColorPointer_o(4, $fpsbox_colours);
   if ($hasVBO) {
     glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, $FpsIndObjID);
   }

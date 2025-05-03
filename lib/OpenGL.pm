@@ -323,9 +323,11 @@ our @gl_func = (@gl_func_common, qw(
    glBitmap_p
    glBitmap_s
    glBufferDataARB_c
+   glBufferDataARB_o
    glBufferDataARB_p
    glBufferDataARB_s
    glBufferSubDataARB_c
+   glBufferSubDataARB_o
    glBufferSubDataARB_p
    glBufferSubDataARB_s
    glCallLists_c
@@ -389,9 +391,11 @@ our @gl_func = (@gl_func_common, qw(
    glColor4usv_p
    glColor4usv_s
    glColorPointerEXT_c
+   glColorPointerEXT_o
    glColorPointerEXT_p
    glColorPointerEXT_s
    glColorPointer_c
+   glColorPointer_o
    glColorPointer_p
    glColorPointer_s
    glCompileShaderARB
@@ -500,9 +504,11 @@ our @gl_func = (@gl_func_common, qw(
    glGetBufferParameterivARB_p
    glGetBufferParameterivARB_s
    glGetBufferPointervARB_c
+   glGetBufferPointervARB_o
    glGetBufferPointervARB_p
    glGetBufferPointervARB_s
    glGetBufferSubDataARB_c
+   glGetBufferSubDataARB_o
    glGetBufferSubDataARB_p
    glGetBufferSubDataARB_s
    glGetClipPlane_c
@@ -635,9 +641,11 @@ our @gl_func = (@gl_func_common, qw(
    glGetVertexAttribivARB_p
    glGetVertexAttribivARB_s
    glIndexPointerEXT_c
+   glIndexPointerEXT_o
    glIndexPointerEXT_p
    glIndexPointerEXT_s
    glIndexPointer_c
+   glIndexPointer_o
    glIndexPointer_p
    glIndexPointer_s
    glInterleavedArrays_c
@@ -679,6 +687,7 @@ our @gl_func = (@gl_func_common, qw(
    glMap2f_p
    glMap2f_s
    glMapBufferARB_c
+   glMapBufferARB_o
    glMapBufferARB_p
    glMaterialfv_c
    glMaterialfv_p
@@ -832,9 +841,11 @@ our @gl_func = (@gl_func_common, qw(
    glNormal3sv_p
    glNormal3sv_s
    glNormalPointerEXT_c
+   glNormalPointerEXT_o
    glNormalPointerEXT_p
    glNormalPointerEXT_s
    glNormalPointer_c
+   glNormalPointer_o
    glNormalPointer_p
    glNormalPointer_s
    glPixelMapfv_c
@@ -981,9 +992,11 @@ our @gl_func = (@gl_func_common, qw(
    glTexCoord4sv_p
    glTexCoord4sv_s
    glTexCoordPointerEXT_c
+   glTexCoordPointerEXT_o
    glTexCoordPointerEXT_p
    glTexCoordPointerEXT_s
    glTexCoordPointer_c
+   glTexCoordPointer_o
    glTexCoordPointer_p
    glTexCoordPointer_s
    glTexEnvfv_p
@@ -1197,9 +1210,11 @@ our @gl_func = (@gl_func_common, qw(
    glVertexAttribPointerARB_c
    glVertexAttribPointerARB_p
    glVertexPointerEXT_c
+   glVertexPointerEXT_o
    glVertexPointerEXT_p
    glVertexPointerEXT_s
    glVertexPointer_c
+   glVertexPointer_o
    glVertexPointer_p
    glVertexPointer_s
    glWindowPos2dMESA
