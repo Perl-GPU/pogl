@@ -4168,10 +4168,7 @@ our @oldfunctions = (@oldfuncs_common, qw(
 	glMinmaxEXT
 	glResetHistogramEXT
 	glResetMinmaxEXT
-	glSampleMaskSGIS
-	glSamplePatternSGIS
 	glSelectBuffer
-	glTagSampleBufferSGIX
 	glpClipPlane
 	glpFlush
 	glpGetClipPlane
