@@ -6688,39 +6688,13 @@ glVertexPointerEXT_s(size, type, stride, count, pointer)
 	}
 
 #//# glVertexPointerEXT_p($size, (OGA)pointer);
+#//# glVertexPointer_p($size, (OGA)pointer);
 void
 glVertexPointerEXT_p(size, oga)
 	GLint	size
 	OpenGL::Array oga
-	INIT:
-#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
-		loadProc(glVertexPointerEXT,"glVertexPointerEXT");
-#endif
-	CODE:
-	{
-		GLvoid * data = oga->data;
-#ifdef GL_VERSION_2_0
-		glBindBufferARB(GL_ARRAY_BUFFER, oga->bind);
-		if (oga->bind) data = NULL;
-#elif defined(GL_ARB_vertex_buffer_object)
-		if (testProc(glBindBufferARB,"glBindBufferARB"))
-		{
-			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
-			if (oga->bind) data = NULL;
-		}
-#endif
-#ifdef GL_VERSION_1_1
-		glVertexPointer(size, oga->types[0], 0, data);
-#else // GL_EXT_vertex_array
-		glVertexPointerEXT(size, oga->types[0], 0, oga->item_count/size, data);
-#endif
-	}
-
-#//# glVertexPointer_p($size, (OGA)pointer);
-void
-glVertexPointer_p(size, oga)
-	GLint	size
-	OpenGL::Array oga
+	ALIAS:
+	glVertexPointer_p = 1
 	INIT:
 #ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glVertexPointerEXT,"glVertexPointerEXT");
@@ -6788,37 +6762,12 @@ glNormalPointerEXT_s(size, type, stride, count, pointer)
 	}
 
 #//# glNormalPointerEXT_p((OGA)pointer);
-void
-glNormalPointerEXT_p(oga)
-	OpenGL::Array oga
-	INIT:
-#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
-		loadProc(glNormalPointerEXT,"glNormalPointerEXT");
-#endif
-	CODE:
-	{
-		GLvoid * data = oga->data;
-#ifdef GL_VERSION_2_0
-		glBindBufferARB(GL_ARRAY_BUFFER, oga->bind);
-		if (oga->bind) data = NULL;
-#elif defined(GL_ARB_vertex_buffer_object)
-		if (testProc(glBindBufferARB,"glBindBufferARB"))
-		{
-			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
-			if (oga->bind) data = NULL;
-		}
-#endif
-#ifdef GL_VERSION_1_1
-		glNormalPointer(oga->types[0], 0, data);
-#else // GL_EXT_vertex_array
-		glNormalPointerEXT(oga->types[0], 0, oga->item_count/3, data);
-#endif
-	}
-
 #//# glNormalPointer_p((OGA)pointer);
 void
 glNormalPointer_p(oga)
 	OpenGL::Array oga
+	ALIAS:
+	glNormalPointerEXT_p = 1
 	INIT:
 #ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glNormalPointerEXT,"glNormalPointerEXT");
@@ -6886,39 +6835,13 @@ glColorPointerEXT_s(size, type, stride, count, pointer)
 	}
 
 #//# glColorPointerEXT_p($size, (OGA)pointer);
-void
-glColorPointerEXT_p(size, oga)
-	GLint	size
-	OpenGL::Array oga
-	INIT:
-#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
-		loadProc(glColorPointerEXT,"glColorPointerEXT");
-#endif
-	CODE:
-	{
-		GLvoid * data = oga->data;
-#ifdef GL_VERSION_2_0
-		glBindBufferARB(GL_ARRAY_BUFFER, oga->bind);
-		if (oga->bind) data = NULL;
-#elif defined(GL_ARB_vertex_buffer_object)
-		if (testProc(glBindBufferARB,"glBindBufferARB"))
-		{
-			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
-			if (oga->bind) data = NULL;
-		}
-#endif
-#ifdef GL_VERSION_1_1
-		glColorPointer(size, oga->types[0], 0, data);
-#else // GL_EXT_vertex_array
-		glColorPointerEXT(size, oga->types[0], 0, oga->item_count/size, data);
-#endif
-	}
-
 #//# glColorPointer_p($size, (OGA)pointer);
 void
 glColorPointer_p(size, oga)
 	GLint	size
 	OpenGL::Array oga
+	ALIAS:
+	glColorPointerEXT_p = 1
 	INIT:
 #ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glColorPointerEXT,"glColorPointerEXT");
@@ -6986,37 +6909,12 @@ glIndexPointerEXT_s(size, type, stride, count, pointer)
 	}
 
 #//# glIndexPointerEXT_p((OGA)pointer);
-void
-glIndexPointerEXT_p(oga)
-	OpenGL::Array oga
-	INIT:
-#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
-		loadProc(glIndexPointerEXT,"glIndexPointerEXT");
-#endif
-	CODE:
-	{
-		GLvoid * data = oga->data;
-#ifdef GL_VERSION_2_0
-		glBindBufferARB(GL_ARRAY_BUFFER, oga->bind);
-		if (oga->bind) data = NULL;
-#elif defined(GL_ARB_vertex_buffer_object)
-		if (testProc(glBindBufferARB,"glBindBufferARB"))
-		{
-			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
-			if (oga->bind) data = NULL;
-		}
-#endif
-#ifdef GL_VERSION_1_1
-		glIndexPointer(oga->types[0], 0, data);
-#else // GL_EXT_vertex_array
-		glIndexPointerEXT(oga->types[0], 0, oga->item_count, data);
-#endif
-	}
-
 #//# glIndexPointer_p((OGA)pointer);
 void
 glIndexPointer_p(oga)
 	OpenGL::Array oga
+	ALIAS:
+	glIndexPointerEXT_p = 1
 	INIT:
 #ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glIndexPointerEXT,"glIndexPointerEXT");
@@ -7084,39 +6982,13 @@ glTexCoordPointerEXT_s(size, type, stride, count, pointer)
 	}
 
 #//# glTexCoordPointerEXT_p($size, (OGA)pointer);
-void
-glTexCoordPointerEXT_p(size, oga)
-	GLint	size
-	OpenGL::Array oga
-	INIT:
-#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
-		loadProc(glTexCoordPointerEXT,"glTexCoordPointerEXT");
-#endif
-	CODE:
-	{
-		GLvoid * data = oga->data;
-#ifdef GL_VERSION_2_0
-		glBindBufferARB(GL_ARRAY_BUFFER, oga->bind);
-		if (oga->bind) data = NULL;
-#elif defined(GL_ARB_vertex_buffer_object)
-		if (testProc(glBindBufferARB,"glBindBufferARB"))
-		{
-			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
-			if (oga->bind) data = NULL;
-		}
-#endif
-#ifdef GL_VERSION_1_1
-		glTexCoordPointer(size, oga->types[0], 0, data);
-#else // GL_EXT_vertex_array
-		glTexCoordPointerEXT(size, oga->types[0], 0, oga->item_count/size, data);
-#endif
-	}
-
 #//# glTexCoordPointer_p($size, (OGA)pointer);
 void
 glTexCoordPointer_p(size, oga)
 	GLint	size
 	OpenGL::Array oga
+	ALIAS:
+	glTexCoordPointerEXT_p = 1
 	INIT:
 #ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glTexCoordPointerEXT,"glTexCoordPointerEXT");
@@ -7184,37 +7056,12 @@ glEdgeFlagPointerEXT_s(size, type, stride, count, pointer)
 	}
 
 #//# glEdgeFlagPointerEXT_p((OGA)pointer);
-void
-glEdgeFlagPointerEXT_p(oga)
-	OpenGL::Array oga
-	INIT:
-#ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
-		loadProc(glTexCoordPointerEXT,"glEdgeFlagPointerEXT");
-#endif
-	CODE:
-	{
-		GLvoid * data = oga->data;
-#ifdef GL_VERSION_2_0
-		glBindBufferARB(GL_ARRAY_BUFFER, oga->bind);
-		if (oga->bind) data = NULL;
-#elif defined(GL_ARB_vertex_buffer_object)
-		if (testProc(glBindBufferARB,"glBindBufferARB"))
-		{
-			glBindBufferARB(GL_ARRAY_BUFFER_ARB, oga->bind);
-			if (oga->bind) data = NULL;
-		}
-#endif
-#ifdef GL_VERSION_1_1
-		glEdgeFlagPointer(0, data);
-#else // GL_EXT_vertex_array
-		glEdgeFlagPointerEXT(0, oga->item_count, data);
-#endif
-	}
-
 #//# glEdgeFlagPointer_p((OGA)pointer);
 void
 glEdgeFlagPointer_p(oga)
 	OpenGL::Array oga
+	ALIAS:
+	glEdgeFlagPointerEXT_p = 1
 	INIT:
 #ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glTexCoordPointerEXT,"glEdgeFlagPointerEXT");
