@@ -162,8 +162,8 @@ sub Init {
   glTranslated( 0.0, 0.0, -6.0 );
 
   if ($use_vertex_arrays) {
-    glVertexPointerEXT_c( 3, GL_FLOAT, 0, $numverts, $verts->ptr );
-    glNormalPointerEXT_c( 3, GL_FLOAT, 0, $numverts, $norms->ptr );
+    glVertexPointer_c( 3, GL_FLOAT, 0, $verts->ptr );
+    glNormalPointer_c( GL_FLOAT, 0, $norms->ptr );
     glEnableClientState( GL_VERTEX_ARRAY );
     glEnableClientState( GL_NORMAL_ARRAY );
   }
@@ -293,7 +293,7 @@ my $WindowId;
       exit(0);
    }
 
-   if (defined &OpenGL::glVertexPointerEXT_c) {
+   if (defined &OpenGL::glVertexPointer_c) {
      print "Using Vertex Array...\n";
    } else {
      print "No Vertex Array extension found, using a slow method...\n";
