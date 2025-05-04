@@ -3139,31 +3139,6 @@ glRasterPos4sv_p(x, y, z, w)
 		glRasterPos4sv(param);
 	}
 
-#ifdef GL_VERSION_1_4
-
-#//# glBlendColor($red, $green, $blue, $alpha);
-void
-glBlendColor(red, green, blue, alpha)
-	GLclampf	red
-	GLclampf	green
-	GLclampf	blue
-	GLclampf	alpha
-	INIT:
-		loadProc(glBlendColor,"glBlendColor");
-	CODE:
-		glBlendColor(red, green, blue, alpha);
-
-#//# glBlendEquation($mode);
-void
-glBlendEquation(mode)
-	GLenum	mode
-	INIT:
-		loadProc(glBlendEquation,"glBlendEquation");
-	CODE:
-		glBlendEquation(mode);
-
-#endif
-
 #//# glVertex3dv_s((PACKED)v);
 void
 glVertex3dv_s(v)
@@ -4478,16 +4453,6 @@ glEdgeFlagPointer_s(stride, pointer)
 
 #ifdef GL_VERSION_1_4
 
-#//# glBindBuffer($target,$buffer);
-void
-glBindBuffer(target,buffer)
-	GLenum target
-	GLuint buffer
-	CODE:
-	{
-		glBindBuffer(target,buffer);
-	}
-
 #//# glDeleteBuffers_s($n,(PACKED)buffers);
 void
 glDeleteBuffers_s(n,buffers)
@@ -4497,23 +4462,6 @@ glDeleteBuffers_s(n,buffers)
 	{
 		void * buffers_s = EL(buffers, sizeof(GLuint)*n);
 		glDeleteBuffers(n,buffers_s);
-	}
-
-#//# glDeleteBuffers_p(@buffers);
-void
-glDeleteBuffers_p(...)
-	CODE:
-	{
-		if (items) {
-			GLuint * list = malloc(sizeof(GLuint) * items);
-			int i;
-
-			for (i=0;i<items;i++)
-				list[i] = SvIV(ST(i));
-
-			glDeleteBuffers(items, list);
-			free(list);
-		}
 	}
 
 #//# glGenBuffers_s($n,(PACKED)buffers);
@@ -4526,36 +4474,6 @@ glGenBuffers_s(n,buffers)
 		void * buffers_s = EL(buffers, sizeof(GLuint)*n);
 		glGenBuffers(n, buffers_s);
 	}
-
-#//# @buffers = glGenBuffers_p($n);
-void
-glGenBuffers_p(n)
-	GLsizei n
-	PPCODE:
-	if (n)
-	{
-		GLuint * buffers = malloc(sizeof(GLuint) * n);
-		int i;
-
-		glGenBuffers(n, buffers);
-
-		EXTEND(sp, n);
-		for(i=0;i<n;i++)
-			PUSHs(sv_2mortal(newSViv(buffers[i])));
-
-		free(buffers);
-	}
-
-#//# glIsBuffer($buffer);
-GLboolean
-glIsBuffer(buffer)
-	GLuint buffer
-	CODE:
-	{
-		RETVAL = glIsBuffer(buffer);
-	}
-	OUTPUT:
-		RETVAL
 
 #//# glBufferData_s($target,$size,(PACKED)data,$usage);
 void
@@ -4742,15 +4660,6 @@ glMapBuffer_p(target,access,...)
 
 		RETVAL = oga;
 	}
-	OUTPUT:
-		RETVAL
-
-#//# glUnmapBuffer($target);
-GLboolean
-glUnmapBuffer(target)
-	GLenum	target
-	CODE:
-		RETVAL = glUnmapBuffer(target);
 	OUTPUT:
 		RETVAL
 
@@ -5283,25 +5192,6 @@ glMultiTexCoord4sv_p(target,s,t,r,q)
 
 #ifdef GL_VERSION_1_5
 
-#//# glDeleteQueries(@textureIDs);
-void
-glDeleteQueries(...)
-	INIT:
-		loadProc(glDeleteQueries,"glDeleteQueries");
-	PPCODE:
-	{
-		GLsizei n = items;
-		GLuint * ids = malloc(sizeof(GLuint) * (n+1));
-		int i;
-
-		for (i=0;i<n;i++)
-			ids[i] = SvIV(ST(i));
-
-		glDeleteQueries(n, ids);
-
-		free(ids);
-	}
-
 #//# $result = glGetQueryObjectiv($id, $pname);
 GLint
 glGetQueryObjectiv(id, pname)
@@ -5351,27 +5241,6 @@ glGetQueryiv(target, pname)
 	    RETVAL
 
 #endif // GL_VERSION_1_5
-
-#ifdef GL_MESA_resize_buffers
-
-#// glResizeBuffersMESA();
-void
-glResizeBuffersMESA()
-
-#endif // GL_MESA_resize_buffers
-
-#ifndef NO_GL_EXT_vertex_array
-#ifdef GL_EXT_vertex_array
-
-#//# glArrayElementEXT($i);
-void
-glArrayElementEXT(i)
-	GLint	i
-	INIT:
-		loadProc(glArrayElementEXT,"glArrayElementEXT");
-
-#endif // GL_EXT_vertex_array
-#endif // !NO_GL_EXT_vertex_array
 
 #ifdef GL_ARB_vertex_buffer_object
 
@@ -6346,13 +6215,5 @@ glTexSubImage3DEXT_p(target, level, xoffset, yoffset, zoffset, width, height, de
 	}
 
 #endif
-
-const char *
-glpErrorString(err)
-  int err
-CODE:
-  RETVAL = gl_error_string(err);
-OUTPUT:
-  RETVAL
 
 #endif /* HAVE_GL */

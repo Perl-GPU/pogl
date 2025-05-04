@@ -1501,37 +1501,9 @@ glGetActiveAttribARB_p(programObj, index)
 		}
 	}
 
-#//!!! Since pointer is string, should combine _C and _p
-#//# $value = glGetAttribLocationARB_p(programObj, $name);
-GLint
-glGetAttribLocationARB_p(programObj, ...)
-	GLhandleARB programObj
-	INIT:
-		loadProc(glGetAttribLocationARB,"glGetAttribLocationARB");
-	CODE:
-	{
-		GLcharARB *name = (GLcharARB *)SvPV(ST(1),PL_na);
-		RETVAL = glGetAttribLocationARB(programObj, name);
-	}
-	OUTPUT:
-		RETVAL
-
 #endif
 
 #ifdef GL_ARB_shader_objects
-
-#//# glGetHandleARB($pname);
-GLhandleARB
-glGetHandleARB(pname)
-	GLenum	pname
-	INIT:
-		loadProc(glGetHandleARB,"glGetHandleARB");
-	CODE:
-	{
-		RETVAL = glGetHandleARB(pname);
-	}
-	OUTPUT:
-		RETVAL
 
 #//# glShaderSourceARB_p($shaderObj, @string);
 void

@@ -1238,9 +1238,14 @@ push @extra_gl_func, @extra_gl_func_modern;
 }
 
 use OpenGL::Modern @gl_func_common_modern, @extra_gl_func_modern, qw(
+  glArrayElementEXT
+  glBindBuffer
   glBindFramebuffer
   glBindRenderbuffer
+  glBlendColor
+  glBlendEquation
   glCheckFramebufferStatus
+  glDeleteBuffers_p
   glDeleteFramebuffers_p
   glDeleteRenderbuffers_p
   glDeleteVertexArrays_p
@@ -1248,12 +1253,18 @@ use OpenGL::Modern @gl_func_common_modern, @extra_gl_func_modern, qw(
   glFramebufferTexture1D
   glFramebufferTexture2D
   glFramebufferTexture3D
+  glGenBuffers_p
   glGenFramebuffers_p
   glGenRenderbuffers_p
   glGenerateMipmap
+  glGetHandleARB
+  glIsBuffer
   glIsFramebuffer
   glIsRenderbuffer
   glRenderbufferStorage
+  glResizeBuffersMESA
+  glUnmapBuffer
+  glpErrorString
 );
 for (qw(
   glRectd
@@ -1269,7 +1280,7 @@ for (qw(
   glGetUniformLocationARB
 )) {
   no strict 'refs';
-  *{$_."_c"} = *{"OpenGL::Modern::$_"};
+  *{$_."_c"} = *{$_."_p"} = *{"OpenGL::Modern::$_"};
 }
 for (qw(
   glDeleteQueries
