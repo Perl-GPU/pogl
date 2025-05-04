@@ -183,28 +183,6 @@ glProgramEnvParameter4dvARB_s(target,index,v)
 		glProgramEnvParameter4dvARB(target,index,v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glProgramEnvParameter4dARB
-#//# glProgramEnvParameter4dvARB_p($target,$index,$x,$y,$z,$w);
-void
-glProgramEnvParameter4dvARB_p(target,index,x,y,z,w)
-	GLenum target
-	GLuint index
-	GLdouble	x
-	GLdouble	y
-	GLdouble	z
-	GLdouble	w
-	INIT:
-		loadProc(glProgramEnvParameter4dvARB,"glProgramEnvParameter4dvARB");
-	CODE:
-	{
-		GLdouble param[4];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		param[3] = w;
-		glProgramEnvParameter4dvARB(target,index,param);
-	}
-
 #//# glProgramEnvParameter4fvARB_s($target,$index,(PACKED)v);
 void
 glProgramEnvParameter4fvARB_s(target,index,v)
@@ -217,28 +195,6 @@ glProgramEnvParameter4fvARB_s(target,index,v)
 	{
 		GLfloat * v_s = EL(v, sizeof(GLfloat)*4);
 		glProgramEnvParameter4fvARB(target,index,v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glProgramEnvParameter4fARB
-#//# glProgramEnvParameter4fvARB_p($target,$index,$x,$y,$z,$w);
-void
-glProgramEnvParameter4fvARB_p(target,index,x,y,z,w)
-	GLenum target
-	GLuint index
-	GLfloat	x
-	GLfloat	y
-	GLfloat	z
-	GLfloat	w
-	INIT:
-		loadProc(glProgramEnvParameter4fvARB,"glProgramEnvParameter4fvARB");
-	CODE:
-	{
-		GLfloat param[4];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		param[3] = w;
-		glProgramEnvParameter4fvARB(target,index,param);
 	}
 
 #//# glProgramLocalParameter4dvARB_s($target,$index,(PACKED)v);
@@ -255,28 +211,6 @@ glProgramLocalParameter4dvARB_s(target,index,v)
 		glProgramLocalParameter4dvARB(target,index,v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glProgramLocalParameter4dARB
-#//# glProgramLocalParameter4dvARB_p($target,$index,$x,$y,$z,$w);
-void
-glProgramLocalParameter4dvARB_p(target,index,x,y,z,w)
-	GLenum target
-	GLuint index
-	GLdouble	x
-	GLdouble	y
-	GLdouble	z
-	GLdouble	w
-	INIT:
-		loadProc(glProgramLocalParameter4dvARB,"glProgramLocalParameter4dvARB");
-	CODE:
-	{
-		GLdouble param[4];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		param[3] = w;
-		glProgramLocalParameter4dvARB(target,index,param);
-	}
-
 #//# glProgramLocalParameter4fvARB_s($target,$index,(PACKED)v);
 void
 glProgramLocalParameter4fvARB_s(target,index,v)
@@ -289,28 +223,6 @@ glProgramLocalParameter4fvARB_s(target,index,v)
 	{
 		GLfloat * v_s = EL(v, sizeof(GLfloat)*4);
 		glProgramLocalParameter4fvARB(target,index,v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glProgramLocalParameter4fARB
-#//# glProgramLocalParameter4fvARB_p($target,$index,$x,$y,$z,$w);
-void
-glProgramLocalParameter4fvARB_p(target,index,x,y,z,w)
-	GLenum target
-	GLuint index
-	GLfloat	x
-	GLfloat	y
-	GLfloat	z
-	GLfloat	w
-	INIT:
-		loadProc(glProgramLocalParameter4fvARB,"glProgramLocalParameter4fvARB");
-	CODE:
-	{
-		GLfloat param[4];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		param[3] = w;
-		glProgramLocalParameter4fvARB(target,index,param);
 	}
 
 #//# glGetProgramEnvParameterdvARB_s($target,$index,(PACKED)params);
@@ -546,21 +458,6 @@ glVertexAttrib1dvARB_s(index,v)
 		glVertexAttrib1dvARB(index,v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glVertexAttrib1dARB
-#//# glVertexAttrib1dvARB_p($index,$x);
-void
-glVertexAttrib1dvARB_p(index,x)
-	GLuint index
-	GLdouble	x
-	INIT:
-		loadProc(glVertexAttrib1dvARB,"glVertexAttrib1dvARB");
-	CODE:
-	{
-		GLdouble param[1];
-		param[0] = x;
-		glVertexAttrib1dvARB(index,param);
-	}
-
 #//# glVertexAttrib1svARB_s($index,(PACKED)v);
 void
 glVertexAttrib1svARB_s(index,v)
@@ -572,21 +469,6 @@ glVertexAttrib1svARB_s(index,v)
 	{
 		GLshort * v_s = EL(v, sizeof(GLshort)*1);
 		glVertexAttrib1svARB(index,v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glVertexAttrib1sARB
-#//# glVertexAttrib1svARB_p($index,$x);
-void
-glVertexAttrib1svARB_p(index,x)
-	GLuint index
-	GLshort	x
-	INIT:
-		loadProc(glVertexAttrib1svARB,"glVertexAttrib1svARB");
-	CODE:
-	{
-		GLshort param[1];
-		param[0] = x;
-		glVertexAttrib1svARB(index,param);
 	}
 
 #//# glVertexAttrib2dvARB_s($index,(PACKED)v);
@@ -602,23 +484,6 @@ glVertexAttrib2dvARB_s(index,v)
 		glVertexAttrib2dvARB(index,v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glVertexAttrib2dARB
-#//# glVertexAttrib2dvARB_p($index,$x,$y);
-void
-glVertexAttrib2dvARB_p(index,x,y)
-	GLuint index
-	GLdouble	x
-	GLdouble	y
-	INIT:
-		loadProc(glVertexAttrib2dvARB,"glVertexAttrib2dvARB");
-	CODE:
-	{
-		GLdouble param[2];
-		param[0] = x;
-		param[1] = y;
-		glVertexAttrib2dvARB(index,param);
-	}
-
 #//# glVertexAttrib2svARB_s($index,(PACKED)v);
 void
 glVertexAttrib2svARB_s(index,v)
@@ -630,23 +495,6 @@ glVertexAttrib2svARB_s(index,v)
 	{
 		GLshort * v_s = EL(v, sizeof(GLshort)*2);
 		glVertexAttrib2svARB(index,v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glVertexAttrib2sARB
-#//# glVertexAttrib2svARB_p($index,$x,$y);
-void
-glVertexAttrib2svARB_p(index,x,y)
-	GLuint index
-	GLshort	x
-	GLshort	y
-	INIT:
-		loadProc(glVertexAttrib2svARB,"glVertexAttrib2svARB");
-	CODE:
-	{
-		GLshort param[2];
-		param[0] = x;
-		param[1] = y;
-		glVertexAttrib2svARB(index,param);
 	}
 
 #//# glVertexAttrib3dvARB_s($index,(PACKED)v);
@@ -662,25 +510,6 @@ glVertexAttrib3dvARB_s(index,v)
 		glVertexAttrib3dvARB(index,v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glVertexAttrib3dARB
-#//# glVertexAttrib3dvARB_p($index,$x,$y,$z);
-void
-glVertexAttrib3dvARB_p(index,x,y,z)
-	GLuint index
-	GLdouble	x
-	GLdouble	y
-	GLdouble	z
-	INIT:
-		loadProc(glVertexAttrib3dvARB,"glVertexAttrib3dvARB");
-	CODE:
-	{
-		GLdouble param[3];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		glVertexAttrib3dvARB(index,param);
-	}
-
 #//# glVertexAttrib3fvARB_s($index,(PACKED)v);
 void
 glVertexAttrib3fvARB_s(index,v)
@@ -694,25 +523,6 @@ glVertexAttrib3fvARB_s(index,v)
 		glVertexAttrib3fvARB(index,v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glVertexAttrib3fARB
-#//# glVertexAttrib3fvARB_p($index,$x,$y,$z);
-void
-glVertexAttrib3fvARB_p(index,x,y,z)
-	GLuint index
-	GLfloat	x
-	GLfloat	y
-	GLfloat	z
-	INIT:
-		loadProc(glVertexAttrib3fvARB,"glVertexAttrib3fvARB");
-	CODE:
-	{
-		GLfloat param[3];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		glVertexAttrib3fvARB(index,param);
-	}
-
 #//# glVertexAttrib3svARB_s($index,(PACKED)v);
 void
 glVertexAttrib3svARB_s(index,v)
@@ -724,25 +534,6 @@ glVertexAttrib3svARB_s(index,v)
 	{
 		GLshort * v_s = EL(v, sizeof(GLshort)*3);
 		glVertexAttrib3svARB(index,v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glVertexAttrib3sARB
-#//# glVertexAttrib3svARB_p($index,$x,$y,$z);
-void
-glVertexAttrib3svARB_p(index,x,y,z)
-	GLuint index
-	GLshort	x
-	GLshort	y
-	GLshort	z
-	INIT:
-		loadProc(glVertexAttrib3svARB,"glVertexAttrib3svARB");
-	CODE:
-	{
-		GLshort param[3];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		glVertexAttrib3svARB(index,param);
 	}
 
 #//# glVertexAttrib4NbvARB_s($index,(PACKED)v);
@@ -989,27 +780,6 @@ glVertexAttrib4dvARB_s(index,v)
 		glVertexAttrib4dvARB(index,v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glVertexAttrib4dARB
-#//# glVertexAttrib4dvARB_p($index,$x,$y,$z,$w);
-void
-glVertexAttrib4dvARB_p(index,x,y,z,w)
-	GLuint index
-	GLdouble	x
-	GLdouble	y
-	GLdouble	z
-	GLdouble	w
-	INIT:
-		loadProc(glVertexAttrib4dvARB,"glVertexAttrib4dvARB");
-	CODE:
-	{
-		GLdouble param[4];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		param[3] = w;
-		glVertexAttrib4dvARB(index,param);
-	}
-
 #//# glVertexAttrib4fvARB_s($index,(PACKED)v);
 void
 glVertexAttrib4fvARB_s(index,v)
@@ -1021,27 +791,6 @@ glVertexAttrib4fvARB_s(index,v)
 	{
 		GLfloat * v_s = EL(v, sizeof(GLfloat)*4);
 		glVertexAttrib4fvARB(index,v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glVertexAttrib4fARB
-#//# glVertexAttrib4fvARB_p($index,$x,$y,$z,$w);
-void
-glVertexAttrib4fvARB_p(index,x,y,z,w)
-	GLuint index
-	GLfloat	x
-	GLfloat	y
-	GLfloat	z
-	GLfloat	w
-	INIT:
-		loadProc(glVertexAttrib4fvARB,"glVertexAttrib4fvARB");
-	CODE:
-	{
-		GLfloat param[4];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		param[3] = w;
-		glVertexAttrib4fvARB(index,param);
 	}
 
 #//# glVertexAttrib4ivARB_s($index,(PACKED)v);
@@ -1088,27 +837,6 @@ glVertexAttrib4svARB_s(index,v)
 	{
 		GLshort * v_s = EL(v, sizeof(GLshort)*4);
 		glVertexAttrib4svARB(index,v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glVertexAttrib4sARB
-#//# glVertexAttrib4svARB_p($index,$x,$y,$z,$w);
-void
-glVertexAttrib4svARB_p(index,x,y,z,w)
-	GLuint index
-	GLshort	x
-	GLshort	y
-	GLshort	z
-	GLshort	w
-	INIT:
-		loadProc(glVertexAttrib4svARB,"glVertexAttrib4svARB");
-	CODE:
-	{
-		GLshort param[4];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		param[3] = w;
-		glVertexAttrib4svARB(index,param);
 	}
 
 #//# glVertexAttrib4ubvARB_s($index,(PACKED)v);

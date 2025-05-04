@@ -2429,20 +2429,6 @@ glVertex2dv_s(v)
 		glVertex2dv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glVertex2d
-#//# glVertex2dv_p($x, $y);
-void
-glVertex2dv_p(x, y)
-	GLdouble	x
-	GLdouble	y
-	CODE:
-	{
-		GLdouble param[2];
-		param[0] = x;
-		param[1] = y;
-		glVertex2dv(param);
-	}
-
 #//# glVertex2f_s((PACKED)v);
 void
 glVertex2fv_s(v)
@@ -2451,20 +2437,6 @@ glVertex2fv_s(v)
 	{
 		GLfloat * v_s = EL(v, sizeof(GLfloat)*2);
 		glVertex2fv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glVertex2f
-#//# glVertex2fv_p($x, $y);
-void
-glVertex2fv_p(x, y)
-	GLfloat	x
-	GLfloat	y
-	CODE:
-	{
-		GLfloat param[2];
-		param[0] = x;
-		param[1] = y;
-		glVertex2fv(param);
 	}
 
 #//# glVertex2iv_s((PACKED)v);
@@ -2477,20 +2449,6 @@ glVertex2iv_s(v)
 		glVertex2iv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glVertex2i
-#//# glVertex2iv_p($x, $y);
-void
-glVertex2iv_p(x, y)
-	GLint	x
-	GLint	y
-	CODE:
-	{
-		GLint param[2];
-		param[0] = x;
-		param[1] = y;
-		glVertex2iv(param);
-	}
-
 #//# glVertex2sv_s((PACKED)v);
 void
 glVertex2sv_s(v)
@@ -2499,20 +2457,6 @@ glVertex2sv_s(v)
 	{
 		GLshort * v_s = EL(v, sizeof(GLshort)*2);
 		glVertex2sv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glVertex2s
-#//# glVertex2sv_p($x, $y);
-void
-glVertex2sv_p(x, y)
-	GLshort	x
-	GLshort	y
-	CODE:
-	{
-		GLshort param[2];
-		param[0] = x;
-		param[1] = y;
-		glVertex2sv(param);
 	}
 
 #//# glTexCoord2dv_s((PACKED)v);
@@ -2525,20 +2469,6 @@ glTexCoord2dv_s(v)
 		glTexCoord2dv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glTexCoord2d
-#//# glTexCoord2dv_p($s, $t);
-void
-glTexCoord2dv_p(s, t)
-	GLdouble	s
-	GLdouble	t
-	CODE:
-	{
-		GLdouble param[2];
-		param[0] = s;
-		param[1] = t;
-		glTexCoord2dv(param);
-	}
-
 #//# glTexCoord2fv_s((PACKED)v);
 void
 glTexCoord2fv_s(v)
@@ -2547,20 +2477,6 @@ glTexCoord2fv_s(v)
 	{
 		GLfloat * v_s = EL(v, sizeof(GLfloat)*2);
 		glTexCoord2fv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glTexCoord2f
-#//# glTexCoord2fv_p($s, $t);
-void
-glTexCoord2fv_p(s, t)
-	GLfloat	s
-	GLfloat	t
-	CODE:
-	{
-		GLfloat param[2];
-		param[0] = s;
-		param[1] = t;
-		glTexCoord2fv(param);
 	}
 
 #//# glTexCoord2iv_s((PACKED)v);
@@ -2573,20 +2489,6 @@ glTexCoord2iv_s(v)
 		glTexCoord2iv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glTexCoord2i
-#//# glTexCoord2iv_p($s, $t);
-void
-glTexCoord2iv_p(s, t)
-	GLint	s
-	GLint	t
-	CODE:
-	{
-		GLint param[2];
-		param[0] = s;
-		param[1] = t;
-		glTexCoord2iv(param);
-	}
-
 #//# glTexCoord2sv_s((PACKED)v);
 void
 glTexCoord2sv_s(v)
@@ -2595,20 +2497,6 @@ glTexCoord2sv_s(v)
 	{
 		GLshort * v_s = EL(v, sizeof(GLshort)*2);
 		glTexCoord2sv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glTexCoord2s
-#//# glTexCoord2sv_p($s, $t);
-void
-glTexCoord2sv_p(s, t)
-	GLshort	s
-	GLshort	t
-	CODE:
-	{
-		GLshort param[2];
-		param[0] = s;
-		param[1] = t;
-		glTexCoord2sv(param);
 	}
 
 #//# glTexCoord3dv_s((PACKED)v);
@@ -2621,22 +2509,6 @@ glTexCoord3dv_s(v)
 		glTexCoord3dv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glTexCoord3d
-#//# glTexCoord3dv_p($s, $t, $r);
-void
-glTexCoord3dv_p(s, t, r)
-	GLdouble	s
-	GLdouble	t
-	GLdouble	r
-	CODE:
-	{
-		GLdouble param[3];
-		param[0] = s;
-		param[1] = t;
-		param[2] = r;
-		glTexCoord3dv(param);
-	}
-
 #//# glTexCoord3fv_s((PACKED)v);
 void
 glTexCoord3fv_s(v)
@@ -2645,22 +2517,6 @@ glTexCoord3fv_s(v)
 	{
 		GLfloat * v_s = EL(v, sizeof(GLfloat)*3);
 		glTexCoord3fv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glTexCoord3f
-#//# glTexCoord3fv_p($s, $t, $r);
-void
-glTexCoord3fv_p(s, t, r)
-	GLfloat	s
-	GLfloat	t
-	GLfloat	r
-	CODE:
-	{
-		GLfloat param[3];
-		param[0] = s;
-		param[1] = t;
-		param[2] = r;
-		glTexCoord3fv(param);
 	}
 
 #//# glTexCoord3iv_s((PACKED)v);
@@ -2673,22 +2529,6 @@ glTexCoord3iv_s(v)
 		glTexCoord3iv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glTexCoord3i
-#//# glTexCoord3iv_p($s, $t, $r);
-void
-glTexCoord3iv_p(s, t, r)
-	GLint	s
-	GLint	t
-	GLint	r
-	CODE:
-	{
-		GLint param[3];
-		param[0] = s;
-		param[1] = t;
-		param[2] = r;
-		glTexCoord3iv(param);
-	}
-
 #//# glTexCoord3sv_s((PACKED)v);
 void
 glTexCoord3sv_s(v)
@@ -2697,22 +2537,6 @@ glTexCoord3sv_s(v)
 	{
 		GLshort * v_s = EL(v, sizeof(GLshort)*3);
 		glTexCoord3sv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glTexCoord3s
-#//# glTexCoord3sv_p($s, $t, $r);
-void
-glTexCoord3sv_p(s, t, r)
-	GLshort	s
-	GLshort	t
-	GLshort	r
-	CODE:
-	{
-		GLshort param[3];
-		param[0] = s;
-		param[1] = t;
-		param[2] = r;
-		glTexCoord3sv(param);
 	}
 
 #//# glTexCoord4dv_s((PACKED)v);
@@ -2725,24 +2549,6 @@ glTexCoord4dv_s(v)
 		glTexCoord4dv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glTexCoord4d
-#//# glTexCoord4dv_p($s, $t, $r, $q);
-void
-glTexCoord4dv_p(s, t, r, q)
-	GLdouble	s
-	GLdouble	t
-	GLdouble	r
-	GLdouble	q
-	CODE:
-	{
-		GLdouble param[4];
-		param[0] = s;
-		param[1] = t;
-		param[2] = r;
-		param[3] = q;
-		glTexCoord4dv(param);
-	}
-
 #//# glTexCoord4fv_s((PACKED)v);
 void
 glTexCoord4fv_s(v)
@@ -2751,24 +2557,6 @@ glTexCoord4fv_s(v)
 	{
 		GLfloat * v_s = EL(v, sizeof(GLfloat)*4);
 		glTexCoord4fv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glTexCoord4f
-#//# glTexCoord4fv_p($s, $t, $r, $q);
-void
-glTexCoord4fv_p(s, t, r, q)
-	GLfloat	s
-	GLfloat	t
-	GLfloat	r
-	GLfloat	q
-	CODE:
-	{
-		GLfloat param[4];
-		param[0] = s;
-		param[1] = t;
-		param[2] = r;
-		param[3] = q;
-		glTexCoord4fv(param);
 	}
 
 #//# glTexCoord4iv_s((PACKED)v);
@@ -2781,24 +2569,6 @@ glTexCoord4iv_s(v)
 		glTexCoord4iv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glTexCoord4i
-#//# glTexCoord4iv_p($s, $t, $r, $q);
-void
-glTexCoord4iv_p(s, t, r, q)
-	GLint	s
-	GLint	t
-	GLint	r
-	GLint	q
-	CODE:
-	{
-		GLint param[4];
-		param[0] = s;
-		param[1] = t;
-		param[2] = r;
-		param[3] = q;
-		glTexCoord4iv(param);
-	}
-
 #//# glTexCoord4sv_s((PACKED)v);
 void
 glTexCoord4sv_s(v)
@@ -2807,24 +2577,6 @@ glTexCoord4sv_s(v)
 	{
 		GLshort * v_s = EL(v, sizeof(GLshort)*4);
 		glTexCoord4sv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glTexCoord4s
-#//# glTexCoord4sv_p($s, $t, $r, $q);
-void
-glTexCoord4sv_p(s, t, r, q)
-	GLshort	s
-	GLshort	t
-	GLshort	r
-	GLshort	q
-	CODE:
-	{
-		GLshort param[4];
-		param[0] = s;
-		param[1] = t;
-		param[2] = r;
-		param[3] = q;
-		glTexCoord4sv(param);
 	}
 
 #//# glRasterPos2dv_s((PACKED)v);
@@ -2837,20 +2589,6 @@ glRasterPos2dv_s(v)
 		glRasterPos2dv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glRasterPos2d
-#//# glRasterPos2dv_p($x, $y);
-void
-glRasterPos2dv_p(x, y)
-	GLdouble	x
-	GLdouble	y
-	CODE:
-	{
-		GLdouble param[2];
-		param[0] = x;
-		param[1] = y;
-		glRasterPos2dv(param);
-	}
-
 #//# glRasterPos2fv_s((PACKED)v);
 void
 glRasterPos2fv_s(v)
@@ -2859,20 +2597,6 @@ glRasterPos2fv_s(v)
 	{
 		GLfloat * v_s = EL(v, sizeof(GLfloat)*2);
 		glRasterPos2fv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glRasterPos2f
-#//# glRasterPos2fv_p($x, $y);
-void
-glRasterPos2fv_p(x, y)
-	GLfloat	x
-	GLfloat	y
-	CODE:
-	{
-		GLfloat param[2];
-		param[0] = x;
-		param[1] = y;
-		glRasterPos2fv(param);
 	}
 
 #//# glRasterPos2iv_s((PACKED)v);
@@ -2885,20 +2609,6 @@ glRasterPos2iv_s(v)
 		glRasterPos2iv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glRasterPos2i
-#//# glRasterPos2iv_p($x, $y);
-void
-glRasterPos2iv_p(x, y)
-	GLint	x
-	GLint	y
-	CODE:
-	{
-		GLint param[2];
-		param[0] = x;
-		param[1] = y;
-		glRasterPos2iv(param);
-	}
-
 #//# glRasterPos2sv_s((PACKED)v);
 void
 glRasterPos2sv_s(v)
@@ -2907,20 +2617,6 @@ glRasterPos2sv_s(v)
 	{
 		GLshort * v_s = EL(v, sizeof(GLshort)*2);
 		glRasterPos2sv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glRasterPos2s
-#//# glRasterPos2sv_p($x, $y);
-void
-glRasterPos2sv_p(x, y)
-	GLshort	x
-	GLshort	y
-	CODE:
-	{
-		GLshort param[2];
-		param[0] = x;
-		param[1] = y;
-		glRasterPos2sv(param);
 	}
 
 #//# glRasterPos3dv_s((PACKED)v);
@@ -2933,22 +2629,6 @@ glRasterPos3dv_s(v)
 		glRasterPos3dv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glRasterPos3d
-#//# glRasterPos3dv_p($x, $y, $z);
-void
-glRasterPos3dv_p(x, y, z)
-	GLdouble	x
-	GLdouble	y
-	GLdouble	z
-	CODE:
-	{
-		GLdouble param[3];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		glRasterPos3dv(param);
-	}
-
 #//# glRasterPos3fv_s((PACKED)v);
 void
 glRasterPos3fv_s(v)
@@ -2957,22 +2637,6 @@ glRasterPos3fv_s(v)
 	{
 		GLfloat * v_s = EL(v, sizeof(GLfloat)*3);
 		glRasterPos3fv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glRasterPos3f
-#//# glRasterPos3fv_p($x, $y, $z);
-void
-glRasterPos3fv_p(x, y, z)
-	GLfloat	x
-	GLfloat	y
-	GLfloat	z
-	CODE:
-	{
-		GLfloat param[3];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		glRasterPos3fv(param);
 	}
 
 #//# glRasterPos3iv_s((PACKED)v);
@@ -2985,22 +2649,6 @@ glRasterPos3iv_s(v)
 		glRasterPos3iv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glRasterPos3i
-#//# glRasterPos3iv_p($x, $y, $z);
-void
-glRasterPos3iv_p(x, y, z)
-	GLint	x
-	GLint	y
-	GLint	z
-	CODE:
-	{
-		GLint param[3];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		glRasterPos3iv(param);
-	}
-
 #//# glRasterPos3sv_s((PACKED)v);
 void
 glRasterPos3sv_s(v)
@@ -3009,22 +2657,6 @@ glRasterPos3sv_s(v)
 	{
 		GLshort * v_s = EL(v, sizeof(GLshort)*3);
 		glRasterPos3sv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glRasterPos3s
-#//# glRasterPos3sv_p($x, $y, $z);
-void
-glRasterPos3sv_p(x, y, z)
-	GLshort	x
-	GLshort	y
-	GLshort	z
-	CODE:
-	{
-		GLshort param[3];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		glRasterPos3sv(param);
 	}
 
 #//# glRasterPos4dv_s((PACKED)v);
@@ -3037,24 +2669,6 @@ glRasterPos4dv_s(v)
 		glRasterPos4dv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glRasterPos4d
-#//# glRasterPos4dv_p($x, $y, $z, $w);
-void
-glRasterPos4dv_p(x, y, z, w)
-	GLdouble	x
-	GLdouble	y
-	GLdouble	z
-	GLdouble	w
-	CODE:
-	{
-		GLdouble param[4];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		param[3] = w;
-		glRasterPos4dv(param);
-	}
-
 #//# glRasterPos4fv_s((PACKED)v);
 void
 glRasterPos4fv_s(v)
@@ -3063,24 +2677,6 @@ glRasterPos4fv_s(v)
 	{
 		GLfloat * v_s = EL(v, sizeof(GLfloat)*4);
 		glRasterPos4fv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glRasterPos4f
-#//# glRasterPos4fv_p($x, $y, $z, $w);
-void
-glRasterPos4fv_p(x, y, z, w)
-	GLfloat	x
-	GLfloat	y
-	GLfloat	z
-	GLfloat	w
-	CODE:
-	{
-		GLfloat param[4];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		param[3] = w;
-		glRasterPos4fv(param);
 	}
 
 #//# glRasterPos4iv_s((PACKED)v);
@@ -3093,24 +2689,6 @@ glRasterPos4iv_s(v)
 		glRasterPos4iv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glRasterPos4i
-#//# glRasterPos4iv_p($x, $y, $z, $w);
-void
-glRasterPos4iv_p(x, y, z, w)
-	GLint	x
-	GLint	y
-	GLint	z
-	GLint	w
-	CODE:
-	{
-		GLint param[4];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		param[3] = w;
-		glRasterPos4iv(param);
-	}
-
 #//# glRasterPos4sv_s((PACKED)v);
 void
 glRasterPos4sv_s(v)
@@ -3119,24 +2697,6 @@ glRasterPos4sv_s(v)
 	{
 		GLshort * v_s = EL(v, sizeof(GLshort)*4);
 		glRasterPos4sv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glRasterPos4s
-#//# glRasterPos4sv_p($x, $y, $z, $w);
-void
-glRasterPos4sv_p(x, y, z, w)
-	GLshort	x
-	GLshort	y
-	GLshort	z
-	GLshort	w
-	CODE:
-	{
-		GLshort param[4];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		param[3] = w;
-		glRasterPos4sv(param);
 	}
 
 #//# glVertex3dv_s((PACKED)v);
@@ -3149,22 +2709,6 @@ glVertex3dv_s(v)
 		glVertex3dv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glVertex3d
-#//# glVertex3dv_p($x, $y, $z);
-void
-glVertex3dv_p(x, y, z)
-	GLdouble	x
-	GLdouble	y
-	GLdouble	z
-	CODE:
-	{
-		GLdouble param[3];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		glVertex3dv(param);
-	}
-
 #//# glVertex3fv_s((PACKED)v);
 void
 glVertex3fv_s(v)
@@ -3173,22 +2717,6 @@ glVertex3fv_s(v)
 	{
 		GLfloat * v_s = EL(v, sizeof(GLfloat)*3);
 		glVertex3fv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glVertex3f
-#//# glVertex3fv_p($x, $y, $z);
-void
-glVertex3fv_p(x, y, z)
-	GLfloat	x
-	GLfloat	y
-	GLfloat	z
-	CODE:
-	{
-		GLfloat param[3];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		glVertex3fv(param);
 	}
 
 #//# glVertex3iv_s((PACKED)v);
@@ -3201,22 +2729,6 @@ glVertex3iv_s(v)
 		glVertex3iv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glVertex3i
-#//# glVertex3iv_p($x, $y, $z);
-void
-glVertex3iv_p(x, y, z)
-	GLint	x
-	GLint	y
-	GLint	z
-	CODE:
-	{
-		GLint param[3];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		glVertex3iv(param);
-	}
-
 #//# glVertex3sv_s((PACKED)v);
 void
 glVertex3sv_s(v)
@@ -3225,22 +2737,6 @@ glVertex3sv_s(v)
 	{
 		GLshort * v_s = EL(v, sizeof(GLshort)*3);
 		glVertex3sv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glVertex3s
-#//# glVertex3sv_p($x, $y, $z);
-void
-glVertex3sv_p(x, y, z)
-	GLshort	x
-	GLshort	y
-	GLshort	z
-	CODE:
-	{
-		GLshort param[3];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		glVertex3sv(param);
 	}
 
 #//# glVertex4dv_s((PACKED)v);
@@ -3253,24 +2749,6 @@ glVertex4dv_s(v)
 		glVertex4dv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glVertex4d
-#//# glVertex4dv_p($x, $y, $z, $w);
-void
-glVertex4dv_p(x, y, z, w)
-	GLdouble	x
-	GLdouble	y
-	GLdouble	z
-	GLdouble	w
-	CODE:
-	{
-		GLdouble param[4];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		param[3] = w;
-		glVertex4dv(param);
-	}
-
 #//# glVertex4fv_s((PACKED)v);
 void
 glVertex4fv_s(v)
@@ -3279,24 +2757,6 @@ glVertex4fv_s(v)
 	{
 		GLfloat * v_s = EL(v, sizeof(GLfloat)*4);
 		glVertex4fv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glVertex4f
-#//# glVertex4fv_p($x, $y, $z, $w);
-void
-glVertex4fv_p(x, y, z, w)
-	GLfloat	x
-	GLfloat	y
-	GLfloat	z
-	GLfloat	w
-	CODE:
-	{
-		GLfloat param[4];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		param[3] = w;
-		glVertex4fv(param);
 	}
 
 #//# glVertex4iv_s((PACKED)v);
@@ -3309,24 +2769,6 @@ glVertex4iv_s(v)
 		glVertex4iv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glVertex4i
-#//# glVertex4iv_p($x, $y, $z, $w);
-void
-glVertex4iv_p(x, y, z, w)
-	GLint	x
-	GLint	y
-	GLint	z
-	GLint	w
-	CODE:
-	{
-		GLint param[4];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		param[3] = w;
-		glVertex4iv(param);
-	}
-
 #//# glVertex4sv_s((PACKED)v);
 void
 glVertex4sv_s(v)
@@ -3335,24 +2777,6 @@ glVertex4sv_s(v)
 	{
 		GLshort * v_s = EL(v, sizeof(GLshort)*4);
 		glVertex4sv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glVertex4s
-#//# glVertex4sv_p($x, $y, $z, $w);
-void
-glVertex4sv_p(x, y, z, w)
-	GLshort	x
-	GLshort	y
-	GLshort	z
-	GLshort	w
-	CODE:
-	{
-		GLshort param[4];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		param[3] = w;
-		glVertex4sv(param);
 	}
 
 #//# glNormal3bv_s((PACKED)v);
@@ -3365,22 +2789,6 @@ glNormal3bv_s(v)
 		glNormal3bv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glNormal3b
-#//# glNormal3bv_p($nx, $ny, $nz);
-void
-glNormal3bv_p(nx, ny, nz)
-	GLbyte	nx
-	GLbyte	ny
-	GLbyte	nz
-	CODE:
-	{
-		GLbyte param[3];
-		param[0] = nx;
-		param[1] = ny;
-		param[2] = nz;
-		glNormal3bv(param);
-	}
-
 #//# glNormal3dv_s((PACKED)v);
 void
 glNormal3dv_s(v)
@@ -3389,22 +2797,6 @@ glNormal3dv_s(v)
 	{
 		GLdouble * v_s = EL(v, sizeof(GLdouble)*3);
 		glNormal3dv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glNormal3d
-#//# glNormal3dv_p($nx, $ny, $nz);
-void
-glNormal3dv_p(nx, ny, nz)
-	GLdouble	nx
-	GLdouble	ny
-	GLdouble	nz
-	CODE:
-	{
-		GLdouble param[3];
-		param[0] = nx;
-		param[1] = ny;
-		param[2] = nz;
-		glNormal3dv(param);
 	}
 
 #//# glNormal3fv_s((PACKED)v);
@@ -3417,22 +2809,6 @@ glNormal3fv_s(v)
 		glNormal3fv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glNormal3f
-#//# glNormal3fv_p($nx, $ny, $nz);
-void
-glNormal3fv_p(nx, ny, nz)
-	GLfloat	nx
-	GLfloat	ny
-	GLfloat	nz
-	CODE:
-	{
-		GLfloat param[3];
-		param[0] = nx;
-		param[1] = ny;
-		param[2] = nz;
-		glNormal3fv(param);
-	}
-
 #//# glNormal3iv_s((PACKED)v);
 void
 glNormal3iv_s(v)
@@ -3441,22 +2817,6 @@ glNormal3iv_s(v)
 	{
 		GLint * v_s = EL(v, sizeof(GLint)*3);
 		glNormal3iv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glNormal3i
-#//# glNormal3iv_p($nx, $ny, $nz);
-void
-glNormal3iv_p(nx, ny, nz)
-	GLint	nx
-	GLint	ny
-	GLint	nz
-	CODE:
-	{
-		GLint param[3];
-		param[0] = nx;
-		param[1] = ny;
-		param[2] = nz;
-		glNormal3iv(param);
 	}
 
 #//# glNormal3sv_s((PACKED)v);
@@ -3469,22 +2829,6 @@ glNormal3sv_s(v)
 		glNormal3sv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glNormal3s
-#//# glNormal3sv_p($nx, $ny, $nz);
-void
-glNormal3sv_p(nx, ny, nz)
-	GLshort	nx
-	GLshort	ny
-	GLshort	nz
-	CODE:
-	{
-		GLshort param[3];
-		param[0] = nx;
-		param[1] = ny;
-		param[2] = nz;
-		glNormal3sv(param);
-	}
-
 #//# glColor3bv_s((PACKED)v);
 void
 glColor3bv_s(v)
@@ -3493,22 +2837,6 @@ glColor3bv_s(v)
 	{
 		GLbyte * v_s = EL(v, sizeof(GLbyte)*3);
 		glColor3bv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glColor3b
-#//# glColor3bv_p($red, $green, $blue);
-void
-glColor3bv_p(red, green, blue)
-	GLbyte	red
-	GLbyte	green
-	GLbyte	blue
-	CODE:
-	{
-		GLbyte param[3];
-		param[0] = red;
-		param[1] = green;
-		param[2] = blue;
-		glColor3bv(param);
 	}
 
 #//# glColor3dv_s((PACKED)v);
@@ -3521,22 +2849,6 @@ glColor3dv_s(v)
 		glColor3dv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glColor3d
-#//# glColor3dv_p($red, $green, $blue);
-void
-glColor3dv_p(red, green, blue)
-	GLdouble	red
-	GLdouble	green
-	GLdouble	blue
-	CODE:
-	{
-		GLdouble param[3];
-		param[0] = red;
-		param[1] = green;
-		param[2] = blue;
-		glColor3dv(param);
-	}
-
 #//# glColor3fv_s((PACKED)v);
 void
 glColor3fv_s(v)
@@ -3545,22 +2857,6 @@ glColor3fv_s(v)
 	{
 		GLfloat * v_s = EL(v, sizeof(GLfloat)*3);
 		glColor3fv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glColor3s
-#//# glColor3sv_p($red, $green, $blue);
-void
-glColor3fv_p(red, green, blue)
-	GLfloat	red
-	GLfloat	green
-	GLfloat	blue
-	CODE:
-	{
-		GLfloat param[3];
-		param[0] = red;
-		param[1] = green;
-		param[2] = blue;
-		glColor3fv(param);
 	}
 
 #//# glColor3iv_s((PACKED)v);
@@ -3573,22 +2869,6 @@ glColor3iv_s(v)
 		glColor3iv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glColor3i
-#//# glColor3iv_p($red, $green, $blue);
-void
-glColor3iv_p(red, green, blue)
-	GLint	red
-	GLint	green
-	GLint	blue
-	CODE:
-	{
-		GLint param[3];
-		param[0] = red;
-		param[1] = green;
-		param[2] = blue;
-		glColor3iv(param);
-	}
-
 #//# glColor3sv_s((PACKED)v);
 void
 glColor3sv_s(v)
@@ -3597,22 +2877,6 @@ glColor3sv_s(v)
 	{
 		GLshort * v_s = EL(v, sizeof(GLshort)*3);
 		glColor3sv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glColor3s
-#//# glColor3sv_p($red, $green, $blue);
-void
-glColor3sv_p(red, green, blue)
-	GLshort	red
-	GLshort	green
-	GLshort	blue
-	CODE:
-	{
-		GLshort param[3];
-		param[0] = red;
-		param[1] = green;
-		param[2] = blue;
-		glColor3sv(param);
 	}
 
 #//# glColor3ubv_s((PACKED)v);
@@ -3625,22 +2889,6 @@ glColor3ubv_s(v)
 		glColor3ubv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glColor3ub
-#//# glColor3ubv_p($red, $green, $blue);
-void
-glColor3ubv_p(red, green, blue)
-	GLubyte	red
-	GLubyte	green
-	GLubyte	blue
-	CODE:
-	{
-		GLubyte param[3];
-		param[0] = red;
-		param[1] = green;
-		param[2] = blue;
-		glColor3ubv(param);
-	}
-
 #//# glColor3uiv_s((PACKED)v);
 void
 glColor3uiv_s(v)
@@ -3649,22 +2897,6 @@ glColor3uiv_s(v)
 	{
 		GLuint * v_s = EL(v, sizeof(GLuint)*3);
 		glColor3uiv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glColor3ui
-#//# glColor3uiv_p($red, $green, $blue);
-void
-glColor3uiv_p(red, green, blue)
-	GLuint	red
-	GLuint	green
-	GLuint	blue
-	CODE:
-	{
-		GLuint param[3];
-		param[0] = red;
-		param[1] = green;
-		param[2] = blue;
-		glColor3uiv(param);
 	}
 
 #//# glColor3usv_s((PACKED)v);
@@ -3677,22 +2909,6 @@ glColor3usv_s(v)
 		glColor3usv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glColor3us
-#//# glColor3usv_p($red, $green, $blue);
-void
-glColor3usv_p(red, green, blue)
-	GLushort	red
-	GLushort	green
-	GLushort	blue
-	CODE:
-	{
-		GLushort param[3];
-		param[0] = red;
-		param[1] = green;
-		param[2] = blue;
-		glColor3usv(param);
-	}
-
 #//# glColor4bv_s((PACKED)v);
 void
 glColor4bv_s(v)
@@ -3701,24 +2917,6 @@ glColor4bv_s(v)
 	{
 		GLbyte * v_s = EL(v, sizeof(GLbyte)*4);
 		glColor4bv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glColor3b
-#//# glColor3bv_p($red, $green, $blue, $alpha);
-void
-glColor4bv_p(red, green, blue, alpha)
-	GLbyte	red
-	GLbyte	green
-	GLbyte	blue
-	GLbyte	alpha
-	CODE:
-	{
-		GLbyte param[4];
-		param[0] = red;
-		param[1] = green;
-		param[2] = blue;
-		param[3] = alpha;
-		glColor4bv(param);
 	}
 
 #//# glColor4dv_s((PACKED)v);
@@ -3731,24 +2929,6 @@ glColor4dv_s(v)
 		glColor4dv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glColor3d
-#//# glColor3dv_p($red, $green, $blue, $alpha);
-void
-glColor4dv_p(red, green, blue, alpha)
-	GLdouble	red
-	GLdouble	green
-	GLdouble	blue
-	GLdouble	alpha
-	CODE:
-	{
-		GLdouble param[4];
-		param[0] = red;
-		param[1] = green;
-		param[2] = blue;
-		param[3] = alpha;
-		glColor4dv(param);
-	}
-
 #//# glColor4fv_s((PACKED)v);
 void
 glColor4fv_s(v)
@@ -3757,24 +2937,6 @@ glColor4fv_s(v)
 	{
 		GLfloat * v_s = EL(v, sizeof(GLfloat)*4);
 		glColor4fv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glColor3f
-#//# glColor3fv_p($red, $green, $blue, $alpha);
-void
-glColor4fv_p(red, green, blue, alpha)
-	GLfloat	red
-	GLfloat	green
-	GLfloat	blue
-	GLfloat	alpha
-	CODE:
-	{
-		GLfloat param[4];
-		param[0] = red;
-		param[1] = green;
-		param[2] = blue;
-		param[3] = alpha;
-		glColor4fv(param);
 	}
 
 #//# glColor4iv_s((PACKED)v);
@@ -3787,24 +2949,6 @@ glColor4iv_s(v)
 		glColor4iv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glColor3i
-#//# glColor3iv_p($red, $green, $blue, $alpha);
-void
-glColor4iv_p(red, green, blue, alpha)
-	GLint	red
-	GLint	green
-	GLint	blue
-	GLint	alpha
-	CODE:
-	{
-		GLint param[4];
-		param[0] = red;
-		param[1] = green;
-		param[2] = blue;
-		param[3] = alpha;
-		glColor4iv(param);
-	}
-
 #//# glColor4sv_s((PACKED)v);
 void
 glColor4sv_s(v)
@@ -3813,24 +2957,6 @@ glColor4sv_s(v)
 	{
 		GLshort * v_s = EL(v, sizeof(GLshort)*4);
 		glColor4sv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glColor3s
-#//# glColor3sv_p($red, $green, $blue, $alpha);
-void
-glColor4sv_p(red, green, blue, alpha)
-	GLshort	red
-	GLshort	green
-	GLshort	blue
-	GLshort	alpha
-	CODE:
-	{
-		GLshort param[4];
-		param[0] = red;
-		param[1] = green;
-		param[2] = blue;
-		param[3] = alpha;
-		glColor4sv(param);
 	}
 
 #//# glColor4ubv_s((PACKED)v);
@@ -3843,24 +2969,6 @@ glColor4ubv_s(v)
 		glColor4ubv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glColor3ub
-#//# glColor3ubv_p($red, $green, $blue, $alpha);
-void
-glColor4ubv_p(red, green, blue, alpha)
-	GLubyte	red
-	GLubyte	green
-	GLubyte	blue
-	GLubyte	alpha
-	CODE:
-	{
-		GLubyte param[4];
-		param[0] = red;
-		param[1] = green;
-		param[2] = blue;
-		param[3] = alpha;
-		glColor4ubv(param);
-	}
-
 #//# glColor4uiv_s((PACKED)v);
 void
 glColor4uiv_s(v)
@@ -3869,24 +2977,6 @@ glColor4uiv_s(v)
 	{
 		GLuint * v_s = EL(v, sizeof(GLuint)*4);
 		glColor4uiv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glColor3ui
-#//# glColor3uiv_p($red, $green, $blue, $alpha);
-void
-glColor4uiv_p(red, green, blue, alpha)
-	GLuint	red
-	GLuint	green
-	GLuint	blue
-	GLuint	alpha
-	CODE:
-	{
-		GLuint param[4];
-		param[0] = red;
-		param[1] = green;
-		param[2] = blue;
-		param[3] = alpha;
-		glColor4uiv(param);
 	}
 
 #//# glColor4usv_s((PACKED)v);
@@ -3899,24 +2989,6 @@ glColor4usv_s(v)
 		glColor4usv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glColor3us
-#//# glColor3usv_p($red, $green, $blue, $alpha);
-void
-glColor4usv_p(red, green, blue, alpha)
-	GLushort	red
-	GLushort	green
-	GLushort	blue
-	GLushort	alpha
-	CODE:
-	{
-		GLushort param[4];
-		param[0] = red;
-		param[1] = green;
-		param[2] = blue;
-		param[3] = alpha;
-		glColor4usv(param);
-	}
-
 #//# glTexCoord1dv_s((PACKED)v);
 void
 glTexCoord1dv_s(v)
@@ -3925,18 +2997,6 @@ glTexCoord1dv_s(v)
 	{
 		GLdouble * v_s = EL(v, sizeof(GLdouble)*1);
 		glTexCoord1dv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glTexCoord1d
-#//# glTexCoord1dv_p($s);
-void
-glTexCoord1dv_p(s)
-	GLdouble	s
-	CODE:
-	{
-		GLdouble param[1];
-		param[0] = s;
-		glTexCoord1dv(param);
 	}
 
 #//# glTexCoord1fv_s((PACKED)v);
@@ -3949,18 +3009,6 @@ glTexCoord1fv_s(v)
 		glTexCoord1fv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glTexCoord1f
-#//# glTexCoord1fv_p($s);
-void
-glTexCoord1fv_p(s)
-	GLfloat	s
-	CODE:
-	{
-		GLfloat param[1];
-		param[0] = s;
-		glTexCoord1fv(param);
-	}
-
 #//# glTexCoord1iv_s((PACKED)v);
 void
 glTexCoord1iv_s(v)
@@ -3971,18 +3019,6 @@ glTexCoord1iv_s(v)
 		glTexCoord1iv(v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glTexCoord1i
-#//# glTexCoord1iv_p($s);
-void
-glTexCoord1iv_p(s)
-	GLint	s
-	CODE:
-	{
-		GLint param[1];
-		param[0] = s;
-		glTexCoord1iv(param);
-	}
-
 #//# glTexCoord1sv_s((PACKED)v)
 void
 glTexCoord1sv_s(v)
@@ -3991,18 +3027,6 @@ glTexCoord1sv_s(v)
 	{
 		GLshort * v_s = EL(v, sizeof(GLshort)*1);
 		glTexCoord1sv(v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glTexCoord1s
-#//# glTexCoord1sv_p($s);
-void
-glTexCoord1sv_p(s)
-	GLshort	s
-	CODE:
-	{
-		GLshort param[1];
-		param[0] = s;
-		glTexCoord1sv(param);
 	}
 
 #if defined(GL_VERSION_1_1) || defined(GL_EXT_vertex_array)
@@ -4775,17 +3799,6 @@ glMultiTexCoord1dv_s(target,v)
 		glMultiTexCoord1dv(target,v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glMultiTexCoord1d
-#//# glMultiTexCoord1dv_p($target,$s);
-void
-glMultiTexCoord1dv_p(target,s)
-	GLenum target
-	GLdouble s
-	CODE:
-	{
-		glMultiTexCoord1dv(target,&s);
-	}
-
 #//# glMultiTexCoord1fv_s($target,(PACKED)v);
 void
 glMultiTexCoord1fv_s(target,v)
@@ -4795,17 +3808,6 @@ glMultiTexCoord1fv_s(target,v)
 	{
 		GLfloat * v_s = EL(v, sizeof(GLfloat));
 		glMultiTexCoord1fv(target,v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glMultiTexCoord1f
-#//# glMultiTexCoord1fv_p($target,$s);
-void
-glMultiTexCoord1fv_p(target,s)
-	GLenum target
-	GLfloat s
-	CODE:
-	{
-		glMultiTexCoord1fv(target,&s);
 	}
 
 #//# glMultiTexCoord1iv_s($target,(PACKED)v);
@@ -4819,17 +3821,6 @@ glMultiTexCoord1iv_s(target,v)
 		glMultiTexCoord1iv(target,v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glMultiTexCoord1i
-#//# glMultiTexCoord1iv_p($target,$s);
-void
-glMultiTexCoord1iv_p(target,s)
-	GLenum target
-	GLint s
-	CODE:
-	{
-		glMultiTexCoord1iv(target,&s);
-	}
-
 #//# glMultiTexCoord1sv_s($target,(PACKED)v);
 void
 glMultiTexCoord1sv_s(target,v)
@@ -4839,17 +3830,6 @@ glMultiTexCoord1sv_s(target,v)
 	{
 		GLshort * v_s = EL(v, sizeof(GLshort));
 		glMultiTexCoord1sv(target,v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glMultiTexCoord1s
-#//# glMultiTexCoord1sv_p($target,$s);
-void
-glMultiTexCoord1sv_p(target,s)
-	GLenum target
-	GLshort s
-	CODE:
-	{
-		glMultiTexCoord1sv(target,&s);
 	}
 
 #//# glMultiTexCoord2dv_s(target,(PACKED)v);
@@ -4863,21 +3843,6 @@ glMultiTexCoord2dv_s(target,v)
 		glMultiTexCoord2dv(target,v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glMultiTexCoord2d
-#//# glMultiTexCoord2dv_p($target,$s,$t);
-void
-glMultiTexCoord2dv_p(target,s,t)
-	GLenum target
-	GLdouble s
-	GLdouble t
-	CODE:
-	{
-		GLdouble param[2];
-		param[0] = s;
-		param[1] = t;
-		glMultiTexCoord2dv(target,param);
-	}
-
 #//# glMultiTexCoord2fv_s($target,(PACKED)v);
 void
 glMultiTexCoord2fv_s(target,v)
@@ -4887,21 +3852,6 @@ glMultiTexCoord2fv_s(target,v)
 	{
 		GLfloat * v_s = EL(v, sizeof(GLfloat));
 		glMultiTexCoord2fv(target,v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glMultiTexCoord2f
-#//# glMultiTexCoord2fv_p($target,$s,$t);
-void
-glMultiTexCoord2fv_p(target,s,t)
-	GLenum target
-	GLfloat s
-	GLfloat t
-	CODE:
-	{
-		GLfloat param[2];
-		param[0] = s;
-		param[1] = t;
-		glMultiTexCoord2fv(target,param);
 	}
 
 #//# glMultiTexCoord2iv_s($target,(PACKED)v);
@@ -4915,21 +3865,6 @@ glMultiTexCoord2iv_s(target,v)
 		glMultiTexCoord2iv(target,v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glMultiTexCoord2i
-#//# glMultiTexCoord2iv_p($target,$s,$t);
-void
-glMultiTexCoord2iv_p(target,s,t)
-	GLenum target
-	GLint s
-	GLint t
-	CODE:
-	{
-		GLint param[2];
-		param[0] = s;
-		param[1] = t;
-		glMultiTexCoord2iv(target,param);
-	}
-
 #//# glMultiTexCoord2sv_s($target,(PACKED)v);
 void
 glMultiTexCoord2sv_s(target,v)
@@ -4939,21 +3874,6 @@ glMultiTexCoord2sv_s(target,v)
 	{
 		GLshort * v_s = EL(v, sizeof(GLshort));
 		glMultiTexCoord2sv(target,v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glMultiTexCoord2s
-#//# glMultiTexCoord2sv_p($target,$s,$t);
-void
-glMultiTexCoord2sv_p(target,s,t)
-	GLenum target
-	GLshort s
-	GLshort t
-	CODE:
-	{
-		GLshort param[2];
-		param[0] = s;
-		param[1] = t;
-		glMultiTexCoord2sv(target,param);
 	}
 
 #//# glMultiTexCoord3dv_s(target,(PACKED)v);
@@ -4967,23 +3887,6 @@ glMultiTexCoord3dv_s(target,v)
 		glMultiTexCoord3dv(target,v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glMultiTexCoord3d
-#//# glMultiTexCoord3dv_p($target,$s,$t,$r);
-void
-glMultiTexCoord3dv_p(target,s,t,r)
-	GLenum target
-	GLdouble s
-	GLdouble t
-	GLdouble r
-	CODE:
-	{
-		GLdouble param[3];
-		param[0] = s;
-		param[1] = t;
-		param[2] = r;
-		glMultiTexCoord3dv(target,param);
-	}
-
 #//# glMultiTexCoord3fv_s($target,(PACKED)v);
 void
 glMultiTexCoord3fv_s(target,v)
@@ -4993,23 +3896,6 @@ glMultiTexCoord3fv_s(target,v)
 	{
 		GLfloat * v_s = EL(v, sizeof(GLfloat));
 		glMultiTexCoord3fv(target,v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glMultiTexCoord3f
-#//# glMultiTexCoord3fv_p($target,$s,$t,$r);
-void
-glMultiTexCoord3fv_p(target,s,t,r)
-	GLenum target
-	GLfloat s
-	GLfloat t
-	GLfloat r
-	CODE:
-	{
-		GLfloat param[3];
-		param[0] = s;
-		param[1] = t;
-		param[2] = r;
-		glMultiTexCoord3fv(target,param);
 	}
 
 #//# glMultiTexCoord3iv_s($target,(PACKED)v);
@@ -5023,23 +3909,6 @@ glMultiTexCoord3iv_s(target,v)
 		glMultiTexCoord3iv(target,v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glMultiTexCoord3i
-#//# glMultiTexCoord3iv_p($target,$s,$t,$r);
-void
-glMultiTexCoord3iv_p(target,s,t,r)
-	GLenum target
-	GLint s
-	GLint t
-	GLint r
-	CODE:
-	{
-		GLint param[3];
-		param[0] = s;
-		param[1] = t;
-		param[2] = r;
-		glMultiTexCoord3iv(target,param);
-	}
-
 #//# glMultiTexCoord3sv_s($target,(PACKED)v);
 void
 glMultiTexCoord3sv_s(target,v)
@@ -5049,23 +3918,6 @@ glMultiTexCoord3sv_s(target,v)
 	{
 		GLshort * v_s = EL(v, sizeof(GLshort));
 		glMultiTexCoord3sv(target,v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glMultiTexCoord3s
-#//# glMultiTexCoord3sv_p($target,$s,$t,$r);
-void
-glMultiTexCoord3sv_p(target,s,t,r)
-	GLenum target
-	GLshort s
-	GLshort t
-	GLshort r
-	CODE:
-	{
-		GLshort param[3];
-		param[0] = s;
-		param[1] = t;
-		param[2] = r;
-		glMultiTexCoord3sv(target,param);
 	}
 
 #//# glMultiTexCoord4dv_s($target,(PACKED)v);
@@ -5079,25 +3931,6 @@ glMultiTexCoord4dv_s(target,v)
 		glMultiTexCoord4dv(target,v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glMultiTexCoord4d
-#//# glMultiTexCoord4dv_p($target,$s,$t,$r,$q);
-void
-glMultiTexCoord4dv_p(target,s,t,r,q)
-	GLenum target
-	GLdouble s
-	GLdouble t
-	GLdouble r
-	GLdouble q
-	CODE:
-	{
-		GLdouble param[4];
-		param[0] = s;
-		param[1] = t;
-		param[2] = r;
-		param[3] = q;
-		glMultiTexCoord4dv(target,param);
-	}
-
 #//# glMultiTexCoord4fv_s($target,(PACKED)v);
 void
 glMultiTexCoord4fv_s(target,v)
@@ -5107,25 +3940,6 @@ glMultiTexCoord4fv_s(target,v)
 	{
 		GLfloat * v_s = EL(v, sizeof(GLfloat));
 		glMultiTexCoord4fv(target,v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glMultiTexCoord4f
-#//# glMultiTexCoord4fv_p($target,$s,$t,$r,$q);
-void
-glMultiTexCoord4fv_p(target,s,t,r,q)
-	GLenum target
-	GLfloat s
-	GLfloat t
-	GLfloat r
-	GLfloat q
-	CODE:
-	{
-		GLfloat param[4];
-		param[0] = s;
-		param[1] = t;
-		param[2] = r;
-		param[3] = q;
-		glMultiTexCoord4fv(target,param);
 	}
 
 #//# glMultiTexCoord4iv_s($target,(PACKED)v);
@@ -5139,25 +3953,6 @@ glMultiTexCoord4iv_s(target,v)
 		glMultiTexCoord4iv(target,v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glMultiTexCoord4i
-#//# glMultiTexCoord4iv_p($target,$s,$t,$r,$q);
-void
-glMultiTexCoord4iv_p(target,s,t,r,q)
-	GLenum target
-	GLint s
-	GLint t
-	GLint r
-	GLint q
-	CODE:
-	{
-		GLint param[4];
-		param[0] = s;
-		param[1] = t;
-		param[2] = r;
-		param[3] = q;
-		glMultiTexCoord4iv(target,param);
-	}
-
 #//# glMultiTexCoord4sv_s($target,(PACKED)v);
 void
 glMultiTexCoord4sv_s(target,v)
@@ -5167,25 +3962,6 @@ glMultiTexCoord4sv_s(target,v)
 	{
 		GLshort * v_s = EL(v, sizeof(GLshort));
 		glMultiTexCoord4sv(target,v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glMultiTexCoord4s
-#//# glMultiTexCoord4sv_p($target,$s,$t,$r,$q);
-void
-glMultiTexCoord4sv_p(target,s,t,r,q)
-	GLenum target
-	GLshort s
-	GLshort t
-	GLshort r
-	GLshort q
-	CODE:
-	{
-		GLshort param[4];
-		param[0] = s;
-		param[1] = t;
-		param[2] = r;
-		param[3] = q;
-		glMultiTexCoord4sv(target,param);
 	}
 
 #endif // defined(GL_VERSION_1_2_1) || defined(GL_VERSION_1_3)
@@ -5597,19 +4373,6 @@ glMultiTexCoord1dvARB_s(target,v)
 		glMultiTexCoord1dvARB(target,v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glMultiTexCoord1dARB
-#//# glMultiTexCoord1dvARB_p($target,$s);
-void
-glMultiTexCoord1dvARB_p(target,s)
-	GLenum target
-	GLdouble s
-	INIT:
-		loadProc(glMultiTexCoord1dvARB,"glMultiTexCoord1dvARB");
-	CODE:
-	{
-		glMultiTexCoord1dvARB(target,&s);
-	}
-
 #//# glMultiTexCoord1fvARB_s($target,(PACKED)v);
 void
 glMultiTexCoord1fvARB_s(target,v)
@@ -5621,19 +4384,6 @@ glMultiTexCoord1fvARB_s(target,v)
 	{
 		GLfloat * v_s = EL(v, sizeof(GLfloat));
 		glMultiTexCoord1fvARB(target,v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glMultiTexCoord1fARB
-#//# glMultiTexCoord1fvARB_p($target,$s);
-void
-glMultiTexCoord1fvARB_p(target,s)
-	GLenum target
-	GLfloat s
-	INIT:
-		loadProc(glMultiTexCoord1fvARB,"glMultiTexCoord1fvARB");
-	CODE:
-	{
-		glMultiTexCoord1fvARB(target,&s);
 	}
 
 #//# glMultiTexCoord1ivARB_s($target,(PACKED)v);
@@ -5649,19 +4399,6 @@ glMultiTexCoord1ivARB_s(target,v)
 		glMultiTexCoord1ivARB(target,v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glMultiTexCoord1iARB
-#//# glMultiTexCoord1ivARB_p($target,$s);
-void
-glMultiTexCoord1ivARB_p(target,s)
-	GLenum target
-	GLint s
-	INIT:
-		loadProc(glMultiTexCoord1ivARB,"glMultiTexCoord1ivARB");
-	CODE:
-	{
-		glMultiTexCoord1ivARB(target,&s);
-	}
-
 #//# glMultiTexCoord1svARB_s($target,(PACKED)v);
 void
 glMultiTexCoord1svARB_s(target,v)
@@ -5673,19 +4410,6 @@ glMultiTexCoord1svARB_s(target,v)
 	{
 		GLshort * v_s = EL(v, sizeof(GLshort));
 		glMultiTexCoord1svARB(target,v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glMultiTexCoord1sARB
-#//# glMultiTexCoord1svARB_p($target,$s);
-void
-glMultiTexCoord1svARB_p(target,s)
-	GLenum target
-	GLshort s
-	INIT:
-		loadProc(glMultiTexCoord1svARB,"glMultiTexCoord1svARB");
-	CODE:
-	{
-		glMultiTexCoord1svARB(target,&s);
 	}
 
 #//# glMultiTexCoord2dvARB_s(target,(PACKED)v);
@@ -5701,23 +4425,6 @@ glMultiTexCoord2dvARB_s(target,v)
 		glMultiTexCoord2dvARB(target,v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glMultiTexCoord2dARB
-#//# glMultiTexCoord2dvARB_p($target,$s,$t);
-void
-glMultiTexCoord2dvARB_p(target,s,t)
-	GLenum target
-	GLdouble s
-	GLdouble t
-	INIT:
-		loadProc(glMultiTexCoord2dvARB,"glMultiTexCoord2dvARB");
-	CODE:
-	{
-		GLdouble param[2];
-		param[0] = s;
-		param[1] = t;
-		glMultiTexCoord2dvARB(target,param);
-	}
-
 #//# glMultiTexCoord2fvARB_s($target,(PACKED)v);
 void
 glMultiTexCoord2fvARB_s(target,v)
@@ -5729,23 +4436,6 @@ glMultiTexCoord2fvARB_s(target,v)
 	{
 		GLfloat * v_s = EL(v, sizeof(GLfloat));
 		glMultiTexCoord2fvARB(target,v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glMultiTexCoord2fARB
-#//# glMultiTexCoord2fvARB_p($target,$s,$t);
-void
-glMultiTexCoord2fvARB_p(target,s,t)
-	GLenum target
-	GLfloat s
-	GLfloat t
-	INIT:
-		loadProc(glMultiTexCoord2fvARB,"glMultiTexCoord2fvARB");
-	CODE:
-	{
-		GLfloat param[2];
-		param[0] = s;
-		param[1] = t;
-		glMultiTexCoord2fvARB(target,param);
 	}
 
 #//# glMultiTexCoord2ivARB_s($target,(PACKED)v);
@@ -5761,23 +4451,6 @@ glMultiTexCoord2ivARB_s(target,v)
 		glMultiTexCoord2ivARB(target,v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glMultiTexCoord2iARB
-#//# glMultiTexCoord2ivARB_p($target,$s,$t);
-void
-glMultiTexCoord2ivARB_p(target,s,t)
-	GLenum target
-	GLint s
-	GLint t
-	INIT:
-		loadProc(glMultiTexCoord2ivARB,"glMultiTexCoord2ivARB");
-	CODE:
-	{
-		GLint param[2];
-		param[0] = s;
-		param[1] = t;
-		glMultiTexCoord2ivARB(target,param);
-	}
-
 #//# glMultiTexCoord2svARB_s($target,(PACKED)v);
 void
 glMultiTexCoord2svARB_s(target,v)
@@ -5789,23 +4462,6 @@ glMultiTexCoord2svARB_s(target,v)
 	{
 		GLshort * v_s = EL(v, sizeof(GLshort));
 		glMultiTexCoord2svARB(target,v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glMultiTexCoord2sARB
-#//# glMultiTexCoord2svARB_p($target,$s,$t);
-void
-glMultiTexCoord2svARB_p(target,s,t)
-	GLenum target
-	GLshort s
-	GLshort t
-	INIT:
-		loadProc(glMultiTexCoord2svARB,"glMultiTexCoord2svARB");
-	CODE:
-	{
-		GLshort param[2];
-		param[0] = s;
-		param[1] = t;
-		glMultiTexCoord2svARB(target,param);
 	}
 
 #//# glMultiTexCoord3dvARB_s(target,(PACKED)v);
@@ -5821,25 +4477,6 @@ glMultiTexCoord3dvARB_s(target,v)
 		glMultiTexCoord3dvARB(target,v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glMultiTexCoord3dARB
-#//# glMultiTexCoord3dvARB_p($target,$s,$t,$r);
-void
-glMultiTexCoord3dvARB_p(target,s,t,r)
-	GLenum target
-	GLdouble s
-	GLdouble t
-	GLdouble r
-	INIT:
-		loadProc(glMultiTexCoord3dvARB,"glMultiTexCoord3dvARB");
-	CODE:
-	{
-		GLdouble param[3];
-		param[0] = s;
-		param[1] = t;
-		param[2] = r;
-		glMultiTexCoord3dvARB(target,param);
-	}
-
 #//# glMultiTexCoord3fvARB_s($target,(PACKED)v);
 void
 glMultiTexCoord3fvARB_s(target,v)
@@ -5851,25 +4488,6 @@ glMultiTexCoord3fvARB_s(target,v)
 	{
 		GLfloat * v_s = EL(v, sizeof(GLfloat));
 		glMultiTexCoord3fvARB(target,v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glMultiTexCoord3fARB
-#//# glMultiTexCoord3fvARB_p($target,$s,$t,$r);
-void
-glMultiTexCoord3fvARB_p(target,s,t,r)
-	GLenum target
-	GLfloat s
-	GLfloat t
-	GLfloat r
-	INIT:
-		loadProc(glMultiTexCoord3fvARB,"glMultiTexCoord3fvARB");
-	CODE:
-	{
-		GLfloat param[3];
-		param[0] = s;
-		param[1] = t;
-		param[2] = r;
-		glMultiTexCoord3fvARB(target,param);
 	}
 
 #//# glMultiTexCoord3ivARB_s($target,(PACKED)v);
@@ -5885,25 +4503,6 @@ glMultiTexCoord3ivARB_s(target,v)
 		glMultiTexCoord3ivARB(target,v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glMultiTexCoord3iARB
-#//# glMultiTexCoord3ivARB_p($target,$s,$t,$r);
-void
-glMultiTexCoord3ivARB_p(target,s,t,r)
-	GLenum target
-	GLint s
-	GLint t
-	GLint r
-	INIT:
-		loadProc(glMultiTexCoord3ivARB,"glMultiTexCoord3ivARB");
-	CODE:
-	{
-		GLint param[3];
-		param[0] = s;
-		param[1] = t;
-		param[2] = r;
-		glMultiTexCoord3ivARB(target,param);
-	}
-
 #//# glMultiTexCoord3svARB_s($target,(PACKED)v);
 void
 glMultiTexCoord3svARB_s(target,v)
@@ -5915,25 +4514,6 @@ glMultiTexCoord3svARB_s(target,v)
 	{
 		GLshort * v_s = EL(v, sizeof(GLshort));
 		glMultiTexCoord3svARB(target,v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glMultiTexCoord3sARB
-#//# glMultiTexCoord3svARB_p($target,$s,$t,$r);
-void
-glMultiTexCoord3svARB_p(target,s,t,r)
-	GLenum target
-	GLshort s
-	GLshort t
-	GLshort r
-	INIT:
-		loadProc(glMultiTexCoord3svARB,"glMultiTexCoord3svARB");
-	CODE:
-	{
-		GLshort param[3];
-		param[0] = s;
-		param[1] = t;
-		param[2] = r;
-		glMultiTexCoord3svARB(target,param);
 	}
 
 #//# glMultiTexCoord4dvARB_s($target,(PACKED)v);
@@ -5949,27 +4529,6 @@ glMultiTexCoord4dvARB_s(target,v)
 		glMultiTexCoord4dvARB(target,v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glMultiTexCoord4dARB
-#//# glMultiTexCoord4dvARB_p($target,$s,$t,$r,$q);
-void
-glMultiTexCoord4dvARB_p(target,s,t,r,q)
-	GLenum target
-	GLdouble s
-	GLdouble t
-	GLdouble r
-	GLdouble q
-	INIT:
-		loadProc(glMultiTexCoord4dvARB,"glMultiTexCoord4dvARB");
-	CODE:
-	{
-		GLdouble param[4];
-		param[0] = s;
-		param[1] = t;
-		param[2] = r;
-		param[3] = q;
-		glMultiTexCoord4dvARB(target,param);
-	}
-
 #//# glMultiTexCoord4fvARB_s($target,(PACKED)v);
 void
 glMultiTexCoord4fvARB_s(target,v)
@@ -5981,27 +4540,6 @@ glMultiTexCoord4fvARB_s(target,v)
 	{
 		GLfloat * v_s = EL(v, sizeof(GLfloat));
 		glMultiTexCoord4fvARB(target,v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glMultiTexCoord4fARB
-#//# glMultiTexCoord4fvARB_p($target,$s,$t,$r,$q);
-void
-glMultiTexCoord4fvARB_p(target,s,t,r,q)
-	GLenum target
-	GLfloat s
-	GLfloat t
-	GLfloat r
-	GLfloat q
-	INIT:
-		loadProc(glMultiTexCoord4fvARB,"glMultiTexCoord4fvARB");
-	CODE:
-	{
-		GLfloat param[4];
-		param[0] = s;
-		param[1] = t;
-		param[2] = r;
-		param[3] = q;
-		glMultiTexCoord4fvARB(target,param);
 	}
 
 #//# glMultiTexCoord4ivARB_s($target,(PACKED)v);
@@ -6017,27 +4555,6 @@ glMultiTexCoord4ivARB_s(target,v)
 		glMultiTexCoord4ivARB(target,v_s);
 	}
 
-#//!!! Do we really need this?  It duplicates glMultiTexCoord4iARB
-#//# glMultiTexCoord4ivARB_p($target,$s,$t,$r,$q);
-void
-glMultiTexCoord4ivARB_p(target,s,t,r,q)
-	GLenum target
-	GLint s
-	GLint t
-	GLint r
-	GLint q
-	INIT:
-		loadProc(glMultiTexCoord4ivARB,"glMultiTexCoord4ivARB");
-	CODE:
-	{
-		GLint param[4];
-		param[0] = s;
-		param[1] = t;
-		param[2] = r;
-		param[3] = q;
-		glMultiTexCoord4ivARB(target,param);
-	}
-
 #//# glMultiTexCoord4svARB_s($target,(PACKED)v);
 void
 glMultiTexCoord4svARB_s(target,v)
@@ -6049,27 +4566,6 @@ glMultiTexCoord4svARB_s(target,v)
 	{
 		GLshort * v_s = EL(v, sizeof(GLshort));
 		glMultiTexCoord4svARB(target,v_s);
-	}
-
-#//!!! Do we really need this?  It duplicates glMultiTexCoord4sARB
-#//# glMultiTexCoord4svARB_p($target,$s,$t,$r,$q);
-void
-glMultiTexCoord4svARB_p(target,s,t,r,q)
-	GLenum target
-	GLshort s
-	GLshort t
-	GLshort r
-	GLshort q
-	INIT:
-		loadProc(glMultiTexCoord4svARB,"glMultiTexCoord4svARB");
-	CODE:
-	{
-		GLshort param[4];
-		param[0] = s;
-		param[1] = t;
-		param[2] = r;
-		param[3] = q;
-		glMultiTexCoord4svARB(target,param);
 	}
 
 #endif // GL_ARB_multitexture

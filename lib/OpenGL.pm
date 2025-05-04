@@ -1267,13 +1267,125 @@ use OpenGL::Modern @gl_func_common_modern, @extra_gl_func_modern, qw(
   glpErrorString
 );
 for (qw(
+  glColor3b
+  glColor3b
+  glColor3d
+  glColor3d
+  glColor3f
+  glColor3i
+  glColor3i
+  glColor3s
+  glColor3s
+  glColor3s
+  glColor3ub
+  glColor3ub
+  glColor3ui
+  glColor3ui
+  glColor3us
+  glColor3us
+  glMultiTexCoord1d
+  glMultiTexCoord1f
+  glMultiTexCoord1i
+  glMultiTexCoord1s
+  glMultiTexCoord2d
+  glMultiTexCoord2f
+  glMultiTexCoord2i
+  glMultiTexCoord2s
+  glMultiTexCoord3d
+  glMultiTexCoord3f
+  glMultiTexCoord3i
+  glMultiTexCoord3s
+  glMultiTexCoord4d
+  glMultiTexCoord4f
+  glMultiTexCoord4i
+  glMultiTexCoord4s
+  glNormal3b
+  glNormal3d
+  glNormal3f
+  glNormal3i
+  glNormal3s
+  glRasterPos2d
+  glRasterPos2f
+  glRasterPos2i
+  glRasterPos2s
+  glRasterPos3d
+  glRasterPos3f
+  glRasterPos3i
+  glRasterPos3s
+  glRasterPos4d
+  glRasterPos4f
+  glRasterPos4i
+  glRasterPos4s
   glRectd
   glRectf
   glRecti
   glRects
+  glTexCoord1d
+  glTexCoord1f
+  glTexCoord1i
+  glTexCoord1s
+  glTexCoord2d
+  glTexCoord2f
+  glTexCoord2i
+  glTexCoord2s
+  glTexCoord3d
+  glTexCoord3f
+  glTexCoord3i
+  glTexCoord3s
+  glTexCoord4d
+  glTexCoord4f
+  glTexCoord4i
+  glTexCoord4s
+  glVertex2d
+  glVertex2f
+  glVertex2i
+  glVertex2s
+  glVertex3d
+  glVertex3f
+  glVertex3i
+  glVertex3s
+  glVertex4d
+  glVertex4f
+  glVertex4i
+  glVertex4s
 )) {
   no strict 'refs';
   *{$_."v_p"} = *{"OpenGL::Modern::$_"};
+}
+for (qw(
+  glMultiTexCoord1d
+  glMultiTexCoord1f
+  glMultiTexCoord1i
+  glMultiTexCoord1s
+  glMultiTexCoord2d
+  glMultiTexCoord2f
+  glMultiTexCoord2i
+  glMultiTexCoord2s
+  glMultiTexCoord3d
+  glMultiTexCoord3f
+  glMultiTexCoord3i
+  glMultiTexCoord3s
+  glMultiTexCoord4d
+  glMultiTexCoord4f
+  glMultiTexCoord4i
+  glMultiTexCoord4s
+  glProgramEnvParameter4d
+  glProgramEnvParameter4f
+  glProgramLocalParameter4d
+  glProgramLocalParameter4f
+  glVertexAttrib1d
+  glVertexAttrib1s
+  glVertexAttrib2d
+  glVertexAttrib2s
+  glVertexAttrib3d
+  glVertexAttrib3f
+  glVertexAttrib3s
+  glVertexAttrib4d
+  glVertexAttrib4f
+  glVertexAttrib4s
+)) {
+  no strict 'refs';
+  *{$_."vARB_p"} = *{"OpenGL::Modern::${_}ARB"};
 }
 for (qw(
   glGetAttribLocationARB
