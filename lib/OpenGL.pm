@@ -1350,7 +1350,8 @@ for (qw(
   glVertex4s
 )) {
   no strict 'refs';
-  *{$_."v_p"} = *{"OpenGL::Modern::$_"};
+  push @extra_gl_func, my $fname = $_."v_p";
+  *$fname = *{"OpenGL::Modern::$_"};
 }
 for (qw(
   glMultiTexCoord1d
@@ -1385,19 +1386,22 @@ for (qw(
   glVertexAttrib4s
 )) {
   no strict 'refs';
-  *{$_."vARB_p"} = *{"OpenGL::Modern::${_}ARB"};
+  push @extra_gl_func, my $fname = $_."vARB_p";
+  *$fname = *{"OpenGL::Modern::${_}ARB"};
 }
 for (qw(
   glGetAttribLocationARB
   glGetUniformLocationARB
 )) {
   no strict 'refs';
+  push @extra_gl_func, $_."_c", $_."_p";
   *{$_."_c"} = *{$_."_p"} = *{"OpenGL::Modern::$_"};
 }
 for (qw(
   glDeleteQueries
 )) {
   no strict 'refs';
+  push @extra_gl_func, $_;
   *$_ = *{"OpenGL::Modern::${_}_p"};
 }
 

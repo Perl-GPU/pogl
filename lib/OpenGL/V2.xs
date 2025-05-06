@@ -1800,20 +1800,6 @@ glGetAttachedObjectsARB_p(containerObj)
 		free(obj);
 	}
 
-#//# $value = glGetUniformLocationARB_p($programObj, $name);
-GLint
-glGetUniformLocationARB_p(programObj, ...)
-	GLhandleARB programObj
-	INIT:
-		loadProc(glGetUniformLocationARB,"glGetUniformLocationARB");
-	CODE:
-	{
-		GLcharARB *name = (GLcharARB *)SvPV(ST(1),PL_na);
-		RETVAL = glGetUniformLocationARB(programObj, name);
-	}
-	OUTPUT:
-		RETVAL
-
 #//# glGetActiveUniformARB_s($programObj, $index, $maxLength, (PACKED)length, (PACKED)size, (PACKED)type, (PACKED)name);
 void
 glGetActiveUniformARB_s(programObj, index, maxLength, length, size, type, name)
