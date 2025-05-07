@@ -3,9 +3,6 @@
  *  modify it under the same terms as Perl itself.
  */
 
-/* OpenGL::Matrix */
-#define IN_POGL_MATRIX_XS
-
 #include <stdio.h>
 #include <float.h>
 
@@ -142,8 +139,6 @@ static int inverse_lookup[] = {0,3,6,9,1,4,7,10,2,5,8,11};
 
 
 MODULE = OpenGL::Matrix		PACKAGE = OpenGL::Matrix
-
-#ifdef IN_POGL_MATRIX_XS
 
 #//# $mat = OpenGL::Matrix->new($cols, $rows[, (OGM)matrix]);
 #//- Constructor for 2D Matrix OGM - populated with matrix if provided
@@ -924,21 +919,3 @@ invert(mat, transpose)
 	}
 	OUTPUT:
 	    RETVAL
-
-
-#endif /* End IN_POGL_MATRIX_XS */
-
-
-
-
-
-
-
-##################### GLU #########################
-
-
-############################## GLUT #########################
-
-
-# /* This is assigned to GLX for now.  The glp*() functions should be split out */
-
