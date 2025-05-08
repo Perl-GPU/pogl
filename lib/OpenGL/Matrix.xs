@@ -110,7 +110,7 @@ static void set_data_identity(GLfloat * data, int size)
 	}
 }
 
-static void set_data_frustrum(GLfloat * data,
+static void set_data_frustum(GLfloat * data,
     GLfloat left, GLfloat right, GLfloat top, GLfloat bottom, GLfloat n, GLfloat f)
 {
     GLfloat width = right-left;
@@ -395,10 +395,10 @@ set_quaternion(mat, degrees, ...)
 	OUTPUT:
 		RETVAL
 
-#//# $status = $mat->set_frustrum($left, $right, $top, $bottom, $near, $far);
+#//# $status = $mat->set_frustum($left, $right, $top, $bottom, $near, $far);
 #//- Set 4x4 Frustrum Matrix; returns 0 if successful
 GLint
-set_frustrum(mat, left, right, top, bottom, n, f)
+set_frustum(mat, left, right, top, bottom, n, f)
 	OpenGL::Matrix	mat
 	GLfloat         left
 	GLfloat         right
@@ -408,9 +408,9 @@ set_frustrum(mat, left, right, top, bottom, n, f)
 	GLfloat         f
 	CODE:
 	{
-	    needs_4x4(mat, "set_frustrum");
+	    needs_4x4(mat, "set_frustum");
 
-        set_data_frustrum((GLfloat*)mat->data, left, right, top, bottom, n, f);
+        set_data_frustum((GLfloat*)mat->data, left, right, top, bottom, n, f);
 
         RETVAL = 0;
 	}
@@ -434,7 +434,7 @@ set_perspective(mat, width, height, n, f, fov)
         double aspect = width/height;
         double h_2 = n*tan(fov*PI/360);
         double w_2 = h_2*aspect;
-        set_data_frustrum((GLfloat*)mat->data, -w_2, w_2, -h_2, h_2, n, f);
+        set_data_frustum((GLfloat*)mat->data, -w_2, w_2, -h_2, h_2, n, f);
 
         RETVAL = 0;
 	}
