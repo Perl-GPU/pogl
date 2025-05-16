@@ -56,11 +56,7 @@ else
   print "\nrun as `perl Makefile.PL help` to show user options\n";
 }
 
-our $verbose = 0;
-# Get debugging flags
-if ( grep { if (m/^verbose/i) { $verbose++; 1; } else { 0; } } @ARGV ) {
-  @ARGV = grep { !m/^verbose/i } @ARGV;
-}
+our $verbose = grep m/^verbose/i, @ARGV; # Get debugging flags
 print "\$verbose set to $verbose" . ($verbose ? "" : " - enable by running as `perl Makefile.PL verbose`");
 print "\n\n";
 
@@ -74,7 +70,7 @@ our $IS_W32API = ($IS_CYGWIN && grep { m/^interface=(W32API|WGL)/i } @ARGV );
 print "Build platform \$IS_W32API==$IS_W32API\n" if $IS_W32API and $verbose;
 
 our $INCS;
-our $NO_LGCC = grep /^NO_LGCC$/, @ARGV; @ARGV = grep !/^NO_LGCC$/, @ARGV;
+our $NO_LGCC = grep /^NO_LGCC$/, @ARGV;
 
 my $prepare_success = eval {
 # Look for available libs
@@ -143,9 +139,7 @@ my $build_config =
   !defined($OPTS) ? () : (OPTIMIZE => $OPTS),
 };
 
-print "MakeMaker configuration:\n DEFINE=$DEFS\n INC=$INCS\n LIBS=$LIBS\n\n" if $verbose;
-
-close(CONF) if (open(CONF,">", "lib/OpenGL/Config.pm")); # empty Config.pm
+WriteConfigPM( $build_config ); # generate final Config.pm
 WriteMakefile(
   NAME	=> 'OpenGL',
   VERSION_FROM=> 'lib/OpenGL.pm',
@@ -191,7 +185,6 @@ WriteMakefile(
   %$build_config,
   INC => $INCS . ' -I'.curdir(),
 );       		# Generate the Makefile
-WriteConfigPM( $build_config );			# Regenerate final Config.pm
 
 if ($found_libs->{GLX} && $ENV{TERM} !~ /^xterm/) {
   print "\nThis configuration should be built under an X11 shell\n\n";
@@ -476,8 +469,6 @@ sub get_interface_lib {
       if @interface_opts > 1;
     ($interface_lib) = @interface_opts;
     print "User set interface to $interface_lib\n" if $verbose && !$fallback;
-    # Strip out interface args
-    @$argv_ref = grep { !m/^interface=/i } @$argv_ref;
     return $interface_lib;
   }
   # Otherwise use available defaults
@@ -650,8 +641,8 @@ sub get_defines {
 sub WriteConfigPM
 {
   my($config) = @_;
-  die "Unable to write to Config.pm\n" if (!open(CONFIGPM, ">", "lib/OpenGL/Config.pm"));
-  print CONFIGPM q
+  die "Unable to write to Config.pm\n" if !open my $fh, ">", "lib/OpenGL/Config.pm";
+  print $fh q
 {
 # This is the Perl OpenGL build configuration file.
 # It contains the final OpenGL build arguments from
@@ -664,11 +655,10 @@ sub WriteConfigPM
   require Data::Dumper;
   # Ensure deterministic output
   { no warnings; $Data::Dumper::Sortkeys = 1; }
-  print CONFIGPM Data::Dumper->Dump( [$config], [qw(OpenGL::Config)] );
-  print CONFIGPM qq
+  print $fh Data::Dumper->Dump( [$config], [qw(OpenGL::Config)] );
+  print $fh qq
 {
 1;
 __END__
 };
-  close(CONFIGPM);
 }
