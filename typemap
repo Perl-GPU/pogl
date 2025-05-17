@@ -29,13 +29,3 @@ OpenGL::Array		T_PTROBJ
 OpenGL::Matrix 		T_PTROBJ
 
 GLXDrawable		T_PTR
-
-INPUT
-
-T_FASTPTROBJ
-        $var = INT2PTR($type,SvIV($arg));
-
-OUTPUT
-
-T_FASTPTROBJ
-	sv_setref_pv($arg, \"${ntype}\", (void*)$var);
