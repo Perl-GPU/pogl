@@ -40,7 +40,7 @@
 
 ^.*.tar.gz
 ^.git
-^lib/OpenGL/Config.pm
+^lib/OpenGL/Config\.pm
 ^Makefile$
 ^MYMETA.json
 ^MYMETA.yml

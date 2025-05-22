@@ -4598,4 +4598,9 @@ sub glpCheckExtension
   return 0;
 }
 
+sub Inline {
+  require OpenGL::Install::Files;
+  goto &OpenGL::Install::Files::Inline;
+}
+
 1;

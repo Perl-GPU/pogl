@@ -75,6 +75,7 @@ lib/OpenGL/GLUT.pm
 lib/OpenGL/GLUT.xs
 lib/OpenGL/GLX.pm
 lib/OpenGL/GLX.xs
+lib/OpenGL/Install/Files.pm
 lib/OpenGL/Install/typemap
 lib/OpenGL/Matrix.pm
 lib/OpenGL/Matrix.xs
