@@ -159,6 +159,7 @@ WriteMakefile(
     },
   },
   XSPROTOARG	=> '-noprototypes',
+  TYPEMAPS => [qw(lib/OpenGL/Install/typemap)],
   META_MERGE => {
      "meta-spec" => { version => 2 },
      dynamic_config => 0,

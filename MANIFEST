@@ -75,6 +75,7 @@ lib/OpenGL/GLUT.pm
 lib/OpenGL/GLUT.xs
 lib/OpenGL/GLX.pm
 lib/OpenGL/GLX.xs
+lib/OpenGL/Install/typemap
 lib/OpenGL/Matrix.pm
 lib/OpenGL/Matrix.xs
 lib/OpenGL/Shader.pm
@@ -114,7 +115,6 @@ test.jpg
 test.pl
 test.tga
 TODO
-typemap
 utils/const.pl
 utils/exports.pl
 utils/exports.txt
