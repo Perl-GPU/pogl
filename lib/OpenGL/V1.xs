@@ -1172,8 +1172,9 @@ glGetTexParameterfv_s(target, pname, params)
 	SV *	params
 	CODE:
 	{
-	GLfloat * params_s = EL(params,
-		sizeof(GLfloat)*gl_texparameter_count(pname));
+	int nparams = gl_texparameter_count(pname);
+	if (nparams < 0) croak("Unknown texparameter parameter");
+	GLfloat * params_s = EL(params, sizeof(GLfloat)*nparams);
 	glGetTexParameterfv(target, pname, params_s);
 	}
 
@@ -1186,8 +1187,9 @@ glGetTexParameteriv_s(target, pname, params)
 	SV *	params
 	CODE:
 	{
-	GLint * params_s = EL(params,
-		sizeof(GLint)*gl_texparameter_count(pname));
+	int nparams = gl_texparameter_count(pname);
+	if (nparams < 0) croak("Unknown texparameter parameter");
+	GLint * params_s = EL(params, sizeof(GLint)*nparams);
 	glGetTexParameteriv(target, pname, params_s);
 	}
 
@@ -1200,11 +1202,12 @@ glGetTexParameterfv_p(target, pname)
 	PPCODE:
 	{
 		GLfloat	ret[MAX_GL_TEXPARAMETER_COUNT];
-		int n = gl_texparameter_count(pname);
+		int nparams = gl_texparameter_count(pname);
+		if (nparams < 0) croak("Unknown texparameter parameter");
 		int i;
 		glGetTexParameterfv(target, pname, &ret[0]);
-		EXTEND(sp, n);
-		for(i=0;i<n;i++)
+		EXTEND(sp, nparams);
+		for(i=0;i<nparams;i++)
 			PUSHs(sv_2mortal(newSVnv(ret[i])));
 	}
 
@@ -1217,11 +1220,12 @@ glGetTexParameteriv_p(target, pname)
 	PPCODE:
 	{
 		GLint	ret[MAX_GL_TEXPARAMETER_COUNT];
-		int n = gl_texparameter_count(pname);
+		int nparams = gl_texparameter_count(pname);
+		if (nparams < 0) croak("Unknown texparameter parameter");
 		int i;
 		glGetTexParameteriv(target, pname, &ret[0]);
-		EXTEND(sp, n);
-		for(i=0;i<n;i++)
+		EXTEND(sp, nparams);
+		for(i=0;i<nparams;i++)
 			PUSHs(sv_2mortal(newSViv(ret[i])));
 	}
 
@@ -2213,8 +2217,9 @@ glTexParameterfv_s(target, pname, params)
 	SV *	params
 	CODE:
 	{
-	GLfloat * params_s = EL(params,
-		sizeof(GLfloat)*gl_texparameter_count(pname));
+	int nparams = gl_texparameter_count(pname);
+	if (nparams < 0) croak("Unknown texparameter parameter");
+	GLfloat * params_s = EL(params, sizeof(GLfloat)*nparams);
 	glTexParameterfv(target, pname, params_s);
 	}
 
@@ -2227,8 +2232,9 @@ glTexParameteriv_s(target, pname, params)
 	SV *	params
 	CODE:
 	{
-	GLint * params_s = EL(params,
-		sizeof(GLint)*gl_texparameter_count(pname));
+	int nparams = gl_texparameter_count(pname);
+	if (nparams < 0) croak("Unknown texparameter parameter");
+	GLint * params_s = EL(params, sizeof(GLint)*nparams);
 	glTexParameteriv(target, pname, params_s);
 	}
 
@@ -2243,7 +2249,9 @@ glTexParameterfv_p(target, pname, ...)
 		GLfloat p[MAX_GL_TEXPARAMETER_COUNT];
 		int n = items-2;
 		int i;
-		if (n != gl_texparameter_count(pname))
+		int nparams = gl_texparameter_count(pname);
+		if (nparams < 0) croak("Unknown texparameter parameter");
+		if (n != nparams)
 			croak("Incorrect number of arguments");
 		for(i=0;i<n;i++)
 			p[i] = (GLfloat)SvNV(ST(i+2));
@@ -2261,7 +2269,9 @@ glTexParameteriv_p(target, pname, ...)
 		GLint p[MAX_GL_TEXPARAMETER_COUNT];
 		int n = items-2;
 		int i;
-		if (n != gl_texparameter_count(pname))
+		int nparams = gl_texparameter_count(pname);
+		if (nparams < 0) croak("Unknown texparameter parameter");
+		if (n != nparams)
 			croak("Incorrect number of arguments");
 		for(i=0;i<n;i++)
 			p[i] = SvIV(ST(i+2));

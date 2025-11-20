@@ -39,10 +39,8 @@ int gl_texparameter_count(GLenum pname)
 		return 1;
 	case GL_TEXTURE_BORDER_COLOR:
 		return 4;
-	default:
-		croak("Unknown texparameter parameter");
 	}
-	return 0;	// Just to make the compiler happy
+	return -1;
 }
 
 
