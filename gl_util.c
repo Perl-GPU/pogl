@@ -51,10 +51,8 @@ int gl_texenv_count(GLenum pname)
 		return 1;
 	case GL_TEXTURE_ENV_COLOR:
 		return 4;
-	default:
-		croak("Unknown texenv parameter");
 	}
-	return 0;	// Just to make the compiler happy
+	return -1;
 }
 
 int gl_texgen_count(GLenum pname)

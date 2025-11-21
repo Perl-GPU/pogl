@@ -912,7 +912,9 @@ glGetTexEnvfv_s(target, pname, params)
 	SV * params
 	CODE:
 	{
-	GLfloat * params_s = EL(params, sizeof(GLfloat) * gl_texenv_count(pname));
+	int nparams = gl_texenv_count(pname);
+	if (nparams < 0) croak("Unknown texenv parameter");
+	GLfloat * params_s = EL(params, sizeof(GLfloat) * nparams);
 	glGetTexEnvfv(target, pname, params_s);
 	}
 
@@ -925,7 +927,9 @@ glGetTexEnviv_s(target, pname, params)
 	SV * params
 	CODE:
 	{
-	GLint * params_s = EL(params, sizeof(GLint) * gl_texenv_count(pname));
+	int nparams = gl_texenv_count(pname);
+	if (nparams < 0) croak("Unknown texenv parameter");
+	GLint * params_s = EL(params, sizeof(GLint) * nparams);
 	glGetTexEnviv(target, pname, params_s);
 	}
 
@@ -939,6 +943,7 @@ glGetTexEnvfv_p(target, pname)
 	{
 		GLfloat	ret[MAX_GL_TEXENV_COUNT];
 		int n = gl_texenv_count(pname);
+		if (n < 0) croak("Unknown texenv parameter");
 		int i;
 		glGetTexEnvfv(target, pname, &ret[0]);
 		EXTEND(sp, n);
@@ -956,6 +961,7 @@ glGetTexEnviv_p(target, pname)
 	{
 		GLint	ret[MAX_GL_TEXENV_COUNT];
 		int n = gl_texenv_count(pname);
+		if (n < 0) croak("Unknown texenv parameter");
 		int i;
 		glGetTexEnviv(target, pname, &ret[0]);
 		EXTEND(sp, n);
@@ -1907,7 +1913,9 @@ glTexEnvfv_s(target, pname, params)
 	SV *	params
 	CODE:
 	{
-	GLfloat * params_s = EL(params, sizeof(GLfloat)*gl_texenv_count(pname));
+	int nparams = gl_texenv_count(pname);
+	if (nparams < 0) croak("Unknown texenv parameter");
+	GLfloat * params_s = EL(params, sizeof(GLfloat)*nparams);
 	glTexEnvfv(target, pname, params_s);
 	}
 
@@ -1920,7 +1928,9 @@ glTexEnviv_s(target, pname, params)
 	SV *	params
 	CODE:
 	{
-	GLint * params_s = EL(params, sizeof(GLint)*gl_texenv_count(pname));
+	int nparams = gl_texenv_count(pname);
+	if (nparams < 0) croak("Unknown texenv parameter");
+	GLint * params_s = EL(params, sizeof(GLint)*nparams);
 	glTexEnviv(target, pname, params_s);
 	}
 
@@ -1935,7 +1945,9 @@ glTexEnvfv_p(target, pname, ...)
 		GLfloat p[MAX_GL_TEXENV_COUNT];
 		int n = items-2;
 		int i;
-		if (n != gl_texenv_count(pname))
+		int nparams = gl_texenv_count(pname);
+		if (nparams < 0) croak("Unknown texenv parameter");
+		if (n != nparams)
 			croak("Incorrect number of arguments");
 		for (i=2;i<items;i++)
 			p[i-2] = (GLfloat)SvNV(ST(i));
@@ -1953,7 +1965,9 @@ glTexEnviv_p(target, pname, ...)
 		GLint p[MAX_GL_TEXENV_COUNT];
 		int n = items-2;
 		int i;
-		if (n != gl_texenv_count(pname))
+		int nparams = gl_texenv_count(pname);
+		if (nparams < 0) croak("Unknown texenv parameter");
+		if (n != nparams)
 			croak("Incorrect number of arguments");
 		for (i=2;i<items;i++)
 			p[i-2] = SvIV(ST(i));
