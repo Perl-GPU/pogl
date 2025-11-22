@@ -63,10 +63,8 @@ int gl_texgen_count(GLenum pname)
 	case GL_OBJECT_PLANE:
 	case GL_EYE_PLANE:
 		return 4;
-	default:
-		croak("Unknown texgen parameter");
 	}
-	return 0;	// Just to make the compiler happy
+	return -1;
 }
 
 int gl_material_count(GLenum pname)

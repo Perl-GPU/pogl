@@ -978,7 +978,9 @@ glGetTexGendv_s(coord, pname, params)
 	SV *	params
 	CODE:
 	{
-	GLdouble * params_s = EL(params, sizeof(GLdouble)*gl_texgen_count(pname));
+	int nparams = gl_texgen_count(pname);
+	if (nparams < 0) croak("Unknown texgen parameter");
+	GLdouble * params_s = EL(params, sizeof(GLdouble)*nparams);
 	glGetTexGendv(coord, pname, params_s);
 	}
 
@@ -991,7 +993,9 @@ glGetTexGenfv_s(coord, pname, params)
 	SV *	params
 	CODE:
 	{
-	GLfloat * params_s = EL(params, sizeof(GLfloat)*gl_texgen_count(pname));
+	int nparams = gl_texgen_count(pname);
+	if (nparams < 0) croak("Unknown texgen parameter");
+	GLfloat * params_s = EL(params, sizeof(GLfloat)*nparams);
 	glGetTexGenfv(coord, pname, params_s);
 	}
 
@@ -1004,7 +1008,9 @@ glGetTexGeniv_s(coord, pname, params)
 	SV *	params
 	CODE:
 	{
-	GLint * params_s = EL(params, sizeof(GLint)*gl_texgen_count(pname));
+	int nparams = gl_texgen_count(pname);
+	if (nparams < 0) croak("Unknown texgen parameter");
+	GLint * params_s = EL(params, sizeof(GLint)*nparams);
 	glGetTexGeniv(coord, pname, params_s);
 	}
 
@@ -1018,6 +1024,7 @@ glGetTexGenfv_p(coord, pname)
 	{
 		GLfloat	ret[MAX_GL_TEXGEN_COUNT];
 		int n = gl_texgen_count(pname);
+		if (n < 0) croak("Unknown texgen parameter");
 		int i;
 		glGetTexGenfv(coord, pname, &ret[0]);
 		EXTEND(sp, n);
@@ -1035,6 +1042,7 @@ glGetTexGendv_p(coord, pname)
 	{
 		GLdouble	ret[MAX_GL_TEXGEN_COUNT];
 		int n = gl_texgen_count(pname);
+		if (n < 0) croak("Unknown texgen parameter");
 		int i;
 		glGetTexGendv(coord, pname, &ret[0]);
 		EXTEND(sp, n);
@@ -1052,6 +1060,7 @@ glGetTexGeniv_p(coord, pname)
 	{
 		GLint	ret[MAX_GL_TEXGEN_COUNT];
 		int n = gl_texgen_count(pname);
+		if (n < 0) croak("Unknown texgen parameter");
 		int i;
 		glGetTexGeniv(coord, pname, &ret[0]);
 		EXTEND(sp, n);
@@ -1983,8 +1992,9 @@ glTexGendv_s(Coord, pname, params)
 	SV *	params
 	CODE:
 	{
-	GLdouble * params_s = EL(params,
-		sizeof(GLdouble)* gl_texgen_count(pname));
+	int nparams = gl_texgen_count(pname);
+	if (nparams < 0) croak("Unknown texgen parameter");
+	GLdouble * params_s = EL(params, sizeof(GLdouble)* nparams);
 	glTexGendv(Coord, pname, params_s);
 	}
 
@@ -1997,8 +2007,9 @@ glTexGenfv_s(Coord, pname, params)
 	SV *	params
 	CODE:
 	{
-	GLfloat * params_s = EL(params,
-		sizeof(GLfloat)* gl_texgen_count(pname));
+	int nparams = gl_texgen_count(pname);
+	if (nparams < 0) croak("Unknown texgen parameter");
+	GLfloat * params_s = EL(params, sizeof(GLfloat)* nparams);
 	glTexGenfv(Coord, pname, params_s);
 	}
 
@@ -2011,8 +2022,9 @@ glTexGeniv_s(Coord, pname, params)
 	SV *	params
 	CODE:
 	{
-	GLint * params_s = EL(params,
-		sizeof(GLint)* gl_texgen_count(pname));
+	int nparams = gl_texgen_count(pname);
+	if (nparams < 0) croak("Unknown texgen parameter");
+	GLint * params_s = EL(params, sizeof(GLint)* nparams);
 	glTexGeniv(Coord, pname, params_s);
 	}
 
@@ -2027,7 +2039,9 @@ glTexGendv_p(Coord, pname, ...)
 		GLdouble p[MAX_GL_TEXGEN_COUNT];
 		int n = items-2;
 		int i;
-		if (n != gl_texgen_count(pname))
+		int nparams = gl_texgen_count(pname);
+		if (nparams < 0) croak("Unknown texgen parameter");
+		if (n != nparams)
 			croak("Incorrect number of arguments");
 		for (i=2;i<items;i++)
 			p[i-2] = SvNV(ST(i));
@@ -2045,7 +2059,9 @@ glTexGenfv_p(Coord, pname, ...)
 		GLfloat p[MAX_GL_TEXGEN_COUNT];
 		int n = items-2;
 		int i;
-		if (n != gl_texgen_count(pname))
+		int nparams = gl_texgen_count(pname);
+		if (nparams < 0) croak("Unknown texgen parameter");
+		if (n != nparams)
 			croak("Incorrect number of arguments");
 		for (i=2;i<items;i++)
 			p[i-2] = (GLfloat)SvNV(ST(i));
@@ -2063,7 +2079,9 @@ glTexGeniv_p(Coord, pname, ...)
 		GLint p[MAX_GL_TEXGEN_COUNT];
 		int n = items-2;
 		int i;
-		if (n != gl_texgen_count(pname))
+		int nparams = gl_texgen_count(pname);
+		if (nparams < 0) croak("Unknown texgen parameter");
+		if (n != nparams)
 			croak("Incorrect number of arguments");
 		for (i=2;i<items;i++)
 			p[i-2] = SvIV(ST(i));
