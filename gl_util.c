@@ -80,10 +80,8 @@ int gl_material_count(GLenum pname)
 		return 3;
 	case GL_SHININESS:
 		return 1;
-	default:
-		croak("Unknown material parameter");
 	}
-	return 0;	// Just to make the compiler happy
+	return -1;
 }
 
 

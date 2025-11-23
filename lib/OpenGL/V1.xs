@@ -700,8 +700,10 @@ glGetMaterialfv_s(face, query, params)
 	SV *	params
 	CODE:
 	{
+		int nparams = gl_material_count(query);
+		if (nparams < 0) croak("Unknown material parameter");
 		GLfloat * params_s = EL(params,
-			sizeof(GLfloat)*gl_material_count(query));
+			sizeof(GLfloat)*nparams);
 		glGetMaterialfv(face, query, params_s);
 	}
 
@@ -714,8 +716,10 @@ glGetMaterialiv_s(face, query, params)
 	SV *	params
 	CODE:
 	{
+		int nparams = gl_material_count(query);
+		if (nparams < 0) croak("Unknown material parameter");
 		GLint * params_s = EL(params,
-			sizeof(GLfloat)*gl_material_count(query));
+			sizeof(GLfloat)*nparams);
 		glGetMaterialiv(face, query, params_s);
 	}
 
@@ -729,6 +733,7 @@ glGetMaterialfv_p(face, query)
 	{
 		GLfloat	ret[MAX_GL_MATERIAL_COUNT];
 		int n = gl_material_count(query);
+		if (n < 0) croak("Unknown material parameter");
 		int i;
 		glGetMaterialfv(face, query, &ret[0]);
 		EXTEND(sp, n);
@@ -746,6 +751,7 @@ glGetMaterialiv_p(face, query)
 	{
 		GLint	ret[MAX_GL_MATERIAL_COUNT];
 		int n = gl_material_count(query);
+		if (n < 0) croak("Unknown material parameter");
 		int i;
 		glGetMaterialiv(face, query, &ret[0]);
 		EXTEND(sp, n);
@@ -1582,7 +1588,9 @@ glMaterialfv_s(face, pname, param)
 	SV *	param
 	CODE:
 	{
-	GLfloat * param_s = EL(param, sizeof(GLfloat)*gl_material_count(pname));
+	int nparams = gl_material_count(pname);
+	if (nparams < 0) croak("Unknown material parameter");
+	GLfloat * param_s = EL(param, sizeof(GLfloat)*nparams);
 	glMaterialfv(face, pname, param_s);
 	}
 
@@ -1595,7 +1603,9 @@ glMaterialiv_s(face, pname, param)
 	SV *	param
 	CODE:
 	{
-	GLint * param_s = EL(param, sizeof(GLint)*gl_material_count(pname));
+	int nparams = gl_material_count(pname);
+	if (nparams < 0) croak("Unknown material parameter");
+	GLint * param_s = EL(param, sizeof(GLint)*nparams);
 	glMaterialiv(face, pname, param_s);
 	}
 
@@ -1609,7 +1619,9 @@ glMaterialfv_p(face, pname, ...)
 	{
 		GLfloat p[MAX_GL_MATERIAL_COUNT];
 		int i;
-		if ((items-2) != gl_material_count(pname))
+		int nparams = gl_material_count(pname);
+		if (nparams < 0) croak("Unknown material parameter");
+		if ((items-2) != nparams)
 			croak("Incorrect number of arguments");
 		for(i=2;i<items;i++)
 			p[i-2] = (GLfloat)SvNV(ST(i));
@@ -1626,7 +1638,9 @@ glMaterialiv_p(face, pname, ...)
 	{
 		GLint p[MAX_GL_MATERIAL_COUNT];
 		int i;
-		if ((items-2) != gl_material_count(pname))
+		int nparams = gl_material_count(pname);
+		if (nparams < 0) croak("Unknown material parameter");
+		if ((items-2) != nparams)
 			croak("Incorrect number of arguments");
 		for(i=2;i<items;i++)
 			p[i-2] = SvIV(ST(i));
