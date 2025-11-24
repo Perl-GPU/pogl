@@ -367,7 +367,9 @@ glGetProgramivARB_s(target,pname,params)
 		loadProc(glGetProgramivARB,"glGetProgramivARB");
 	CODE:
 	{
-		GLint * params_s = EL(params, sizeof(GLint)*gl_get_count(pname));
+		int nparams = gl_get_count(pname);
+		if (nparams < 0) croak("Unknown param");
+		GLint * params_s = EL(params, sizeof(GLint)*nparams);
 		glGetProgramivARB(target,pname,params_s);
 	}
 

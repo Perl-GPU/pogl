@@ -597,9 +597,8 @@ int gl_get_count(GLenum param)
 			if ((param > GL_CLIP_PLANE0) && (param <= (GLenum)(GL_CLIP_PLANE0 + max_clip_planes)))
 				return 1;
 		}
-		croak("Unknown param");
 	}
-	return 0;	// Just to make the compiler happy
+	return -1;
 }
 
 
