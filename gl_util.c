@@ -117,7 +117,7 @@ int gl_map_count(GLenum target, GLenum query)
 		case GL_MAP2_TEXTURE_COORD_1:
 			return 1;
 		default:
-			croak("Unknown map target");
+			return -1;
 		}
 	case GL_ORDER:
 		switch (target) {
@@ -142,7 +142,7 @@ int gl_map_count(GLenum target, GLenum query)
 		case GL_MAP2_TEXTURE_COORD_1:
 			return 2;
 		default:
-			croak("Unknown map target");
+			return -1;
 		}
 	case GL_DOMAIN:
 		switch (target) {
@@ -166,13 +166,9 @@ int gl_map_count(GLenum target, GLenum query)
 		case GL_MAP2_INDEX:
 		case GL_MAP2_TEXTURE_COORD_1:
 			return 4;
-		default:
-			croak("Unknown map target");
 		}
-	default:
-		croak("Unknown map query");
 	}
-	return 0;	// Just to make the compiler happy
+	return -1;
 }
 
 int gl_light_count(GLenum pname)

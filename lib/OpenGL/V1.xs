@@ -621,8 +621,9 @@ glGetMapdv_s(target, query, v)
 	SV * v
 	CODE:
 	{
-		GLdouble * v_s = EL(v,
-			sizeof(GLdouble)*gl_map_count(target, query));
+		int nparams = gl_map_count(target, query);
+		if (nparams < 0) croak("Unknown map query");
+		GLdouble * v_s = EL(v, sizeof(GLdouble)*nparams);
 		glGetMapdv(target, query, v_s);
 	}
 
@@ -635,7 +636,9 @@ glGetMapfv_s(target, query, v)
 	SV * v
 	CODE:
 	{
-		GLfloat * v_s = EL(v, sizeof(GLfloat)*gl_map_count(target, query));
+		int nparams = gl_map_count(target, query);
+		if (nparams < 0) croak("Unknown map query");
+		GLfloat * v_s = EL(v, sizeof(GLfloat)*nparams);
 		glGetMapfv(target, query, v_s);
 	}
 
@@ -648,7 +651,9 @@ glGetMapiv_s(target, query, v)
 	SV * v
 	CODE:
 	{
-		GLint * v_s = EL(v, sizeof(GLint)*gl_map_count(target, query));
+		int nparams = gl_map_count(target, query);
+		if (nparams < 0) croak("Unknown map query");
+		GLint * v_s = EL(v, sizeof(GLint)*nparams);
 		glGetMapiv(target, query, v_s);
 	}
 
@@ -662,6 +667,7 @@ glGetMapfv_p(target, query)
 	{
 		GLfloat	ret[MAX_GL_MAP_COUNT];
 		int n = gl_map_count(target, query);
+		if (n < 0) croak("Unknown map query");
 		int i;
 		glGetMapfv(target, query, &ret[0]);
 		EXTEND(sp, n);
@@ -679,6 +685,7 @@ glGetMapdv_p(target, query)
 	{
 		GLdouble	ret[MAX_GL_MAP_COUNT];
 		int n = gl_map_count(target, query);
+		if (n < 0) croak("Unknown map query");
 		int i;
 		glGetMapdv(target, query, &ret[0]);
 		EXTEND(sp, n);
@@ -696,6 +703,7 @@ glGetMapiv_p(target, query)
 	{
 		GLint	ret[MAX_GL_MAP_COUNT];
 		int n = gl_map_count(target, query);
+		if (n < 0) croak("Unknown map query");
 		int i;
 		glGetMapiv(target, query, &ret[0]);
 		EXTEND(sp, n);
@@ -1474,7 +1482,9 @@ glMap1d_p(target, u1, u2, ...)
 	CODE:
 	{
 		int count = items-3;
-		GLint order = (items - 3) / gl_map_count(target, GL_COEFF);
+		int nparams = gl_map_count(target, GL_COEFF);
+		if (nparams < 0) croak("Unknown map query");
+		GLint order = (items - 3) / nparams;
 		GLdouble * points = malloc(sizeof(GLdouble) * (count+1));
 		int i;
 		for (i=0;i<count;i++)
@@ -1494,7 +1504,9 @@ glMap1f_p(target, u1, u2, ...)
 	CODE:
 	{
 		int count = items-3;
-		GLint order = (items - 3) / gl_map_count(target, GL_COEFF);
+		int nparams = gl_map_count(target, GL_COEFF);
+		if (nparams < 0) croak("Unknown map query");
+		GLint order = (items - 3) / nparams;
 		GLfloat * points = malloc(sizeof(GLfloat) * (count+1));
 		int i;
 		for (i=0;i<count;i++)
@@ -1559,7 +1571,9 @@ glMap2d_p(target, u1, u2, uorder, v1, v2, ...)
 	CODE:
 	{
 		int count = items-6;
-		GLint vorder = (count / uorder) / gl_map_count(target, GL_COEFF);
+		int nparams = gl_map_count(target, GL_COEFF);
+		if (nparams < 0) croak("Unknown map query");
+		GLint vorder = (count / uorder) / nparams;
 		GLdouble * points = malloc(sizeof(GLdouble) * (count+1));
 		int i;
 		for (i=0;i<count;i++)
@@ -1582,7 +1596,9 @@ glMap2f_p(target, u1, u2, uorder, v1, v2, ...)
 	CODE:
 	{
 		int count = items-6;
-		GLint vorder = (count / uorder) / gl_map_count(target, GL_COEFF);
+		int nparams = gl_map_count(target, GL_COEFF);
+		if (nparams < 0) croak("Unknown map query");
+		GLint vorder = (count / uorder) / nparams;
 		GLfloat * points = malloc(sizeof(GLfloat) * (count+1));
 		int i;
 		for (i=0;i<count;i++)
