@@ -187,10 +187,8 @@ int gl_light_count(GLenum pname)
 	case GL_LINEAR_ATTENUATION:
 	case GL_QUADRATIC_ATTENUATION:
 		return 1;
-	default:
-		croak("Unknown light parameter");
 	}
-	return 0;	// Just to make the compiler happy
+	return -1;
 }
 
 int gl_lightmodel_count(GLenum pname)

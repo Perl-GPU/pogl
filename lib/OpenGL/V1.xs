@@ -561,7 +561,9 @@ glGetLightfv_s(light, pname, p)
 	SV *	p
 	CODE:
 	{
-	void * p_s = EL(p, sizeof(GLfloat)*gl_light_count(pname));
+	int nparams = gl_light_count(pname);
+	if (nparams < 0) croak("Unknown light parameter");
+	void * p_s = EL(p, sizeof(GLfloat)*nparams);
 	glGetLightfv(light, pname, p_s);
 	}
 
@@ -574,7 +576,9 @@ glGetLightiv_s(light, pname, p)
 	SV *	p
 	CODE:
 	{
-	void * p_s = EL(p, sizeof(GLint)*gl_light_count(pname));
+	int nparams = gl_light_count(pname);
+	if (nparams < 0) croak("Unknown light parameter");
+	void * p_s = EL(p, sizeof(GLint)*nparams);
 	glGetLightiv(light, pname, p_s);
 	}
 
@@ -588,6 +592,7 @@ glGetLightfv_p(light, pname)
 	{
 		GLfloat	ret[MAX_GL_LIGHT_COUNT];
 		int n = gl_light_count(pname);
+		if (n < 0) croak("Unknown light parameter");
 		int i;
 		glGetLightfv(light, pname, &ret[0]);
 		EXTEND(sp, n);
@@ -605,6 +610,7 @@ glGetLightiv_p(light, pname)
 	{
 		GLint	ret[MAX_GL_LIGHT_COUNT];
 		int n = gl_light_count(pname);
+		if (n < 0) croak("Unknown light parameter");
 		int i;
 		glGetLightiv(light, pname, &ret[0]);
 		EXTEND(sp, n);
@@ -1279,7 +1285,9 @@ glLightfv_s(light, pname, params)
 	SV *	params
 	CODE:
 	{
-	GLfloat * params_s = EL(params, sizeof(GLfloat)*gl_light_count(pname));
+	int nparams = gl_light_count(pname);
+	if (nparams < 0) croak("Unknown light parameter");
+	GLfloat * params_s = EL(params, sizeof(GLfloat)*nparams);
 	glLightfv(light, pname, params_s);
 	}
 
@@ -1292,7 +1300,9 @@ glLightiv_s(light, pname, params)
 	SV *	params
 	CODE:
 	{
-	GLint * params_s = EL(params, sizeof(GLint)*gl_light_count(pname));
+	int nparams = gl_light_count(pname);
+	if (nparams < 0) croak("Unknown light parameter");
+	GLint * params_s = EL(params, sizeof(GLint)*nparams);
 	glLightiv(light, pname, params_s);
 	}
 
@@ -1306,7 +1316,9 @@ glLightfv_p(light, pname, ...)
 	{
 		GLfloat p[MAX_GL_LIGHT_COUNT];
 		int i;
-		if ((items-2) != gl_light_count(pname))
+		int nparams = gl_light_count(pname);
+		if (nparams < 0) croak("Unknown light parameter");
+		if ((items-2) != nparams)
 			croak("Incorrect number of arguments");
 		for(i=2;i<items;i++)
 			p[i-2] = (GLfloat)SvNV(ST(i));
@@ -1323,7 +1335,9 @@ glLightiv_p(light, pname, ...)
 	{
 		GLint p[MAX_GL_LIGHT_COUNT];
 		int i;
-		if ((items-2) != gl_light_count(pname))
+		int nparams = gl_light_count(pname);
+		if (nparams < 0) croak("Unknown light parameter");
+		if ((items-2) != nparams)
 			croak("Incorrect number of arguments");
 		for(i=2;i<items;i++)
 			p[i-2] = SvIV(ST(i));
