@@ -199,10 +199,8 @@ int gl_lightmodel_count(GLenum pname)
 	case GL_LIGHT_MODEL_LOCAL_VIEWER:
 	case GL_LIGHT_MODEL_TWO_SIDE:
 		return 1;
-	default:
-		croak("Unknown light model");
 	}
-	return 0;	// Just to make the compiler happy
+	return -1;
 }
 
 int gl_fog_count(GLenum pname)

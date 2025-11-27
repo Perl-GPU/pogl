@@ -1352,7 +1352,9 @@ glLightModeliv_s(pname, params)
 	SV *	params
 	CODE:
 	{
-	GLint * params_s = EL(params, sizeof(GLint)*gl_lightmodel_count(pname));
+	int nparams = gl_lightmodel_count(pname);
+	if (nparams < 0) croak("Unknown light model");
+	GLint * params_s = EL(params, sizeof(GLint)*nparams);
 	glLightModeliv(pname, params_s);
 	}
 
@@ -1364,8 +1366,9 @@ glLightModelfv_s(pname, params)
 	SV *	params
 	CODE:
 	{
-	GLfloat * params_s = EL(params,
-		sizeof(GLfloat)*gl_lightmodel_count(pname));
+	int nparams = gl_lightmodel_count(pname);
+	if (nparams < 0) croak("Unknown light model");
+	GLfloat * params_s = EL(params, sizeof(GLfloat)*nparams);
 	glLightModelfv(pname, params_s);
 	}
 
@@ -1378,7 +1381,9 @@ glLightModelfv_p(pname, ...)
 	{
 		GLfloat p[MAX_GL_LIGHTMODEL_COUNT];
 		int i;
-		if ((items-1) != gl_lightmodel_count(pname))
+		int nparams = gl_lightmodel_count(pname);
+		if (nparams < 0) croak("Unknown light model");
+		if ((items-1) != nparams)
 			croak("Incorrect number of arguments");
 		for(i=1;i<items;i++)
 			p[i-1] = (GLfloat)SvNV(ST(i));
@@ -1394,7 +1399,9 @@ glLightModeliv_p(pname, ...)
 	{
 		GLint p[MAX_GL_LIGHTMODEL_COUNT];
 		int i;
-		if ((items-1) != gl_lightmodel_count(pname))
+		int nparams = gl_lightmodel_count(pname);
+		if (nparams < 0) croak("Unknown light model");
+		if ((items-1) != nparams)
 			croak("Incorrect number of arguments");
 		for(i=1;i<items;i++)
 			p[i-1] = SvIV(ST(i));
