@@ -315,7 +315,9 @@ glFogfv_s(pname, params)
 	SV *	params
 	CODE:
 	{
-	GLfloat * params_s = EL(params, sizeof(GLfloat)*gl_fog_count(pname));
+	int nparams = gl_fog_count(pname);
+	if (nparams < 0) croak("Unknown fog parameter");
+	GLfloat * params_s = EL(params, sizeof(GLfloat)*nparams);
 	glFogfv(pname, params_s);
 	}
 
@@ -327,7 +329,9 @@ glFogiv_s(pname, params)
 	SV *	params
 	CODE:
 	{
-	GLint * params_s = EL(params, sizeof(GLint)*gl_fog_count(pname));
+	int nparams = gl_fog_count(pname);
+	if (nparams < 0) croak("Unknown fog parameter");
+	GLint * params_s = EL(params, sizeof(GLint)*nparams);
 	glFogiv(pname, params_s);
 	}
 

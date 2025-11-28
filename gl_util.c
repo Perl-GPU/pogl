@@ -214,10 +214,8 @@ int gl_fog_count(GLenum pname)
 	case GL_FOG_END:
 	case GL_FOG_INDEX:
 		return 1;
-	default:
-		croak("Unknown fog parameter");
 	}
-	return 0;	// Just to make the compiler happy
+	return -1;
 }
 
 int gl_get_count(GLenum param)
