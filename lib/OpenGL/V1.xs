@@ -797,7 +797,9 @@ glGetPixelMapfv_s(map, values)
 	SV *	values
 	CODE:
 	{
-	GLfloat * values_s = EL(values, sizeof(GLfloat)* gl_pixelmap_size(map));
+	int nparams = gl_pixelmap_size(map);
+	if (nparams < 0) croak("unknown pixelmap");
+	GLfloat * values_s = EL(values, sizeof(GLfloat)* nparams);
 	glGetPixelMapfv(map, values_s);
 	}
 
@@ -809,7 +811,9 @@ glGetPixelMapuiv_s(map, values)
 	SV *	values
 	CODE:
 	{
-	GLuint * values_s = EL(values, sizeof(GLuint)* gl_pixelmap_size(map));
+	int nparams = gl_pixelmap_size(map);
+	if (nparams < 0) croak("unknown pixelmap");
+	GLuint * values_s = EL(values, sizeof(GLuint)* nparams);
 	glGetPixelMapuiv(map, values_s);
 	}
 
@@ -821,7 +825,9 @@ glGetPixelMapusv_s(map, values)
 	SV *	values
 	CODE:
 	{
-	GLushort * values_s = EL(values, sizeof(GLushort)* gl_pixelmap_size(map));
+	int nparams = gl_pixelmap_size(map);
+	if (nparams < 0) croak("unknown pixelmap");
+	GLushort * values_s = EL(values, sizeof(GLushort)* nparams);
 	glGetPixelMapusv(map, values_s);
 	}
 
@@ -833,6 +839,7 @@ glGetPixelMapfv_p(map)
 	CODE:
 	{
 		int count = gl_pixelmap_size(map);
+		if (count < 0) croak("unknown pixelmap");
 		GLfloat * values;
 		int i;
 
@@ -856,6 +863,7 @@ glGetPixelMapuiv_p(map)
 	CODE:
 	{
 		int count = gl_pixelmap_size(map);
+		if (count < 0) croak("unknown pixelmap");
 		GLuint * values;
 		int i;
 		values = malloc(sizeof(GLuint) * count);
@@ -874,6 +882,7 @@ glGetPixelMapusv_p(map)
 	CODE:
 	{
 		int count = gl_pixelmap_size(map);
+		if (count < 0) croak("unknown pixelmap");
 		GLushort * values;
 		int i;
 		values = malloc(sizeof(GLushort) * count);

@@ -626,10 +626,8 @@ int gl_pixelmap_size(GLenum map)
 		case GL_PIXEL_MAP_A_TO_A:
 			glGetIntegerv(GL_PIXEL_MAP_A_TO_A_SIZE, &s);
 			return s;
-		default:
-			croak("unknown pixelmap");
 	}
-	return 0;	// Just to make the compiler happy
+	return -1;
 }
 
 int gl_state_count(GLenum state) {
