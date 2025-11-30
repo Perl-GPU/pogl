@@ -765,7 +765,7 @@ int gl_component_count(GLenum format, GLenum type)
 		case GL_RGBA:
 			n = 4; break;
 		default:
-			croak("unknown format");
+			return -1;
 	}
 
 #ifdef GL_VERSION_1_2
@@ -824,6 +824,7 @@ unsigned long gl_pixelbuffer_size(
 	s = gl_type_size(type);
 	
 	n = gl_component_count(format, type);
+	if (n < 0) croak("unknown format");
 
 /* From Mesa, more or less */
 
@@ -873,6 +874,7 @@ void gl_pixelbuffer_size2(
 	s = gl_type_size(type);
 	
 	n = gl_component_count(format, type);
+	if (n < 0) croak("unknown format");
 
 /* From Mesa, more or less */
 
