@@ -1056,7 +1056,7 @@ SV * pgl_get_type(GLenum type, void ** ptr)
 		break;
 	}
 	default:
-		croak("Unable to get data with unknown type");
+		return NULL;
 	}
 	return result;
 #undef RIV
@@ -1152,7 +1152,9 @@ GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, int mo
 
 	EXTEND(sp, max);
 	for (i=0;i<max;i++) {
-		PUSHs(sv_2mortal(pgl_get_type(type, &data)));
+		SV *t = pgl_get_type(type, &data);
+		if (!t) croak("Unable to get data with unknown type");
+		PUSHs(sv_2mortal(t));
 	}
 	
 	return sp;
