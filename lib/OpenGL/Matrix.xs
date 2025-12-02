@@ -48,6 +48,7 @@ static OpenGL__Matrix new_matrix(int cols, int rows)
 	mat->type_count = 1;
 	mat->item_count = count;
 	mat->total_types_width = gl_type_size(GL_FLOAT);
+	if (mat->total_types_width < 0) croak("unknown type");
 	mat->data_length = mat->total_types_width * mat->item_count;
 	
 	mat->types = malloc(sizeof(GLenum) * mat->type_count);

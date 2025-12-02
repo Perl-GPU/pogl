@@ -686,7 +686,6 @@ GLvoid * ELI(SV * sv, GLsizei width, GLsizei height,
 int gl_type_size(GLenum type)
 {
 	switch (type) {
-
 #ifdef GL_VERSION_1_2
 		case GL_UNSIGNED_BYTE_3_3_2:
 		case GL_UNSIGNED_BYTE_2_3_3_REV:
@@ -704,8 +703,6 @@ int gl_type_size(GLenum type)
 		case GL_UNSIGNED_INT_2_10_10_10_REV:
 			return sizeof(GLuint);
 #endif
-
-
 		case GL_UNSIGNED_BYTE: return sizeof(GLubyte); break;
 		case GL_BITMAP: return sizeof(GLubyte); break;
 		case GL_BYTE: return  sizeof(GLbyte); break;
@@ -718,10 +715,8 @@ int gl_type_size(GLenum type)
 		case GL_2_BYTES: return 2;
 		case GL_3_BYTES: return 3;
 		case GL_4_BYTES: return 4;
-	default:
-		croak("unknown type");
 	}
-	return 0;	// Just to make the compiler happy
+	return -1;
 }
 
 int gl_component_count(GLenum format, GLenum type)
@@ -822,6 +817,7 @@ unsigned long gl_pixelbuffer_size(
 	l = r > 0 ? r : width;
 
 	s = gl_type_size(type);
+	if (s < 0) croak("unknown type");
 	
 	n = gl_component_count(format, type);
 	if (n < 0) croak("unknown format");
@@ -872,6 +868,7 @@ void gl_pixelbuffer_size2(
 	}
 
 	s = gl_type_size(type);
+	if (s < 0) croak("unknown type");
 	
 	n = gl_component_count(format, type);
 	if (n < 0) croak("unknown format");

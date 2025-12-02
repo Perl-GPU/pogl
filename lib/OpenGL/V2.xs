@@ -952,7 +952,8 @@ glVertexAttribPointerARB_p(index,type,normalized,stride,...)
 	CODE:
 	{
 		GLuint count = items - 4;
-		GLuint size = gl_type_size(type);
+		int size = gl_type_size(type);
+		if (size < 0) croak("unknown type");
 		void * pointer = malloc(count * size);
 
 		SvItems(type,4,count,pointer);

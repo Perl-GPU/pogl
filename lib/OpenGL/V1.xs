@@ -113,7 +113,9 @@ glCallLists_s(n, type, lists)
 	SV *	lists
 	CODE:
 	{
-	void * lists_s = EL(lists, gl_type_size(type) * n);
+	int size = gl_type_size(type);
+	if (size < 0) croak("unknown type");
+	void * lists_s = EL(lists, size * n);
 	glCallLists(n, type, lists_s);
 	}
 
@@ -187,7 +189,9 @@ glDrawElements_s(mode, count, type, indices)
 	SV *	indices
 	CODE:
 	{
-		void * indices_s = EL(indices, gl_type_size(type)*count);
+		int size = gl_type_size(type);
+		if (size < 0) croak("unknown type");
+		void * indices_s = EL(indices, size*count);
 		glDrawElements(mode, count, type, indices_s);
 	}
 
@@ -262,7 +266,9 @@ glDrawRangeElements_s(mode, start, end, count, type, indices)
 		loadProc(glDrawRangeElements,"glDrawRangeElements");
 	CODE:
 	{
-		void * indices_s = EL(indices, gl_type_size(type) * count);
+		int size = gl_type_size(type);
+		if (size < 0) croak("unknown type");
+		void * indices_s = EL(indices, size * count);
 		glDrawRangeElements(mode, start, end, count, type, indices_s);
 	}
 
@@ -3518,7 +3524,9 @@ glNormalPointer_s(type, stride, pointer)
 	SV *	pointer
 	CODE:
 	{
-		int width = stride ? stride : (gl_type_size(type)*3);
+		int size = gl_type_size(type);
+		if (size < 0) croak("unknown type");
+		int width = stride ? stride : (size*3);
 		void * pointer_s = NULL;
 		if ( pointer ) {
 			pointer_s = EL(pointer, width);
@@ -3551,7 +3559,9 @@ glIndexPointer_s(type, stride, pointer)
 	SV *	pointer
 	CODE:
 	{
-		int width = stride ? stride : gl_type_size(type);
+		int size = gl_type_size(type);
+		if (size < 0) croak("unknown type");
+		int width = stride ? stride : size;
 		void * pointer_s = NULL;
 		if ( pointer ) {
 			pointer_s = EL(pointer, width);
@@ -3708,7 +3718,9 @@ glGetBufferSubData_p(target,offset,count,...)
 			for(i=0,j=0;i<oga->type_count;i++) {
 				oga->types[i] = SvIV(ST(i+3));
 				oga->type_offset[i] = j;
-				j += gl_type_size(oga->types[i]);
+				int size = gl_type_size(oga->types[i]);
+				if (size < 0) croak("unknown type");
+				j += size;
 			}
 			oga->total_types_width = j;
 		}
@@ -3720,7 +3732,9 @@ glGetBufferSubData_p(target,offset,count,...)
 
 			oga->types[0] = GL_UNSIGNED_BYTE;
 			oga->type_offset[0] = 0;
-			oga->total_types_width = gl_type_size(oga->types[0]);
+			int size = gl_type_size(oga->types[0]);
+			if (size < 0) croak("unknown type");
+			oga->total_types_width = size;
 		}
 		if (!oga->total_types_width) croak("Unable to determine type sizes\n");
 
@@ -3776,7 +3790,9 @@ glMapBuffer_p(target,access,...)
 			for(i=0,j=0;i<oga->type_count;i++) {
 				oga->types[i] = SvIV(ST(i+2));
 				oga->type_offset[i] = j;
-				j += gl_type_size(oga->types[i]);
+				int size = gl_type_size(oga->types[i]);
+				if (size < 0) croak("unknown type");
+				j += size;
 			}
 			oga->total_types_width = j;
 		}
@@ -3788,7 +3804,9 @@ glMapBuffer_p(target,access,...)
 
 			oga->types[0] = GL_UNSIGNED_BYTE;
 			oga->type_offset[0] = 0;
-			oga->total_types_width = gl_type_size(oga->types[0]);
+			int size = gl_type_size(oga->types[0]);
+			if (size < 0) croak("unknown type");
+			oga->total_types_width = size;
 		}
 
 		if (!oga->total_types_width) croak("Unable to determine type sizes\n");
@@ -3873,7 +3891,9 @@ glGetBufferPointerv_p(target,pname,...)
 			for(i=0,j=0;i<oga->type_count;i++) {
 				oga->types[i] = SvIV(ST(i+2));
 				oga->type_offset[i] = j;
-				j += gl_type_size(oga->types[i]);
+				int size = gl_type_size(oga->types[i]);
+				if (size < 0) croak("unknown type");
+				j += size;
 			}
 			oga->total_types_width = j;
 		}
@@ -3885,7 +3905,9 @@ glGetBufferPointerv_p(target,pname,...)
 
 			oga->types[0] = GL_UNSIGNED_BYTE;
 			oga->type_offset[0] = 0;
-			oga->total_types_width = gl_type_size(oga->types[0]);
+			int size = gl_type_size(oga->types[0]);
+			if (size < 0) croak("unknown type");
+			oga->total_types_width = size;
 		}
 
 		if (!oga->total_types_width) croak("Unable to determine type sizes\n");
@@ -4268,7 +4290,9 @@ glGetBufferSubDataARB_p(target,offset,count,...)
 			for(i=0,j=0;i<oga->type_count;i++) {
 				oga->types[i] = SvIV(ST(i+3));
 				oga->type_offset[i] = j;
-				j += gl_type_size(oga->types[i]);
+				int size = gl_type_size(oga->types[i]);
+				if (size < 0) croak("unknown type");
+				j += size;
 			}
 			oga->total_types_width = j;
 		}
@@ -4280,7 +4304,9 @@ glGetBufferSubDataARB_p(target,offset,count,...)
 
 			oga->types[0] = GL_UNSIGNED_BYTE;
 			oga->type_offset[0] = 0;
-			oga->total_types_width = gl_type_size(oga->types[0]);
+			int size = gl_type_size(oga->types[0]);
+			if (size < 0) croak("unknown type");
+			oga->total_types_width = size;
 		}
 		if (!oga->total_types_width) croak("Unable to determine type sizes\n");
 
@@ -4339,7 +4365,9 @@ glMapBufferARB_p(target,access,...)
 			for(i=0,j=0;i<oga->type_count;i++) {
 				oga->types[i] = SvIV(ST(i+2));
 				oga->type_offset[i] = j;
-				j += gl_type_size(oga->types[i]);
+				int size = gl_type_size(oga->types[i]);
+				if (size < 0) croak("unknown type");
+				j += size;
 			}
 			oga->total_types_width = j;
 		}
@@ -4351,7 +4379,9 @@ glMapBufferARB_p(target,access,...)
 
 			oga->types[0] = GL_UNSIGNED_BYTE;
 			oga->type_offset[0] = 0;
-			oga->total_types_width = gl_type_size(oga->types[0]);
+			int size = gl_type_size(oga->types[0]);
+			if (size < 0) croak("unknown type");
+			oga->total_types_width = size;
 		}
 
 		if (!oga->total_types_width) croak("Unable to determine type sizes\n");
@@ -4445,7 +4475,9 @@ glGetBufferPointervARB_p(target,pname,...)
 			for(i=0,j=0;i<oga->type_count;i++) {
 				oga->types[i] = SvIV(ST(i+2));
 				oga->type_offset[i] = j;
-				j += gl_type_size(oga->types[i]);
+				int size = gl_type_size(oga->types[i]);
+				if (size < 0) croak("unknown type");
+				j += size;
 			}
 			oga->total_types_width = j;
 		}
@@ -4457,7 +4489,9 @@ glGetBufferPointervARB_p(target,pname,...)
 
 			oga->types[0] = GL_UNSIGNED_BYTE;
 			oga->type_offset[0] = 0;
-			oga->total_types_width = gl_type_size(oga->types[0]);
+			int size = gl_type_size(oga->types[0]);
+			if (size < 0) croak("unknown type");
+			oga->total_types_width = size;
 		}
 
 		if (!oga->total_types_width) croak("Unable to determine type sizes\n");
