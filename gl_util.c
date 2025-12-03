@@ -677,9 +677,9 @@ GLvoid * EL(SV * sv, int needlen)
 GLvoid * ELI(SV * sv, GLsizei width, GLsizei height, 
              GLenum format, GLenum type, int mode)
 {
-	int needlen = 0;
-    if (!SvROK(sv)) /* don't calc length if arg is a perl ref */
-        needlen = gl_pixelbuffer_size(format, width, height, type, mode);
+	if (SvROK(sv)) /* don't calc length if arg is a perl ref */
+		return EL(sv, 0);
+	int needlen = needlen = gl_pixelbuffer_size(format, width, height, type, mode);
 	return EL(sv, needlen);
 }
 
