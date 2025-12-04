@@ -638,12 +638,110 @@ int gl_state_count(GLenum state) {
 	return 0;
 }
 
+/* From Mesa */
+
+/* Compute ceiling of integer quotient of A divided by B: */
+#define CEILING( A, B )  ( (A) % (B) == 0 ? (A)/(B) : (A)/(B)+1 )
+
 unsigned long gl_pixelbuffer_size(
 	GLenum format,
 	GLsizei	width,
 	GLsizei	height,
 	GLenum	type,
-	int mode);
+	int mode)
+{
+	GLint n; /* elements in a group */
+	GLint l; /* number of groups in a row */
+	GLint r; /* pack/unpack row length (overrides l if nonzero) */
+	GLint s; /* size (in bytes) of an element */
+	GLint a; /* alignment */
+	unsigned long k; /* size in bytes of row */
+
+	r = 0;
+	a = 4;
+
+	if (mode == gl_pixelbuffer_pack) {
+		glGetIntegerv(GL_PACK_ROW_LENGTH, &r);
+		glGetIntegerv(GL_PACK_ALIGNMENT, &a);
+	} else if (mode == gl_pixelbuffer_unpack) {
+		glGetIntegerv(GL_UNPACK_ROW_LENGTH, &r);
+		glGetIntegerv(GL_UNPACK_ALIGNMENT, &a);
+	}
+
+	l = r > 0 ? r : width;
+
+	s = gl_type_size(type);
+	if (s < 0) croak("unknown type");
+
+	n = gl_component_count(format, type);
+	if (n < 0) croak("unknown format");
+
+/* From Mesa, more or less */
+
+	if (type == GL_BITMAP) {
+		k = a * CEILING( n * l, 8 * a);
+	} else {
+		k = l * s * n;
+
+		if ( s < a ) {
+			k = (a / s * CEILING(k, a)) * s;
+		}
+	}
+
+	return k * height;
+}
+
+/* Compute ceiling of integer quotient of A divided by B: */
+#define CEILING( A, B )  ( (A) % (B) == 0 ? (A)/(B) : (A)/(B)+1 )
+
+void gl_pixelbuffer_size2(
+	GLsizei	width,
+	GLsizei	height,
+	GLsizei depth,
+	GLenum format,
+	GLenum	type,
+	int mode,
+	GLsizei * length,
+	GLsizei * items)
+{
+	GLint n; /* elements in a group */
+	GLint l; /* number of groups in a row */
+	GLint s; /* size (in bytes) of an element */
+	GLint a; /* alignment */
+	unsigned long k; /* size in bytes of row */
+
+	a = 4;
+	l = width;
+
+	if (mode == gl_pixelbuffer_pack) {
+		glGetIntegerv(GL_PACK_ROW_LENGTH, &l);
+		glGetIntegerv(GL_PACK_ALIGNMENT, &a);
+	} else if (mode == gl_pixelbuffer_unpack) {
+		glGetIntegerv(GL_UNPACK_ROW_LENGTH, &l);
+		glGetIntegerv(GL_UNPACK_ALIGNMENT, &a);
+	}
+
+	s = gl_type_size(type);
+	if (s < 0) croak("unknown type");
+
+	n = gl_component_count(format, type);
+	if (n < 0) croak("unknown format");
+
+/* From Mesa, more or less */
+
+	if (type == GL_BITMAP) {
+		k = a * CEILING( n * l, 8 * a);
+	} else {
+		k = l * s * n;
+
+		if ( s < a ) {
+			k = (a / s * CEILING(k, a)) * s;
+		}
+	}
+
+	*items = l * n * height * depth;
+	*length = (k * height * depth);
+}
 
 GLvoid * EL(SV * sv, int needlen)
 {
@@ -783,112 +881,6 @@ int gl_component_count(GLenum format, GLenum type)
 	return n;
 }
 
-
-/* From Mesa */
-
-/* Compute ceiling of integer quotient of A divided by B: */
-#define CEILING( A, B )  ( (A) % (B) == 0 ? (A)/(B) : (A)/(B)+1 )
-
-unsigned long gl_pixelbuffer_size(
-	GLenum format,
-	GLsizei	width,
-	GLsizei	height,
-	GLenum	type,
-	int mode)
-{
-	GLint n; /* elements in a group */
-	GLint l; /* number of groups in a row */
-	GLint r; /* pack/unpack row length (overrides l if nonzero) */
-	GLint s; /* size (in bytes) of an element */
-	GLint a; /* alignment */
-	unsigned long k; /* size in bytes of row */
-	
-	r = 0;
-	a = 4;
-	
-	if (mode == gl_pixelbuffer_pack) {
-		glGetIntegerv(GL_PACK_ROW_LENGTH, &r);
-		glGetIntegerv(GL_PACK_ALIGNMENT, &a);
-	} else if (mode == gl_pixelbuffer_unpack) {
-		glGetIntegerv(GL_UNPACK_ROW_LENGTH, &r);
-		glGetIntegerv(GL_UNPACK_ALIGNMENT, &a);
-	}
-
-	l = r > 0 ? r : width;
-
-	s = gl_type_size(type);
-	if (s < 0) croak("unknown type");
-	
-	n = gl_component_count(format, type);
-	if (n < 0) croak("unknown format");
-
-/* From Mesa, more or less */
-
-	if (type == GL_BITMAP) {
-		k = a * CEILING( n * l, 8 * a);
-	} else {
-		k = l * s * n;
-
-		if ( s < a ) {
-			k = (a / s * CEILING(k, a)) * s;
-		}
-	}
-
-	return k * height;
-}
-
-/* Compute ceiling of integer quotient of A divided by B: */
-#define CEILING( A, B )  ( (A) % (B) == 0 ? (A)/(B) : (A)/(B)+1 )
-
-void gl_pixelbuffer_size2(
-	GLsizei	width,
-	GLsizei	height,
-	GLsizei depth,
-	GLenum format,
-	GLenum	type,
-	int mode,
-	GLsizei * length,
-	GLsizei * items)
-{
-	GLint n; /* elements in a group */
-	GLint l; /* number of groups in a row */
-	GLint s; /* size (in bytes) of an element */
-	GLint a; /* alignment */
-	unsigned long k; /* size in bytes of row */
-	
-	a = 4;
-	l = width;
-	
-	if (mode == gl_pixelbuffer_pack) {
-		glGetIntegerv(GL_PACK_ROW_LENGTH, &l);
-		glGetIntegerv(GL_PACK_ALIGNMENT, &a);
-	} else if (mode == gl_pixelbuffer_unpack) {
-		glGetIntegerv(GL_UNPACK_ROW_LENGTH, &l);
-		glGetIntegerv(GL_UNPACK_ALIGNMENT, &a);
-	}
-
-	s = gl_type_size(type);
-	if (s < 0) croak("unknown type");
-	
-	n = gl_component_count(format, type);
-	if (n < 0) croak("unknown format");
-
-/* From Mesa, more or less */
-
-	if (type == GL_BITMAP) {
-		k = a * CEILING( n * l, 8 * a);
-	} else {
-		k = l * s * n;
-
-		if ( s < a ) {
-			k = (a / s * CEILING(k, a)) * s;
-		}
-	}
-	
-	*items = l * n * height * depth;
-	*length = (k * height * depth);
-	
-}
 
 void pgl_set_type(SV * sv, GLenum type, void ** ptr)
 {
