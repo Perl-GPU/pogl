@@ -317,13 +317,6 @@ enum {
 	gl_pixelbuffer_unpack = 2,
 };
 
-extern unsigned long gl_pixelbuffer_size(
-	GLenum format,
-	GLsizei	width,
-	GLsizei	height,
-	GLenum	type,
-	int mode);
-
 extern GLvoid * pack_image_ST(SV ** stack, int count, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, int mode);
 extern GLvoid * allocate_image_ST(GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, int mode);
 

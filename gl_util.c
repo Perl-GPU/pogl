@@ -643,12 +643,13 @@ int gl_state_count(GLenum state) {
 /* Compute ceiling of integer quotient of A divided by B: */
 #define CEILING( A, B )  ( (A) % (B) == 0 ? (A)/(B) : (A)/(B)+1 )
 
-unsigned long gl_pixelbuffer_size(
+char *gl_pixelbuffer_size(
 	GLenum format,
 	GLsizei	width,
 	GLsizei	height,
 	GLenum	type,
-	int mode)
+	int mode,
+	GLsizei * length)
 {
 	GLint n; /* elements in a group */
 	GLint l; /* number of groups in a row */
@@ -671,10 +672,10 @@ unsigned long gl_pixelbuffer_size(
 	l = r > 0 ? r : width;
 
 	s = gl_type_size(type);
-	if (s < 0) croak("unknown type");
+	if (s < 0) return "unknown type";
 
 	n = gl_component_count(format, type);
-	if (n < 0) croak("unknown format");
+	if (n < 0) return "unknown format";
 
 /* From Mesa, more or less */
 
@@ -688,7 +689,8 @@ unsigned long gl_pixelbuffer_size(
 		}
 	}
 
-	return k * height;
+	*length = k * height;
+	return NULL;
 }
 
 /* Compute ceiling of integer quotient of A divided by B: */
@@ -747,10 +749,8 @@ GLvoid * EL(SV * sv, int needlen)
 {
 	STRLEN skip = 0;
     SV * svref;
-	
 	if (SvREADONLY(sv))
 		croak("Readonly value for buffer");
-
 	if(SvROK(sv)) {
         svref = SvRV(sv);
         sv = svref;
@@ -761,14 +761,12 @@ GLvoid * EL(SV * sv, int needlen)
         if (SvFAKE(sv) && SvTYPE(sv) == SVt_PVGV)
             sv_unglob(sv);
 #endif
-
         SvUPGRADE(sv, SVt_PV);
         SvGROW(sv, (unsigned int)(needlen + 1));
         SvPOK_on(sv);
         SvCUR_set(sv, needlen);
         *SvEND(sv) = '\0';  /* Why is this here? -chm */
     }
-
 	return SvPV_force(sv, skip);
 }
 
@@ -777,7 +775,9 @@ GLvoid * ELI(SV * sv, GLsizei width, GLsizei height,
 {
 	if (SvROK(sv)) /* don't calc length if arg is a perl ref */
 		return EL(sv, 0);
-	int needlen = needlen = gl_pixelbuffer_size(format, width, height, type, mode);
+	GLsizei needlen;
+	char *ret = gl_pixelbuffer_size(format, width, height, type, mode, &needlen);
+	if (ret) croak("%s", ret);
 	return EL(sv, needlen);
 }
 
