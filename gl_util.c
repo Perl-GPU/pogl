@@ -696,7 +696,7 @@ char *gl_pixelbuffer_size(
 /* Compute ceiling of integer quotient of A divided by B: */
 #define CEILING( A, B )  ( (A) % (B) == 0 ? (A)/(B) : (A)/(B)+1 )
 
-void gl_pixelbuffer_size2(
+char *gl_pixelbuffer_size2(
 	GLsizei	width,
 	GLsizei	height,
 	GLsizei depth,
@@ -724,10 +724,10 @@ void gl_pixelbuffer_size2(
 	}
 
 	s = gl_type_size(type);
-	if (s < 0) croak("unknown type");
+	if (s < 0) return "unknown type";
 
 	n = gl_component_count(format, type);
-	if (n < 0) croak("unknown format");
+	if (n < 0) return "unknown format";
 
 /* From Mesa, more or less */
 
@@ -743,6 +743,7 @@ void gl_pixelbuffer_size2(
 
 	*items = l * n * height * depth;
 	*length = (k * height * depth);
+	return NULL;
 }
 
 GLvoid * EL(SV * sv, int needlen)
@@ -1057,7 +1058,8 @@ GLvoid * pack_image_ST(SV ** stack, int count, GLsizei width, GLsizei height, GL
 	int i;
 	void * ptr, * optr;
 	GLsizei size, max;
-	gl_pixelbuffer_size2(width, height, depth, format, type, mode, &size, &max);
+	char *ret = gl_pixelbuffer_size2(width, height, depth, format, type, mode, &size, &max);
+	if (ret) croak("%s", ret);
 	optr = ptr = malloc(size);
 
 	for (i=0;i<count;i++) {
@@ -1124,7 +1126,8 @@ GLvoid * allocate_image_ST(GLsizei width, GLsizei height, GLsizei depth, GLenum 
 	void * ptr;
 	GLsizei size, max;
 	
-	gl_pixelbuffer_size2(width, height, depth, format, type, mode, &size, &max);
+	char *ret = gl_pixelbuffer_size2(width, height, depth, format, type, mode, &size, &max);
+	if (ret) croak("%s", ret);
 	ptr = malloc(size);
 
 	return ptr;
@@ -1137,7 +1140,8 @@ GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, int mo
 	int i;
 	GLsizei size, max;
 
-	gl_pixelbuffer_size2(width, height, depth, format, type, mode, &size, &max);
+	char *ret = gl_pixelbuffer_size2(width, height, depth, format, type, mode, &size, &max);
+	if (ret) croak("%s", ret);
 
 	EXTEND(sp, max);
 	for (i=0;i<max;i++) {
