@@ -218,7 +218,7 @@ int gl_fog_count(GLenum pname)
 	return -1;
 }
 
-int gl_get_count(GLenum param)
+int ogl_howmany1(GLenum param)
 {
 
 /* 3 */

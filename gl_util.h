@@ -304,9 +304,9 @@ extern int gl_lightmodel_count(GLenum pname);
 
 extern int gl_fog_count(GLenum pname);
 
-#define MAX_GL_GET_COUNT	16
+#define OGL_MAX_COUNT	16
 
-extern int gl_get_count(GLenum param);
+extern int ogl_howmany1(GLenum param);
 
 extern int gl_pixelmap_size(GLenum map);
 

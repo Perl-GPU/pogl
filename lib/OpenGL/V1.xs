@@ -418,7 +418,7 @@ glGetDoublev_s(pname, params)
 	SV *	params
 	CODE:
 	{
-	int nparams = gl_get_count(pname);
+	int nparams = ogl_howmany1(pname);
 	if (nparams < 0) croak("Unknown param");
 	void * params_s = EL(params, sizeof(GLdouble) * nparams);
 	glGetDoublev(pname, params_s);
@@ -432,7 +432,7 @@ glGetBooleanv_s(pname, params)
 	SV *	params
 	CODE:
 	{
-	int nparams = gl_get_count(pname);
+	int nparams = ogl_howmany1(pname);
 	if (nparams < 0) croak("Unknown param");
 	void * params_s = EL(params, sizeof(GLboolean) * nparams);
 	glGetBooleanv(pname, params_s);
@@ -446,7 +446,7 @@ glGetIntegerv_s(pname, params)
 	SV *	params
 	CODE:
 	{
-	int nparams = gl_get_count(pname);
+	int nparams = ogl_howmany1(pname);
 	if (nparams < 0) croak("Unknown param");
 	void * params_s = EL(params, sizeof(GLint) * nparams);
 	glGetIntegerv(pname, params_s);
@@ -460,7 +460,7 @@ glGetFloatv_s(pname, params)
 	void *	params
 	CODE:
 	{
-	int nparams = gl_get_count(pname);
+	int nparams = ogl_howmany1(pname);
 	if (nparams < 0) croak("Unknown param");
 	void * params_s = EL(params, sizeof(GLfloat) * nparams);
 	glGetFloatv(pname, params_s);
@@ -473,8 +473,8 @@ glGetDoublev_p(param)
 	GLenum	param
 	PPCODE:
 	{
-		GLdouble	ret[MAX_GL_GET_COUNT];
-		int n = gl_get_count(param);
+		GLdouble	ret[OGL_MAX_COUNT];
+		int n = ogl_howmany1(param);
 		if (n < 0) croak("Unknown param");
 		int i;
 		glGetDoublev(param, &ret[0]);
@@ -490,8 +490,8 @@ glGetBooleanv_p(param)
 	GLenum	param
 	PPCODE:
 	{
-		GLboolean	ret[MAX_GL_GET_COUNT];
-		int n = gl_get_count(param);
+		GLboolean	ret[OGL_MAX_COUNT];
+		int n = ogl_howmany1(param);
 		if (n < 0) croak("Unknown param");
 		int i;
 		glGetBooleanv(param, &ret[0]);
@@ -507,8 +507,8 @@ glGetIntegerv_p(param)
 	GLenum	param
 	PPCODE:
 	{
-		GLint	ret[MAX_GL_GET_COUNT];
-		int n = gl_get_count(param);
+		GLint	ret[OGL_MAX_COUNT];
+		int n = ogl_howmany1(param);
 		if (n < 0) croak("Unknown param");
 		int i;
 		glGetIntegerv(param, &ret[0]);
@@ -524,8 +524,8 @@ glGetFloatv_p(param)
 	GLenum	param
 	PPCODE:
 	{
-		GLfloat	ret[MAX_GL_GET_COUNT];
-		int n = gl_get_count(param);
+		GLfloat	ret[OGL_MAX_COUNT];
+		int n = ogl_howmany1(param);
 		if (n < 0) croak("Unknown param");
 		int i;
 		glGetFloatv(param, &ret[0]);
@@ -4733,7 +4733,7 @@ glPointParameterfvARB_s(pname,params)
 		loadProc(glPointParameterfvARB,"glPointParameterfvARB");
 	CODE:
 	{
-		int count = gl_get_count(pname);
+		int count = ogl_howmany1(pname);
 		if (count < 0) croak("Unknown param");
 		GLfloat * params_s = EL(params, sizeof(GLfloat)*count);
 		glPointParameterfvARB(pname,params_s);
@@ -4750,7 +4750,7 @@ glPointParameterfvARB_p(pname, ...)
 	{
 		GLfloat params[4];
 		int i;
-		int nparams = gl_get_count(pname);
+		int nparams = ogl_howmany1(pname);
 		if (nparams < 0) croak("Unknown param");
 		if ((items-1) != nparams)
 			croak("Incorrect number of arguments");
