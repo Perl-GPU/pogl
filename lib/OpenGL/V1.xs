@@ -65,6 +65,20 @@ glAreTexturesResident_p(...)
 
 #endif
 
+#// 1.0
+#//# glBitmap_c($width, $height, $xorig, $yorig, $xmove, $ymove, (CPTR)bitmap);
+void
+glBitmap_c(width, height, xorig, yorig, xmove, ymove, bitmap)
+	GLsizei width
+	GLsizei height
+	GLfloat xorig
+	GLfloat yorig
+	GLfloat xmove
+	GLfloat ymove
+	void *  bitmap
+	CODE:
+	glBitmap(width, height, xorig, yorig, xmove, ymove, bitmap);
+
 #//# glBitmap_s($width, $height, $xorig, $yorig, $xmove, $ymove, (PACKED)bitmap);
 void
 glBitmap_s(width, height, xorig, yorig, xmove, ymove, bitmap)
@@ -898,6 +912,14 @@ glGetPixelMapusv_p(map)
 			PUSHs(sv_2mortal(newSViv(values[i])));
 		free(values);
 	}
+
+#// 1.0
+#//# glPolygonStipple_c((CPTR)mask);
+void
+glPolygonStipple_c(mask)
+	void *  mask
+	CODE:
+	glPolygonStipple(mask);
 
 #// 1.0
 #//# glGetPolygonStipple_s((PACKED)mask);

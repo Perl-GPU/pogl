@@ -848,7 +848,6 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
   glBindTexture
   glBindTextureEXT
   glBindVertexArray
-  glBitmap_c
   glBufferDataARB_c
   glBufferSubDataARB_c
   glCallLists_c
@@ -1087,7 +1086,6 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
   glPointParameterfARB
   glPointParameterfvARB_c
   glPolygonOffset
-  glPolygonStipple_c
   glPopClientAttrib
   glPrioritizeTextures_c
   glProgramEnvParameter4dARB
