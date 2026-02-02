@@ -11,13 +11,6 @@ use warnings;
 #  This program is free software; you can redistribute it and/or
 #  modify it under the same terms as Perl itself.
 
-our @gl_func_common = qw(
-   glDeleteQueries
-   glGetQueryObjectiv
-   glGetQueryObjectuiv
-   glGetQueryiv
-);
-
 our @gl_func_common_modern = qw(
   glAccum
   glAlphaFunc
@@ -1282,6 +1275,9 @@ our @modern_import_as_c_and_p = qw(
 
 our @modern_import_p_as = qw(
   glDeleteQueries
+  glGetQueryObjectiv
+  glGetQueryObjectuiv
+  glGetQueryiv
 );
 
 1;

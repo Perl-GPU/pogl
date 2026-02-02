@@ -121,7 +121,7 @@ our $glext_dependencies =
 
 my (@gl_func_common, @gl_func_common_modern); BEGIN {
 @gl_func_common_modern = @OpenGL::Misc::gl_func_common_modern;
-@gl_func_common = (@OpenGL::Misc::gl_func_common, @gl_func_common_modern);
+@gl_func_common = (@OpenGL::Misc::modern_import_p_as, @gl_func_common_modern);
 }
 
 my (@extra_gl_func, @extra_gl_func_modern); BEGIN {
