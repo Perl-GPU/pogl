@@ -3219,21 +3219,19 @@ our %window_defaults=(
 
 
 sub glpOpenWindow {
-        # default values
-        my(%a) = @_;
-        my(%p) = %window_defaults;
-        foreach my $k (keys(%a)){
-                exists($p{$k}) || warn "Not a valid parameter to glpOpenWindow: `$k'\n";
-                #print "parameter $k now ",$a{$k}," was ",$p{$k},"\n";  
-                $p{$k} = $a{$k};
-        }
-        #
-        # glpcOpenWindow() no longer exported.  Use fully qualified
-        # package name or (better!) glpOpenWindow()
-        #
-        glpcOpenWindow($p{'x'},$p{'y'},$p{'width'},$p{'height'},
-                       $p{'parent'},$p{'mask'},$p{'steal'},
-                       @{$p{'attributes'}});
+  # default values
+  my(%a) = @_;
+  my(%p) = %window_defaults;
+  foreach my $k (keys(%a)){
+    exists($p{$k}) || warn "Not a valid parameter to glpOpenWindow: `$k'\n";
+    #print "parameter $k now ",$a{$k}," was ",$p{$k},"\n";  
+    $p{$k} = $a{$k};
+  }
+  #
+  # glpcOpenWindow() no longer exported.  Use fully qualified
+  # package name or (better!) glpOpenWindow()
+  #
+  glpcOpenWindow(@p{qw(x y width height parent mask steal)}, @{$p{attributes}});
 }
 
 # The following material is original to OpenGL-0.5, and provides compatibility
