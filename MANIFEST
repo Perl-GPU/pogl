@@ -79,6 +79,7 @@ lib/OpenGL/Install/Files.pm
 lib/OpenGL/Install/typemap
 lib/OpenGL/Matrix.pm
 lib/OpenGL/Matrix.xs
+lib/OpenGL/Misc.pm
 lib/OpenGL/Shader.pm
 lib/OpenGL/Shader.pod
 lib/OpenGL/Shader/ARB.pm
