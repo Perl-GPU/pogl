@@ -3,6 +3,7 @@
 - use OpenGL::Modern for _c, most _p, and simple bindings
 - add ExtUtils::Depends support in addition to OpenGL::Config, including `use Inline with => 'OpenGL'`
 - glGetActive{Attrib,Uniform}ARB_p interface now return size,type,name not name,type,size
+- glPrioritizeTextures_p now takes 2 array-refs, not interleaving args
 
 0.7006 2025-04-14
 - incorporate Acme::MITHALDU::BleedingOpenGL changes - thanks @wchristian
