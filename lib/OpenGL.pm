@@ -132,11 +132,6 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN {
 use OpenGL::Modern @gl_func_common_modern, @extra_gl_func_modern,
   @OpenGL::Misc::modern_also_import;
 
-for (@OpenGL::Misc::modern_import_as_v_p) {
-  no strict 'refs';
-  push @extra_gl_func, my $fname = $_."v_p";
-  *$fname = *{"OpenGL::Modern::$_"};
-}
 for (@OpenGL::Misc::modern_import_as_vARB_p) {
   no strict 'refs';
   push @extra_gl_func, my $fname = $_."vARB_p";
