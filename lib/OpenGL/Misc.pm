@@ -226,6 +226,7 @@ our @extra_gl_func = qw(
    glColorPointerEXT_o
    glColorPointerEXT_p
    glColorPointerEXT_s
+   glDeleteBuffers_s
    glDeleteBuffersARB_s
    glDeleteFramebuffersEXT_s
    glDeleteProgramsARB_s
@@ -246,6 +247,7 @@ our @extra_gl_func = qw(
    glEdgeFlagPointerEXT_s
    glFogfv_s
    glFogiv_s
+   glGenBuffers_s
    glGenBuffersARB_s
    glGenFramebuffersEXT_s
    glGenProgramsARB_s
@@ -258,6 +260,7 @@ our @extra_gl_func = qw(
    glGetAttribLocationARB_c
    glGetAttribLocationARB_p
    glGetBooleanv_s
+   glGetBufferParameteriv_s
    glGetBufferParameterivARB_s
    glGetBufferPointervARB_o
    glGetBufferPointervARB_p
