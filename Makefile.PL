@@ -147,7 +147,7 @@ WriteMakefile(
     'ExtUtils::MakeMaker' => 0,
   },
   PREREQ_PM => {
-    'OpenGL::Modern' => '0.0401',
+    'OpenGL::Modern' => '0.0402', # more _p
   },
   TEST_REQUIRES => { 'Test::More' => '0.88' },
   AUTHOR	=> "Chris Marshall ".'<chm at cpan dot org>',

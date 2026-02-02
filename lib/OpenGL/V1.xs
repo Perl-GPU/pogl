@@ -33,36 +33,6 @@ glAreTexturesResident_s(n, textures, residences)
 	glAreTexturesResident(n, textures_s, residences_s);
 	}
 
-#// 1.1
-#//# (result,@residences) = glAreTexturesResident_p(@textureIDs);
-void
-glAreTexturesResident_p(...)
-	PPCODE:
-	{
-		GLsizei n = items;
-		GLuint * textures = malloc(sizeof(GLuint) * (n+1));
-		GLboolean * residences = malloc(sizeof(GLboolean) * (n+1));
-		GLboolean result;
-		int i;
-
-		for (i=0;i<n;i++)
-			textures[i] = SvIV(ST(i));
-
-		result = glAreTexturesResident(n, textures, residences);
-
-		if ((result == GL_TRUE) || (GIMME != G_ARRAY))
-			PUSHs(sv_2mortal(newSViv(result)));
-		else {
-			EXTEND(sp, n+1);
-			PUSHs(sv_2mortal(newSViv(result)));
-			for(i=0;i<n;i++)
-				PUSHs(sv_2mortal(newSViv(residences[i])));
-		}
-
-		free(textures);
-		free(residences);
-	}
-
 #endif
 
 #// 1.0
@@ -158,25 +128,6 @@ glClipPlane_s(plane, eqn)
 	{
 		GLdouble * eqn_s = EL(eqn, sizeof(GLdouble) * 4);
 		glClipPlane(plane, eqn_s);
-	}
-
-#// 1.0
-#//# glClipPlane_p($plane, $eqn0, $eqn1, $eqn2, $eqn3);
-void
-glClipPlane_p(plane, eqn0, eqn1, eqn2, eqn3)
-	GLenum	plane
-	double	eqn0
-	double	eqn1
-	double	eqn2
-	double	eqn3
-	CODE:
-	{
-		double eqn[4];
-		eqn[0] = eqn0;
-		eqn[1] = eqn1;
-		eqn[2] = eqn2;
-		eqn[3] = eqn3;
-		glClipPlane(plane, &eqn[0]);
 	}
 
 #ifdef GL_VERSION_1_1
@@ -355,44 +306,6 @@ glFogiv_s(pname, params)
 	glFogiv(pname, params_s);
 	}
 
-#// 1.0
-#//# glFogfv_p($pname, $param1, $param2=0, $param3=0, $param4=0);
-void
-glFogfv_p(pname, param1, param2=0, param3=0, param4=0)
-	GLenum	pname
-	GLfloat	param1
-	GLfloat	param2
-	GLfloat	param3
-	GLfloat	param4
-	CODE:
-	{
-		GLfloat p[4];
-		p[0] = param1;
-		p[1] = param2;
-		p[2] = param3;
-		p[3] = param4;
-		glFogfv(pname, &p[0]);
-	}
-
-#// 1.0
-#//# glFogiv_p($pname, $param1, $param2=0, $param3=0, $param4=0);
-void
-glFogiv_p(pname, param1, param2=0, param3=0, param4=0)
-	GLenum	pname
-	GLint	param1
-	GLint	param2
-	GLint	param3
-	GLint	param4
-	CODE:
-	{
-		GLint p[4];
-		p[0] = param1;
-		p[1] = param2;
-		p[2] = param3;
-		p[3] = param4;
-		glFogiv(pname, &p[0]);
-	}
-
 #ifdef GL_VERSION_1_1
 
 #// 1.1
@@ -406,21 +319,6 @@ glGenTextures_s(n, textures)
 	void * textures_s = EL(textures, sizeof(GLuint)*n);
 	glGenTextures(n, textures_s);
 	}
-
-#// 1.1
-#//# @textureIDs = glGenTextures_p($n);
-void
-glGenTextures_p(n)
-	GLint	n
-	PPCODE:
-	if (!n) XSRETURN_EMPTY;
-	GLuint * textures = malloc(sizeof(GLuint) * n);
-	int i;
-	glGenTextures(n, textures);
-	EXTEND(sp, n);
-	for(i=0;i<n;i++)
-		PUSHs(sv_2mortal(newSViv(textures[i])));
-	free(textures);
 
 #endif
 
@@ -481,74 +379,6 @@ glGetFloatv_s(pname, params)
 	}
 
 #// 1.0
-#//# @data = glGetDoublev_p($param);
-void
-glGetDoublev_p(param)
-	GLenum	param
-	PPCODE:
-	{
-		GLdouble	ret[OGL_MAX_COUNT];
-		int n = ogl_howmany1(param);
-		if (n < 0) croak("Unknown param");
-		int i;
-		glGetDoublev(param, &ret[0]);
-		EXTEND(sp, n);
-		for(i=0;i<n;i++)
-			PUSHs(sv_2mortal(newSVnv(ret[i])));
-	}
-
-#// 1.0
-#//# @data = glGetBooleanv_p($param);
-void
-glGetBooleanv_p(param)
-	GLenum	param
-	PPCODE:
-	{
-		GLboolean	ret[OGL_MAX_COUNT];
-		int n = ogl_howmany1(param);
-		if (n < 0) croak("Unknown param");
-		int i;
-		glGetBooleanv(param, &ret[0]);
-		EXTEND(sp, n);
-		for(i=0;i<n;i++)
-			PUSHs(sv_2mortal(newSViv(ret[i])));
-	}
-
-#// 1.0
-#//# @data = glGetIntegerv_p($param);
-void
-glGetIntegerv_p(param)
-	GLenum	param
-	PPCODE:
-	{
-		GLint	ret[OGL_MAX_COUNT];
-		int n = ogl_howmany1(param);
-		if (n < 0) croak("Unknown param");
-		int i;
-		glGetIntegerv(param, &ret[0]);
-		EXTEND(sp, n);
-		for(i=0;i<n;i++)
-			PUSHs(sv_2mortal(newSViv(ret[i])));
-	}
-
-#// 1.0
-#//# @data = glGetFloatv_p($param);
-void
-glGetFloatv_p(param)
-	GLenum	param
-	PPCODE:
-	{
-		GLfloat	ret[OGL_MAX_COUNT];
-		int n = ogl_howmany1(param);
-		if (n < 0) croak("Unknown param");
-		int i;
-		glGetFloatv(param, &ret[0]);
-		EXTEND(sp, n);
-		for(i=0;i<n;i++)
-			PUSHs(sv_2mortal(newSVnv(ret[i])));
-	}
-
-#// 1.0
 #//# glGetClipPlane_s($plane, (PACKED)eqn);
 void
 glGetClipPlane_s(plane, eqn)
@@ -604,42 +434,6 @@ glGetLightiv_s(light, pname, p)
 	if (nparams < 0) croak("Unknown light parameter");
 	void * p_s = EL(p, sizeof(GLint)*nparams);
 	glGetLightiv(light, pname, p_s);
-	}
-
-#// 1.0
-#//# @data = glGetLightfv_p($light, $pname);
-void
-glGetLightfv_p(light, pname)
-	GLenum	light
-	GLenum	pname
-	PPCODE:
-	{
-		GLfloat	ret[MAX_GL_LIGHT_COUNT];
-		int n = gl_light_count(pname);
-		if (n < 0) croak("Unknown light parameter");
-		int i;
-		glGetLightfv(light, pname, &ret[0]);
-		EXTEND(sp, n);
-		for(i=0;i<n;i++)
-			PUSHs(sv_2mortal(newSVnv(ret[i])));
-	}
-
-#// 1.0
-#//# @data = glGetLightiv_p($light, $pname);
-void
-glGetLightiv_p(light, pname)
-	GLenum	light
-	GLenum	pname
-	PPCODE:
-	{
-		GLint	ret[MAX_GL_LIGHT_COUNT];
-		int n = gl_light_count(pname);
-		if (n < 0) croak("Unknown light parameter");
-		int i;
-		glGetLightiv(light, pname, &ret[0]);
-		EXTEND(sp, n);
-		for(i=0;i<n;i++)
-			PUSHs(sv_2mortal(newSViv(ret[i])));
 	}
 
 #// 1.0
@@ -771,42 +565,6 @@ glGetMaterialiv_s(face, query, params)
 		GLint * params_s = EL(params,
 			sizeof(GLfloat)*nparams);
 		glGetMaterialiv(face, query, params_s);
-	}
-
-#// 1.0
-#//# @params = glGetMaterialfv_p($face, $query);
-void
-glGetMaterialfv_p(face, query)
-	GLenum	face
-	GLenum	query
-	PPCODE:
-	{
-		GLfloat	ret[MAX_GL_MATERIAL_COUNT];
-		int n = gl_material_count(query);
-		if (n < 0) croak("Unknown material parameter");
-		int i;
-		glGetMaterialfv(face, query, &ret[0]);
-		EXTEND(sp, n);
-		for(i=0;i<n;i++)
-			PUSHs(sv_2mortal(newSVnv(ret[i])));
-	}
-
-#// 1.0
-#//# @params = glGetMaterialiv_p($face, $query);
-void
-glGetMaterialiv_p(face, query)
-	GLenum	face
-	GLenum	query
-	PPCODE:
-	{
-		GLint	ret[MAX_GL_MATERIAL_COUNT];
-		int n = gl_material_count(query);
-		if (n < 0) croak("Unknown material parameter");
-		int i;
-		glGetMaterialiv(face, query, &ret[0]);
-		EXTEND(sp, n);
-		for(i=0;i<n;i++)
-			PUSHs(sv_2mortal(newSViv(ret[i])));
 	}
 
 #// 1.0
@@ -1007,42 +765,6 @@ glGetTexEnviv_s(target, pname, params)
 	}
 
 #// 1.0
-#//# @parames = glGetTexEnvfv_p($target, $pname);
-void
-glGetTexEnvfv_p(target, pname)
-	GLenum	target
-	GLenum	pname
-	PPCODE:
-	{
-		GLfloat	ret[MAX_GL_TEXENV_COUNT];
-		int n = gl_texenv_count(pname);
-		if (n < 0) croak("Unknown texenv parameter");
-		int i;
-		glGetTexEnvfv(target, pname, &ret[0]);
-		EXTEND(sp, n);
-		for(i=0;i<n;i++)
-			PUSHs(sv_2mortal(newSVnv(ret[i])));
-	}
-
-#// 1.0
-#//# @parames = glGetTexEnviv_p($target, $pname);
-void
-glGetTexEnviv_p(target, pname)
-	GLenum	target
-	GLenum	pname
-	PPCODE:
-	{
-		GLint	ret[MAX_GL_TEXENV_COUNT];
-		int n = gl_texenv_count(pname);
-		if (n < 0) croak("Unknown texenv parameter");
-		int i;
-		glGetTexEnviv(target, pname, &ret[0]);
-		EXTEND(sp, n);
-		for(i=0;i<n;i++)
-			PUSHs(sv_2mortal(newSViv(ret[i])));
-	}
-
-#// 1.0
 #//# glGetTexGendv_s($coord, $pname, (CPTR)params);
 void
 glGetTexGendv_s(coord, pname, params)
@@ -1085,60 +807,6 @@ glGetTexGeniv_s(coord, pname, params)
 	if (nparams < 0) croak("Unknown texgen parameter");
 	GLint * params_s = EL(params, sizeof(GLint)*nparams);
 	glGetTexGeniv(coord, pname, params_s);
-	}
-
-#// 1.0
-#//# @params = glGetTexGenfv_p($coord, $pname);
-void
-glGetTexGenfv_p(coord, pname)
-	GLenum	coord
-	GLenum	pname
-	PPCODE:
-	{
-		GLfloat	ret[MAX_GL_TEXGEN_COUNT];
-		int n = gl_texgen_count(pname);
-		if (n < 0) croak("Unknown texgen parameter");
-		int i;
-		glGetTexGenfv(coord, pname, &ret[0]);
-		EXTEND(sp, n);
-		for(i=0;i<n;i++)
-			PUSHs(sv_2mortal(newSVnv(ret[i])));
-	}
-
-#// 1.0
-#//# @params = glGetTexGendv_p($coord, $pname);
-void
-glGetTexGendv_p(coord, pname)
-	GLenum	coord
-	GLenum	pname
-	PPCODE:
-	{
-		GLdouble	ret[MAX_GL_TEXGEN_COUNT];
-		int n = gl_texgen_count(pname);
-		if (n < 0) croak("Unknown texgen parameter");
-		int i;
-		glGetTexGendv(coord, pname, &ret[0]);
-		EXTEND(sp, n);
-		for(i=0;i<n;i++)
-			PUSHs(sv_2mortal(newSVnv(ret[i])));
-	}
-
-#// 1.0
-#//# @params = glGetTexGeniv_p($coord, $pname);
-void
-glGetTexGeniv_p(coord, pname)
-	GLenum	coord
-	GLenum	pname
-	PPCODE:
-	{
-		GLint	ret[MAX_GL_TEXGEN_COUNT];
-		int n = gl_texgen_count(pname);
-		if (n < 0) croak("Unknown texgen parameter");
-		int i;
-		glGetTexGeniv(coord, pname, &ret[0]);
-		EXTEND(sp, n);
-		for(i=0;i<n;i++)
-			PUSHs(sv_2mortal(newSViv(ret[i])));
 	}
 
 #// 1.0
@@ -1224,34 +892,6 @@ glGetTexLevelParameteriv_s(target, level, pname, params)
 	}
 
 #// 1.0
-#//# @params = glGetTexLevelParameterfv_p($target, $level, $pname);
-void
-glGetTexLevelParameterfv_p(target, level, pname)
-	GLenum	target
-	GLint	level
-	GLenum	pname
-	PPCODE:
-	{
-		GLfloat	ret;
-		glGetTexLevelParameterfv(target, level, pname, &ret);
-		PUSHs(sv_2mortal(newSVnv(ret)));
-	}
-
-#// 1.0
-#//# @params = glGetTexLevelParameteriv_p($target, $level, $pname);
-void
-glGetTexLevelParameteriv_p(target, level, pname)
-	GLenum	target
-	GLint	level
-	GLenum	pname
-	PPCODE:
-	{
-		GLint	ret;
-		glGetTexLevelParameteriv(target, level, pname, &ret);
-		PUSHs(sv_2mortal(newSViv(ret)));
-	}
-
-#// 1.0
 #//# glGetTexParameterfv_s($target, $pname, (PACKED)params);
 void
 glGetTexParameterfv_s(target, pname, params)
@@ -1279,42 +919,6 @@ glGetTexParameteriv_s(target, pname, params)
 	if (nparams < 0) croak("Unknown texparameter parameter");
 	GLint * params_s = EL(params, sizeof(GLint)*nparams);
 	glGetTexParameteriv(target, pname, params_s);
-	}
-
-#// 1.0
-#//# @params = glGetTexParameterfv_p($target, $pname);
-void
-glGetTexParameterfv_p(target, pname)
-	GLenum	target
-	GLenum	pname
-	PPCODE:
-	{
-		GLfloat	ret[MAX_GL_TEXPARAMETER_COUNT];
-		int nparams = gl_texparameter_count(pname);
-		if (nparams < 0) croak("Unknown texparameter parameter");
-		int i;
-		glGetTexParameterfv(target, pname, &ret[0]);
-		EXTEND(sp, nparams);
-		for(i=0;i<nparams;i++)
-			PUSHs(sv_2mortal(newSVnv(ret[i])));
-	}
-
-#// 1.0
-#//# @params = glGetTexParameteriv_p($target, $pname);
-void
-glGetTexParameteriv_p(target, pname)
-	GLenum	target
-	GLenum	pname
-	PPCODE:
-	{
-		GLint	ret[MAX_GL_TEXPARAMETER_COUNT];
-		int nparams = gl_texparameter_count(pname);
-		if (nparams < 0) croak("Unknown texparameter parameter");
-		int i;
-		glGetTexParameteriv(target, pname, &ret[0]);
-		EXTEND(sp, nparams);
-		for(i=0;i<nparams;i++)
-			PUSHs(sv_2mortal(newSViv(ret[i])));
 	}
 
 #// 1.0
@@ -1348,44 +952,6 @@ glLightiv_s(light, pname, params)
 	}
 
 #// 1.0
-#//# glLightfv_p($light, $pname, @params);
-void
-glLightfv_p(light, pname, ...)
-	GLenum	light
-	GLenum	pname
-	CODE:
-	{
-		GLfloat p[MAX_GL_LIGHT_COUNT];
-		int i;
-		int nparams = gl_light_count(pname);
-		if (nparams < 0) croak("Unknown light parameter");
-		if ((items-2) != nparams)
-			croak("Incorrect number of arguments");
-		for(i=2;i<items;i++)
-			p[i-2] = (GLfloat)SvNV(ST(i));
-		glLightfv(light, pname, &p[0]);
-	}
-
-#// 1.0
-#//# glLightiv_p($light, $pname, @params);
-void
-glLightiv_p(light, pname, ...)
-	GLenum	light
-	GLenum	pname
-	CODE:
-	{
-		GLint p[MAX_GL_LIGHT_COUNT];
-		int i;
-		int nparams = gl_light_count(pname);
-		if (nparams < 0) croak("Unknown light parameter");
-		if ((items-2) != nparams)
-			croak("Incorrect number of arguments");
-		for(i=2;i<items;i++)
-			p[i-2] = SvIV(ST(i));
-		glLightiv(light, pname, &p[0]);
-	}
-
-#// 1.0
 #//# glLightModeliv_s($pname, (PACKED)params);
 void
 glLightModeliv_s(pname, params)
@@ -1414,42 +980,6 @@ glLightModelfv_s(pname, params)
 	}
 
 #// 1.0
-#//# glLightModelfv_p($pname, @params);
-void
-glLightModelfv_p(pname, ...)
-	GLenum	pname
-	CODE:
-	{
-		GLfloat p[MAX_GL_LIGHTMODEL_COUNT];
-		int i;
-		int nparams = gl_lightmodel_count(pname);
-		if (nparams < 0) croak("Unknown light model");
-		if ((items-1) != nparams)
-			croak("Incorrect number of arguments");
-		for(i=1;i<items;i++)
-			p[i-1] = (GLfloat)SvNV(ST(i));
-		glLightModelfv(pname, &p[0]);
-	}
-
-#// 1.0
-#//# glLightModeliv_p($pname, @params);
-void
-glLightModeliv_p(pname, ...)
-	GLenum	pname
-	CODE:
-	{
-		GLint p[MAX_GL_LIGHTMODEL_COUNT];
-		int i;
-		int nparams = gl_lightmodel_count(pname);
-		if (nparams < 0) croak("Unknown light model");
-		if ((items-1) != nparams)
-			croak("Incorrect number of arguments");
-		for(i=1;i<items;i++)
-			p[i-1] = SvIV(ST(i));
-		glLightModeliv(pname, &p[0]);
-	}
-
-#// 1.0
 #//# glLoadMatrixf_s((PACKED)m);
 void
 glLoadMatrixf_s(m)
@@ -1469,36 +999,6 @@ glLoadMatrixd_s(m)
 	{
 	GLdouble * m_s = EL(m, sizeof(GLdouble)*16);
 	glLoadMatrixd(m_s);
-	}
-
-#// 1.0
-#//# glLoadMatrixd_p(@m);
-void
-glLoadMatrixd_p(...)
-	CODE:
-	{
-		GLdouble m[16];
-		int i;
-		if (items != 16)
-			croak("Incorrect number of arguments");
-		for (i=0;i<16;i++)
-			m[i] = SvNV(ST(i));
-		glLoadMatrixd(&m[0]);
-	}
-
-#// 1.0
-#//# glLoadMatrixf_p(@m);
-void
-glLoadMatrixf_p(...)
-	CODE:
-	{
-		GLfloat m[16];
-		int i;
-		if (items != 16)
-			croak("Incorrect number of arguments");
-		for (i=0;i<16;i++)
-			m[i] = (GLfloat)SvNV(ST(i));
-		glLoadMatrixf(&m[0]);
 	}
 
 #// 1.0
@@ -1700,74 +1200,6 @@ glMaterialiv_s(face, pname, param)
 	}
 
 #// 1.0
-#//# glMaterialfv_s($face, $pname, @param);
-void
-glMaterialfv_p(face, pname, ...)
-	GLenum	face
-	GLenum	pname
-	CODE:
-	{
-		GLfloat p[MAX_GL_MATERIAL_COUNT];
-		int i;
-		int nparams = gl_material_count(pname);
-		if (nparams < 0) croak("Unknown material parameter");
-		if ((items-2) != nparams)
-			croak("Incorrect number of arguments");
-		for(i=2;i<items;i++)
-			p[i-2] = (GLfloat)SvNV(ST(i));
-		glMaterialfv(face, pname, &p[0]);
-	}
-
-#// 1.0
-#//# glMaterialiv_s($face, $pname, @param);
-void
-glMaterialiv_p(face, pname, ...)
-	GLenum	face
-	GLenum	pname
-	CODE:
-	{
-		GLint p[MAX_GL_MATERIAL_COUNT];
-		int i;
-		int nparams = gl_material_count(pname);
-		if (nparams < 0) croak("Unknown material parameter");
-		if ((items-2) != nparams)
-			croak("Incorrect number of arguments");
-		for(i=2;i<items;i++)
-			p[i-2] = SvIV(ST(i));
-		glMaterialiv(face, pname, &p[0]);
-	}
-
-#// 1.0
-#//# glMultMatrixd_p(@m);
-void
-glMultMatrixd_p(...)
-	CODE:
-	{
-		GLdouble m[16];
-		int i;
-		if (items != 16)
-			croak("Incorrect number of arguments");
-		for (i=0;i<16;i++)
-			m[i] = SvNV(ST(i));
-		glMultMatrixd(&m[0]);
-	}
-
-#// 1.0
-#//# glMultMatrixf_p(@m);
-void
-glMultMatrixf_p(...)
-	CODE:
-	{
-		GLfloat m[16];
-		int i;
-		if (items != 16)
-			croak("Incorrect number of arguments");
-		for (i=0;i<16;i++)
-			m[i] = (GLfloat)SvNV(ST(i));
-		glMultMatrixf(&m[0]);
-	}
-
-#// 1.0
 #//# glPixelMapfv_s($map, $mapsize, (PACKED)values);
 void
 glPixelMapfv_s(map, mapsize, values)
@@ -1804,57 +1236,6 @@ glPixelMapusv_s(map, mapsize, values)
 	{
 	GLushort * values_s = EL(values, sizeof(GLushort)*mapsize);
 	glPixelMapusv(map, mapsize, values_s);
-	}
-
-#// 1.0
-#//# glPixelMapfv_p($map, @values);
-void
-glPixelMapfv_p(map, ...)
-	GLenum	map
-	CODE:
-	{
-		GLint mapsize = items-1;
-		GLfloat * values;
-		int i;
-		values = malloc(sizeof(GLfloat) * (mapsize+1));
-		for (i=0;i<mapsize;i++)
-			values[i] = (GLfloat)SvNV(ST(i+1));
-		glPixelMapfv(map, mapsize, values);
-		free(values);
-	}
-
-#// 1.0
-#//# glPixelMapuiv_p($map, @values);
-void
-glPixelMapuiv_p(map, ...)
-	GLenum	map
-	CODE:
-	{
-		GLint mapsize = items-1;
-		GLuint * values;
-		int i;
-		values = malloc(sizeof(GLuint) * (mapsize+1));
-		for (i=0;i<mapsize;i++)
-			values[i] = SvIV(ST(i+1));
-		glPixelMapuiv(map, mapsize, values);
-		free(values);
-	}
-
-#// 1.0
-#//# glPixelMapusv_p($map, @values);
-void
-glPixelMapusv_p(map, ...)
-	GLenum	map
-	CODE:
-	{
-		GLint mapsize = items-1;
-		GLushort * values;
-		int i;
-		values = malloc(sizeof(GLushort) * (mapsize+1));
-		for (i=0;i<mapsize;i++)
-			values[i] = (GLushort)SvIV(ST(i+1));
-		glPixelMapusv(map, mapsize, values);
-		free(values);
 	}
 
 #// 1.0
@@ -1898,28 +1279,6 @@ glPrioritizeTextures_s(n, textures, priorities)
 	GLuint * textures_s = EL(textures, sizeof(GLuint) * n);
 	GLclampf * priorities_s = EL(priorities, sizeof(GLclampf) * n);
 	glPrioritizeTextures(n, textures_s, priorities_s);
-	}
-
-#// 1.1
-#//# glPrioritizeTextures_p(@textureIDs, @priorities);
-void
-glPrioritizeTextures_p(...)
-	CODE:
-	{
-		GLsizei n = items/2;
-		GLuint * textures = malloc(sizeof(GLuint) * (n+1));
-		GLclampf * prior = malloc(sizeof(GLclampf) * (n+1));
-		int i;
-
-		for (i=0;i<n;i++) {
-			textures[i] = SvIV(ST(i * 2 + 0));
-			prior[i] = (GLclampf)SvNV(ST(i * 2 + 1));
-		}
-
-		glPrioritizeTextures(n, textures, prior);
-
-		free(textures);
-		free(prior);
 	}
 
 #endif
@@ -2048,46 +1407,6 @@ glTexEnviv_s(target, pname, params)
 	}
 
 #// 1.0
-#//# glTexEnvfv_p(target, pname, @params);
-void
-glTexEnvfv_p(target, pname, ...)
-	GLenum	target
-	GLenum	pname
-	CODE:
-	{
-		GLfloat p[MAX_GL_TEXENV_COUNT];
-		int n = items-2;
-		int i;
-		int nparams = gl_texenv_count(pname);
-		if (nparams < 0) croak("Unknown texenv parameter");
-		if (n != nparams)
-			croak("Incorrect number of arguments");
-		for (i=2;i<items;i++)
-			p[i-2] = (GLfloat)SvNV(ST(i));
-		glTexEnvfv(target, pname, &p[0]);
-	}
-
-#// 1.0
-#//# glTexEnviv_p(target, pname, @params);
-void
-glTexEnviv_p(target, pname, ...)
-	GLenum	target
-	GLenum	pname
-	CODE:
-	{
-		GLint p[MAX_GL_TEXENV_COUNT];
-		int n = items-2;
-		int i;
-		int nparams = gl_texenv_count(pname);
-		if (nparams < 0) croak("Unknown texenv parameter");
-		if (n != nparams)
-			croak("Incorrect number of arguments");
-		for (i=2;i<items;i++)
-			p[i-2] = SvIV(ST(i));
-		glTexEnviv(target, pname, &p[0]);
-	}
-
-#// 1.0
 #//# glTexGendv_s($Coord, $pname, (PACKED)params);
 void
 glTexGendv_s(Coord, pname, params)
@@ -2130,66 +1449,6 @@ glTexGeniv_s(Coord, pname, params)
 	if (nparams < 0) croak("Unknown texgen parameter");
 	GLint * params_s = EL(params, sizeof(GLint)* nparams);
 	glTexGeniv(Coord, pname, params_s);
-	}
-
-#// 1.0
-#//# glTexGendv_p($Coord, $pname, @params);
-void
-glTexGendv_p(Coord, pname, ...)
-	GLenum	Coord
-	GLenum	pname
-	CODE:
-	{
-		GLdouble p[MAX_GL_TEXGEN_COUNT];
-		int n = items-2;
-		int i;
-		int nparams = gl_texgen_count(pname);
-		if (nparams < 0) croak("Unknown texgen parameter");
-		if (n != nparams)
-			croak("Incorrect number of arguments");
-		for (i=2;i<items;i++)
-			p[i-2] = SvNV(ST(i));
-		glTexGendv(Coord, pname, &p[0]);
-	}
-
-#// 1.0
-#//# glTexGenfv_p($Coord, $pname, @params);
-void
-glTexGenfv_p(Coord, pname, ...)
-	GLenum	Coord
-	GLenum	pname
-	CODE:
-	{
-		GLfloat p[MAX_GL_TEXGEN_COUNT];
-		int n = items-2;
-		int i;
-		int nparams = gl_texgen_count(pname);
-		if (nparams < 0) croak("Unknown texgen parameter");
-		if (n != nparams)
-			croak("Incorrect number of arguments");
-		for (i=2;i<items;i++)
-			p[i-2] = (GLfloat)SvNV(ST(i));
-		glTexGenfv(Coord, pname, &p[0]);
-	}
-
-#// 1.0
-#//# glTexGeniv_p($Coord, $pname, @params);
-void
-glTexGeniv_p(Coord, pname, ...)
-	GLenum	Coord
-	GLenum	pname
-	CODE:
-	{
-		GLint p[MAX_GL_TEXGEN_COUNT];
-		int n = items-2;
-		int i;
-		int nparams = gl_texgen_count(pname);
-		if (nparams < 0) croak("Unknown texgen parameter");
-		if (n != nparams)
-			croak("Incorrect number of arguments");
-		for (i=2;i<items;i++)
-			p[i-2] = SvIV(ST(i));
-		glTexGeniv(Coord, pname, &p[0]);
 	}
 
 #// 1.0
@@ -2372,46 +1631,6 @@ glTexParameteriv_s(target, pname, params)
 	if (nparams < 0) croak("Unknown texparameter parameter");
 	GLint * params_s = EL(params, sizeof(GLint)*nparams);
 	glTexParameteriv(target, pname, params_s);
-	}
-
-#// 1.0
-#//# glTexParameterfv_p($target, $pname, @params);
-void
-glTexParameterfv_p(target, pname, ...)
-	GLenum	target
-	GLenum	pname
-	CODE:
-	{
-		GLfloat p[MAX_GL_TEXPARAMETER_COUNT];
-		int n = items-2;
-		int i;
-		int nparams = gl_texparameter_count(pname);
-		if (nparams < 0) croak("Unknown texparameter parameter");
-		if (n != nparams)
-			croak("Incorrect number of arguments");
-		for(i=0;i<n;i++)
-			p[i] = (GLfloat)SvNV(ST(i+2));
-		glTexParameterfv(target, pname, &p[0]);
-	}
-
-#// 1.0
-#//# glTexParameteriv_p($target, $pname, @params);
-void
-glTexParameteriv_p(target, pname, ...)
-	GLenum	target
-	GLenum	pname
-	CODE:
-	{
-		GLint p[MAX_GL_TEXPARAMETER_COUNT];
-		int n = items-2;
-		int i;
-		int nparams = gl_texparameter_count(pname);
-		if (nparams < 0) croak("Unknown texparameter parameter");
-		if (n != nparams)
-			croak("Incorrect number of arguments");
-		for(i=0;i<n;i++)
-			p[i] = SvIV(ST(i+2));
-		glTexParameteriv(target, pname, &p[0]);
 	}
 
 #ifdef GL_VERSION_1_1
@@ -3857,18 +3076,6 @@ glGetBufferParameteriv_s(target,pname,params)
 		glGetBufferParameteriv(target,pname,params_s);
 	}
 
-#//# @params = glGetBufferParameteriv_p($target,$pname);
-void
-glGetBufferParameteriv_p(target,pname)
-	GLenum	target
-	GLenum	pname
-	PPCODE:
-	{
-		GLint	ret;
-		glGetBufferParameteriv(target,pname,&ret);
-		PUSHs(sv_2mortal(newSViv(ret)));
-	}
-
 #//# glGetBufferPointerv_s($target,$pname,(PACKED)params);
 void
 glGetBufferPointerv_s(target,pname,params)
@@ -4434,20 +3641,6 @@ glGetBufferParameterivARB_s(target,pname,params)
 		glGetBufferParameterivARB(target,pname,params_s);
 	}
 
-#//# @params = glGetBufferParameterivARB_p($target,$pname);
-void
-glGetBufferParameterivARB_p(target,pname)
-	GLenum	target
-	GLenum	pname
-	INIT:
-		loadProc(glGetBufferParameterivARB,"glGetBufferParameterivARB");
-	PPCODE:
-	{
-		GLint	ret;
-		glGetBufferParameterivARB(target,pname,&ret);
-		PUSHs(sv_2mortal(newSViv(ret)));
-	}
-
 #//# glGetBufferPointervARB_s($target,$pname,(PACKED)params);
 void
 glGetBufferPointervARB_s(target,pname,params)
@@ -4759,26 +3952,6 @@ glPointParameterfvARB_s(pname,params)
 		if (count < 0) croak("Unknown param");
 		GLfloat * params_s = EL(params, sizeof(GLfloat)*count);
 		glPointParameterfvARB(pname,params_s);
-	}
-
-#//!!! This implementation doesn't look right
-#//# glPointParameterfvARB_p($pname,@params);
-void
-glPointParameterfvARB_p(pname, ...)
-	GLenum pname
-	INIT:
-		loadProc(glPointParameterfvARB,"glPointParameterfvARB");
-	CODE:
-	{
-		GLfloat params[4];
-		int i;
-		int nparams = ogl_howmany1(pname);
-		if (nparams < 0) croak("Unknown param");
-		if ((items-1) != nparams)
-			croak("Incorrect number of arguments");
-		for(i=1;i<items;i++)
-			params[i-1] = (GLfloat)SvNV(ST(i));
-		glPointParameterfvARB(pname,params);
 	}
 
 #endif

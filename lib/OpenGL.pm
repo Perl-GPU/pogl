@@ -119,9 +119,6 @@ our $glext_dependencies =
 };
 
 my (@gl_func_common, @gl_func_common_modern); BEGIN { @gl_func_common = qw(
-   glGetProgramiv_p
-   glGetShaderiv_p
-   glGetShaderInfoLog_p
    glDeleteQueries
    glGetQueryObjectiv
    glGetQueryObjectuiv
@@ -191,6 +188,9 @@ my (@gl_func_common, @gl_func_common_modern); BEGIN { @gl_func_common = qw(
    glGenLists
    glGenQueries_p
    glGetError
+   glGetProgramiv_p
+   glGetShaderInfoLog_p
+   glGetShaderiv_p
    glHint
    glIndexMask
    glIndexd
@@ -307,7 +307,6 @@ push@gl_func_common, @gl_func_common_modern;
 }
 my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
    glAreTexturesResidentEXT_p
-   glAreTexturesResident_p
    glAreTexturesResident_s
    glBitmap_p
    glBitmap_s
@@ -319,7 +318,6 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
    glBufferSubDataARB_s
    glCallLists_p
    glCallLists_s
-   glClipPlane_p
    glClipPlane_s
    glColor3bv_p
    glColor3bv_s
@@ -365,7 +363,6 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
    glDeleteRenderbuffersEXT_s
    glDeleteVertexArrays
    glDeleteTextures_s
-   glDrawBuffersARB_p
    glDrawBuffersARB_s
    glDrawBuffers_p
    glDrawBuffers_s
@@ -379,27 +376,20 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
    glEdgeFlagPointerEXT_s
    glEdgeFlagPointer_p
    glEdgeFlagPointer_s
-   glFogfv_p
    glFogfv_s
-   glFogiv_p
    glFogiv_s
    glGenBuffersARB_s
    glGenFramebuffersEXT_s
    glGenProgramsARB_s
    glGenRenderbuffersEXT_s
-   glGenTextures_p
    glGenTextures_s
-   glGetActiveAttribARB_p
    glGetActiveAttribARB_s
-   glGetActiveUniformARB_p
    glGetActiveUniformARB_s
    glGetAttachedObjectsARB_p
    glGetAttachedObjectsARB_s
    glGetAttribLocationARB_c
    glGetAttribLocationARB_p
-   glGetBooleanv_p
    glGetBooleanv_s
-   glGetBufferParameterivARB_p
    glGetBufferParameterivARB_s
    glGetBufferPointervARB_o
    glGetBufferPointervARB_p
@@ -409,17 +399,11 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
    glGetBufferSubDataARB_s
    glGetClipPlane_p
    glGetClipPlane_s
-   glGetDoublev_p
    glGetDoublev_s
-   glGetFloatv_p
    glGetFloatv_s
    glGetFramebufferAttachmentParameterivEXT_s
-   glGetInfoLogARB_p
-   glGetIntegerv_p
    glGetIntegerv_s
-   glGetLightfv_p
    glGetLightfv_s
-   glGetLightiv_p
    glGetLightiv_s
    glGetMapdv_p
    glGetMapdv_s
@@ -427,9 +411,7 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
    glGetMapfv_s
    glGetMapiv_p
    glGetMapiv_s
-   glGetMaterialfv_p
    glGetMaterialfv_s
-   glGetMaterialiv_p
    glGetMaterialiv_s
    glGetObjectParameterfvARB_p
    glGetObjectParameterfvARB_s
@@ -445,39 +427,24 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
    glGetPointerv_s
    glGetPolygonStipple_p
    glGetPolygonStipple_s
-   glGetProgramEnvParameterdvARB_p
    glGetProgramEnvParameterdvARB_s
-   glGetProgramEnvParameterfvARB_p
    glGetProgramEnvParameterfvARB_s
-   glGetProgramLocalParameterdvARB_p
    glGetProgramLocalParameterdvARB_s
-   glGetProgramLocalParameterfvARB_p
    glGetProgramLocalParameterfvARB_s
    glGetProgramStringARB_p
    glGetProgramStringARB_s
-   glGetProgramivARB_p
    glGetProgramivARB_s
    glGetRenderbufferParameterivEXT_s
-   glGetShaderSourceARB_p
-   glGetTexEnvfv_p
    glGetTexEnvfv_s
-   glGetTexEnviv_p
    glGetTexEnviv_s
-   glGetTexGendv_p
    glGetTexGendv_s
-   glGetTexGenfv_p
    glGetTexGenfv_s
-   glGetTexGeniv_p
    glGetTexGeniv_s
    glGetTexImage_p
    glGetTexImage_s
-   glGetTexLevelParameterfv_p
    glGetTexLevelParameterfv_s
-   glGetTexLevelParameteriv_p
    glGetTexLevelParameteriv_s
-   glGetTexParameterfv_p
    glGetTexParameterfv_s
-   glGetTexParameteriv_p
    glGetTexParameteriv_s
    glGetUniformLocationARB_c
    glGetVertexAttribdvARB_s
@@ -485,10 +452,7 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
    glGetUniformfvARB_p
    glGetUniformivARB_p
    glGetVertexAttribPointervARB_p
-   glGetVertexAttribdvARB_p
-   glGetVertexAttribfvARB_p
    glGetVertexAttribfvARB_s
-   glGetVertexAttribivARB_p
    glGetVertexAttribivARB_s
    glIndexPointerEXT_o
    glIndexPointerEXT_p
@@ -496,17 +460,11 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
    glIndexPointer_o
    glIndexPointer_p
    glIndexPointer_s
-   glLightModelfv_p
    glLightModelfv_s
-   glLightModeliv_p
    glLightModeliv_s
-   glLightfv_p
    glLightfv_s
-   glLightiv_p
    glLightiv_s
-   glLoadMatrixd_p
    glLoadMatrixd_s
-   glLoadMatrixf_p
    glLoadMatrixf_s
    glMap1d_p
    glMap1d_s
@@ -518,12 +476,8 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
    glMap2f_s
    glMapBufferARB_o
    glMapBufferARB_p
-   glMaterialfv_p
    glMaterialfv_s
-   glMaterialiv_p
    glMaterialiv_s
-   glMultMatrixd_p
-   glMultMatrixf_p
    glMultiTexCoord1dvARB_p
    glMultiTexCoord1dvARB_s
    glMultiTexCoord1dv_p
@@ -604,18 +558,13 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
    glNormalPointer_o
    glNormalPointer_p
    glNormalPointer_s
-   glPixelMapfv_p
    glPixelMapfv_s
-   glPixelMapuiv_p
    glPixelMapuiv_s
-   glPixelMapusv_p
    glPixelMapusv_s
-   glPointParameterfvARB_p
    glPointParameterfvARB_s
    glPolygonStipple_p
    glPolygonStipple_s
    glPrioritizeTexturesEXT_p
-   glPrioritizeTextures_p
    glPrioritizeTextures_s
    glProgramEnvParameter4dvARB_p
    glProgramEnvParameter4dvARB_s
@@ -657,7 +606,6 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
    glRectfv_s
    glRectiv_s
    glRectsv_s
-   glShaderSourceARB_p
    glTexCoord1dv_p
    glTexCoord1dv_s
    glTexCoord1fv_p
@@ -696,15 +644,10 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
    glTexCoordPointer_o
    glTexCoordPointer_p
    glTexCoordPointer_s
-   glTexEnvfv_p
    glTexEnvfv_s
-   glTexEnviv_p
    glTexEnviv_s
-   glTexGendv_p
    glTexGendv_s
-   glTexGenfv_p
    glTexGenfv_s
-   glTexGeniv_p
    glTexGeniv_s
    glTexImage1D_p
    glTexImage1D_s
@@ -714,9 +657,7 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
    glTexImage3DEXT_s
    glTexImage3D_p
    glTexImage3D_s
-   glTexParameterfv_p
    glTexParameterfv_s
-   glTexParameteriv_p
    glTexParameteriv_s
    glTexSubImage1DEXT_p
    glTexSubImage1DEXT_s
@@ -728,27 +669,16 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
    glTexSubImage2D_s
    glTexSubImage3D_p
    glTexSubImage3D_s
-   glUniform1fvARB_p
    glUniform1fvARB_s
-   glUniform1ivARB_p
    glUniform1ivARB_s
-   glUniform2fvARB_p
    glUniform2fvARB_s
-   glUniform2ivARB_p
    glUniform2ivARB_s
-   glUniform3fvARB_p
    glUniform3fvARB_s
-   glUniform3ivARB_p
    glUniform3ivARB_s
-   glUniform4fvARB_p
    glUniform4fvARB_s
-   glUniform4ivARB_p
    glUniform4ivARB_s
-   glUniformMatrix2fvARB_p
    glUniformMatrix2fvARB_s
-   glUniformMatrix3fvARB_p
    glUniformMatrix3fvARB_s
-   glUniformMatrix4fvARB_p
    glUniformMatrix4fvARB_s
    glVertex2dv_p
    glVertex2dv_s
@@ -792,33 +722,22 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
    glVertexAttrib3fvARB_s
    glVertexAttrib3svARB_p
    glVertexAttrib3svARB_s
-   glVertexAttrib4NbvARB_p
    glVertexAttrib4NbvARB_s
-   glVertexAttrib4NivARB_p
    glVertexAttrib4NivARB_s
-   glVertexAttrib4NsvARB_p
    glVertexAttrib4NsvARB_s
-   glVertexAttrib4NubvARB_p
    glVertexAttrib4NubvARB_s
-   glVertexAttrib4NuivARB_p
    glVertexAttrib4NuivARB_s
-   glVertexAttrib4NusvARB_p
    glVertexAttrib4NusvARB_s
-   glVertexAttrib4bvARB_p
    glVertexAttrib4bvARB_s
    glVertexAttrib4dvARB_p
    glVertexAttrib4dvARB_s
    glVertexAttrib4fvARB_p
    glVertexAttrib4fvARB_s
-   glVertexAttrib4ivARB_p
    glVertexAttrib4ivARB_s
    glVertexAttrib4svARB_p
    glVertexAttrib4svARB_s
-   glVertexAttrib4ubvARB_p
    glVertexAttrib4ubvARB_s
-   glVertexAttrib4uivARB_p
    glVertexAttrib4uivARB_s
-   glVertexAttrib4usvARB_p
    glVertexAttrib4usvARB_s
    glVertexAttribPointerARB_p
    glVertexPointerEXT_o
@@ -837,6 +756,7 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
   glActiveTexture
   glActiveTextureARB
   glAreTexturesResident_c
+  glAreTexturesResident_p
   glArrayElement
   glArrayElementEXT
   glAttachObjectARB
@@ -856,6 +776,7 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
   glClientActiveTexture
   glClientActiveTextureARB
   glClipPlane_c
+  glClipPlane_p
   glColor3bv_c
   glColor3dv_c
   glColor3fv_c
@@ -908,6 +829,7 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
   glDrawArraysEXT
   glDrawBuffersARB_c
   glDrawBuffers_c
+  glDrawBuffersARB_p
   glDrawElements_c
   glDrawPixels_c
   glDrawRangeElements_c
@@ -917,7 +839,9 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
   glEnableVertexAttribArrayARB
   glFeedbackBuffer_c
   glFogfv_c
+  glFogfv_p
   glFogiv_c
+  glFogiv_p
   glFramebufferRenderbufferEXT
   glFramebufferTexture1DEXT
   glFramebufferTexture2DEXT
@@ -933,27 +857,41 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
   glGenTexturesEXT_p
   glGenVertexArrays_p
   glGenTextures_c
+  glGenTextures_p
   glGenerateMipmapEXT
   glGetActiveAttribARB_c
+  glGetActiveAttribARB_p
   glGetActiveUniformARB_c
+  glGetActiveUniformARB_p
   glGetAttachedObjectsARB_c
   glGetBooleanv_c
+  glGetBooleanv_p
   glGetBufferParameterivARB_c
+  glGetBufferParameterivARB_p
+  glGetBufferParameteriv_p
   glGetBufferPointervARB_c
   glGetBufferSubDataARB_c
   glGetClipPlane_c
   glGetDoublev_c
+  glGetDoublev_p
   glGetFloatv_c
+  glGetFloatv_p
   glGetFramebufferAttachmentParameterivEXT_c
   glGetInfoLogARB_c
+  glGetInfoLogARB_p
   glGetIntegerv_c
+  glGetIntegerv_p
   glGetLightfv_c
+  glGetLightfv_p
   glGetLightiv_c
+  glGetLightiv_p
   glGetMapdv_c
   glGetMapfv_c
   glGetMapiv_c
   glGetMaterialfv_c
+  glGetMaterialfv_p
   glGetMaterialiv_c
+  glGetMaterialiv_p
   glGetObjectParameterfvARB_c
   glGetObjectParameterivARB_c
   glGetPixelMapfv_c
@@ -962,30 +900,48 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
   glGetPointerv_c
   glGetPolygonStipple_c
   glGetProgramEnvParameterdvARB_c
+  glGetProgramEnvParameterdvARB_p
   glGetProgramEnvParameterfvARB_c
+  glGetProgramEnvParameterfvARB_p
   glGetProgramLocalParameterdvARB_c
+  glGetProgramLocalParameterdvARB_p
   glGetProgramLocalParameterfvARB_c
+  glGetProgramLocalParameterfvARB_p
   glGetProgramStringARB_c
   glGetProgramivARB_c
+  glGetProgramivARB_p
   glGetRenderbufferParameterivEXT_c
   glGetShaderSourceARB_c
+  glGetShaderSourceARB_p
   glGetString
   glGetTexEnvfv_c
+  glGetTexEnvfv_p
   glGetTexEnviv_c
+  glGetTexEnviv_p
   glGetTexGendv_c
+  glGetTexGendv_p
   glGetTexGenfv_c
+  glGetTexGenfv_p
   glGetTexGeniv_c
+  glGetTexGeniv_p
   glGetTexImage_c
   glGetTexLevelParameterfv_c
+  glGetTexLevelParameterfv_p
   glGetTexLevelParameteriv_c
+  glGetTexLevelParameteriv_p
   glGetTexParameterfv_c
+  glGetTexParameterfv_p
   glGetTexParameteriv_c
+  glGetTexParameteriv_p
   glGetUniformfvARB_c
   glGetUniformivARB_c
   glGetVertexAttribPointervARB_c
   glGetVertexAttribdvARB_c
+  glGetVertexAttribdvARB_p
   glGetVertexAttribfvARB_c
+  glGetVertexAttribfvARB_p
   glGetVertexAttribivARB_c
+  glGetVertexAttribivARB_p
   glIndexPointerEXT_c
   glIndexPointer_c
   glInterleavedArrays_c
@@ -996,19 +952,29 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
   glIsTexture
   glIsTextureEXT
   glLightModelfv_c
+  glLightModelfv_p
   glLightModeliv_c
+  glLightModeliv_p
   glLightfv_c
+  glLightfv_p
   glLightiv_c
+  glLightiv_p
   glLinkProgramARB
   glLoadMatrixd_c
+  glLoadMatrixd_p
   glLoadMatrixf_c
+  glLoadMatrixf_p
   glMap1d_c
   glMap1f_c
   glMap2d_c
   glMap2f_c
   glMapBufferARB_c
   glMaterialfv_c
+  glMaterialfv_p
   glMaterialiv_c
+  glMaterialiv_p
+  glMultMatrixd_p
+  glMultMatrixf_p
   glMultiTexCoord1d
   glMultiTexCoord1dARB
   glMultiTexCoord1dvARB_c
@@ -1081,13 +1047,18 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
   glNormalPointerEXT_c
   glNormalPointer_c
   glPixelMapfv_c
+  glPixelMapfv_p
   glPixelMapuiv_c
+  glPixelMapuiv_p
   glPixelMapusv_c
+  glPixelMapusv_p
   glPointParameterfARB
   glPointParameterfvARB_c
+  glPointParameterfvARB_p
   glPolygonOffset
   glPopClientAttrib
   glPrioritizeTextures_c
+  glPrioritizeTextures_p
   glProgramEnvParameter4dARB
   glProgramEnvParameter4dvARB_c
   glProgramEnvParameter4fARB
@@ -1120,6 +1091,7 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
   glSampleCoverageARB
   glSelectBuffer_c
   glShaderSourceARB_c
+  glShaderSourceARB_p
   glTexCoord1dv_c
   glTexCoord1fv_c
   glTexCoord1iv_c
@@ -1138,15 +1110,22 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
   glTexCoord4sv_c
   glTexCoordPointerEXT_c
   glTexCoordPointer_c
+  glTexEnvfv_p
+  glTexEnviv_p
   glTexGendv_c
+  glTexGendv_p
   glTexGenfv_c
+  glTexGenfv_p
   glTexGeniv_c
+  glTexGeniv_p
   glTexImage1D_c
   glTexImage2D_c
   glTexImage3DEXT_c
   glTexImage3D_c
   glTexParameterfv_c
+  glTexParameterfv_p
   glTexParameteriv_c
+  glTexParameteriv_p
   glTexSubImage1DEXT_c
   glTexSubImage1D_c
   glTexSubImage2DEXT_c
@@ -1154,23 +1133,34 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
   glTexSubImage3D_c
   glUniform1fARB
   glUniform1fvARB_c
+  glUniform1fvARB_p
   glUniform1iARB
   glUniform1ivARB_c
+  glUniform1ivARB_p
   glUniform2fARB
   glUniform2fvARB_c
+  glUniform2fvARB_p
   glUniform2iARB
   glUniform2ivARB_c
+  glUniform2ivARB_p
   glUniform3fARB
   glUniform3fvARB_c
+  glUniform3fvARB_p
   glUniform3iARB
   glUniform3ivARB_c
+  glUniform3ivARB_p
   glUniform4fARB
   glUniform4fvARB_c
+  glUniform4fvARB_p
   glUniform4iARB
   glUniform4ivARB_c
+  glUniform4ivARB_p
   glUniformMatrix2fvARB_c
+  glUniformMatrix2fvARB_p
   glUniformMatrix3fvARB_c
+  glUniformMatrix3fvARB_p
   glUniformMatrix4fvARB_c
+  glUniformMatrix4fvARB_p
   glUnmapBufferARB
   glUseProgramObjectARB
   glValidateProgramARB
@@ -1205,23 +1195,34 @@ my (@extra_gl_func, @extra_gl_func_modern); BEGIN { @extra_gl_func = qw(
   glVertexAttrib3sARB
   glVertexAttrib3svARB_c
   glVertexAttrib4NbvARB_c
+  glVertexAttrib4NbvARB_p
   glVertexAttrib4NivARB_c
+  glVertexAttrib4NivARB_p
   glVertexAttrib4NsvARB_c
+  glVertexAttrib4NsvARB_p
   glVertexAttrib4NubARB
   glVertexAttrib4NubvARB_c
+  glVertexAttrib4NubvARB_p
   glVertexAttrib4NuivARB_c
+  glVertexAttrib4NuivARB_p
   glVertexAttrib4NusvARB_c
+  glVertexAttrib4NusvARB_p
   glVertexAttrib4bvARB_c
+  glVertexAttrib4bvARB_p
   glVertexAttrib4dARB
   glVertexAttrib4dvARB_c
   glVertexAttrib4fARB
   glVertexAttrib4fvARB_c
   glVertexAttrib4ivARB_c
+  glVertexAttrib4ivARB_p
   glVertexAttrib4sARB
   glVertexAttrib4svARB_c
   glVertexAttrib4ubvARB_c
+  glVertexAttrib4ubvARB_p
   glVertexAttrib4uivARB_c
+  glVertexAttrib4uivARB_p
   glVertexAttrib4usvARB_c
+  glVertexAttrib4usvARB_p
   glVertexAttribPointerARB_c
   glVertexPointerEXT_c
   glVertexPointer_c

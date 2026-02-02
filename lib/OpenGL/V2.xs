@@ -30,86 +30,6 @@ glDrawBuffers_s(n,buffers)
 		glDrawBuffers(n,buffers_s);
 	}
 
-#//# glDrawBuffers_p(@buffers);
-void
-glDrawBuffers_p(...)
-	CODE:
-	{
-		if (items) {
-			GLuint * list = malloc(sizeof(GLuint) * items);
-			int i;
-
-			for (i=0;i<items;i++)
-				list[i] = SvIV(ST(i));
-
-			glDrawBuffers(items, list);
-			free(list);
-		}
-	}
-
-#//# $value = glGetShaderiv_p($target,$pname);
-GLuint
-glGetShaderiv_p(target,pname)
-	GLenum	target
-	GLenum	pname
-	INIT:
-		loadProc(glGetShaderiv,"glGetShaderiv");
-	CODE:
-	{
-		GLuint param;
-		glGetShaderiv(target,pname,(void *)&param);
-		RETVAL = param;
-	}
-	OUTPUT:
-		RETVAL
-
-#//# $infoLog = glGetShaderInfoLog_p($shader);
-SV *
-glGetShaderInfoLog_p(shader)
-	GLuint shader
-	INIT:
-		loadProc(glGetShaderiv,"glGetShaderiv");
-		loadProc(glGetShaderInfoLog,"glGetShaderInfoLog");
-	CODE:
-	{
-		GLint infoLogLength;
-		glGetShaderiv(shader,GL_INFO_LOG_LENGTH,(GLvoid *)&infoLogLength);
-		if (infoLogLength)
-		{
-			GLint length;
-			GLchar * infoLog = malloc(infoLogLength+1);
-			glGetShaderInfoLog(shader,infoLogLength,&length,infoLog);
-			infoLog[length] = 0;
-			if (*infoLog)
-				RETVAL = newSVpv(infoLog, 0);
-			else
-				RETVAL = newSVsv(&PL_sv_undef);
-			free(infoLog);
-		}
-		else
-		{
-			RETVAL = newSVsv(&PL_sv_undef);
-		}
-	}
-	OUTPUT:
-		RETVAL
-
-#//# $value = glGetProgramiv_p($target,$pname);
-GLuint
-glGetProgramiv_p(target,pname)
-	GLenum	target
-	GLenum	pname
-	INIT:
-		loadProc(glGetProgramiv,"glGetProgramiv");
-	CODE:
-	{
-		GLuint param;
-		glGetProgramiv(target,pname,(void *)&param);
-		RETVAL = param;
-	}
-	OUTPUT:
-		RETVAL
-
 #endif // GL_VERSION_2_0
 
 #ifdef GL_ARB_vertex_program
@@ -239,25 +159,6 @@ glGetProgramEnvParameterdvARB_s(target,index,params)
 		glGetProgramEnvParameterdvARB(target,index,params_s);
 	}
 
-#//# @params = glGetProgramEnvParameterdvARB_p($target,$index);
-void
-glGetProgramEnvParameterdvARB_p(target,index)
-	GLenum	target
-	GLint	index
-	INIT:
-		loadProc(glGetProgramEnvParameterdvARB,"glGetProgramEnvParameterdvARB");
-	PPCODE:
-	{
-		GLdouble params[4];
-		glGetProgramEnvParameterdvARB(target,index,params);
-
-		EXTEND(sp, 4);
-		PUSHs(sv_2mortal(newSVnv(params[0])));
-		PUSHs(sv_2mortal(newSVnv(params[1])));
-		PUSHs(sv_2mortal(newSVnv(params[2])));
-		PUSHs(sv_2mortal(newSVnv(params[3])));
-	}
-
 #//# glGetProgramEnvParameterfvARB_s($target,$index,(PACKED)params);
 void
 glGetProgramEnvParameterfvARB_s(target,index,params)
@@ -270,25 +171,6 @@ glGetProgramEnvParameterfvARB_s(target,index,params)
 	{
 		GLfloat * params_s = EL(params, sizeof(GLfloat) * 4);
 		glGetProgramEnvParameterfvARB(target,index,params_s);
-	}
-
-#//# @params = glGetProgramEnvParameterfvARB_p($target,$index);
-void
-glGetProgramEnvParameterfvARB_p(target,index)
-	GLenum	target
-	GLint	index
-	INIT:
-		loadProc(glGetProgramEnvParameterfvARB,"glGetProgramEnvParameterfvARB");
-	PPCODE:
-	{
-		GLfloat params[4];
-		glGetProgramEnvParameterfvARB(target,index,params);
-
-		EXTEND(sp, 4);
-		PUSHs(sv_2mortal(newSVnv(params[0])));
-		PUSHs(sv_2mortal(newSVnv(params[1])));
-		PUSHs(sv_2mortal(newSVnv(params[2])));
-		PUSHs(sv_2mortal(newSVnv(params[3])));
 	}
 
 #//# glGetProgramLocalParameterdvARB_s($target,$index,(PACKED)params);
@@ -305,25 +187,6 @@ glGetProgramLocalParameterdvARB_s(target,index,params)
 		glGetProgramLocalParameterdvARB(target,index,params_s);
 	}
 
-#//# @params = glGetProgramLocalParameterdvARB_p($target,$index);
-void
-glGetProgramLocalParameterdvARB_p(target,index)
-	GLenum	target
-	GLint	index
-	INIT:
-		loadProc(glGetProgramLocalParameterdvARB,"glGetProgramLocalParameterdvARB");
-	PPCODE:
-	{
-		GLdouble params[4];
-		glGetProgramLocalParameterdvARB(target,index,params);
-
-		EXTEND(sp, 4);
-		PUSHs(sv_2mortal(newSVnv(params[0])));
-		PUSHs(sv_2mortal(newSVnv(params[1])));
-		PUSHs(sv_2mortal(newSVnv(params[2])));
-		PUSHs(sv_2mortal(newSVnv(params[3])));
-	}
-
 #//# glGetProgramLocalParameterfvARB_s($target,$index,(PACKED)params);
 void
 glGetProgramLocalParameterfvARB_s(target,index,params)
@@ -336,25 +199,6 @@ glGetProgramLocalParameterfvARB_s(target,index,params)
 	{
 		GLfloat * params_s = EL(params, sizeof(GLfloat) * 4);
 		glGetProgramLocalParameterfvARB(target,index,params_s);
-	}
-
-#//# @params = glGetProgramLocalParameterfvARB_p($target,$index);
-void
-glGetProgramLocalParameterfvARB_p(target,index)
-	GLenum	target
-	GLint	index
-	INIT:
-		loadProc(glGetProgramLocalParameterfvARB,"glGetProgramLocalParameterfvARB");
-	PPCODE:
-	{
-		GLfloat params[4];
-		glGetProgramLocalParameterfvARB(target,index,params);
-
-		EXTEND(sp, 4);
-		PUSHs(sv_2mortal(newSVnv(params[0])));
-		PUSHs(sv_2mortal(newSVnv(params[1])));
-		PUSHs(sv_2mortal(newSVnv(params[2])));
-		PUSHs(sv_2mortal(newSVnv(params[3])));
 	}
 
 #//# glGetProgramivARB_s($target,$pname,(PACKED)params);
@@ -372,22 +216,6 @@ glGetProgramivARB_s(target,pname,params)
 		GLint * params_s = EL(params, sizeof(GLint)*nparams);
 		glGetProgramivARB(target,pname,params_s);
 	}
-
-#//# $value = glGetProgramivARB_p($target,$pname);
-GLuint
-glGetProgramivARB_p(target,pname)
-	GLenum	target
-	GLenum	pname
-	INIT:
-		loadProc(glGetProgramivARB,"glGetProgramivARB");
-	CODE:
-	{
-		GLuint param;
-		glGetProgramivARB(target,pname,(void *)&param);
-		RETVAL = param;
-	}
-	OUTPUT:
-		RETVAL
 
 #//# glGetProgramStringARB_s(target,pname,(PACKED)string);
 void
@@ -551,26 +379,6 @@ glVertexAttrib4NbvARB_s(index,v)
 		glVertexAttrib4NbvARB(index,v_s);
 	}
 
-#//# glVertexAttrib4NbvARB_p($index,$x,$y,$z,$w);
-void
-glVertexAttrib4NbvARB_p(index,x,y,z,w)
-	GLuint index
-	GLbyte	x
-	GLbyte	y
-	GLbyte	z
-	GLbyte	w
-	INIT:
-		loadProc(glVertexAttrib4NbvARB,"glVertexAttrib4NbvARB");
-	CODE:
-	{
-		GLbyte param[4];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		param[3] = w;
-		glVertexAttrib4NbvARB(index,param);
-	}
-
 #//# glVertexAttrib4NivARB_s($index,(PACKED)v);
 void
 glVertexAttrib4NivARB_s(index,v)
@@ -582,26 +390,6 @@ glVertexAttrib4NivARB_s(index,v)
 	{
 		GLint * v_s = EL(v, sizeof(GLint)*4);
 		glVertexAttrib4NivARB(index,v_s);
-	}
-
-#//# glVertexAttrib4NivARB_p($index,$x,$y,$z,$w);
-void
-glVertexAttrib4NivARB_p(index,x,y,z,w)
-	GLuint index
-	GLint	x
-	GLint	y
-	GLint	z
-	GLint	w
-	INIT:
-		loadProc(glVertexAttrib4NivARB,"glVertexAttrib4NivARB");
-	CODE:
-	{
-		GLint param[4];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		param[3] = w;
-		glVertexAttrib4NivARB(index,param);
 	}
 
 #//# glVertexAttrib4NsvARB_s($index,(PACKED)v);
@@ -617,26 +405,6 @@ glVertexAttrib4NsvARB_s(index,v)
 		glVertexAttrib4NsvARB(index,v_s);
 	}
 
-#//# glVertexAttrib4NsvARB_p($index,$x,$y,$z,$w);
-void
-glVertexAttrib4NsvARB_p(index,x,y,z,w)
-	GLuint index
-	GLshort	x
-	GLshort	y
-	GLshort	z
-	GLshort	w
-	INIT:
-		loadProc(glVertexAttrib4NsvARB,"glVertexAttrib4NsvARB");
-	CODE:
-	{
-		GLshort param[4];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		param[3] = w;
-		glVertexAttrib4NsvARB(index,param);
-	}
-
 #//# glVertexAttrib4NubvARB_s($index,(PACKED)v);
 void
 glVertexAttrib4NubvARB_s(index,v)
@@ -648,26 +416,6 @@ glVertexAttrib4NubvARB_s(index,v)
 	{
 		GLubyte * v_s = EL(v, sizeof(GLubyte)*4);
 		glVertexAttrib4NubvARB(index,v_s);
-	}
-
-#//# glVertexAttrib4NubvARB_p($index,$x,$y,$z,$w);
-void
-glVertexAttrib4NubvARB_p(index,x,y,z,w)
-	GLuint index
-	GLubyte	x
-	GLubyte	y
-	GLubyte	z
-	GLubyte	w
-	INIT:
-		loadProc(glVertexAttrib4NubvARB,"glVertexAttrib4NubvARB");
-	CODE:
-	{
-		GLubyte param[4];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		param[3] = w;
-		glVertexAttrib4NubvARB(index,param);
 	}
 
 #//# glVertexAttrib4NuivARB_s($index,(PACKED)v);
@@ -683,26 +431,6 @@ glVertexAttrib4NuivARB_s(index,v)
 		glVertexAttrib4NuivARB(index,v_s);
 	}
 
-#//# glVertexAttrib4NuivARB_p($index,$x,$y,$z,$w);
-void
-glVertexAttrib4NuivARB_p(index,x,y,z,w)
-	GLuint index
-	GLuint	x
-	GLuint	y
-	GLuint	z
-	GLuint	w
-	INIT:
-		loadProc(glVertexAttrib4NuivARB,"glVertexAttrib4NuivARB");
-	CODE:
-	{
-		GLuint param[4];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		param[3] = w;
-		glVertexAttrib4NuivARB(index,param);
-	}
-
 #//# glVertexAttrib4NusvARB_s($index,(PACKED)v);
 void
 glVertexAttrib4NusvARB_s(index,v)
@@ -716,26 +444,6 @@ glVertexAttrib4NusvARB_s(index,v)
 		glVertexAttrib4NusvARB(index,v_s);
 	}
 
-#//# glVertexAttrib4NusvARB_p($index,$x,$y,$z,$w);
-void
-glVertexAttrib4NusvARB_p(index,x,y,z,w)
-	GLuint index
-	GLushort	x
-	GLushort	y
-	GLushort	z
-	GLushort	w
-	INIT:
-		loadProc(glVertexAttrib4NusvARB,"glVertexAttrib4NusvARB");
-	CODE:
-	{
-		GLushort param[4];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		param[3] = w;
-		glVertexAttrib4NusvARB(index,param);
-	}
-
 #//# glVertexAttrib4bvARB_s($index,(PACKED)v);
 void
 glVertexAttrib4bvARB_s(index,v)
@@ -747,26 +455,6 @@ glVertexAttrib4bvARB_s(index,v)
 	{
 		GLbyte * v_s = EL(v, sizeof(GLbyte)*4);
 		glVertexAttrib4bvARB(index,v_s);
-	}
-
-#//# glVertexAttrib4bvARB_p($index,$x,$y,$z,$w);
-void
-glVertexAttrib4bvARB_p(index,x,y,z,w)
-	GLuint index
-	GLbyte	x
-	GLbyte	y
-	GLbyte	z
-	GLbyte	w
-	INIT:
-		loadProc(glVertexAttrib4bvARB,"glVertexAttrib4bvARB");
-	CODE:
-	{
-		GLbyte param[4];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		param[3] = w;
-		glVertexAttrib4bvARB(index,param);
 	}
 
 #//# glVertexAttrib4dvARB_s($index,(PACKED)v);
@@ -808,26 +496,6 @@ glVertexAttrib4ivARB_s(index,v)
 		glVertexAttrib4ivARB(index,v_s);
 	}
 
-#//# glVertexAttrib4ivARB_p($index,$x,$y,$z,$w);
-void
-glVertexAttrib4ivARB_p(index,x,y,z,w)
-	GLuint index
-	GLint	x
-	GLint	y
-	GLint	z
-	GLint	w
-	INIT:
-		loadProc(glVertexAttrib4ivARB,"glVertexAttrib4ivARB");
-	CODE:
-	{
-		GLint param[4];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		param[3] = w;
-		glVertexAttrib4ivARB(index,param);
-	}
-
 #//# glVertexAttrib4svARB_s($index,(PACKED)v);
 void
 glVertexAttrib4svARB_s(index,v)
@@ -854,26 +522,6 @@ glVertexAttrib4ubvARB_s(index,v)
 		glVertexAttrib4ubvARB(index,v_s);
 	}
 
-#//# glVertexAttrib4ubvARB_p($index,$x,$y,$z,$w);
-void
-glVertexAttrib4ubvARB_p(index,x,y,z,w)
-	GLuint index
-	GLubyte	x
-	GLubyte	y
-	GLubyte	z
-	GLubyte	w
-	INIT:
-		loadProc(glVertexAttrib4ubvARB,"glVertexAttrib4ubvARB");
-	CODE:
-	{
-		GLubyte param[4];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		param[3] = w;
-		glVertexAttrib4ubvARB(index,param);
-	}
-
 #//# glVertexAttrib4uivARB_s($index,(PACKED)v);
 void
 glVertexAttrib4uivARB_s(index,v)
@@ -887,26 +535,6 @@ glVertexAttrib4uivARB_s(index,v)
 		glVertexAttrib4uivARB(index,v_s);
 	}
 
-#//# glVertexAttrib4uivARB_p($index,$x,$y,$z,$w);
-void
-glVertexAttrib4uivARB_p(index,x,y,z,w)
-	GLuint index
-	GLuint	x
-	GLuint	y
-	GLuint	z
-	GLuint	w
-	INIT:
-		loadProc(glVertexAttrib4uivARB,"glVertexAttrib4uivARB");
-	CODE:
-	{
-		GLuint param[4];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		param[3] = w;
-		glVertexAttrib4uivARB(index,param);
-	}
-
 #//# glVertexAttrib4usvARB_s($index,(PACKED)v);
 void
 glVertexAttrib4usvARB_s(index,v)
@@ -918,26 +546,6 @@ glVertexAttrib4usvARB_s(index,v)
 	{
 		GLushort * v_s = EL(v, sizeof(GLushort)*4);
 		glVertexAttrib4usvARB(index,v_s);
-	}
-
-#//# glVertexAttrib4usvARB_p($index,$x,$y,$z,$w);
-void
-glVertexAttrib4usvARB_p(index,x,y,z,w)
-	GLuint index
-	GLushort	x
-	GLushort	y
-	GLushort	z
-	GLushort	w
-	INIT:
-		loadProc(glVertexAttrib4usvARB,"glVertexAttrib4usvARB");
-	CODE:
-	{
-		GLushort param[4];
-		param[0] = x;
-		param[1] = y;
-		param[2] = z;
-		param[3] = w;
-		glVertexAttrib4usvARB(index,param);
 	}
 
 #//# glVertexAttribPointerARB_p($index,$type,$normalized,$stride,@attribs);
@@ -978,22 +586,6 @@ glGetVertexAttribdvARB_s(index,pname,params)
 		glGetVertexAttribdvARB(index,pname,params_s);
 	}
 
-#//# $param = glGetVertexAttribdvARB_p($index,$pname);
-GLdouble
-glGetVertexAttribdvARB_p(index,pname)
-	GLuint	index
-	GLenum	pname
-	INIT:
-		loadProc(glGetVertexAttribdvARB,"glGetVertexAttribdvARB");
-	CODE:
-	{
-		GLdouble param;
-		glGetVertexAttribdvARB(index,pname,(void *)&param);
-		RETVAL = param;
-	}
-	OUTPUT:
-		RETVAL
-
 #//# glGetVertexAttribfvARB_s($index,$pname,(PACKED)params);
 void
 glGetVertexAttribfvARB_s(index,pname,params)
@@ -1007,22 +599,6 @@ glGetVertexAttribfvARB_s(index,pname,params)
 		GLfloat * params_s = EL(params, sizeof(GLfloat) * 4);
 		glGetVertexAttribfvARB(index,pname,params_s);
 	}
-
-#//# $param = glGetVertexAttribfvARB_p($index,$pname);
-GLfloat
-glGetVertexAttribfvARB_p(index,pname)
-	GLuint	index
-	GLenum	pname
-	INIT:
-		loadProc(glGetVertexAttribfvARB,"glGetVertexAttribfvARB");
-	CODE:
-	{
-		GLfloat param;
-		glGetVertexAttribfvARB(index,pname,(void *)&param);
-		RETVAL = param;
-	}
-	OUTPUT:
-		RETVAL
 
 #//# glGetVertexAttribivARB_s($index,$pname,(PACKED)params);
 void
@@ -1038,22 +614,6 @@ glGetVertexAttribivARB_s(index,pname,params)
 		glGetVertexAttribivARB(index,pname,params_s);
 	}
 
-#//# $param = glGetVertexAttribivARB_p($index,$pname);
-GLuint
-glGetVertexAttribivARB_p(index,pname)
-	GLuint	index
-	GLenum	pname
-	INIT:
-		loadProc(glGetVertexAttribivARB,"glGetVertexAttribivARB");
-	CODE:
-	{
-		GLuint param;
-		glGetVertexAttribivARB(index,pname,(void *)&param);
-		RETVAL = param;
-	}
-	OUTPUT:
-		RETVAL
-
 #//# $param = glGetVertexAttribPointervARB_p($index,$pname);
 void
 glGetVertexAttribPointervARB_p(index,pname)
@@ -1066,14 +626,10 @@ glGetVertexAttribPointervARB_p(index,pname)
 	{
 		void * pointer;
 		GLuint i,count,type;
-
 		glGetVertexAttribPointervARB(index,pname,&pointer);
-
 		glGetVertexAttribivARB(index,GL_VERTEX_ATTRIB_ARRAY_SIZE_ARB,(void *)&count);
 		glGetVertexAttribivARB(index,GL_VERTEX_ATTRIB_ARRAY_TYPE_ARB,(void *)&type);
-
 		EXTEND(sp, count);
-
 		switch (type)
 		{
 #ifdef GL_VERSION_1_2
@@ -1185,81 +741,9 @@ glGetActiveAttribARB_s(programObj, index, maxLength, length, size, type, name)
 		glGetActiveAttribARB(programObj,index,maxLength,length_s,size_s,type_s,name_s);
 	}
 
-#//# ($name,$type,$size) = glGetActiveAttribARB_p($programObj, $index);
-void
-glGetActiveAttribARB_p(programObj, index)
-	GLhandleARB programObj
-	GLuint index
-	INIT:
-		loadProc(glGetObjectParameterivARB,"glGetObjectParameterivARB");
-		loadProc(glGetActiveAttribARB,"glGetActiveAttribARB");
-	PPCODE:
-	{
-		GLsizei maxLength;
-		glGetObjectParameterivARB(programObj,GL_OBJECT_ACTIVE_ATTRIBUTES_ARB,
-			(GLvoid *)&maxLength);
-		if (maxLength)
-		{
-			GLsizei length;
-			GLint size;
-			GLenum type;
-			GLcharARB *name;
-
-			name = malloc(maxLength+1);
-			glGetActiveAttribARB(programObj,index,maxLength,
-				&length,&size,&type,name);
-			name[length] = 0;
-
-			if (*name)
-			{
-				EXTEND(sp,3);
-				PUSHs(sv_2mortal(newSVpv(name,0)));
-				PUSHs(sv_2mortal(newSViv(type)));
-				PUSHs(sv_2mortal(newSViv(size)));
-			}
-			else
-			{
-				EXTEND(sp,1);
-				PUSHs(sv_2mortal(newSVsv(&PL_sv_undef)));
-			}
-
-			free(name);
-		}
-		else
-		{
-			EXTEND(sp,1);
-			PUSHs(sv_2mortal(newSVsv(&PL_sv_undef)));
-		}
-	}
-
 #endif
 
 #ifdef GL_ARB_shader_objects
-
-#//# glShaderSourceARB_p($shaderObj, @string);
-void
-glShaderSourceARB_p(shaderObj, ...)
-	GLhandleARB shaderObj
-	INIT:
-		loadProc(glShaderSourceARB,"glShaderSourceARB");
-	CODE:
-	{
-		int i;
-		int count = items - 1;
-		GLcharARB **string = malloc(sizeof(GLcharARB *) * count);
-		GLint *length = malloc(sizeof(GLint) * count);
-
-		for(i=0;i<count;i++) {
-			string[i] = (GLcharARB *)SvPV(ST(i+1),PL_na);
-			length[i] = strlen(string[i]);
-		}
-
-		glShaderSourceARB(shaderObj, count, (const GLcharARB**)string,
-			(const GLint *)length);
-
-		free(length);
-                free(string);
-	}
 
 #//# glUniform1fvARB_s($location, $count, (PACKED)value);
 void
@@ -1273,27 +757,6 @@ glUniform1fvARB_s(location, count, value)
 	{
 		GLfloat * value_s = EL(value, sizeof(GLfloat));
 		glUniform1fvARB(location, count, value_s);
-	}
-
-#//# glUniform1fvARB_p(location, @value);
-void
-glUniform1fvARB_p(location, ...)
-	GLint location
-	INIT:
-		loadProc(glUniform1fvARB,"glUniform1fvARB");
-	CODE:
-	{
-		int i;
-		GLsizei count = items - 1;
-		GLfloat *value = malloc(sizeof(GLfloat) * count);
-
-		for(i=0;i<count;i++) {
-			value[i] = (GLfloat)SvNV(ST(i+1));
-		}
-
-		glUniform1fvARB(location, count, value);
-
-		free(value);
 	}
 
 #//# glUniform2fvARB_s($location, $count, (PACKED)value);
@@ -1310,28 +773,6 @@ glUniform2fvARB_s(location, count, value)
 		glUniform2fvARB(location, count, value_s);
 	}
 
-#//# glUniform2fvARB_p($location, @value);
-void
-glUniform2fvARB_p(location, ...)
-	GLint location
-	INIT:
-		loadProc(glUniform2fvARB,"glUniform2fvARB");
-	CODE:
-	{
-		int i;
-		GLsizei elements = items - 1;
-		GLsizei count = elements >> 1;
-		GLfloat *value = malloc(sizeof(GLfloat) * elements);
-
-		for(i=0;i<elements;i++) {
-			value[i] = (GLfloat)SvNV(ST(i+1));
-		}
-
-		glUniform2fvARB(location, count, value);
-
-		free(value);
-	}
-
 #//# glUniform3fvARB_s($location, $count, (PACKED)value);
 void
 glUniform3fvARB_s(location, count, value)
@@ -1344,28 +785,6 @@ glUniform3fvARB_s(location, count, value)
 	{
 		GLfloat * value_s = EL(value, sizeof(GLfloat));
 		glUniform3fvARB(location, count, value_s);
-	}
-
-#//# glUniform3fvARB_p($location, @value);
-void
-glUniform3fvARB_p(location, ...)
-	GLint location
-	INIT:
-		loadProc(glUniform3fvARB,"glUniform3fvARB");
-	CODE:
-	{
-		int i;
-		GLsizei elements = items - 1;
-		GLsizei count = elements / 3;
-		GLfloat *value = malloc(sizeof(GLfloat) * elements);
-
-		for(i=0;i<elements;i++) {
-			value[i] = (GLfloat)SvNV(ST(i+1));
-		}
-
-		glUniform3fvARB(location, count, value);
-
-		free(value);
 	}
 
 #//# glUniform4fvARB_s($location, $count, (PACKED)value);
@@ -1382,28 +801,6 @@ glUniform4fvARB_s(location, count, value)
 		glUniform4fvARB(location, count, value_s);
 	}
 
-#//# glUniform4fvARB_p($location, @value);
-void
-glUniform4fvARB_p(location, ...)
-	GLint location
-	INIT:
-		loadProc(glUniform4fvARB,"glUniform4fvARB");
-	CODE:
-	{
-		int i;
-		GLsizei elements = items - 1;
-		GLsizei count = elements >> 2;
-		GLfloat *value = malloc(sizeof(GLfloat) * elements);
-
-		for(i=0;i<elements;i++) {
-			value[i] = (GLfloat)SvNV(ST(i+1));
-		}
-
-		glUniform4fvARB(location, count, value);
-
-		free(value);
-	}
-
 #//# glUniform1ivARB_s($location, $count, (PACKED)value);
 void
 glUniform1ivARB_s(location, count, value)
@@ -1416,27 +813,6 @@ glUniform1ivARB_s(location, count, value)
 	{
 		GLint * value_s = EL(value, sizeof(GLint));
 		glUniform1ivARB(location, count, value_s);
-	}
-
-#//# glUniform1ivARB_p($location, @value);
-void
-glUniform1ivARB_p(location, ...)
-	GLint location
-	INIT:
-		loadProc(glUniform1ivARB,"glUniform1ivARB");
-	CODE:
-	{
-		int i;
-		GLsizei count = items - 1;
-		GLint *value = malloc(sizeof(GLint) * count);
-
-		for(i=0;i<count;i++) {
-			value[i] = SvIV(ST(i+1));
-		}
-
-		glUniform1ivARB(location, count, value);
-
-		free(value);
 	}
 
 #//# glUniform2ivARB_s($location, $count, (PACKED)value);
@@ -1453,28 +829,6 @@ glUniform2ivARB_s(location, count, value)
 		glUniform2ivARB(location, count, value_s);
 	}
 
-#//# glUniform2ivARB_p($location, @value);
-void
-glUniform2ivARB_p(location, ...)
-	GLint location
-	INIT:
-		loadProc(glUniform2ivARB,"glUniform2ivARB");
-	CODE:
-	{
-		int i;
-		GLsizei elements = items - 1;
-		GLsizei count = elements >> 1;
-		GLint *value = malloc(sizeof(GLint) * elements);
-
-		for(i=0;i<elements;i++) {
-			value[i] = SvIV(ST(i+1));
-		}
-
-		glUniform2ivARB(location, count, value);
-
-		free(value);
-	}
-
 #//# glUniform3ivARB_s($location, $count, (PACKED)value);
 void
 glUniform3ivARB_s(location, count, value)
@@ -1489,28 +843,6 @@ glUniform3ivARB_s(location, count, value)
 		glUniform3ivARB(location, count, value_s);
 	}
 
-#//# glUniform3ivARB_p($location, @value);
-void
-glUniform3ivARB_p(location, ...)
-	GLint location
-	INIT:
-		loadProc(glUniform3ivARB,"glUniform3ivARB");
-	CODE:
-	{
-		int i;
-		GLsizei elements = items - 1;
-		GLsizei count = elements / 3;
-		GLint *value = malloc(sizeof(GLint) * elements);
-
-		for(i=0;i<elements;i++) {
-			value[i] = SvIV(ST(i+1));
-		}
-
-		glUniform3ivARB(location, count, value);
-
-		free(value);
-	}
-
 #//# glUniform4ivARB_s($location, $count, (PACKED)value);
 void
 glUniform4ivARB_s(location, count, value)
@@ -1523,28 +855,6 @@ glUniform4ivARB_s(location, count, value)
 	{
 		GLint * value_s = EL(value, sizeof(GLint));
 		glUniform4ivARB(location, count, value_s);
-	}
-
-#//# glUniform4ivARB_p($location, @value);
-void
-glUniform4ivARB_p(location, ...)
-	GLint location
-	INIT:
-		loadProc(glUniform4ivARB,"glUniform4ivARB");
-	CODE:
-	{
-		int i;
-		GLsizei elements = items - 1;
-		GLsizei count = elements >> 2;
-		GLint *value = malloc(sizeof(GLint) * elements);
-
-		for(i=0;i<elements;i++) {
-			value[i] = SvIV(ST(i+1));
-		}
-
-		glUniform4ivARB(location, count, value);
-
-		free(value);
 	}
 
 #//# glUniformMatrix2fvARB_s($location, $count, $transpose, (PACKED)value);
@@ -1562,29 +872,6 @@ glUniformMatrix2fvARB_s(location, count, transpose, value)
 		glUniformMatrix2fvARB(location, count, transpose, value_s);
 	}
 
-#//# glUniformMatrix2fvARB_p($location, $transpose, @matrix);
-void
-glUniformMatrix2fvARB_p(location, transpose, ...)
-	GLint location
-	GLboolean transpose
-	INIT:
-		loadProc(glUniformMatrix2fvARB,"glUniformMatrix2fvARB");
-	CODE:
-	{
-		int i;
-		GLsizei elements = items - 2;
-		GLsizei count = elements / 4;
-		GLfloat *value = malloc(sizeof(GLfloat) * elements);
-
-		for(i=0;i<elements;i++) {
-			value[i] = (GLfloat)SvNV(ST(i+2));
-		}
-
-		glUniformMatrix2fvARB(location, count, transpose, value);
-
-		free(value);
-	}
-
 #//# glUniformMatrix3fvARB_s($location, $count, $transpose, (PACKED)value);
 void
 glUniformMatrix3fvARB_s(location, count, transpose, value)
@@ -1600,29 +887,6 @@ glUniformMatrix3fvARB_s(location, count, transpose, value)
 		glUniformMatrix3fvARB(location, count, transpose, value_s);
 	}
 
-#//# glUniformMatrix3fvARB_p($location, $transpose, @matrix);
-void
-glUniformMatrix3fvARB_p(location, transpose, ...)
-	GLint location
-	GLboolean transpose
-	INIT:
-		loadProc(glUniformMatrix3fvARB,"glUniformMatrix3fvARB");
-	CODE:
-	{
-		int i;
-		GLsizei elements = items - 2;
-		GLsizei count = elements / 9;
-		GLfloat *value = malloc(sizeof(GLfloat) * elements);
-
-		for(i=0;i<elements;i++) {
-			value[i] = (GLfloat)SvNV(ST(i+2));
-		}
-
-		glUniformMatrix3fvARB(location, count, transpose, value);
-
-		free(value);
-	}
-
 #//# glUniformMatrix4fvARB_s($location, $count, $transpose, (PACKED)value);
 void
 glUniformMatrix4fvARB_s(location, count, transpose, value)
@@ -1636,29 +900,6 @@ glUniformMatrix4fvARB_s(location, count, transpose, value)
 	{
 		GLfloat * value_s = EL(value, sizeof(GLfloat));
 		glUniformMatrix4fvARB(location, count, transpose, value_s);
-	}
-
-#//# glUniformMatrix4fvARB_p($location, $transpose, @matrix);
-void
-glUniformMatrix4fvARB_p(location, transpose, ...)
-	GLint location
-	GLboolean transpose
-	INIT:
-		loadProc(glUniformMatrix4fvARB,"glUniformMatrix4fvARB");
-	CODE:
-	{
-		int i;
-		GLsizei elements = items - 2;
-		GLsizei count = elements / 16;
-		GLfloat *value = malloc(sizeof(GLfloat) * elements);
-
-		for(i=0;i<elements;i++) {
-			value[i] = (GLfloat)SvNV(ST(i+2));
-		}
-
-		glUniformMatrix4fvARB(location, count, transpose, value);
-
-		free(value);
 	}
 
 #//# glGetObjectParameterfvARB_s($obj,$pname,(PACKED)params);
@@ -1717,38 +958,6 @@ glGetObjectParameterivARB_p(obj,pname)
 		GLint	ret;
 		glGetObjectParameterivARB(obj,pname,&ret);
 		RETVAL = ret;
-	}
-	OUTPUT:
-		RETVAL
-
-#//# $infoLog = glGetInfoLogARB_p($obj);
-SV *
-glGetInfoLogARB_p(obj)
-	GLhandleARB obj
-	INIT:
-		loadProc(glGetObjectParameterivARB,"glGetObjectParameterivARB");
-		loadProc(glGetInfoLogARB,"glGetInfoLogARB");
-	CODE:
-	{
-		GLint maxLength;
-		glGetObjectParameterivARB(obj,GL_OBJECT_INFO_LOG_LENGTH_ARB,(GLvoid *)&maxLength);
-		if (maxLength)
-		{
-			GLint length;
-			GLcharARB * infoLog = malloc(maxLength+1);
-			glGetInfoLogARB(obj,maxLength,&length,infoLog);
-			infoLog[length] = 0;
-			if (*infoLog)
-				RETVAL = newSVpv(infoLog, 0);
-			else
-				RETVAL = newSVsv(&PL_sv_undef);
-
-			free(infoLog);
-		}
-		else
-		{
-			RETVAL = newSVsv(&PL_sv_undef);
-		}
 	}
 	OUTPUT:
 		RETVAL
@@ -1824,53 +1033,6 @@ glGetActiveUniformARB_s(programObj, index, maxLength, length, size, type, name)
 		glGetActiveUniformARB(programObj,index,maxLength,length_s,size_s,type_s,name_s);
 	}
 
-#//# ($name,$type,$size) = glGetActiveUniformARB_p($programObj, $index);
-void
-glGetActiveUniformARB_p(programObj, index)
-	GLhandleARB programObj
-	GLuint index
-	INIT:
-		loadProc(glGetObjectParameterivARB,"glGetObjectParameterivARB");
-		loadProc(glGetActiveUniformARB,"glGetActiveUniformARB");
-	PPCODE:
-	{
-		GLsizei maxLength;
-		glGetObjectParameterivARB(programObj,GL_OBJECT_ACTIVE_UNIFORM_MAX_LENGTH_ARB,
-			(GLvoid *)&maxLength);
-		if (maxLength)
-		{
-			GLsizei length;
-			GLint size;
-			GLenum type;
-			GLcharARB *name;
-
-			name = malloc(maxLength+1);
-			glGetActiveUniformARB(programObj,index,maxLength,
-				&length,&size,&type,name);
-			name[length] = 0;
-
-			if (*name)
-			{
-				EXTEND(sp,3);
-				PUSHs(sv_2mortal(newSVpv(name,0)));
-				PUSHs(sv_2mortal(newSViv(type)));
-				PUSHs(sv_2mortal(newSViv(size)));
-			}
-			else
-			{
-				EXTEND(sp,1);
-				PUSHs(sv_2mortal(newSVsv(&PL_sv_undef)));
-			}
-
-			free(name);
-		}
-		else
-		{
-			EXTEND(sp,1);
-			PUSHs(sv_2mortal(newSVsv(&PL_sv_undef)));
-		}
-	}
-
 #//# @params = glGetUniformfvARB_p($programObj, $location[, $count]);
 void
 glGetUniformfvARB_p(programObj, location, count=1)
@@ -1907,47 +1069,6 @@ glGetUniformivARB_p(programObj, location, count=1)
 			PUSHs(sv_2mortal(newSViv(ret[i])));
 	}
 
-#//# $source = glGetShaderSourceARB_p($obj);
-void
-glGetShaderSourceARB_p(obj)
-	GLhandleARB obj
-	INIT:
-		loadProc(glGetObjectParameterivARB,"glGetObjectParameterivARB");
-		loadProc(glGetShaderSourceARB,"glGetShaderSourceARB");
-	PPCODE:
-	{
-		GLsizei maxLength;
-		glGetObjectParameterivARB(obj,GL_OBJECT_SHADER_SOURCE_LENGTH_ARB,
-			(GLvoid *)&maxLength);
-
-		EXTEND(sp,1);
-
-		if (maxLength)
-		{
-			GLsizei length;
-			GLcharARB *source;
-
-			source = malloc(maxLength+1);
-			glGetShaderSourceARB(obj,maxLength,&length,source);
-			source[length] = 0;
-
-			if (*source)
-			{
-				PUSHs(sv_2mortal(newSVpv(source,0)));
-			}
-			else
-			{
-				PUSHs(sv_2mortal(newSVsv(&PL_sv_undef)));
-			}
-
-			free(source);
-		}
-		else
-		{
-			PUSHs(sv_2mortal(newSVsv(&PL_sv_undef)));
-		}
-	}
-
 #endif // GL_ARB_shader_objects
 
 #ifdef GL_ARB_draw_buffers
@@ -1963,24 +1084,6 @@ glDrawBuffersARB_s(n,buffers)
 	{
 		void * buffers_s = EL(buffers, sizeof(GLuint)*n);
 		glDrawBuffersARB(n,buffers_s);
-	}
-
-#//# glDrawBuffersARB_p(@buffers);
-void
-glDrawBuffersARB_p(...)
-	INIT:
-		loadProc(glDrawBuffersARB,"glDrawBuffersARB");
-	CODE:
-	{
-		if (items)
-		{
-			GLuint * list = malloc(sizeof(GLuint) * items);
-			int i;
-			for (i=0;i<items;i++)
-				list[i] = SvIV(ST(i));
-			glDrawBuffersARB(items, list);
-			free(list);
-		}
 	}
 
 #endif // GL_ARB_draw_buffers
