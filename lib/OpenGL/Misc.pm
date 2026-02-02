@@ -192,8 +192,8 @@ our @gl_func_common_modern = qw(
 );
 
 our @extra_gl_func = qw(
-   glAreTexturesResidentEXT_p
    glAreTexturesResident_s
+   glAreTexturesResidentEXT_p
    glBitmap_p
    glBitmap_s
    glBufferDataARB_o
@@ -237,31 +237,31 @@ our @extra_gl_func = qw(
    glColor4uiv_s
    glColor4usv_p
    glColor4usv_s
-   glColorPointerEXT_o
-   glColorPointerEXT_p
-   glColorPointerEXT_s
    glColorPointer_o
    glColorPointer_p
    glColorPointer_s
+   glColorPointerEXT_o
+   glColorPointerEXT_p
+   glColorPointerEXT_s
    glDeleteBuffersARB_s
    glDeleteFramebuffersEXT_s
    glDeleteProgramsARB_s
    glDeleteRenderbuffersEXT_s
-   glDeleteVertexArrays
    glDeleteTextures_s
-   glDrawBuffersARB_s
+   glDeleteVertexArrays
    glDrawBuffers_p
    glDrawBuffers_s
+   glDrawBuffersARB_s
    glDrawElements_p
    glDrawElements_s
    glDrawPixels_p
    glDrawPixels_s
    glDrawRangeElements_p
    glDrawRangeElements_s
-   glEdgeFlagPointerEXT_p
-   glEdgeFlagPointerEXT_s
    glEdgeFlagPointer_p
    glEdgeFlagPointer_s
+   glEdgeFlagPointerEXT_p
+   glEdgeFlagPointerEXT_s
    glFogfv_s
    glFogiv_s
    glGenBuffersARB_s
@@ -315,11 +315,11 @@ our @extra_gl_func = qw(
    glGetPolygonStipple_s
    glGetProgramEnvParameterdvARB_s
    glGetProgramEnvParameterfvARB_s
+   glGetProgramivARB_s
    glGetProgramLocalParameterdvARB_s
    glGetProgramLocalParameterfvARB_s
    glGetProgramStringARB_p
    glGetProgramStringARB_s
-   glGetProgramivARB_s
    glGetRenderbufferParameterivEXT_s
    glGetTexEnvfv_s
    glGetTexEnviv_s
@@ -332,24 +332,24 @@ our @extra_gl_func = qw(
    glGetTexLevelParameteriv_s
    glGetTexParameterfv_s
    glGetTexParameteriv_s
-   glGetUniformLocationARB_c
-   glGetVertexAttribdvARB_s
-   glGetUniformLocationARB_p
    glGetUniformfvARB_p
    glGetUniformivARB_p
-   glGetVertexAttribPointervARB_p
+   glGetUniformLocationARB_c
+   glGetUniformLocationARB_p
+   glGetVertexAttribdvARB_s
    glGetVertexAttribfvARB_s
    glGetVertexAttribivARB_s
-   glIndexPointerEXT_o
-   glIndexPointerEXT_p
-   glIndexPointerEXT_s
+   glGetVertexAttribPointervARB_p
    glIndexPointer_o
    glIndexPointer_p
    glIndexPointer_s
-   glLightModelfv_s
-   glLightModeliv_s
+   glIndexPointerEXT_o
+   glIndexPointerEXT_p
+   glIndexPointerEXT_s
    glLightfv_s
    glLightiv_s
+   glLightModelfv_s
+   glLightModeliv_s
    glLoadMatrixd_s
    glLoadMatrixf_s
    glMap1d_p
@@ -364,70 +364,70 @@ our @extra_gl_func = qw(
    glMapBufferARB_p
    glMaterialfv_s
    glMaterialiv_s
-   glMultiTexCoord1dvARB_p
-   glMultiTexCoord1dvARB_s
    glMultiTexCoord1dv_p
    glMultiTexCoord1dv_s
-   glMultiTexCoord1fvARB_p
-   glMultiTexCoord1fvARB_s
+   glMultiTexCoord1dvARB_p
+   glMultiTexCoord1dvARB_s
    glMultiTexCoord1fv_p
    glMultiTexCoord1fv_s
-   glMultiTexCoord1ivARB_p
-   glMultiTexCoord1ivARB_s
+   glMultiTexCoord1fvARB_p
+   glMultiTexCoord1fvARB_s
    glMultiTexCoord1iv_p
    glMultiTexCoord1iv_s
-   glMultiTexCoord1svARB_p
-   glMultiTexCoord1svARB_s
+   glMultiTexCoord1ivARB_p
+   glMultiTexCoord1ivARB_s
    glMultiTexCoord1sv_p
    glMultiTexCoord1sv_s
-   glMultiTexCoord2dvARB_p
-   glMultiTexCoord2dvARB_s
+   glMultiTexCoord1svARB_p
+   glMultiTexCoord1svARB_s
    glMultiTexCoord2dv_p
    glMultiTexCoord2dv_s
-   glMultiTexCoord2fvARB_p
-   glMultiTexCoord2fvARB_s
+   glMultiTexCoord2dvARB_p
+   glMultiTexCoord2dvARB_s
    glMultiTexCoord2fv_p
    glMultiTexCoord2fv_s
-   glMultiTexCoord2ivARB_p
-   glMultiTexCoord2ivARB_s
+   glMultiTexCoord2fvARB_p
+   glMultiTexCoord2fvARB_s
    glMultiTexCoord2iv_p
    glMultiTexCoord2iv_s
-   glMultiTexCoord2svARB_p
-   glMultiTexCoord2svARB_s
+   glMultiTexCoord2ivARB_p
+   glMultiTexCoord2ivARB_s
    glMultiTexCoord2sv_p
    glMultiTexCoord2sv_s
-   glMultiTexCoord3dvARB_p
-   glMultiTexCoord3dvARB_s
+   glMultiTexCoord2svARB_p
+   glMultiTexCoord2svARB_s
    glMultiTexCoord3dv_p
    glMultiTexCoord3dv_s
-   glMultiTexCoord3fvARB_p
-   glMultiTexCoord3fvARB_s
+   glMultiTexCoord3dvARB_p
+   glMultiTexCoord3dvARB_s
    glMultiTexCoord3fv_p
    glMultiTexCoord3fv_s
-   glMultiTexCoord3ivARB_p
-   glMultiTexCoord3ivARB_s
+   glMultiTexCoord3fvARB_p
+   glMultiTexCoord3fvARB_s
    glMultiTexCoord3iv_p
    glMultiTexCoord3iv_s
-   glMultiTexCoord3svARB_p
-   glMultiTexCoord3svARB_s
+   glMultiTexCoord3ivARB_p
+   glMultiTexCoord3ivARB_s
    glMultiTexCoord3sv_p
    glMultiTexCoord3sv_s
-   glMultiTexCoord4dvARB_p
-   glMultiTexCoord4dvARB_s
+   glMultiTexCoord3svARB_p
+   glMultiTexCoord3svARB_s
    glMultiTexCoord4dv_p
    glMultiTexCoord4dv_s
-   glMultiTexCoord4fvARB_p
-   glMultiTexCoord4fvARB_s
+   glMultiTexCoord4dvARB_p
+   glMultiTexCoord4dvARB_s
    glMultiTexCoord4fv_p
    glMultiTexCoord4fv_s
-   glMultiTexCoord4ivARB_p
-   glMultiTexCoord4ivARB_s
+   glMultiTexCoord4fvARB_p
+   glMultiTexCoord4fvARB_s
    glMultiTexCoord4iv_p
    glMultiTexCoord4iv_s
-   glMultiTexCoord4svARB_p
-   glMultiTexCoord4svARB_s
+   glMultiTexCoord4ivARB_p
+   glMultiTexCoord4ivARB_s
    glMultiTexCoord4sv_p
    glMultiTexCoord4sv_s
+   glMultiTexCoord4svARB_p
+   glMultiTexCoord4svARB_s
    glNormal3bv_p
    glNormal3bv_s
    glNormal3dv_p
@@ -438,20 +438,20 @@ our @extra_gl_func = qw(
    glNormal3iv_s
    glNormal3sv_p
    glNormal3sv_s
-   glNormalPointerEXT_o
-   glNormalPointerEXT_p
-   glNormalPointerEXT_s
    glNormalPointer_o
    glNormalPointer_p
    glNormalPointer_s
+   glNormalPointerEXT_o
+   glNormalPointerEXT_p
+   glNormalPointerEXT_s
    glPixelMapfv_s
    glPixelMapuiv_s
    glPixelMapusv_s
    glPointParameterfvARB_s
    glPolygonStipple_p
    glPolygonStipple_s
-   glPrioritizeTexturesEXT_p
    glPrioritizeTextures_s
+   glPrioritizeTexturesEXT_p
    glProgramEnvParameter4dvARB_p
    glProgramEnvParameter4dvARB_s
    glProgramEnvParameter4fvARB_p
@@ -524,12 +524,12 @@ our @extra_gl_func = qw(
    glTexCoord4iv_s
    glTexCoord4sv_p
    glTexCoord4sv_s
-   glTexCoordPointerEXT_o
-   glTexCoordPointerEXT_p
-   glTexCoordPointerEXT_s
    glTexCoordPointer_o
    glTexCoordPointer_p
    glTexCoordPointer_s
+   glTexCoordPointerEXT_o
+   glTexCoordPointerEXT_p
+   glTexCoordPointerEXT_s
    glTexEnvfv_s
    glTexEnviv_s
    glTexGendv_s
@@ -539,20 +539,20 @@ our @extra_gl_func = qw(
    glTexImage1D_s
    glTexImage2D_p
    glTexImage2D_s
-   glTexImage3DEXT_p
-   glTexImage3DEXT_s
    glTexImage3D_p
    glTexImage3D_s
+   glTexImage3DEXT_p
+   glTexImage3DEXT_s
    glTexParameterfv_s
    glTexParameteriv_s
-   glTexSubImage1DEXT_p
-   glTexSubImage1DEXT_s
    glTexSubImage1D_p
    glTexSubImage1D_s
-   glTexSubImage2DEXT_p
-   glTexSubImage2DEXT_s
+   glTexSubImage1DEXT_p
+   glTexSubImage1DEXT_s
    glTexSubImage2D_p
    glTexSubImage2D_s
+   glTexSubImage2DEXT_p
+   glTexSubImage2DEXT_s
    glTexSubImage3D_p
    glTexSubImage3D_s
    glUniform1fvARB_s
@@ -608,30 +608,30 @@ our @extra_gl_func = qw(
    glVertexAttrib3fvARB_s
    glVertexAttrib3svARB_p
    glVertexAttrib3svARB_s
-   glVertexAttrib4NbvARB_s
-   glVertexAttrib4NivARB_s
-   glVertexAttrib4NsvARB_s
-   glVertexAttrib4NubvARB_s
-   glVertexAttrib4NuivARB_s
-   glVertexAttrib4NusvARB_s
    glVertexAttrib4bvARB_s
    glVertexAttrib4dvARB_p
    glVertexAttrib4dvARB_s
    glVertexAttrib4fvARB_p
    glVertexAttrib4fvARB_s
    glVertexAttrib4ivARB_s
+   glVertexAttrib4NbvARB_s
+   glVertexAttrib4NivARB_s
+   glVertexAttrib4NsvARB_s
+   glVertexAttrib4NubvARB_s
+   glVertexAttrib4NuivARB_s
+   glVertexAttrib4NusvARB_s
    glVertexAttrib4svARB_p
    glVertexAttrib4svARB_s
    glVertexAttrib4ubvARB_s
    glVertexAttrib4uivARB_s
    glVertexAttrib4usvARB_s
    glVertexAttribPointerARB_p
-   glVertexPointerEXT_o
-   glVertexPointerEXT_p
-   glVertexPointerEXT_s
    glVertexPointer_o
    glVertexPointer_p
    glVertexPointer_s
+   glVertexPointerEXT_o
+   glVertexPointerEXT_p
+   glVertexPointerEXT_s
    glpCheckExtension
    glpErrorString
    glpFullScreen
@@ -682,8 +682,8 @@ our @extra_gl_func_modern = qw(
   glColor4ubv_c
   glColor4uiv_c
   glColor4usv_c
-  glColorPointerEXT_c
   glColorPointer_c
+  glColorPointerEXT_c
   glCompileShaderARB
   glCopyTexImage1D
   glCopyTexImage1DEXT
@@ -706,22 +706,22 @@ our @extra_gl_func_modern = qw(
   glDeleteProgramsARB_p
   glDeleteRenderbuffersEXT_c
   glDeleteRenderbuffersEXT_p
-  glDeleteTexturesEXT_p
   glDeleteTextures_c
   glDeleteTextures_p
+  glDeleteTexturesEXT_p
   glDetachObjectARB
   glDisableClientState
   glDisableVertexAttribArrayARB
   glDrawArrays
   glDrawArraysEXT
-  glDrawBuffersARB_c
   glDrawBuffers_c
+  glDrawBuffersARB_c
   glDrawBuffersARB_p
   glDrawElements_c
   glDrawPixels_c
   glDrawRangeElements_c
-  glEdgeFlagPointerEXT_c
   glEdgeFlagPointer_c
+  glEdgeFlagPointerEXT_c
   glEnableClientState
   glEnableVertexAttribArrayARB
   glFeedbackBuffer_c
@@ -735,17 +735,17 @@ our @extra_gl_func_modern = qw(
   glFramebufferTexture3DEXT
   glGenBuffersARB_c
   glGenBuffersARB_p
+  glGenerateMipmapEXT
   glGenFramebuffersEXT_c
   glGenFramebuffersEXT_p
   glGenProgramsARB_c
   glGenProgramsARB_p
   glGenRenderbuffersEXT_c
   glGenRenderbuffersEXT_p
-  glGenTexturesEXT_p
-  glGenVertexArrays_p
   glGenTextures_c
   glGenTextures_p
-  glGenerateMipmapEXT
+  glGenTexturesEXT_p
+  glGenVertexArrays_p
   glGetActiveAttribARB_c
   glGetActiveAttribARB_p
   glGetActiveUniformARB_c
@@ -753,9 +753,9 @@ our @extra_gl_func_modern = qw(
   glGetAttachedObjectsARB_c
   glGetBooleanv_c
   glGetBooleanv_p
+  glGetBufferParameteriv_p
   glGetBufferParameterivARB_c
   glGetBufferParameterivARB_p
-  glGetBufferParameteriv_p
   glGetBufferPointervARB_c
   glGetBufferSubDataARB_c
   glGetClipPlane_c
@@ -790,13 +790,13 @@ our @extra_gl_func_modern = qw(
   glGetProgramEnvParameterdvARB_p
   glGetProgramEnvParameterfvARB_c
   glGetProgramEnvParameterfvARB_p
+  glGetProgramivARB_c
+  glGetProgramivARB_p
   glGetProgramLocalParameterdvARB_c
   glGetProgramLocalParameterdvARB_p
   glGetProgramLocalParameterfvARB_c
   glGetProgramLocalParameterfvARB_p
   glGetProgramStringARB_c
-  glGetProgramivARB_c
-  glGetProgramivARB_p
   glGetRenderbufferParameterivEXT_c
   glGetShaderSourceARB_c
   glGetShaderSourceARB_p
@@ -822,15 +822,15 @@ our @extra_gl_func_modern = qw(
   glGetTexParameteriv_p
   glGetUniformfvARB_c
   glGetUniformivARB_c
-  glGetVertexAttribPointervARB_c
   glGetVertexAttribdvARB_c
   glGetVertexAttribdvARB_p
   glGetVertexAttribfvARB_c
   glGetVertexAttribfvARB_p
   glGetVertexAttribivARB_c
   glGetVertexAttribivARB_p
-  glIndexPointerEXT_c
+  glGetVertexAttribPointervARB_c
   glIndexPointer_c
+  glIndexPointerEXT_c
   glInterleavedArrays_c
   glIsBufferARB
   glIsFramebufferEXT
@@ -838,14 +838,14 @@ our @extra_gl_func_modern = qw(
   glIsRenderbufferEXT
   glIsTexture
   glIsTextureEXT
-  glLightModelfv_c
-  glLightModelfv_p
-  glLightModeliv_c
-  glLightModeliv_p
   glLightfv_c
   glLightfv_p
   glLightiv_c
   glLightiv_p
+  glLightModelfv_c
+  glLightModelfv_p
+  glLightModeliv_c
+  glLightModeliv_p
   glLinkProgramARB
   glLoadMatrixd_c
   glLoadMatrixd_p
@@ -860,79 +860,79 @@ our @extra_gl_func_modern = qw(
   glMaterialfv_p
   glMaterialiv_c
   glMaterialiv_p
-  glMultMatrixd_p
-  glMultMatrixf_p
   glMultiTexCoord1d
   glMultiTexCoord1dARB
-  glMultiTexCoord1dvARB_c
   glMultiTexCoord1dv_c
+  glMultiTexCoord1dvARB_c
   glMultiTexCoord1f
   glMultiTexCoord1fARB
-  glMultiTexCoord1fvARB_c
   glMultiTexCoord1fv_c
+  glMultiTexCoord1fvARB_c
   glMultiTexCoord1i
   glMultiTexCoord1iARB
-  glMultiTexCoord1ivARB_c
   glMultiTexCoord1iv_c
+  glMultiTexCoord1ivARB_c
   glMultiTexCoord1s
   glMultiTexCoord1sARB
-  glMultiTexCoord1svARB_c
   glMultiTexCoord1sv_c
+  glMultiTexCoord1svARB_c
   glMultiTexCoord2d
   glMultiTexCoord2dARB
-  glMultiTexCoord2dvARB_c
   glMultiTexCoord2dv_c
+  glMultiTexCoord2dvARB_c
   glMultiTexCoord2f
   glMultiTexCoord2fARB
-  glMultiTexCoord2fvARB_c
   glMultiTexCoord2fv_c
+  glMultiTexCoord2fvARB_c
   glMultiTexCoord2i
   glMultiTexCoord2iARB
-  glMultiTexCoord2ivARB_c
   glMultiTexCoord2iv_c
+  glMultiTexCoord2ivARB_c
   glMultiTexCoord2s
   glMultiTexCoord2sARB
-  glMultiTexCoord2svARB_c
   glMultiTexCoord2sv_c
+  glMultiTexCoord2svARB_c
   glMultiTexCoord3d
   glMultiTexCoord3dARB
-  glMultiTexCoord3dvARB_c
   glMultiTexCoord3dv_c
+  glMultiTexCoord3dvARB_c
   glMultiTexCoord3f
   glMultiTexCoord3fARB
-  glMultiTexCoord3fvARB_c
   glMultiTexCoord3fv_c
+  glMultiTexCoord3fvARB_c
   glMultiTexCoord3i
   glMultiTexCoord3iARB
-  glMultiTexCoord3ivARB_c
   glMultiTexCoord3iv_c
+  glMultiTexCoord3ivARB_c
   glMultiTexCoord3s
   glMultiTexCoord3sARB
-  glMultiTexCoord3svARB_c
   glMultiTexCoord3sv_c
+  glMultiTexCoord3svARB_c
   glMultiTexCoord4d
   glMultiTexCoord4dARB
-  glMultiTexCoord4dvARB_c
   glMultiTexCoord4dv_c
+  glMultiTexCoord4dvARB_c
   glMultiTexCoord4f
   glMultiTexCoord4fARB
-  glMultiTexCoord4fvARB_c
   glMultiTexCoord4fv_c
+  glMultiTexCoord4fvARB_c
   glMultiTexCoord4i
   glMultiTexCoord4iARB
-  glMultiTexCoord4ivARB_c
   glMultiTexCoord4iv_c
+  glMultiTexCoord4ivARB_c
   glMultiTexCoord4s
   glMultiTexCoord4sARB
-  glMultiTexCoord4svARB_c
   glMultiTexCoord4sv_c
+  glMultiTexCoord4svARB_c
+  glMultMatrixd_p
+  glMultMatrixf_p
   glNormal3bv_c
   glNormal3dv_c
   glNormal3fv_c
   glNormal3iv_c
   glNormal3sv_c
-  glNormalPointerEXT_c
   glNormalPointer_c
+  glNormalPointerEXT_c
   glPixelMapfv_c
   glPixelMapfv_p
   glPixelMapuiv_c
@@ -995,8 +995,8 @@ our @extra_gl_func_modern = qw(
   glTexCoord4fv_c
   glTexCoord4iv_c
   glTexCoord4sv_c
-  glTexCoordPointerEXT_c
   glTexCoordPointer_c
+  glTexCoordPointerEXT_c
   glTexEnvfv_p
   glTexEnviv_p
   glTexGendv_c
@@ -1007,16 +1007,16 @@ our @extra_gl_func_modern = qw(
   glTexGeniv_p
   glTexImage1D_c
   glTexImage2D_c
-  glTexImage3DEXT_c
   glTexImage3D_c
+  glTexImage3DEXT_c
   glTexParameterfv_c
   glTexParameterfv_p
   glTexParameteriv_c
   glTexParameteriv_p
-  glTexSubImage1DEXT_c
   glTexSubImage1D_c
-  glTexSubImage2DEXT_c
+  glTexSubImage1DEXT_c
   glTexSubImage2D_c
+  glTexSubImage2DEXT_c
   glTexSubImage3D_c
   glUniform1fARB
   glUniform1fvARB_c
@@ -1081,6 +1081,14 @@ our @extra_gl_func_modern = qw(
   glVertexAttrib3fvARB_c
   glVertexAttrib3sARB
   glVertexAttrib3svARB_c
+  glVertexAttrib4bvARB_c
+  glVertexAttrib4bvARB_p
+  glVertexAttrib4dARB
+  glVertexAttrib4dvARB_c
+  glVertexAttrib4fARB
+  glVertexAttrib4fvARB_c
+  glVertexAttrib4ivARB_c
+  glVertexAttrib4ivARB_p
   glVertexAttrib4NbvARB_c
   glVertexAttrib4NbvARB_p
   glVertexAttrib4NivARB_c
@@ -1094,14 +1102,6 @@ our @extra_gl_func_modern = qw(
   glVertexAttrib4NuivARB_p
   glVertexAttrib4NusvARB_c
   glVertexAttrib4NusvARB_p
-  glVertexAttrib4bvARB_c
-  glVertexAttrib4bvARB_p
-  glVertexAttrib4dARB
-  glVertexAttrib4dvARB_c
-  glVertexAttrib4fARB
-  glVertexAttrib4fvARB_c
-  glVertexAttrib4ivARB_c
-  glVertexAttrib4ivARB_p
   glVertexAttrib4sARB
   glVertexAttrib4svARB_c
   glVertexAttrib4ubvARB_c
@@ -1111,8 +1111,8 @@ our @extra_gl_func_modern = qw(
   glVertexAttrib4usvARB_c
   glVertexAttrib4usvARB_p
   glVertexAttribPointerARB_c
-  glVertexPointerEXT_c
   glVertexPointer_c
+  glVertexPointerEXT_c
   glWindowPos2dMESA
   glWindowPos2iMESA
   glWindowPos3dMESA
