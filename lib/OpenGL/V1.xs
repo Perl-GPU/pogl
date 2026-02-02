@@ -391,22 +391,6 @@ glGetClipPlane_s(plane, eqn)
 	}
 
 #// 1.0
-#//# @data = glGetClipPlane_p($plane);
-void
-glGetClipPlane_p(plane)
-	GLenum	plane
-	PPCODE:
-	{
-		int i;
-		GLdouble	eqn[4];
-		eqn[0] = eqn[1] = eqn[2] = eqn[3] = 0;
-		glGetClipPlane(plane, &eqn[0]);
-		EXTEND(sp, 4);
-		for(i=0;i<4;i++)
-			PUSHs(sv_2mortal(newSVnv(eqn[i])));
-	}
-
-#// 1.0
 #//# glGetLightfv_s($light, $pname, (PACKED)p);
 void
 glGetLightfv_s(light, pname, p)
