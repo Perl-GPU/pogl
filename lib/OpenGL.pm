@@ -3217,20 +3217,12 @@ our %window_defaults=(
    'attributes'=> [],
 );
 
-
 sub glpOpenWindow {
-  # default values
-  my(%a) = @_;
-  my(%p) = %window_defaults;
-  foreach my $k (keys(%a)){
-    exists($p{$k}) || warn "Not a valid parameter to glpOpenWindow: `$k'\n";
-    #print "parameter $k now ",$a{$k}," was ",$p{$k},"\n";  
-    $p{$k} = $a{$k};
-  }
-  #
+  my %a = @_;
+  my %p = (%window_defaults, %a);
+  warn "Not a valid parameter to glpOpenWindow: `$_'\n" for grep !exists $window_defaults{$_}, keys %p;
   # glpcOpenWindow() no longer exported.  Use fully qualified
   # package name or (better!) glpOpenWindow()
-  #
   glpcOpenWindow(@p{qw(x y width height parent mask steal)}, @{$p{attributes}});
 }
 
