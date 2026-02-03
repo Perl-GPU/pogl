@@ -310,8 +310,6 @@ extern int ogl_howmany1(GLenum param);
 
 extern int gl_pixelmap_size(GLenum map);
 
-extern int gl_state_count(GLenum state);
-
 enum {
 	gl_pixelbuffer_pack = 1,
 	gl_pixelbuffer_unpack = 2,

@@ -630,14 +630,6 @@ int gl_pixelmap_size(GLenum map)
 	return -1;
 }
 
-int gl_state_count(GLenum state) {
-	switch (state) {
-		case GL_CURRENT_COLOR: return 4;
-		case GL_CURRENT_INDEX: return 1;
-	}
-	return 0;
-}
-
 /* From Mesa */
 
 /* Compute ceiling of integer quotient of A divided by B: */
