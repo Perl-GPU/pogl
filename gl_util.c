@@ -1,7 +1,7 @@
 
 #include "gl_util.h"
 
-int gl_texparameter_count(GLenum pname)
+int gl_GetTextureParameter_count(GLenum pname)
 {
 
 #ifdef GL_EXT_texture_object
@@ -61,7 +61,7 @@ int gl_BufferPNameARB_count(int param) {
   return -1;
 }
 
-int gl_texenv_count(GLenum pname)
+int gl_TextureEnvParameter_count(GLenum pname)
 {
 	switch (pname) {
 	case GL_TEXTURE_ENV_MODE:
@@ -72,7 +72,7 @@ int gl_texenv_count(GLenum pname)
 	return -1;
 }
 
-int gl_texgen_count(GLenum pname)
+int gl_TextureGenParameter_count(GLenum pname)
 {
 	switch (pname) {
 	case GL_TEXTURE_GEN_MODE:
@@ -84,7 +84,7 @@ int gl_texgen_count(GLenum pname)
 	return -1;
 }
 
-int gl_material_count(GLenum pname)
+int gl_MaterialParameter_count(GLenum pname)
 {
 	switch (pname) {
 	case GL_AMBIENT:
@@ -188,7 +188,7 @@ int gl_map_count(GLenum target, GLenum query)
 	return -1;
 }
 
-int gl_light_count(GLenum pname)
+int gl_LightParameter_count(GLenum pname)
 {
 	switch (pname) {
 	case GL_AMBIENT:
@@ -208,7 +208,7 @@ int gl_light_count(GLenum pname)
 	return -1;
 }
 
-int gl_lightmodel_count(GLenum pname)
+int gl_LightModelParameter_count(GLenum pname)
 {
 	switch (pname) {
 	case GL_LIGHT_MODEL_AMBIENT:
@@ -220,7 +220,7 @@ int gl_lightmodel_count(GLenum pname)
 	return -1;
 }
 
-int gl_fog_count(GLenum pname)
+int gl_FogParameter_count(GLenum pname)
 {
 	switch (pname) {
 	case GL_FOG_COLOR:
@@ -235,8 +235,7 @@ int gl_fog_count(GLenum pname)
 	return -1;
 }
 
-int ogl_howmany1(GLenum param)
-{
+int gl_GetPName_count(int param) {
 
 /* 3 */
 #ifdef GL_EXT_polygon_offset
@@ -608,6 +607,45 @@ int ogl_howmany1(GLenum param)
 	return -1;
 }
 
+int gl_ProgramPropertyARB_count(int param) {
+#ifdef GL_COMPUTE_WORK_GROUP_SIZE
+  switch (param) {
+    case GL_COMPUTE_WORK_GROUP_SIZE:
+    case GL_PROGRAM_BINARY_LENGTH:
+    case GL_ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH:
+    case GL_ACTIVE_UNIFORM_BLOCKS:
+    case GL_DELETE_STATUS:
+    case GL_LINK_STATUS:
+    case GL_VALIDATE_STATUS:
+    case GL_INFO_LOG_LENGTH:
+    case GL_ATTACHED_SHADERS:
+    case GL_ACTIVE_UNIFORMS:
+    case GL_ACTIVE_UNIFORM_MAX_LENGTH:
+    case GL_ACTIVE_ATTRIBUTES:
+    case GL_ACTIVE_ATTRIBUTE_MAX_LENGTH:
+    case GL_TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH:
+    case GL_TRANSFORM_FEEDBACK_BUFFER_MODE:
+    case GL_TRANSFORM_FEEDBACK_VARYINGS:
+    case GL_ACTIVE_ATOMIC_COUNTER_BUFFERS:
+      return 1;
+  }
+#endif
+  return -1;
+}
+
+int gl_PointParameterNameARB_count(int param) {
+#ifdef GL_POINT_SIZE_MIN
+  switch (param) {
+    case GL_POINT_SIZE_MIN:
+    case GL_POINT_SIZE_MAX:
+    case GL_POINT_FADE_THRESHOLD_SIZE:
+      return 1;
+    case GL_POINT_DISTANCE_ATTENUATION:
+      return 3;
+  }
+#endif
+  return -1;
+}
 
 int gl_pixelmap_size(GLenum map)
 {
@@ -890,7 +928,6 @@ int gl_component_count(GLenum format, GLenum type)
 #endif
 	return n;
 }
-
 
 void pgl_set_type(SV * sv, GLenum type, void ** ptr)
 {

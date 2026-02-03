@@ -274,21 +274,21 @@
 
 #define MAX_GL_TEXPARAMETER_COUNT	4
 
-extern int gl_texparameter_count(GLenum pname);
+extern int gl_GetTextureParameter_count(GLenum pname);
 
 int gl_BufferPNameARB_count(int param);
 
 #define MAX_GL_TEXENV_COUNT	4
 
-extern int gl_texenv_count(GLenum pname);
+extern int gl_TextureEnvParameter_count(GLenum pname);
 
 #define MAX_GL_TEXGEN_COUNT	4
 
-extern int gl_texgen_count(GLenum pname);
+extern int gl_TextureGenParameter_count(GLenum pname);
 
 #define MAX_GL_MATERIAL_COUNT	4
 
-extern int gl_material_count(GLenum pname);
+extern int gl_MaterialParameter_count(GLenum pname);
 
 #define MAX_GL_MAP_COUNT	4
 
@@ -296,19 +296,23 @@ extern int gl_map_count(GLenum target, GLenum query);
 
 #define MAX_GL_LIGHT_COUNT	4
 
-extern int gl_light_count(GLenum pname);
+extern int gl_LightParameter_count(GLenum pname);
 
 #define MAX_GL_LIGHTMODEL_COUNT	4
 
-extern int gl_lightmodel_count(GLenum pname);
+extern int gl_LightModelParameter_count(GLenum pname);
 
 #define MAX_GL_FOG_COUNT	4
 
-extern int gl_fog_count(GLenum pname);
+extern int gl_FogParameter_count(GLenum pname);
 
 #define OGL_MAX_COUNT	16
 
-extern int ogl_howmany1(GLenum param);
+extern int gl_GetPName_count(int param);
+
+extern int gl_ProgramPropertyARB_count(int param);
+
+extern int gl_PointParameterNameARB_count(int param);
 
 extern int gl_pixelmap_size(GLenum map);
 

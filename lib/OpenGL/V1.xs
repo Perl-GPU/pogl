@@ -286,7 +286,7 @@ glFogfv_s(pname, params)
 	SV *	params
 	CODE:
 	{
-	int nparams = gl_fog_count(pname);
+	int nparams = gl_FogParameter_count(pname);
 	if (nparams < 0) croak("Unknown fog parameter");
 	GLfloat * params_s = EL(params, sizeof(GLfloat)*nparams);
 	glFogfv(pname, params_s);
@@ -300,7 +300,7 @@ glFogiv_s(pname, params)
 	SV *	params
 	CODE:
 	{
-	int nparams = gl_fog_count(pname);
+	int nparams = gl_FogParameter_count(pname);
 	if (nparams < 0) croak("Unknown fog parameter");
 	GLint * params_s = EL(params, sizeof(GLint)*nparams);
 	glFogiv(pname, params_s);
@@ -330,7 +330,7 @@ glGetDoublev_s(pname, params)
 	SV *	params
 	CODE:
 	{
-	int nparams = ogl_howmany1(pname);
+	int nparams = gl_GetPName_count(pname);
 	if (nparams < 0) croak("Unknown param");
 	void * params_s = EL(params, sizeof(GLdouble) * nparams);
 	glGetDoublev(pname, params_s);
@@ -344,7 +344,7 @@ glGetBooleanv_s(pname, params)
 	SV *	params
 	CODE:
 	{
-	int nparams = ogl_howmany1(pname);
+	int nparams = gl_GetPName_count(pname);
 	if (nparams < 0) croak("Unknown param");
 	void * params_s = EL(params, sizeof(GLboolean) * nparams);
 	glGetBooleanv(pname, params_s);
@@ -358,7 +358,7 @@ glGetIntegerv_s(pname, params)
 	SV *	params
 	CODE:
 	{
-	int nparams = ogl_howmany1(pname);
+	int nparams = gl_GetPName_count(pname);
 	if (nparams < 0) croak("Unknown param");
 	void * params_s = EL(params, sizeof(GLint) * nparams);
 	glGetIntegerv(pname, params_s);
@@ -372,7 +372,7 @@ glGetFloatv_s(pname, params)
 	void *	params
 	CODE:
 	{
-	int nparams = ogl_howmany1(pname);
+	int nparams = gl_GetPName_count(pname);
 	if (nparams < 0) croak("Unknown param");
 	void * params_s = EL(params, sizeof(GLfloat) * nparams);
 	glGetFloatv(pname, params_s);
@@ -399,7 +399,7 @@ glGetLightfv_s(light, pname, p)
 	SV *	p
 	CODE:
 	{
-	int nparams = gl_light_count(pname);
+	int nparams = gl_LightParameter_count(pname);
 	if (nparams < 0) croak("Unknown light parameter");
 	void * p_s = EL(p, sizeof(GLfloat)*nparams);
 	glGetLightfv(light, pname, p_s);
@@ -414,7 +414,7 @@ glGetLightiv_s(light, pname, p)
 	SV *	p
 	CODE:
 	{
-	int nparams = gl_light_count(pname);
+	int nparams = gl_LightParameter_count(pname);
 	if (nparams < 0) croak("Unknown light parameter");
 	void * p_s = EL(p, sizeof(GLint)*nparams);
 	glGetLightiv(light, pname, p_s);
@@ -528,7 +528,7 @@ glGetMaterialfv_s(face, query, params)
 	SV *	params
 	CODE:
 	{
-		int nparams = gl_material_count(query);
+		int nparams = gl_MaterialParameter_count(query);
 		if (nparams < 0) croak("Unknown material parameter");
 		GLfloat * params_s = EL(params,
 			sizeof(GLfloat)*nparams);
@@ -544,7 +544,7 @@ glGetMaterialiv_s(face, query, params)
 	SV *	params
 	CODE:
 	{
-		int nparams = gl_material_count(query);
+		int nparams = gl_MaterialParameter_count(query);
 		if (nparams < 0) croak("Unknown material parameter");
 		GLint * params_s = EL(params,
 			sizeof(GLfloat)*nparams);
@@ -727,7 +727,7 @@ glGetTexEnvfv_s(target, pname, params)
 	SV * params
 	CODE:
 	{
-	int nparams = gl_texenv_count(pname);
+	int nparams = gl_TextureEnvParameter_count(pname);
 	if (nparams < 0) croak("Unknown texenv parameter");
 	GLfloat * params_s = EL(params, sizeof(GLfloat) * nparams);
 	glGetTexEnvfv(target, pname, params_s);
@@ -742,7 +742,7 @@ glGetTexEnviv_s(target, pname, params)
 	SV * params
 	CODE:
 	{
-	int nparams = gl_texenv_count(pname);
+	int nparams = gl_TextureEnvParameter_count(pname);
 	if (nparams < 0) croak("Unknown texenv parameter");
 	GLint * params_s = EL(params, sizeof(GLint) * nparams);
 	glGetTexEnviv(target, pname, params_s);
@@ -757,7 +757,7 @@ glGetTexGendv_s(coord, pname, params)
 	SV *	params
 	CODE:
 	{
-	int nparams = gl_texgen_count(pname);
+	int nparams = gl_TextureGenParameter_count(pname);
 	if (nparams < 0) croak("Unknown texgen parameter");
 	GLdouble * params_s = EL(params, sizeof(GLdouble)*nparams);
 	glGetTexGendv(coord, pname, params_s);
@@ -772,7 +772,7 @@ glGetTexGenfv_s(coord, pname, params)
 	SV *	params
 	CODE:
 	{
-	int nparams = gl_texgen_count(pname);
+	int nparams = gl_TextureGenParameter_count(pname);
 	if (nparams < 0) croak("Unknown texgen parameter");
 	GLfloat * params_s = EL(params, sizeof(GLfloat)*nparams);
 	glGetTexGenfv(coord, pname, params_s);
@@ -787,7 +787,7 @@ glGetTexGeniv_s(coord, pname, params)
 	SV *	params
 	CODE:
 	{
-	int nparams = gl_texgen_count(pname);
+	int nparams = gl_TextureGenParameter_count(pname);
 	if (nparams < 0) croak("Unknown texgen parameter");
 	GLint * params_s = EL(params, sizeof(GLint)*nparams);
 	glGetTexGeniv(coord, pname, params_s);
@@ -884,7 +884,7 @@ glGetTexParameterfv_s(target, pname, params)
 	SV *	params
 	CODE:
 	{
-	int nparams = gl_texparameter_count(pname);
+	int nparams = gl_GetTextureParameter_count(pname);
 	if (nparams < 0) croak("Unknown texparameter parameter");
 	GLfloat * params_s = EL(params, sizeof(GLfloat)*nparams);
 	glGetTexParameterfv(target, pname, params_s);
@@ -899,7 +899,7 @@ glGetTexParameteriv_s(target, pname, params)
 	SV *	params
 	CODE:
 	{
-	int nparams = gl_texparameter_count(pname);
+	int nparams = gl_GetTextureParameter_count(pname);
 	if (nparams < 0) croak("Unknown texparameter parameter");
 	GLint * params_s = EL(params, sizeof(GLint)*nparams);
 	glGetTexParameteriv(target, pname, params_s);
@@ -914,7 +914,7 @@ glLightfv_s(light, pname, params)
 	SV *	params
 	CODE:
 	{
-	int nparams = gl_light_count(pname);
+	int nparams = gl_LightParameter_count(pname);
 	if (nparams < 0) croak("Unknown light parameter");
 	GLfloat * params_s = EL(params, sizeof(GLfloat)*nparams);
 	glLightfv(light, pname, params_s);
@@ -929,7 +929,7 @@ glLightiv_s(light, pname, params)
 	SV *	params
 	CODE:
 	{
-	int nparams = gl_light_count(pname);
+	int nparams = gl_LightParameter_count(pname);
 	if (nparams < 0) croak("Unknown light parameter");
 	GLint * params_s = EL(params, sizeof(GLint)*nparams);
 	glLightiv(light, pname, params_s);
@@ -943,7 +943,7 @@ glLightModeliv_s(pname, params)
 	SV *	params
 	CODE:
 	{
-	int nparams = gl_lightmodel_count(pname);
+	int nparams = gl_LightModelParameter_count(pname);
 	if (nparams < 0) croak("Unknown light model");
 	GLint * params_s = EL(params, sizeof(GLint)*nparams);
 	glLightModeliv(pname, params_s);
@@ -957,7 +957,7 @@ glLightModelfv_s(pname, params)
 	SV *	params
 	CODE:
 	{
-	int nparams = gl_lightmodel_count(pname);
+	int nparams = gl_LightModelParameter_count(pname);
 	if (nparams < 0) croak("Unknown light model");
 	GLfloat * params_s = EL(params, sizeof(GLfloat)*nparams);
 	glLightModelfv(pname, params_s);
@@ -1162,7 +1162,7 @@ glMaterialfv_s(face, pname, param)
 	SV *	param
 	CODE:
 	{
-	int nparams = gl_material_count(pname);
+	int nparams = gl_MaterialParameter_count(pname);
 	if (nparams < 0) croak("Unknown material parameter");
 	GLfloat * param_s = EL(param, sizeof(GLfloat)*nparams);
 	glMaterialfv(face, pname, param_s);
@@ -1177,7 +1177,7 @@ glMaterialiv_s(face, pname, param)
 	SV *	param
 	CODE:
 	{
-	int nparams = gl_material_count(pname);
+	int nparams = gl_MaterialParameter_count(pname);
 	if (nparams < 0) croak("Unknown material parameter");
 	GLint * param_s = EL(param, sizeof(GLint)*nparams);
 	glMaterialiv(face, pname, param_s);
@@ -1369,7 +1369,7 @@ glTexEnvfv_s(target, pname, params)
 	SV *	params
 	CODE:
 	{
-	int nparams = gl_texenv_count(pname);
+	int nparams = gl_TextureEnvParameter_count(pname);
 	if (nparams < 0) croak("Unknown texenv parameter");
 	GLfloat * params_s = EL(params, sizeof(GLfloat)*nparams);
 	glTexEnvfv(target, pname, params_s);
@@ -1384,7 +1384,7 @@ glTexEnviv_s(target, pname, params)
 	SV *	params
 	CODE:
 	{
-	int nparams = gl_texenv_count(pname);
+	int nparams = gl_TextureEnvParameter_count(pname);
 	if (nparams < 0) croak("Unknown texenv parameter");
 	GLint * params_s = EL(params, sizeof(GLint)*nparams);
 	glTexEnviv(target, pname, params_s);
@@ -1399,7 +1399,7 @@ glTexGendv_s(Coord, pname, params)
 	SV *	params
 	CODE:
 	{
-	int nparams = gl_texgen_count(pname);
+	int nparams = gl_TextureGenParameter_count(pname);
 	if (nparams < 0) croak("Unknown texgen parameter");
 	GLdouble * params_s = EL(params, sizeof(GLdouble)* nparams);
 	glTexGendv(Coord, pname, params_s);
@@ -1414,7 +1414,7 @@ glTexGenfv_s(Coord, pname, params)
 	SV *	params
 	CODE:
 	{
-	int nparams = gl_texgen_count(pname);
+	int nparams = gl_TextureGenParameter_count(pname);
 	if (nparams < 0) croak("Unknown texgen parameter");
 	GLfloat * params_s = EL(params, sizeof(GLfloat)* nparams);
 	glTexGenfv(Coord, pname, params_s);
@@ -1429,7 +1429,7 @@ glTexGeniv_s(Coord, pname, params)
 	SV *	params
 	CODE:
 	{
-	int nparams = gl_texgen_count(pname);
+	int nparams = gl_TextureGenParameter_count(pname);
 	if (nparams < 0) croak("Unknown texgen parameter");
 	GLint * params_s = EL(params, sizeof(GLint)* nparams);
 	glTexGeniv(Coord, pname, params_s);
@@ -1596,7 +1596,7 @@ glTexParameterfv_s(target, pname, params)
 	SV *	params
 	CODE:
 	{
-	int nparams = gl_texparameter_count(pname);
+	int nparams = gl_GetTextureParameter_count(pname);
 	if (nparams < 0) croak("Unknown texparameter parameter");
 	GLfloat * params_s = EL(params, sizeof(GLfloat)*nparams);
 	glTexParameterfv(target, pname, params_s);
@@ -1611,7 +1611,7 @@ glTexParameteriv_s(target, pname, params)
 	SV *	params
 	CODE:
 	{
-	int nparams = gl_texparameter_count(pname);
+	int nparams = gl_GetTextureParameter_count(pname);
 	if (nparams < 0) croak("Unknown texparameter parameter");
 	GLint * params_s = EL(params, sizeof(GLint)*nparams);
 	glTexParameteriv(target, pname, params_s);
@@ -3932,7 +3932,7 @@ glPointParameterfvARB_s(pname,params)
 		loadProc(glPointParameterfvARB,"glPointParameterfvARB");
 	CODE:
 	{
-		int count = ogl_howmany1(pname);
+		int count = gl_PointParameterNameARB_count(pname);
 		if (count < 0) croak("Unknown param");
 		GLfloat * params_s = EL(params, sizeof(GLfloat)*count);
 		glPointParameterfvARB(pname,params_s);
