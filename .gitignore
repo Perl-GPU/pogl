@@ -11,6 +11,7 @@
 *_def.old
 
 # Explicitly skip these generated files
+auto-xs.inc
 lib/OpenGL/Config.pm
 Makefile
 Makefile.old

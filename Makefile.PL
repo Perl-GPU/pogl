@@ -147,7 +147,7 @@ WriteMakefile(
     'ExtUtils::MakeMaker' => 0,
   },
   PREREQ_PM => {
-    'OpenGL::Modern' => '0.0402', # more _p
+    'OpenGL::Modern' => '0.0403', # registry more accurate aliases
   },
   TEST_REQUIRES => { 'Test::More' => '0.88' },
   AUTHOR	=> "Chris Marshall ".'<chm at cpan dot org>',
@@ -176,13 +176,15 @@ WriteMakefile(
         x_IRC => 'irc://irc.perl.org/#pogl',
      },
   },
-  clean       => {
-    FILES =>
-      "lib/OpenGL/Config.pm ".
-      "gl_exclude.h ".
-      "utils/glversion.txt ".
-      "utils/glversion$Config{exe_ext} ".
+  clean => {
+    FILES => join(' ',
+      qw(lib/OpenGL/Config.pm gl_exclude.h utils/glversion.txt auto-xs.inc),
+      "utils/glversion$Config{exe_ext}",
       "utils/glversion$Config{obj_ext}"
+    ),
+  },
+  depend => {
+    'lib/OpenGL/V2$(OBJ_EXT)' => 'auto-xs.inc',
   },
   %$build_config,
   INC => $INCS . ' -I'.curdir(),
@@ -201,6 +203,12 @@ exit 0;
 
 {
 package MY; # so that "SUPER" works right
+sub postamble {
+  <<EOF;
+auto-xs.inc : utils/generate-XS.pl
+\t\$(PERLRUN) -Ilib utils/generate-XS.pl
+EOF
+}
 sub init_PM {
   my ($eumm) = @_;
   $eumm->SUPER::init_PM;

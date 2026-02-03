@@ -1,4 +1,3 @@
-auto-xs.inc
 Changes
 COPYRIGHT
 examples/clip.pl
@@ -121,6 +120,7 @@ TODO
 utils/const.pl
 utils/exports.pl
 utils/exports.txt
+utils/generate-XS.pl
 utils/glext_procs.pl
 utils/glversion.c
 utils/hdr_diff.pl

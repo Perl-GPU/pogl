@@ -5,6 +5,8 @@
 - glGetActive{Attrib,Uniform}ARB_p interface now return size,type,name not name,type,size
 - glPrioritizeTextures_p now takes 2 array-refs, not interleaving args
 - explicitly minimum Perl 5.016 like OpenGL::Modern, for visibility
+- glAreTexturesResident_s now has interface like GL function with return value
+- many _s functions now generated from OpenGL::Modern::Registry data, guaranteeing correct input types - previously some had void*v not SV*v
 
 0.7006 2025-04-14
 - incorporate Acme::MITHALDU::BleedingOpenGL changes - thanks @wchristian

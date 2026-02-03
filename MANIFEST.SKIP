@@ -41,6 +41,7 @@
 ^.*.tar.gz
 ^.git
 ^lib/OpenGL/Config\.pm
+^auto-xs\.inc$
 ^Makefile$
 ^MYMETA.json
 ^MYMETA.yml
