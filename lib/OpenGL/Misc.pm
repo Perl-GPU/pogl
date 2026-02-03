@@ -232,7 +232,6 @@ our @extra_gl_func = qw(
    glDeleteProgramsARB_s
    glDeleteRenderbuffersEXT_s
    glDeleteTextures_s
-   glDeleteVertexArrays
    glDrawBuffers_s
    glDrawBuffersARB_s
    glDrawElements_p
