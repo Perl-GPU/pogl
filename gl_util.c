@@ -43,6 +43,23 @@ int gl_texparameter_count(GLenum pname)
 	return -1;
 }
 
+int gl_BufferPNameARB_count(int param) {
+#ifdef GL_BUFFER_IMMUTABLE_STORAGE
+  switch (param) {
+    case GL_BUFFER_IMMUTABLE_STORAGE:
+    case GL_BUFFER_STORAGE_FLAGS:
+    case GL_BUFFER_SIZE:
+    case GL_BUFFER_USAGE:
+    case GL_BUFFER_ACCESS:
+    case GL_BUFFER_MAPPED:
+    case GL_BUFFER_ACCESS_FLAGS:
+    case GL_BUFFER_MAP_LENGTH:
+    case GL_BUFFER_MAP_OFFSET:
+      return 1;
+  }
+#endif
+  return -1;
+}
 
 int gl_texenv_count(GLenum pname)
 {

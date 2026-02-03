@@ -276,6 +276,8 @@
 
 extern int gl_texparameter_count(GLenum pname);
 
+int gl_BufferPNameARB_count(int param);
+
 #define MAX_GL_TEXENV_COUNT	4
 
 extern int gl_texenv_count(GLenum pname);
