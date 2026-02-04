@@ -276,6 +276,8 @@
 
 extern int gl_GetTextureParameter_count(GLenum pname);
 
+extern int gl_FramebufferAttachmentParameterName_count(int param);
+
 extern int gl_TextureParameterName_count(int param);
 
 extern int gl_BufferPNameARB_count(int param);
