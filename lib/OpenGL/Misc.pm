@@ -228,8 +228,10 @@ our @extra_gl_func = qw(
    glColorPointerEXT_s
    glDeleteBuffers_s
    glDeleteBuffersARB_s
+   glDeleteFramebuffers_s
    glDeleteFramebuffersEXT_s
    glDeleteProgramsARB_s
+   glDeleteRenderbuffers_s
    glDeleteRenderbuffersEXT_s
    glDeleteTextures_s
    glDrawBuffers_s
@@ -248,8 +250,10 @@ our @extra_gl_func = qw(
    glFogiv_s
    glGenBuffers_s
    glGenBuffersARB_s
+   glGenFramebuffers_s
    glGenFramebuffersEXT_s
    glGenProgramsARB_s
+   glGenRenderbuffers_s
    glGenRenderbuffersEXT_s
    glGenTextures_s
    glGetActiveAttribARB_s
@@ -270,6 +274,7 @@ our @extra_gl_func = qw(
    glGetClipPlane_s
    glGetDoublev_s
    glGetFloatv_s
+   glGetFramebufferAttachmentParameteriv_s
    glGetFramebufferAttachmentParameterivEXT_s
    glGetIntegerv_s
    glGetLightfv_s
@@ -303,6 +308,7 @@ our @extra_gl_func = qw(
    glGetProgramLocalParameterfvARB_s
    glGetProgramStringARB_p
    glGetProgramStringARB_s
+   glGetRenderbufferParameteriv_s
    glGetRenderbufferParameterivEXT_s
    glGetTexEnvfv_s
    glGetTexEnviv_s
