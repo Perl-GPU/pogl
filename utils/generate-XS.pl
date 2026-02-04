@@ -62,7 +62,7 @@ sub generate_packed_xs {
 
 my @filtered = sort {$a->[0] cmp $b->[0] } map {
   (my $t = $_) =~ s#_s$##;
-  (my $noARB = $t) =~ s#ARB$##;
+  (my $noARB = $t) =~ s#(?:ARB|EXT)$##;
   my $official_name = $signature{$t}{dynlang} ? $t :
     $signature{$noARB}{dynlang} ? $noARB :
     undef;

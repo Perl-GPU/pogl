@@ -21,7 +21,6 @@ $VERSION =~ tr/_//d;
 
 use OpenGL::V1;
 use OpenGL::V2;
-use OpenGL::V3;
 use OpenGL::Const;
 use OpenGL::Array qw(glpHasGPGPU);
 use OpenGL::Matrix;

@@ -144,7 +144,7 @@ WriteMakefile(
   NAME	=> 'OpenGL',
   VERSION_FROM=> 'lib/OpenGL.pm',
   CONFIGURE_REQUIRES => {
-    'ExtUtils::MakeMaker' => 0,
+    'ExtUtils::MakeMaker' => '7.12', # XSBUILD
   },
   PREREQ_PM => {
     'OpenGL::Modern' => '0.0403', # registry more accurate aliases
@@ -156,7 +156,7 @@ WriteMakefile(
   XSBUILD => {
     xs => {
       map +($_ => {OBJECT => "$_\$(OBJ_EXT) gl_util\$(OBJ_EXT)"}),
-        map "lib/OpenGL/$_", qw(V1 V2 V3 Array Matrix Const GLX GLU GLUT),
+        map "lib/OpenGL/$_", qw(V1 V2 Array Matrix Const GLX GLU GLUT),
     },
   },
   XSPROTOARG	=> '-noprototypes',

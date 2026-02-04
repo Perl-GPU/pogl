@@ -20,7 +20,6 @@ MYMETA.yml
 MYMETA.json
 lib/OpenGL/V1.c
 lib/OpenGL/V2.c
-lib/OpenGL/V3.c
 lib/OpenGL/GLX.c
 lib/OpenGL/GLU.c
 lib/OpenGL/GLUT.c

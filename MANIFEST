@@ -92,8 +92,6 @@ lib/OpenGL/V1.pm
 lib/OpenGL/V1.xs
 lib/OpenGL/V2.pm
 lib/OpenGL/V2.xs
-lib/OpenGL/V3.pm
-lib/OpenGL/V3.xs
 Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP
