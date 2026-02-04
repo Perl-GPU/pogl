@@ -274,6 +274,8 @@
 
 #define MAX_GL_TEXPARAMETER_COUNT	4
 
+extern int gl_RenderbufferParameterName_count(int param);
+
 extern int gl_GetTextureParameter_count(GLenum pname);
 
 extern int gl_FramebufferAttachmentParameterName_count(int param);

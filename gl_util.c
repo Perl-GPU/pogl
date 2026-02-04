@@ -1,5 +1,23 @@
-
 #include "gl_util.h"
+
+int gl_RenderbufferParameterName_count(int param) {
+#ifdef GL_ARB_framebuffer_object
+  switch (param) {
+    case GL_RENDERBUFFER_SAMPLES:
+    case GL_RENDERBUFFER_WIDTH:
+    case GL_RENDERBUFFER_HEIGHT:
+    case GL_RENDERBUFFER_INTERNAL_FORMAT:
+    case GL_RENDERBUFFER_RED_SIZE:
+    case GL_RENDERBUFFER_GREEN_SIZE:
+    case GL_RENDERBUFFER_BLUE_SIZE:
+    case GL_RENDERBUFFER_ALPHA_SIZE:
+    case GL_RENDERBUFFER_DEPTH_SIZE:
+    case GL_RENDERBUFFER_STENCIL_SIZE:
+      return 1;
+  }
+#endif
+  return -1;
+}
 
 int gl_GetTextureParameter_count(GLenum pname)
 {
@@ -42,7 +60,6 @@ int gl_GetTextureParameter_count(GLenum pname)
 	}
 	return -1;
 }
-
 
 int gl_FramebufferAttachmentParameterName_count(int param) {
 #ifdef GL_ARB_framebuffer_object
