@@ -205,7 +205,7 @@ exit 0;
 package MY; # so that "SUPER" works right
 sub postamble {
   <<EOF;
-auto-xs.inc : utils/generate-XS.pl
+auto-xs.inc : utils/generate-XS.pl lib/OpenGL/Misc.pm
 \t\$(PERLRUN) -Ilib utils/generate-XS.pl
 EOF
 }
