@@ -276,7 +276,9 @@
 
 extern int gl_GetTextureParameter_count(GLenum pname);
 
-int gl_BufferPNameARB_count(int param);
+extern int gl_TextureParameterName_count(int param);
+
+extern int gl_BufferPNameARB_count(int param);
 
 #define MAX_GL_TEXENV_COUNT	4
 

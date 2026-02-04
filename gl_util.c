@@ -43,6 +43,58 @@ int gl_GetTextureParameter_count(GLenum pname)
 	return -1;
 }
 
+int gl_TextureParameterName_count(int param) {
+  switch (param) {
+    case GL_TEXTURE_WIDTH:
+    case GL_TEXTURE_HEIGHT:
+    case GL_TEXTURE_INTERNAL_FORMAT:
+    case GL_TEXTURE_BORDER:
+    case GL_TEXTURE_MAG_FILTER:
+    case GL_TEXTURE_MIN_FILTER:
+    case GL_TEXTURE_WRAP_S:
+    case GL_TEXTURE_WRAP_T:
+    case GL_TEXTURE_RED_SIZE:
+    case GL_TEXTURE_GREEN_SIZE:
+    case GL_TEXTURE_BLUE_SIZE:
+    case GL_TEXTURE_ALPHA_SIZE:
+    case GL_TEXTURE_LUMINANCE_SIZE:
+    case GL_TEXTURE_INTENSITY_SIZE:
+    case GL_TEXTURE_PRIORITY:
+    case GL_TEXTURE_RESIDENT:
+#ifdef GL_TEXTURE_WRAP_R
+    case GL_TEXTURE_WRAP_R:
+#endif
+#ifdef GL_TEXTURE_MAX_LEVEL
+    case GL_TEXTURE_MIN_LOD:
+    case GL_TEXTURE_MAX_LOD:
+    case GL_TEXTURE_BASE_LEVEL:
+    case GL_TEXTURE_MAX_LEVEL:
+#endif
+#ifdef GL_TEXTURE_COMPARE_MODE
+    case GL_GENERATE_MIPMAP:
+    case GL_TEXTURE_LOD_BIAS:
+    case GL_TEXTURE_COMPARE_MODE:
+    case GL_TEXTURE_COMPARE_FUNC:
+#endif
+#ifdef GL_TEXTURE_SWIZZLE_R
+    case GL_TEXTURE_SWIZZLE_R:
+    case GL_TEXTURE_SWIZZLE_G:
+    case GL_TEXTURE_SWIZZLE_B:
+    case GL_TEXTURE_SWIZZLE_A:
+#endif
+#ifdef GL_DEPTH_STENCIL_TEXTURE_MODE
+    case GL_DEPTH_STENCIL_TEXTURE_MODE:
+#endif
+      return 1;
+    case GL_TEXTURE_BORDER_COLOR:
+#ifdef GL_TEXTURE_SWIZZLE_RGBA
+    case GL_TEXTURE_SWIZZLE_RGBA:
+#endif
+      return 4;
+  }
+  return -1;
+}
+
 int gl_BufferPNameARB_count(int param) {
 #ifdef GL_BUFFER_IMMUTABLE_STORAGE
   switch (param) {
