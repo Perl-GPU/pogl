@@ -151,6 +151,7 @@ WriteMakefile(
   },
   TEST_REQUIRES => { 'Test::More' => '0.88' },
   AUTHOR	=> "Chris Marshall ".'<chm at cpan dot org>',
+  MIN_PERL_VERSION => '5.016', # like OGLM, for visibility
   XSMULTI => 1,
   XSBUILD => {
     xs => {
