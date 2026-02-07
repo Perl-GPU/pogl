@@ -4,6 +4,7 @@ use strict;
 our $PERL_VERSION = $^V;
 $PERL_VERSION =~ s|^v||;
 
+use OpenGL::Modern qw(glpSetAutoCheckErrors);
 use OpenGL qw/
   :glconstants
   glGetString glGetError glpErrorString
@@ -596,13 +597,6 @@ sub ourBuildTextures
     $Tex_Width, $Tex_Height,
     0, $Tex_Format, $Tex_Size, $Tex_Pixels->ptr);
   glGenerateMipmapEXT(GL_TEXTURE_2D) if $hasFBO;
-  if ($^O ne 'MSWin32') {
-    my $errors = '';
-    while((my $err = glGetError()) != 0) {
-      $errors .= "glError: " . glpErrorString($err) . "\n";
-    }
-    die $errors if $errors;
-  }
 
   # Benchmarks for Image Loading
   if (DO_TESTS && $hasIM)
@@ -1558,6 +1552,7 @@ else
   glutInitWindowSize($Window_Width, $Window_Height);
   $Window_ID = glutCreateWindow( PROGRAM_TITLE );
 }
+glpSetAutoCheckErrors(1) if $^O ne 'MSWin32';
 
 # Get OpenGL Info
 print "\n";
@@ -1646,12 +1641,5 @@ glutMainLoop();
 print "Returned from glutMainLoop\n";
 
 print "Exiting in main thread\n";
-if ($^O ne 'MSWin32') {
-  my $errors = '';
-  while((my $err = glGetError()) != 0) {
-    $errors .= "glError: " . glpErrorString($err) . "\n";
-  }
-  die $errors if $errors;
-}
 
 __END__
