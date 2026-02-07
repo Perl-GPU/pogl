@@ -6,7 +6,6 @@ $PERL_VERSION =~ s|^v||;
 
 use OpenGL qw/
   :glconstants
-  glpHasGLUT glpCheckExtension glpFullScreen glpRestoreScreen
   glGetString glGetError glpErrorString
   glGenTextures_p glBindTexture glTexParameteri glTexImage2D_c glTexEnvf
     glDeleteTextures_p
@@ -16,9 +15,8 @@ use OpenGL qw/
   glGenRenderbuffersEXT_p glBindRenderbufferEXT glRenderbufferStorageEXT
     glDeleteRenderbuffersEXT_p
   glFramebufferRenderbufferEXT
-  glGenBuffersARB_p glBindBufferARB glBufferDataARB_o glBufferSubDataARB_o
+  glGenBuffersARB_p glBindBufferARB
     glMapBufferARB_c glUnmapBufferARB glDeleteBuffersARB_p
-  glVertexPointer_o glNormalPointer_o glColorPointer_o glTexCoordPointer_o
   glEnableClientState glDisableClientState
   glEnable glDisable glBlendFunc glDepthFunc glShadeModel
     glMatrixMode glLoadIdentity glLightfv_p glColorMaterial
@@ -30,6 +28,11 @@ use OpenGL qw/
   glPixelZoom glReadPixels_c glDrawPixels_c
   glGetDoublev_c glGetIntegerv_c
   glClearColor glClearDepth glClear glViewport glDrawElements_c
+/;
+use OpenGL qw/
+  glpHasGLUT glpCheckExtension glpFullScreen glpRestoreScreen
+  glBufferDataARB_o glBufferSubDataARB_o
+  glVertexPointer_o glNormalPointer_o glColorPointer_o glTexCoordPointer_o
 /;
 use OpenGL::GLUT qw/
   :constants :functions
