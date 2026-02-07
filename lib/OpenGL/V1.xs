@@ -1133,6 +1133,9 @@ glVertexPointerEXT_p(size, oga)
 #ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glVertexPointerEXT,"glVertexPointerEXT");
 #endif
+#ifdef GL_VERSION_2_0
+		loadProc(glBindBufferARB,"glBindBufferARB");
+#endif
 	CODE:
 	{
 		GLvoid * data = oga->data;
@@ -1188,6 +1191,9 @@ glNormalPointer_p(oga)
 	INIT:
 #ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glNormalPointerEXT,"glNormalPointerEXT");
+#endif
+#ifdef GL_VERSION_2_0
+		loadProc(glBindBufferARB,"glBindBufferARB");
 #endif
 	CODE:
 	{
@@ -1305,6 +1311,9 @@ glIndexPointer_p(oga)
 #ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glIndexPointerEXT,"glIndexPointerEXT");
 #endif
+#ifdef GL_VERSION_2_0
+		loadProc(glBindBufferARB,"glBindBufferARB");
+#endif
 	CODE:
 	{
 		GLvoid * data = oga->data;
@@ -1362,6 +1371,9 @@ glTexCoordPointer_p(size, oga)
 #ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glTexCoordPointerEXT,"glTexCoordPointerEXT");
 #endif
+#ifdef GL_VERSION_2_0
+		loadProc(glBindBufferARB,"glBindBufferARB");
+#endif
 	CODE:
 	{
 		GLvoid * data = oga->data;
@@ -1417,6 +1429,9 @@ glEdgeFlagPointer_p(oga)
 	INIT:
 #ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glTexCoordPointerEXT,"glEdgeFlagPointerEXT");
+#endif
+#ifdef GL_VERSION_2_0
+		loadProc(glBindBufferARB,"glBindBufferARB");
 #endif
 	CODE:
 	{
