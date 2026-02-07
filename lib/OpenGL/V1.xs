@@ -1246,6 +1246,9 @@ glColorPointer_p(size, oga)
 #ifndef GL_VERSION_1_1 // GL_EXT_vertex_array
 		loadProc(glColorPointerEXT,"glColorPointerEXT");
 #endif
+#ifdef GL_VERSION_2_0
+		loadProc(glBindBufferARB,"glBindBufferARB");
+#endif
 	CODE:
 	{
 		GLvoid * data = oga->data;
