@@ -110,13 +110,13 @@ sub Load
 {
   my($self,$fragment,$vertex) = @_;
 
-  glBindProgramARB($self->{fragment_const}, $self->{fragment_id});
-  glProgramStringARB_p($self->{fragment_const}, $fragment);
+  glBindProgramARB($self->GetFragmentConstant, $self->{fragment_id});
+  glProgramStringARB_p($self->GetFragmentConstant, $fragment);
   $self->{fragment_code} = $fragment;
   $self->{frag_vars} = {};
 
-  glBindProgramARB($self->{vertex_const}, $self->{vertex_id});
-  glProgramStringARB_p($self->{vertex_const}, $vertex);
+  glBindProgramARB($self->GetVertexConstant, $self->{vertex_id});
+  glProgramStringARB_p($self->GetVertexConstant, $vertex);
   $self->{vertex_code} = $vertex;
   $self->{vert_vars} = {};
 
@@ -129,8 +129,8 @@ sub Enable
 {
   my($self) = @_;
 
-  glEnable($self->{fragment_const});
-  glEnable($self->{vertex_const});
+  glEnable($self->GetFragmentConstant);
+  glEnable($self->GetVertexConstant);
 }
 
 
@@ -139,8 +139,8 @@ sub Disable
 {
   my($self) = @_;
 
-  glDisable($self->{fragment_const});
-  glDisable($self->{vertex_const});
+  glDisable($self->GetFragmentConstant);
+  glDisable($self->GetVertexConstant);
 }
 
 
@@ -195,14 +195,14 @@ sub SetVector
   my $id = $self->Map($var,2);
   if (defined($id))
   {
-    glProgramLocalParameter4fARB($self->{vertex_const},$id,@values);
+    glProgramLocalParameter4fARB($self->GetVertexConstant,$id,@values);
     return '';
   }
 
   $id = $self->Map($var,1);
   return 'Unable to map $var' if (!defined($id));
 
-  glProgramLocalParameter4fARB($self->{fragment_const},$id,@values);
+  glProgramLocalParameter4fARB($self->GetFragmentConstant,$id,@values);
   return '';
 }
 
@@ -216,14 +216,14 @@ sub SetMatrix
   my $id = $self->Map($var,2);
   if (defined($id))
   {
-    $self->set_matrix($self->{vertex_const},$id,$oga);
+    $self->set_matrix($self->GetVertexConstant,$id,$oga);
     return '';
   }
 
   $id = $self->Map($var,1);
   return 'Unable to map $var' if (!defined($id));
 
-  $self->set_matrix($self->{fragment_const},$id,$oga);
+  $self->set_matrix($self->GetFragmentConstant,$id,$oga);
   return '';
 }
 

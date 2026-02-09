@@ -61,17 +61,14 @@ sub TypeVersion
   if (!defined($SHADER_VER))
   {
     return undef if (OpenGL::glpCheckExtension('GL_EXT_Cg_shader'));
-
     # Get GL_SHADING_LANGUAGE_VERSION_ARB
     my $ver = glGetString(0x8B8C);
     $ver =~ m|Cg ([\d\.]+)|i;
-
     # Some drivers do not report Cg version
     $SHADER_VER = $1 || '1.00';
   }
   return $SHADER_VER;
 }
-
 
 # Get Description
 sub TypeDescription

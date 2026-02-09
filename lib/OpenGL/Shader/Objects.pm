@@ -93,22 +93,22 @@ sub Load {
   my ($self,$fragment,$vertex) = @_;
   # Load fragment code
   if ($fragment) {
-    $self->{fragment_id} = glCreateShaderObjectARB($self->{fragment_const});
+    $self->{fragment_id} = glCreateShaderObjectARB($self->GetFragmentConstant);
     return undef if !$self->{fragment_id};
     my $stat = _compile_shader($self->{fragment_id}, $fragment, 'Fragment');
     return $stat if $stat;
   }
   # Load vertex code
   if ($vertex) {
-    $self->{vertex_id} = glCreateShaderObjectARB($self->{vertex_const});
+    $self->{vertex_id} = glCreateShaderObjectARB($self->GetVertexConstant);
     return undef if !$self->{vertex_id};
     my $stat = _compile_shader($self->{vertex_id}, $vertex, 'Vertex');
     return $stat if $stat;
   }
   # Link shaders
   my $sp = glCreateProgramObjectARB();
-  glAttachObjectARB($sp, $self->{fragment_id}) if ($fragment);
-  glAttachObjectARB($sp, $self->{vertex_id}) if ($vertex);
+  glAttachObjectARB($sp, $self->{fragment_id}) if $fragment;
+  glAttachObjectARB($sp, $self->{vertex_id}) if $vertex;
   glLinkProgramARB($sp);
   my $linked = glGetObjectParameterivARB_p($sp, GL_OBJECT_LINK_STATUS_ARB);
   if (!$linked) {
