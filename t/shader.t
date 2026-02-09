@@ -17,27 +17,18 @@ my $types = OpenGL::Shader::GetTypes();
 plan skip_all => "Your installation has no available shader support"
   if !keys %$types;
 
-#3 Get Shader Types
-my $hasARB = 0;
-my $hasGLSL = 0;
-my $hasCG = 0;
+my %known = map +($_=>1), qw(ARB GLSL CG);
 
 my $good = 0;
 foreach my $type (sort keys(%$types))
 {
-  if ($type eq 'ARB') {
-    $hasARB = 1;
-  } elsif ($type eq 'GLSL') {
-    $hasGLSL = 1;
-  } elsif ($type eq 'CG') {
-    $hasCG = 1;
-  } else {
+  if (!$known{$type}) {
     fail '  Unknown shader type - '.$type.': '.$types->{$type}->{version};
     delete($types->{$type});
     next;
   }
-  pass '  '.$type.' v'.$types->{$type}{version}.' - '.
-    $types->{$type}{description};
+  my $desc = $types->{$type};
+  pass "$type v$desc->{version} - $desc->{description}";
   $good++;
 }
 die "No known shader types available" if !$good;
