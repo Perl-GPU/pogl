@@ -74,10 +74,7 @@ sub GetVertexConstant { GL_VERTEX_PROGRAM_ARB }
 sub new {
   my $this = shift;
   my $class = ref($this) || $this;
-  return undef unless my $ver = TypeVersion();
-  return undef unless my $self = $class->SUPER::new('ARB');
-  $self->{version} = $ver;
-  $self;
+  $class->SUPER::new('ARB');
 }
 
 # Shader destructor

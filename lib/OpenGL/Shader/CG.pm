@@ -84,10 +84,7 @@ sub new
 {
   my $this = shift;
   my $class = ref($this) || $this;
-  return undef unless my $ver = TypeVersion();
-  return undef unless my $self = $class->SUPER::new('CG');
-  $self->{version} = $ver;
-  $self;
+  $class->SUPER::new('CG');
 }
 
 1;

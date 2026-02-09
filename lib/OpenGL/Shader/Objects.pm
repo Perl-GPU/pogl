@@ -58,7 +58,7 @@ sub new {
   my ($type) = @_;
   return undef unless my $self = OpenGL::Shader::Common->new($type);
   bless $self, $class;
-  $self->{version} = '';
+  return undef unless $self->{version} = $self->TypeVersion;
   $self->{description} = $self->TypeDescription;
   return $self;
 }
