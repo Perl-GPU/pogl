@@ -3,6 +3,7 @@ use warnings;
 use Test::More;
 use File::Spec::Functions;
 use OpenGL ':all';
+use OpenGL::Modern qw(:glewfunctions GLEW_OK glpSetAutoCheckErrors);
 
 # Get an OpenGL context
 glutInit();
@@ -10,6 +11,7 @@ glutInitDisplayMode(GLUT_RGBA);
 glutInitWindowSize(1,1);
 my $Window_ID = glutCreateWindow( "OpenGL::Shader test" );
 glutHideWindow();
+glpSetAutoCheckErrors(1);
 
 require OpenGL::Shader;
 
