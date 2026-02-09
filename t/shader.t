@@ -45,7 +45,7 @@ sub test_shader {
   return if !OpenGL::Shader::HasType($test);
   my $shdr = OpenGL::Shader->new($test);
   die "Unable to instantiate $uctype shader" if !$shdr;
-  my $stat = $shdr->LoadFiles(map catfile("t", $_), "fragment.$lctype","vertex.$lctype");
+  my $stat = $shdr->LoadFiles(map catfile("t", "$_.$lctype"), qw(fragment vertex));
   if ($stat) {
     fail "Unable to load $uctype shader: $stat";
     return;
