@@ -100,11 +100,11 @@ pgopogl.h
 ppport.h
 README
 SUPPORTS
-t/10_opengl_array.t
 t/fragment.arb
 t/fragment.cg
 t/fragment.glsl
 t/OpenGL-GLU.t
+t/opengl_array.t
 t/shader.t
 t/vertex.arb
 t/vertex.cg
