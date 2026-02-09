@@ -87,7 +87,6 @@ sub new
   return undef unless my $ver = TypeVersion();
   return undef unless my $self = $class->SUPER::new('CG');
   $self->{version} = $ver;
-  $self->{description} = $DESCRIPTION;
   $self;
 }
 

@@ -79,11 +79,9 @@ sub GetVertexConstant { GL_VERTEX_SHADER }
 sub new {
   my $this = shift;
   my $class = ref($this) || $this;
-  # Check for additional required OpenGL extensions
   return undef unless my $ver = TypeVersion();
   return undef unless my $self = $class->SUPER::new('GLSL');
   $self->{version} = $ver;
-  $self->{description} = $DESCRIPTION;
   $self;
 }
 

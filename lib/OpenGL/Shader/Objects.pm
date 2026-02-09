@@ -55,12 +55,11 @@ sub new {
   return undef if OpenGL::glpCheckExtension('GL_ARB_vertex_shader');
   my $this = shift;
   my $class = ref($this) || $this;
-  my($type) = @_;
-  my $self = OpenGL::Shader::Common->new($type);
-  return undef if !$self;
+  my ($type) = @_;
+  return undef unless my $self = OpenGL::Shader::Common->new($type);
   bless $self, $class;
   $self->{version} = '';
-  $self->{description} = '';
+  $self->{description} = $self->TypeDescription;
   return $self;
 }
 

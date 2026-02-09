@@ -74,11 +74,9 @@ sub GetVertexConstant { GL_VERTEX_PROGRAM_ARB }
 sub new {
   my $this = shift;
   my $class = ref($this) || $this;
-  # Check for required OpenGL extensions
   return undef unless my $ver = TypeVersion();
   return undef unless my $self = $class->SUPER::new('ARB');
   $self->{version} = $ver;
-  $self->{description} = TypeDescription();
   $self;
 }
 
