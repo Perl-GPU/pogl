@@ -49,16 +49,16 @@ modify it under the same terms as Perl itself.
 
 # Shader constructor
 sub new {
+  # Check for required OpenGL extensions
+  return undef if OpenGL::glpCheckExtension('GL_ARB_shader_objects');
+  return undef if OpenGL::glpCheckExtension('GL_ARB_fragment_shader');
+  return undef if OpenGL::glpCheckExtension('GL_ARB_vertex_shader');
   my $this = shift;
   my $class = ref($this) || $this;
   my($type) = @_;
   my $self = OpenGL::Shader::Common->new($type);
-  return undef if (!$self);
-  bless($self,$class);
-  # Check for required OpenGL extensions
-  return undef if (OpenGL::glpCheckExtension('GL_ARB_shader_objects'));
-  return undef if (OpenGL::glpCheckExtension('GL_ARB_fragment_shader'));
-  return undef if (OpenGL::glpCheckExtension('GL_ARB_vertex_shader'));
+  return undef if !$self;
+  bless $self, $class;
   $self->{version} = '';
   $self->{description} = '';
   return $self;
