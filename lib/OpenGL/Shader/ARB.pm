@@ -79,11 +79,8 @@ sub new {
   return undef unless my $self = $class->SUPER::new('ARB');
   $self->{version} = $ver;
   $self->{description} = TypeDescription();
-  @$self{qw(fragment_id vertex_id)} = glGenProgramsARB_p(2);
-  return undef if (!$self->{fragment_id} || !$self->{vertex_id});
   $self;
 }
-
 
 # Shader destructor
 # Must be disabled first
@@ -98,6 +95,8 @@ sub DESTROY
 sub Load
 {
   my($self,$fragment,$vertex) = @_;
+  return "Failed glGenProgramsARB" if grep !$_,
+    @$self{qw(fragment_id vertex_id)} = glGenProgramsARB_p(2);
   for ([fragment => $fragment], [vertex => $vertex]) {
     my ($p, $code) = @$_;
     my ($method, $id, $codemem, $varsmem) = ("Get".ucfirst($p)."Constant", $p."_id", $p."_code", substr($p,0,4)."_vars");
