@@ -90,8 +90,7 @@ sub new {
 sub DESTROY
 {
   my($self) = @_;
-  glDeleteProgramsARB_p($self->{fragment_id}) if ($self->{fragment_id});
-  glDeleteProgramsARB_p($self->{vertex_id}) if ($self->{vertex_id});
+  glDeleteProgramsARB_p($_) for grep $_, @$self{qw(fragment_id vertex_id)}
 }
 
 
@@ -99,17 +98,13 @@ sub DESTROY
 sub Load
 {
   my($self,$fragment,$vertex) = @_;
-
-  glBindProgramARB($self->GetFragmentConstant, $self->{fragment_id});
-  glProgramStringARB_p($self->GetFragmentConstant, $fragment);
-  $self->{fragment_code} = $fragment;
-  $self->{frag_vars} = {};
-
-  glBindProgramARB($self->GetVertexConstant, $self->{vertex_id});
-  glProgramStringARB_p($self->GetVertexConstant, $vertex);
-  $self->{vertex_code} = $vertex;
-  $self->{vert_vars} = {};
-
+  for ([fragment => $fragment], [vertex => $vertex]) {
+    my ($p, $code) = @$_;
+    my ($method, $id, $codemem, $varsmem) = ("Get".ucfirst($p)."Constant", $p."_id", $p."_code", substr($p,0,4)."_vars");
+    glBindProgramARB($self->$method, $self->{$id});
+    glProgramStringARB_p($self->$method, $code);
+    @$self{$codemem, $varsmem} = ($code, {});
+  }
   return '';
 }
 
