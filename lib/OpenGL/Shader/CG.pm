@@ -79,12 +79,4 @@ sub TypeDescription
 sub GetFragmentConstant { GL_CG_FRAGMENT_SHADER_EXT }
 sub GetVertexConstant { GL_CG_VERTEX_SHADER_EXT }
 
-# Shader constructor
-sub new
-{
-  my $this = shift;
-  my $class = ref($this) || $this;
-  $class->SUPER::new('CG');
-}
-
 1;

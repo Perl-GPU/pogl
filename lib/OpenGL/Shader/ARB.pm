@@ -70,13 +70,6 @@ sub TypeDescription {
 sub GetFragmentConstant { GL_FRAGMENT_PROGRAM_ARB }
 sub GetVertexConstant { GL_VERTEX_PROGRAM_ARB }
 
-# Shader constructor
-sub new {
-  my $this = shift;
-  my $class = ref($this) || $this;
-  $class->SUPER::new('ARB');
-}
-
 # Shader destructor
 # Must be disabled first
 sub DESTROY

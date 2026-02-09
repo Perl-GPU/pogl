@@ -75,11 +75,4 @@ sub TypeDescription {
 sub GetFragmentConstant { GL_FRAGMENT_SHADER }
 sub GetVertexConstant { GL_VERTEX_SHADER }
 
-# Shader constructor
-sub new {
-  my $this = shift;
-  my $class = ref($this) || $this;
-  $class->SUPER::new('GLSL');
-}
-
 1;
