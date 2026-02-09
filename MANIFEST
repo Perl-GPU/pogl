@@ -100,7 +100,6 @@ pgopogl.h
 ppport.h
 README
 SUPPORTS
-t/00_require.t
 t/10_opengl_array.t
 t/fragment.arb
 t/fragment.cg
