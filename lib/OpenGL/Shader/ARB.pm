@@ -74,22 +74,14 @@ sub GetVertexConstant { GL_VERTEX_PROGRAM_ARB }
 sub new {
   my $this = shift;
   my $class = ref($this) || $this;
-
   # Check for required OpenGL extensions
-  my $ver = TypeVersion();
-  return undef if (!$ver);
-
-  my $self = OpenGL::Shader::Objects->new('ARB');
-  return undef if (!$self);
-  bless($self,$class);
-
+  return undef unless my $ver = TypeVersion();
+  return undef unless my $self = $class->SUPER::new('ARB');
   $self->{version} = $ver;
   $self->{description} = TypeDescription();
-
-  ($self->{fragment_id},$self->{vertex_id}) = glGenProgramsARB_p(2);
+  @$self{qw(fragment_id vertex_id)} = glGenProgramsARB_p(2);
   return undef if (!$self->{fragment_id} || !$self->{vertex_id});
-
-  return $self;
+  $self;
 }
 
 

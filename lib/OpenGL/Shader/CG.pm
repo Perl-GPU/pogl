@@ -84,19 +84,11 @@ sub new
 {
   my $this = shift;
   my $class = ref($this) || $this;
-
-  # Check for additional required OpenGL extensions
-  my $ver = TypeVersion();
-  return undef if (!$ver);
-
-  my $self = OpenGL::Shader::Objects->new('CG');
-  return undef if (!$self);
-  bless($self,$class);
-
+  return undef unless my $ver = TypeVersion();
+  return undef unless my $self = $class->SUPER::new('CG');
   $self->{version} = $ver;
   $self->{description} = $DESCRIPTION;
-
-  return $self;
+  $self;
 }
 
 1;
