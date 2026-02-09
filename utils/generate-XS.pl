@@ -147,7 +147,7 @@ sub bindings {
     $dynlang{$retval} = "OUTSCALAR";
   }
   delete @dynlang{grep !$name2parsed{$_}, keys %dynlang};
-  @dynlang{$_} = 'OUTSCALAR'
+  $dynlang{$_} = 'OUTSCALAR'
     for grep +(!$dynlang{$_} || $dynlang{$_} eq 'NULL') && $name2data{$_}[2] == 1, keys %name2parsed;
   my %indynlang = %dynlang;
   my %is_array;
