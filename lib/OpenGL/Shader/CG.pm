@@ -76,6 +76,8 @@ sub TypeDescription
   return $DESCRIPTION;
 }
 
+sub GetFragmentConstant { GL_CG_FRAGMENT_SHADER_EXT }
+sub GetVertexConstant { GL_CG_VERTEX_SHADER_EXT }
 
 # Shader constructor
 sub new
@@ -93,9 +95,6 @@ sub new
 
   $self->{version} = $ver;
   $self->{description} = $DESCRIPTION;
-
-  $self->{fragment_const} = GL_CG_FRAGMENT_SHADER_EXT;
-  $self->{vertex_const} = GL_CG_VERTEX_SHADER_EXT;
 
   return $self;
 }

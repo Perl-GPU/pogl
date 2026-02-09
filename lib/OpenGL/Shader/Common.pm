@@ -134,22 +134,6 @@ sub GetDescription
 }
 
 
-# Get fragment shader constant
-sub GetFragmentConstant
-{
-  my($self) = @_;
-  return $self->{fragment_const};
-}
-
-
-# Get vertex shader constant
-sub GetVertexConstant
-{
-  my($self) = @_;
-  return $self->{vertex_const};
-}
-
-
 # Get fragment shader ID
 sub GetFragmentShader
 {

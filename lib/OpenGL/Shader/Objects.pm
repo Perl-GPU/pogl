@@ -61,8 +61,6 @@ sub new {
   return undef if (OpenGL::glpCheckExtension('GL_ARB_vertex_shader'));
   $self->{version} = '';
   $self->{description} = '';
-  $self->{fragment_const} = '';
-  $self->{vertex_const} = '';
   return $self;
 }
 

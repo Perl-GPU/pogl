@@ -72,6 +72,9 @@ sub TypeDescription {
   $DESCRIPTION;
 }
 
+sub GetFragmentConstant { GL_FRAGMENT_SHADER }
+sub GetVertexConstant { GL_VERTEX_SHADER }
+
 # Shader constructor
 sub new {
   my $this = shift;
@@ -84,8 +87,6 @@ sub new {
   bless($self,$class);
   $self->{version} = $ver;
   $self->{description} = $DESCRIPTION;
-  $self->{fragment_const} = GL_FRAGMENT_SHADER;
-  $self->{vertex_const} = GL_VERTEX_SHADER;
   return $self;
 }
 

@@ -62,12 +62,13 @@ sub TypeVersion {
   return $SHADER_VER;
 }
 
-
 # Get Description
 sub TypeDescription {
   return $DESCRIPTION;
 }
 
+sub GetFragmentConstant { GL_FRAGMENT_PROGRAM_ARB }
+sub GetVertexConstant { GL_VERTEX_PROGRAM_ARB }
 
 # Shader constructor
 sub new {
@@ -84,9 +85,6 @@ sub new {
 
   $self->{version} = $ver;
   $self->{description} = TypeDescription();
-
-  $self->{fragment_const} = GL_FRAGMENT_PROGRAM_ARB;
-  $self->{vertex_const} = GL_VERTEX_PROGRAM_ARB;
 
   ($self->{fragment_id},$self->{vertex_id}) = glGenProgramsARB_p(2);
   return undef if (!$self->{fragment_id} || !$self->{vertex_id});
