@@ -99,13 +99,18 @@ modify it under the same terms as Perl itself.
 
 
 # Base constructor
-sub new
-{
+sub new {
+  # Check for required OpenGL extensions
+  return undef if OpenGL::glpCheckExtension('GL_ARB_shader_objects');
+  return undef if OpenGL::glpCheckExtension('GL_ARB_fragment_shader');
+  return undef if OpenGL::glpCheckExtension('GL_ARB_vertex_shader');
   my $this = shift;
   my $class = ref($this) || $this;
-  my($type) = @_;
+  my $type = (split /::/, $class)[-1];
   my $self = bless {}, $class;
-  $self->{type} = uc($type) if defined $type;
+  return undef unless $self->{version} = $self->TypeVersion;
+  $self->{type} = uc($type);
+  $self->{description} = $self->TypeDescription;
   $self;
 }
 

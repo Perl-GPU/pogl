@@ -47,22 +47,6 @@ modify it under the same terms as Perl itself.
 
 =cut
 
-# Shader constructor
-sub new {
-  # Check for required OpenGL extensions
-  return undef if OpenGL::glpCheckExtension('GL_ARB_shader_objects');
-  return undef if OpenGL::glpCheckExtension('GL_ARB_fragment_shader');
-  return undef if OpenGL::glpCheckExtension('GL_ARB_vertex_shader');
-  my $this = shift;
-  my $class = ref($this) || $this;
-  my $type = (split /::/, $class)[-1];
-  return undef unless my $self = OpenGL::Shader::Common->new($type);
-  bless $self, $class;
-  return undef unless $self->{version} = $self->TypeVersion;
-  $self->{description} = $self->TypeDescription;
-  return $self;
-}
-
 # Shader destructor
 # Must be disabled first
 sub DESTROY {
