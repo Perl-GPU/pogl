@@ -86,7 +86,6 @@ lib/OpenGL/Shader/ARB.pm
 lib/OpenGL/Shader/CG.pm
 lib/OpenGL/Shader/Common.pm
 lib/OpenGL/Shader/GLSL.pm
-lib/OpenGL/Shader/Objects.pm
 lib/OpenGL/Tessellation.pod
 lib/OpenGL/V1.pm
 lib/OpenGL/V1.xs

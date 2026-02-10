@@ -20,8 +20,8 @@ our $SHADER_VER;
 our $DESCRIPTION = qq
 {OpenGL Shader Language};
 
-use OpenGL::Shader::Objects;
-our @ISA = qw(OpenGL::Shader::Objects);
+use OpenGL::Shader::Common;
+our @ISA = qw(OpenGL::Shader::Common);
 
 use OpenGL(':all');
 
@@ -43,7 +43,7 @@ This is a plug-in module for use with the OpenGL::Shader.
 While it may be called directly, it will more often be called
 by the OpenGL::Shader abstraction module.
 
-This is a subclass of the OpenGL::Shader::Objects module.
+This is a subclass of the OpenGL::Shader::Common module.
 
 =head1 AUTHOR
 
