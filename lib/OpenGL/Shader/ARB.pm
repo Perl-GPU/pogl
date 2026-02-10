@@ -20,8 +20,8 @@ our $SHADER_VER = '1.0';
 our $DESCRIPTION = qq
 {ARBfp1.0 and ARBvp1.0 Assembly};
 
-use OpenGL::Shader::Common;
-our @ISA = qw(OpenGL::Shader::Common);
+use OpenGL::Shader::Objects;
+our @ISA = qw(OpenGL::Shader::Objects);
 
 =head1 NAME
 
@@ -41,7 +41,7 @@ This is a plug-in module for use with the OpenGL::Shader.
 While it may be called directly, it will more often be called
 by the OpenGL::Shader abstraction module.
 
-This is a subclass of the OpenGL::Shader::Common module.
+This is a subclass of the OpenGL::Shader::Objects module.
 
 =head1 AUTHOR
 
