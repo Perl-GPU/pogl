@@ -8,7 +8,8 @@
 #
 ############################################################
 
-package OpenGL::Shader::Common;
+package # hide from PAUSE
+  OpenGL::Shader::Common;
 
 use strict;
 use warnings;
@@ -30,63 +31,7 @@ OpenGL::Shader::Common - base class for use with OpenGL::Shader
 =head1 DESCRIPTION
 
 This module provides a base class for OpenGL shader types.
-Example usage:
-
-  use OpenGL::Shader;
-  my $shdr = OpenGL::Shader->new();
-
-  ##########
-  # Methods defined in this module:
-
-  # Get shader type.
-  my $type = $shdr->GetType();
-
-  # Get shader version
-  my $ver = $shdr->GetVersion();
-
-  # Get shader description
-  my $desc = $shdr->GetDescription();
-
-  # Load shader files.
-  my $stat = $shdr->LoadFiles($fragment_file,$vertex_file);
-
-  # Get shader GL constants.
-  my $fragment_const = $shdr->GetFragmentConstant();
-  my $vertex_const = $shdr->GetVertexConstant();
-
-  # Get objects.
-  my $fragment_shader = $shdr->GetFragmentShader();
-  my $vertex_shader = $shdr->GetVertexShader();
-  my $program = $shdr->GetProgram();
-
-
-  ##########
-  # Methods defined in subclasses:
-
-  # Load shader text.
-  $shdr->Load($fragment,$vertex);
-
-  # Enable shader.
-  $shdr->Enable();
-
-  # Set Vertex Attribute
-  my $attr_id = $self->MapAttr($attr_name);
-  glVertexAttrib4fARB($attr_id,$x,$y,$z,$w);
-
-  # Get Global Variable ID (uniform/env)
-  my $var_id = $self->Map($var_name);
-
-  # Set float4 vector variable
-  $stat = $self->SetVector($var_name,$x,$y,$z,$w);
-
-  # Set float4x4 matrix via OGA
-  $stat = $self->SetMatrix($var_name,$oga);
-
-  # Disable shader.
-  $shdr->Disable();
-
-  # Destructor.
-  $shdr->DESTROY();
+See L<OpenGL::Shader> documentation.
 
 =head1 AUTHOR
 

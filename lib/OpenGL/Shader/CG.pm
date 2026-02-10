@@ -8,7 +8,8 @@
 #
 ############################################################
 
-package OpenGL::Shader::CG;
+package # hide from PAUSE
+  OpenGL::Shader::CG;
 
 use Carp;
 
@@ -39,11 +40,11 @@ OpenGL::Shader::CG - plug-in module for use with OpenGL::Shader
 
 =head1 DESCRIPTION
 
-This is a plug-in module for use with the OpenGL::Shader.
+This is a plug-in module for use with L<OpenGL::Shader>.
 While it may be called directly, it will more often be called
-by the OpenGL::Shader abstraction module.
+by the abstraction module.
 
-This is a subclass of the OpenGL::Shader::Common module.
+This is a subclass of the L<OpenGL::Shader::Common> module.
 
 =head1 AUTHOR
 
