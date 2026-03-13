@@ -1,3 +1,4 @@
+0.7007 2026-03-13
 - add glpErrorString
 - add _o aliases for all functions taking OpenGL::Array args
 - use OpenGL::Modern for _c, most _p, and simple bindings
