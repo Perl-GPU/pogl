@@ -1423,9 +1423,9 @@ sub dumpMatrices
   my @model = $mm->retrieve(0,16);
   glGetDoublev_c(GL_PROJECTION_MATRIX,$pm->ptr());
   my @projection = $pm->retrieve(0,16);
-  glGetDoublev_c(GL_PROJECTION_MATRIX,$tm->ptr());
+  glGetDoublev_c(GL_TEXTURE_MATRIX,$tm->ptr());
   my @texture = $tm->retrieve(0,16);
-  glGetDoublev_c(GL_PROJECTION_MATRIX,$cm->ptr());
+  glGetDoublev_c(GL_COLOR_MATRIX,$cm->ptr());
   my @colours = $cm->retrieve(0,16);
   for (['Model',\@model], ['Projection',\@projection], ['Texture',\@texture], ['Colour',\@colours]) {
     printf "%-19s$_->[1][0], $_->[1][1], $_->[1][2], $_->[1][3]\n", "$_->[0] Matrix:";
