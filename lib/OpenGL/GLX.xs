@@ -167,8 +167,6 @@ glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
         printf("Visual open %p\n", vi);
     }		
 
-    /* A blank line here will confuse xsubpp ;-) */
-#ifdef HAVE_GLX
     /* create a GLX context */
     ctx = glXCreateContext(dpy, vi, 0, GL_TRUE);
     if (!ctx) {
@@ -185,7 +183,6 @@ glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
     swa.colormap = cmap;
     swa.border_pixel = 0;
     swa.event_mask = event_mask;
-#endif	/* defined HAVE_GLX */
 
     if (!pwin) {
         pwin = RootWindow(dpy, vi->screen);
