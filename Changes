@@ -1,4 +1,5 @@
 - add FreeGLUT-compatible requesting of GL >2.1 for Apple GLUT
+- compatibility break: GLX support requires GLX 1.3+ (from before 2005)
 
 0.7007 2026-03-13
 - add glpErrorString

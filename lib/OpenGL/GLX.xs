@@ -45,7 +45,11 @@ XSetWindowAttributes swa;
 Window win;
 GLXContext ctx;
 
-static int default_attributes[] = { GLX_DOUBLEBUFFER, GLX_RGBA, None };
+static int default_attributes[] = {
+  GLX_DOUBLEBUFFER, True,
+  GLX_RENDER_TYPE, GLX_RGBA_BIT,
+  None
+};
 
 #endif	/* defined HAVE_GLX */
 
@@ -115,26 +119,39 @@ glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
     XEvent event;
     Window pwin = (Window)pw;
     unsigned int err;
-    int *attributes = default_attributes + 1;
+    int *attributes = default_attributes + 2;
     int *a_buf = NULL;
 
     RETVAL = newHV(); /* Create hash to return GL Object info */
 
     if (items > NUM_ARG) {
         int i, buf_ind;
-        a_buf = (int *) malloc((items-NUM_ARG+2) * sizeof(int));
-        a_buf[0] = GLX_DOUBLEBUFFER; /* Preallocate */
-        attributes = a_buf + 1;
+        a_buf = (int *) malloc((items-NUM_ARG+1) * 2 * sizeof(int));
+        a_buf[0] = GLX_DOUBLEBUFFER; a_buf[1] = True; /* Preallocate */
+        attributes = a_buf + 2;
+        /* convert from glXChooseVisual to glXChooseFBConfig style */
         for (i=NUM_ARG, buf_ind=0; i<items; i++) {
             int val = SvIV(ST(i));
-            attributes[buf_ind++] = val;
+            switch (val) {
+              case GLX_DOUBLEBUFFER:
+                attributes[buf_ind++] = val;
+                attributes[buf_ind++] = True;
+                break;
+              case GLX_RGBA:
+                attributes[buf_ind++] = GLX_RENDER_TYPE;
+                attributes[buf_ind++] = GLX_RGBA_BIT;
+                break;
+              default:
+                attributes[buf_ind++] = val;
+                break;
+            }
         }
         attributes[buf_ind++] = None;
     }
     if (debug) {
         int i;
         for (i=0; attributes[i] != None; i++) {
-            printf("att=%d %d\n", i, attributes[i]);
+            printf("att=%d 0x%x\n", i, attributes[i]);
         }
     }
     /* get a connection */
@@ -149,19 +166,26 @@ glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
     }
 
     /* get an appropriate visual */
-    vi = glXChooseVisual(dpy, DefaultScreen(dpy), attributes);
-    if (!vi) { /* Might have happened that one does not
+    int num_fbc = 0;
+    GLXFBConfig *fbc = glXChooseFBConfig(dpy, DefaultScreen(dpy),
+                                         attributes, &num_fbc);
+    if (!fbc) {/* Might have happened that one does not
                 * *need* DOUBLEBUFFER, but the display does
                 * not provide SINGLEBUFFER; and the semantic
                 * of GLX_DOUBLEBUFFER is that if it misses,
                 * only SINGLEBUFFER visuals are selected.  */
-        attributes--; /* GLX_DOUBLEBUFFER preallocated there */
-        vi = glXChooseVisual(dpy, DefaultScreen(dpy), attributes); /* Retry */
-        if (vi)
-            DBUFFER_HACK = 1;
+      attributes -= 2; /* GLX_DOUBLEBUFFER preallocated there */
+      fbc = glXChooseFBConfig(dpy, DefaultScreen(dpy), attributes, &num_fbc); /* Retry */
+      if (fbc)
+          DBUFFER_HACK = 1;
     }
     if (a_buf)
         free(a_buf);
+    if (!fbc)
+        croak("ERROR: failed to get an XFBConfig\n");
+    if (debug)
+        printf("XFBConfig found %p\n", fbc[0]);
+    vi = glXGetVisualFromFBConfig(dpy, fbc[0]);
     if (!vi)
         croak("ERROR: failed to get an X visual\n");
     if (debug)
