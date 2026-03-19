@@ -15,7 +15,7 @@ use Exporter 'import';
 
 use Carp;
 
-our $VERSION = '0.7007';
+our $VERSION = '0.7008';
 our $BUILD_VERSION = our $XS_VERSION = $VERSION;
 $VERSION =~ tr/_//d;
 
