@@ -44,6 +44,7 @@ Colormap cmap;
 XSetWindowAttributes swa;
 Window win;
 GLXContext ctx;
+int requested_major = -1, requested_minor = -1, requested_core = -1;
 
 static int default_attributes[] = {
   GLX_DOUBLEBUFFER, True,
@@ -103,6 +104,20 @@ int
 __had_dbuffer_hack()
 
 #ifdef HAVE_GLX			/* GLX */
+
+void
+glpRequestContext(major, minor, want_core)
+  int major
+  int minor
+  int want_core
+CODE:
+#ifdef GLX_ARB_create_context_profile
+  requested_major = major;
+  requested_minor = minor;
+  requested_core = want_core;
+#else
+  warn("requested context but GLX_ARB_create_context_profile not available");
+#endif
 
 #// $ID = glpcOpenWindow($x,$y,$w,$h,$pw,$steal,$event_mask,@attribs);
 HV *
@@ -192,7 +207,23 @@ glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
         printf("Visual open %p\n", vi);
 
     /* create a GLX context */
+#ifdef GLX_ARB_create_context_profile
+    int context_attribs[7], *ctx_attr_ptr = context_attribs;
+    if (requested_major > 0 && requested_minor >= 0) {
+      *ctx_attr_ptr++ = GLX_CONTEXT_MAJOR_VERSION_ARB;
+      *ctx_attr_ptr++ = requested_major;
+      *ctx_attr_ptr++ = GLX_CONTEXT_MINOR_VERSION_ARB;
+      *ctx_attr_ptr++ = requested_minor;
+    }
+    if (requested_core) {
+      *ctx_attr_ptr++ = GLX_CONTEXT_PROFILE_MASK_ARB;
+      *ctx_attr_ptr++ = GLX_CONTEXT_CORE_PROFILE_BIT_ARB;
+    }
+    *ctx_attr_ptr++ = None;
+    ctx = glXCreateContextAttribsARB(dpy, fbc[0], NULL, 1, context_attribs);
+#else
     ctx = glXCreateContext(dpy, vi, 0, GL_TRUE);
+#endif
     if (!ctx)
         croak("ERROR: failed to get an X Context");
     if (debug)
