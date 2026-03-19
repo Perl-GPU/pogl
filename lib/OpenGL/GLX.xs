@@ -29,7 +29,7 @@ static Bool WaitForNotify(Display *d, XEvent *e, char *arg) {
 #  define glpResizeWindow(s1,s2,w,d)	XResizeWindow(d,w,s1,s2)
 #  define glpMoveWindow(s1,s2,w,d)		XMoveWindow(d,w,s1,s2)
 #  define glpMoveResizeWindow(s1,s2,s3,s4,w,d)	XMoveResizeWindow(d,w,s1,s2,s3,s4)
-#endif	/* defined HAVE_GLX */ 
+#endif	/* defined HAVE_GLX */
 
 static int debug = 0;
 
@@ -120,18 +120,19 @@ glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
 
     RETVAL = newHV(); /* Create hash to return GL Object info */
 
-    if(items > NUM_ARG){
-        int i;
+    if (items > NUM_ARG) {
+        int i, buf_ind;
         a_buf = (int *) malloc((items-NUM_ARG+2) * sizeof(int));
         a_buf[0] = GLX_DOUBLEBUFFER; /* Preallocate */
         attributes = a_buf + 1;
-        for (i=NUM_ARG; i<items; i++) {
-            attributes[i-NUM_ARG] = SvIV(ST(i));
+        for (i=NUM_ARG, buf_ind=0; i<items; i++) {
+            int val = SvIV(ST(i));
+            attributes[buf_ind++] = val;
         }
-        attributes[items-NUM_ARG] = None;
+        attributes[buf_ind++] = None;
     }
     if (debug) {
-        int i;	
+        int i;
         for (i=0; attributes[i] != None; i++) {
             printf("att=%d %d\n", i, attributes[i]);
         }
@@ -145,7 +146,7 @@ glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
         croak("ERROR: failed to get an X connection");
     } else if (debug) {
         printf("Display open %p\n", dpy);
-    }		
+    }
 
     /* get an appropriate visual */
     vi = glXChooseVisual(dpy, DefaultScreen(dpy), attributes);
@@ -161,19 +162,17 @@ glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
     }
     if (a_buf)
         free(a_buf);
-    if(!vi) {
+    if (!vi)
         croak("ERROR: failed to get an X visual\n");
-    } else if (debug) {
+    if (debug)
         printf("Visual open %p\n", vi);
-    }		
 
     /* create a GLX context */
     ctx = glXCreateContext(dpy, vi, 0, GL_TRUE);
-    if (!ctx) {
+    if (!ctx)
         croak("ERROR: failed to get an X Context");
-    } else if (debug) {
+    if (debug)
         printf("Context Created %p\n", ctx);
-    }
 
     /* create a color map */
     cmap = XCreateColormap(dpy, RootWindow(dpy, vi->screen),
@@ -191,7 +190,7 @@ glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
     if (steal) {
         win = nativeWindowId(dpy, pwin); /* What about depth/visual */
     } else {
-        win = XCreateWindow(dpy, pwin, 
+        win = XCreateWindow(dpy, pwin,
                 x, y, w, h,
                 0, vi->depth, InputOutput, vi->visual,
                 CWBorderPixel|CWColormap|CWEventMask, &swa);
@@ -219,11 +218,11 @@ glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
     hv_store(RETVAL, "Window", strlen("Window"),   newSViv(  (IV) win ), 0);
     hv_store(RETVAL, "Context", strlen("Context"), newSViv(PTR2IV(ctx)), 0);
 
-    hv_store(RETVAL, "GL_Version",strlen("GL_Version"), 
+    hv_store(RETVAL, "GL_Version",strlen("GL_Version"),
             newSVpv((char *) glGetString(GL_VERSION),0),0);
-    hv_store(RETVAL, "GL_Vendor",strlen("GL_Vendor"), 
+    hv_store(RETVAL, "GL_Vendor",strlen("GL_Vendor"),
             newSVpv((char *) glGetString(GL_VENDOR),0),0);
-    hv_store(RETVAL, "GL_Renderer",strlen("GL_Renderer"), 
+    hv_store(RETVAL, "GL_Renderer",strlen("GL_Renderer"),
             newSVpv((char *) glGetString(GL_RENDERER),0),0);
 
     /* clear the buffer */
@@ -247,11 +246,11 @@ glpRasterFont(name,base,number,d)
                 XFontStruct *fi;
                 int lb;
                 fi = XLoadQueryFont(d,name);
-                if(fi == NULL) {
+                if (fi == NULL) {
                         die("No font %s found",name);
                 }
                 lb = glGenLists(number);
-                if(lb == 0) {
+                if (lb == 0) {
                         die("No display lists left for font %s (need %d)",name,number);
                 }
                 glXUseXFont(fi->fid, base, number, lb);
@@ -353,7 +352,7 @@ glpXNextEvent(d=dpy)
 				EXTEND(sp,3);
 				PUSHs(sv_2mortal(newSViv(event.type)));
 				PUSHs(sv_2mortal(newSViv(event.xconfigure.width)));
-				PUSHs(sv_2mortal(newSViv(event.xconfigure.height)));				
+				PUSHs(sv_2mortal(newSViv(event.xconfigure.height)));
 				break;
 			case KeyPress:
 			case KeyRelease:
@@ -434,7 +433,7 @@ glpReadTex(file)
 
 		fp=fopen(file,"r");
 
-		if(!fp)	croak("couldn't open file %s",file);
+		if (!fp)	croak("couldn't open file %s",file);
 
 		ret = fgets(buf,250,fp);		/* P3 */
 
@@ -449,14 +448,14 @@ glpReadTex(file)
 			croak("couldn't read image size from file %s",file);
 		if (1 != fscanf(fp,"%d",&d))
 			croak("couldn't read image depth from file %s",file);
-		if(d != 255)
+		if (d != 255)
 			croak("image depth != 255 in file %s unsupported",file);
-		if(w>10000 || h>10000)
+		if (w>10000 || h>10000)
 			croak("suspicious size w=%d d=%d in file %s", w, d, file);
 
 		New(1431, image, w*h*3, unsigned char);
 
-		for(i=0;i<w*h*3;i++) {
+		for (i=0;i<w*h*3;i++) {
 			int v;
 
 			if (1 != fscanf(fp,"%d",&v)) {
@@ -469,7 +468,7 @@ glpReadTex(file)
 
 		fclose(fp);
 
-		glTexImage2D(GL_TEXTURE_2D, 0, 3, w,h, 
+		glTexImage2D(GL_TEXTURE_2D, 0, 3, w,h,
 			0, GL_RGB, GL_UNSIGNED_BYTE,image);
 	}
 
