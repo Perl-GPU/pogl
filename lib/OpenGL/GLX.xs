@@ -111,7 +111,7 @@ glpRequestContext(major, minor, want_core)
   int minor
   int want_core
 CODE:
-#ifdef GLX_ARB_create_context_profile
+#if defined(GLX_ARB_create_context_profile) && !defined(__APPLE__)
   requested_major = major;
   requested_minor = minor;
   requested_core = want_core;
@@ -207,7 +207,7 @@ glpcOpenWindow(x,y,w,h,pw,event_mask,steal, ...)
         printf("Visual open %p\n", vi);
 
     /* create a GLX context */
-#ifdef GLX_ARB_create_context_profile
+#if defined(GLX_ARB_create_context_profile) && !defined(__APPLE__)
     int context_attribs[7], *ctx_attr_ptr = context_attribs;
     if (requested_major > 0 && requested_minor >= 0) {
       *ctx_attr_ptr++ = GLX_CONTEXT_MAJOR_VERSION_ARB;
